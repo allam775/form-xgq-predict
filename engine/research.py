@@ -67,29 +67,44 @@ def _valid_history(history):
     return sorted(result, key=lambda r: (r["date"], r["league"], r["id"]))
 
 
+def season_cohort(day):
+    """League season starts in July; returns the season's starting year."""
+    d = date.fromisoformat(day)
+    return d.year if d.month >= 7 else d.year - 1
+
+
 def _split(games):
-    """Split separately by competition, never split same-date fixtures across folds."""
-    by_league = defaultdict(list)
+    """Block by league AND coherent season, splitting at match-day boundaries.
+
+    Sparse seasons are excluded from scoring; otherwise a tiny modern fragment
+    can consume the test fold while a complete old season is used only as
+    training. All predictions still use the strict historical date filter.
+    """
+    cohorts = defaultdict(list)
     for row in games:
-        by_league[row["league"]].append(row)
+        cohorts[(row["league"], season_cohort(row["date"]))].append(row)
     partitions = {"train": [], "validation": [], "test": []}
     split_meta = {}
-    for league, rows in by_league.items():
+    for (league, season), rows in sorted(cohorts.items()):
+        key = f"{league}:{season}/{str(season+1)[-2:]}"
         days = sorted({r["date"] for r in rows})
-        if len(days) < 10:
-            split_meta[league] = {"status": "not_enough_match_days", "days": len(days)}
+        if len(rows) < 80 or len(days) < 20:
+            split_meta[key] = {"status": "sparse_season_excluded",
+                               "days": len(days), "matches": len(rows),
+                               "reason": "need_80_matches_and_20_distinct_match_days"}
             continue
         n1 = max(1, int(len(days) * .6))
         n2 = max(n1 + 1, int(len(days) * .8))
         if n2 >= len(days):
-            split_meta[league] = {"status": "no_test_days", "days": len(days)}
+            split_meta[key] = {"status": "no_test_days", "days": len(days)}
             continue
         pivot_val, pivot_test = days[n1], days[n2]
         for row in rows:
             group = "train" if row["date"] < pivot_val else "validation" if row["date"] < pivot_test else "test"
             partitions[group].append(row)
-        split_meta[league] = {"status": "split", "training_end_exclusive": pivot_val,
-                              "test_start": pivot_test, "days": len(days), "matches": len(rows)}
+        split_meta[key] = {"status": "split", "validation_start": pivot_val,
+                           "test_start": pivot_test, "days": len(days),
+                           "matches": len(rows)}
     return partitions, split_meta
 
 
@@ -191,7 +206,7 @@ def benchmark(history, *, min_validation=25, min_test=25, max_stale_days=120):
     """Select using historical validation; measure held-out baseline and challenger on identical games."""
     games = _valid_history(history)
     groups, split_info = _split(games)
-    report = {"status": "insufficient", "method": "league-stratified blocked rolling-origin v1",
+    report = {"status": "insufficient", "method": "league-season-stratified date-blocked rolling-origin v2",
               "model": "XGQ-derived pre-match Poisson", "training": len(groups["train"]),
               "validation_matches": len(groups["validation"]),
               "test_matches": len(groups["test"]), "history": len(games),
