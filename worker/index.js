@@ -4,6 +4,11 @@ const json = (data, status=200) => new Response(JSON.stringify(data), {
    'cache-control':'public, max-age=60', 'x-content-type-options':'nosniff',
    'access-control-allow-origin':'*'}
 });
+// Derived Understat team-form data is private; never make it public-cacheable.
+const privateJson = (data, status=200) => new Response(JSON.stringify(data), {
+  status, headers: {'content-type':'application/json; charset=utf-8',
+    'cache-control':'private, no-store', 'x-content-type-options':'nosniff'}
+});
 const decodeMeta = (rows) => {
   const result={};
   for(const r of rows) {
@@ -36,6 +41,23 @@ export default {
         const sql="SELECT payload FROM forecasts WHERE generation=(SELECT v FROM metadata WHERE k='published_generation')"+(conditions.length?' AND '+conditions.join(' AND '):'')+' ORDER BY fixture_date ASC,league ASC LIMIT ?';
         const {results}=await env.DB.prepare(sql).bind(...values,limit).all();
         return json({forecasts:results.map(r=>JSON.parse(r.payload))});
+      }
+      if(url.pathname==='/api/team-form-teams') {
+        const league=url.searchParams.get('league');
+        if(league && !/^(en|de|es|it|fr)\.1$/.test(league)) return privateJson({error:'Bad league'},400);
+        const {results}=await env.DB.prepare('SELECT id FROM private_understat_form'+
+          (league?' WHERE id LIKE ?':'')+' ORDER BY id LIMIT 250')
+          .bind(...(league?[league+'|%']:[])).all();
+        return privateJson({teams:results.map(r=>r.id)});
+      }
+      if(url.pathname==='/api/team-form') {
+        const league=url.searchParams.get('league'), team=url.searchParams.get('team');
+        if(!/^(en|de|es|it|fr)\.1$/.test(league||'') ||
+           !team || !/^[a-z0-9][a-z0-9 .'-]{1,90}$/.test(team) || team!==team.toLowerCase())
+           return privateJson({error:'Invalid team or league'},400);
+        const id=league+'|'+team;
+        const row=await env.DB.prepare('SELECT payload FROM private_understat_form WHERE id=?').bind(id).first();
+        return privateJson({form:row?JSON.parse(row.payload):null});
       }
       if(url.pathname==='/api/unavailable') {
         const {results}=await env.DB.prepare("SELECT fixture_date AS date,league,home,away,reason FROM unavailable WHERE generation=(SELECT v FROM metadata WHERE k='published_generation') ORDER BY fixture_date LIMIT 100").all();
