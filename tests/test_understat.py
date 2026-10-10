@@ -139,6 +139,15 @@ class UnderstatProviderTests(unittest.TestCase):
         self.assertEqual(m['windows']['5']['shots_for'],2)
         self.assertEqual(team_profiles([match],as_of='2026-10-02',source=SOURCE),[])
 
+    def test_private_form_includes_confirmed_today_but_forecast_form_does_not(self):
+        from engine.understat_private import export_form
+        row=parse_match(self.match,detail_payload())
+        self.assertEqual(team_profiles([row],as_of='2026-10-02',source=SOURCE),[])
+        with tempfile.TemporaryDirectory() as td:
+            path=Path(td)/'form.sql'
+            self.assertEqual(export_form([row], path, as_of='2026-10-02'),2)
+            self.assertIn('2026-10-02',path.read_text())
+
     def test_source_homogeneity(self):
         r=parse_match(self.match,detail_payload())
         baseline={**r,'source':'StatsBomb Open Data','date':'2024-05-17'}
