@@ -4,6 +4,14 @@ name: Cloud-only XGQ research refresh
 # Scheduled runs can be delayed; even a successful refresh does not mean
 # StatsBomb offers recent per-shot data for every current competition.
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'engine/**'
+      - 'site/**'
+      - 'tests/**'
+      - 'worker/**'
+      - '.github/workflows/refresh-online.yml'
   schedule:
     - cron: '23 6,18 * * *'
   workflow_dispatch:
