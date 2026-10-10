@@ -26,3 +26,8 @@ CREATE TABLE IF NOT EXISTS release_metadata (
  PRIMARY KEY(generation,k)
 );
 CREATE TABLE IF NOT EXISTS metadata(k TEXT PRIMARY KEY,v TEXT NOT NULL);
+
+-- Owner-only persistence. No public Worker route selects from this table.
+CREATE TABLE IF NOT EXISTS private_shot_history (
+ id TEXT PRIMARY KEY, payload TEXT NOT NULL
+);
