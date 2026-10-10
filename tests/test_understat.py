@@ -81,6 +81,24 @@ class UnderstatProviderTests(unittest.TestCase):
         self.assertEqual(state2['added'],0)
         self.assertEqual(len(out2),1)
 
+    def test_balanced_fetch_budget_across_leagues(self):
+        def index(mid, league):
+            return {'dates': [{**index_payload(mid=str(mid+i), day=f'2026-10-{2+i:02d}')['dates'][0]}
+                              for i in range(3)]}
+        def transport(url):
+            from urllib.parse import urlparse
+            path=urlparse(url).path
+            if 'getLeagueData/EPL/' in path:
+                return index(20001, 'en.1')
+            if 'getLeagueData/Serie_A/' in path:
+                return index(30001, 'it.1')
+            return detail_payload(mid=path.rsplit('/',1)[-1])
+        rows, health=collect([], ['en.1','it.1'], [2026], max_new=4,
+                             today=date(2026,10,10), transport=transport)
+        self.assertEqual(health['selected_by_league'], {'en.1':2,'it.1':2})
+        self.assertEqual(len(rows),4)
+        self.assertEqual({r['league'] for r in rows}, {'en.1','it.1'})
+
     def test_private_d1_roundtrip(self):
         row=parse_match(self.match,detail_payload())
         with tempfile.TemporaryDirectory() as td:
