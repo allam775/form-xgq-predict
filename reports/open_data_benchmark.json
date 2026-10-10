@@ -2,10 +2,10 @@
   "status": "retrospective",
   "method": "league-stratified blocked rolling-origin v1",
   "model": "XGQ-derived pre-match Poisson",
-  "training": 313,
-  "validation_matches": 160,
-  "test_matches": 128,
-  "history": 634,
+  "training": 371,
+  "validation_matches": 164,
+  "test_matches": 132,
+  "history": 700,
   "max_stale_days": 120,
   "splits": {
     "it.1": {
@@ -18,6 +18,13 @@
       "test_start": "2016-03-13",
       "days": 131,
       "matches": 412
+    },
+    "fr.1": {
+      "status": "split",
+      "training_end_exclusive": "2022-08-06",
+      "test_start": "2023-02-01",
+      "days": 78,
+      "matches": 124
     },
     "de.1": {
       "status": "split",
@@ -32,19 +39,12 @@
       "test_start": "2021-02-24",
       "days": 68,
       "matches": 68
-    },
-    "fr.1": {
-      "status": "split",
-      "training_end_exclusive": "2022-10-01",
-      "test_start": "2023-03-04",
-      "days": 58,
-      "matches": 58
     }
   },
   "disclaimer": "Research-only. Not live accuracy or proof of predictive improvement.",
   "selection": "validation_only",
   "validation_eligible": 121,
-  "test_eligible": 89,
+  "test_eligible": 91,
   "selected_parameters": {
     "lookback": 16,
     "half_life_days": 180,
@@ -56,29 +56,29 @@
     "prior_strength": 1.0
   },
   "baseline_test": {
-    "tested": 89,
-    "log_loss": 1.002021,
-    "brier": 0.597635,
-    "top_choice_accuracy": 0.539326
+    "tested": 91,
+    "log_loss": 1.011314,
+    "brier": 0.602724,
+    "top_choice_accuracy": 0.538462
   },
   "selected_test": {
-    "tested": 89,
-    "log_loss": 1.002051,
-    "brier": 0.59762,
-    "top_choice_accuracy": 0.516854
+    "tested": 91,
+    "log_loss": 1.009196,
+    "brier": 0.601501,
+    "top_choice_accuracy": 0.516484
   },
-  "log_loss_improvement": -3e-05,
-  "selected_beats_baseline": false,
+  "log_loss_improvement": 0.002118,
+  "selected_beats_baseline": true,
   "candidate_count": 7,
   "paired_day_uncertainty": {
     "method": "paired_bootstrap_by_league_and_match_day",
     "bootstrap_draws": 2000,
     "random_seed": 20261010,
-    "paired_days": 27,
-    "paired_games": 89,
+    "paired_days": 29,
+    "paired_games": 91,
     "log_loss_improvement_ci_95": [
-      -0.005669,
-      0.005078
+      -0.00396,
+      0.008331
     ],
     "ci_strictly_positive": false,
     "interpretation": "Descriptive historical uncertainty; not validation of current-season performance."
@@ -98,9 +98,24 @@
         "brier": 0.59762,
         "top_choice_accuracy": 0.516854
       }
+    },
+    "fr.1": {
+      "tested": 2,
+      "baseline": {
+        "tested": 2,
+        "log_loss": 1.424877,
+        "brier": 0.829206,
+        "top_choice_accuracy": 0.5
+      },
+      "challenger": {
+        "tested": 2,
+        "log_loss": 1.327144,
+        "brier": 0.774239,
+        "top_choice_accuracy": 0.5
+      }
     }
   },
-  "test_coverage_ratio": 0.695312,
+  "test_coverage_ratio": 0.689394,
   "historical_evidence_only": true,
   "eligible_for_automatic_production_promotion": false,
   "production_model_unchanged": true
