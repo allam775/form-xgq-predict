@@ -1,0 +1,74 @@
+{
+  "status": "retrospective",
+  "method": "league-stratified blocked rolling-origin v1",
+  "model": "XGQ-derived pre-match Poisson",
+  "training": 239,
+  "validation_matches": 112,
+  "test_matches": 116,
+  "history": 500,
+  "max_stale_days": 120,
+  "splits": {
+    "it.1": {
+      "status": "not_enough_match_days",
+      "days": 9
+    },
+    "en.1": {
+      "status": "split",
+      "training_end_exclusive": "2015-10-25",
+      "test_start": "2015-12-21",
+      "days": 97,
+      "matches": 278
+    },
+    "de.1": {
+      "status": "split",
+      "training_end_exclusive": "2023-10-29",
+      "test_start": "2024-02-17",
+      "days": 63,
+      "matches": 63
+    },
+    "es.1": {
+      "status": "split",
+      "training_end_exclusive": "2020-11-21",
+      "test_start": "2021-02-24",
+      "days": 68,
+      "matches": 68
+    },
+    "fr.1": {
+      "status": "split",
+      "training_end_exclusive": "2022-10-01",
+      "test_start": "2023-03-04",
+      "days": 58,
+      "matches": 58
+    }
+  },
+  "disclaimer": "Research-only. Not live accuracy or proof of predictive improvement.",
+  "selection": "validation_only",
+  "validation_eligible": 73,
+  "test_eligible": 77,
+  "selected_parameters": {
+    "lookback": 16,
+    "half_life_days": 90,
+    "prior_strength": 2.0
+  },
+  "baseline_parameters": {
+    "lookback": 16,
+    "half_life_days": 90,
+    "prior_strength": 1.0
+  },
+  "baseline_test": {
+    "tested": 77,
+    "log_loss": 1.070845,
+    "brier": 0.64567,
+    "top_choice_accuracy": 0.415584
+  },
+  "selected_test": {
+    "tested": 77,
+    "log_loss": 1.063821,
+    "brier": 0.639841,
+    "top_choice_accuracy": 0.415584
+  },
+  "log_loss_improvement": 0.007024,
+  "selected_beats_baseline": true,
+  "candidate_count": 7,
+  "production_model_unchanged": true
+}
