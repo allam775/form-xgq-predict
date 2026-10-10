@@ -130,8 +130,17 @@ def poisson_probabilities(home_lam, away_lam, max_goals=12):
             "away": round(p_away, 5), "scorelines": scores[:5]}
 
 
-def predict_xgq(fixture, history, today, max_stale_days=120):
-    """Return an XGQ-based forecast or a clear rejection reason (no fallback odds)."""
+def predict_xgq(fixture, history, today, max_stale_days=120, *,
+                lookback=16, half_life=90, prior_strength=1.0):
+    """Return a strictly pre-match, shot-verified forecast.
+
+    Optional research parameters preserve the default production calculation.
+    They are not automatically chosen from future matches or published.
+    """
+    if (type(lookback) is not int or lookback < 5 or lookback > 64 or
+            type(half_life) not in (int, float) or not 15 <= half_life <= 730 or
+            type(prior_strength) not in (int, float) or not .1 <= prior_strength <= 10):
+        raise ValueError("Invalid research-model parameters")
     d = fixture["date"]
     if d < today:
         return None, "not_upcoming"
@@ -141,8 +150,8 @@ def predict_xgq(fixture, history, today, max_stale_days=120):
     if home == away or not home or not away:
         return None, "invalid_teams"
     rows = [r for r in history if r["league"] == league and r["date"] < d and r["date"] < today]
-    h = weighted_form(rows, league, home, d)
-    a = weighted_form(rows, league, away, d)
+    h = weighted_form(rows, league, home, d, lookback, half_life)
+    a = weighted_form(rows, league, away, d, lookback, half_life)
     if h is None or a is None:
         return None, "insufficient_verified_shots"
     last = max(h["last_seen"], a["last_seen"])
@@ -159,7 +168,7 @@ def predict_xgq(fixture, history, today, max_stale_days=120):
     avg_goals_away = sum(r["ag"] for r in base_rows) / len(base_rows)
     # Conservative shrinkage; both shot creation and shot prevention use real XGQ.
     def ratio(value):
-        return max(.55, min(1.55, (value + avg_xgq) / (2 * avg_xgq)))
+        return max(.55, min(1.55, (value + prior_strength * avg_xgq) / ((1 + prior_strength) * avg_xgq)))
     lh = max(.2, min(3.7, avg_goals_home * ratio(h["xgq_for"]) * ratio(a["xgq_against"])))
     la = max(.2, min(3.7, avg_goals_away * ratio(a["xgq_for"]) * ratio(h["xgq_against"])))
     return {"league": league, "date": d, "home": fixture["home_team"],
