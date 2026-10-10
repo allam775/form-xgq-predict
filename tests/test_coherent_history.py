@@ -51,6 +51,53 @@ class SeasonCohortTests(unittest.TestCase):
         self.assertEqual(chosen, (2, 27))
         self.assertEqual(focused, [(2, [1])])
 
+    def test_automated_focus_prioritizes_smallest_verified_league(self):
+        selection = [(2, 27), (7, 27), (12, 27)]
+        pending = [(2, 27, [1]), (7, 27, [2]), (12, 27, [3])]
+        focus, pair = collect.prioritize_dense_cohort(
+            selection, pending, {2: 412, 7: 124, 12: 33})
+        self.assertEqual(pair, (12, 27))
+        self.assertEqual(focus, [(12, [3])])
+        focus, pair = collect.prioritize_dense_cohort(
+            selection, pending, {2: 412, 7: 124, 12: 250})
+        self.assertEqual(pair, (7, 27))
+        self.assertEqual(focus, [(7, [2])])
+
+    def test_balancing_counts_only_statsbomb_archived_matches(self):
+        fake = [
+            {"competition_id": 2, "season_id": 27, "season_name": "2015/2016"},
+            {"competition_id": 12, "season_id": 27, "season_name": "2015/2016"},
+        ]
+        def m(mid):
+            return {"match_id": mid, "match_date": "2015-08-30",
+                    "home_score": 1, "away_score": 0}
+        def getter(url, **kw):
+            if url.endswith('competitions.json'):
+                return fake
+            if '/matches/2/27.json' in url:
+                return [m(100)]
+            if '/matches/12/27.json' in url:
+                return [m(200)]
+            if '/events/' in url:
+                return []
+            raise AssertionError(url)
+        import json
+        with TemporaryDirectory() as tmp, patch.object(collect, 'DATA', Path(tmp)), \
+                patch.object(collect, 'fetch_json', side_effect=getter), \
+                patch.object(collect, 'statsbomb_to_row') as converter:
+            cached = [{"id": f"en{i}", "source_match_id": f"en{i}",
+                       "source": "StatsBomb Open Data", "league": "en.1"}
+                      for i in range(4)]
+            cached += [{"id": "own", "source_match_id": "private",
+                        "source": "Other authorized feed", "league": "it.1"}]
+            (Path(tmp) / 'shot_history.json').write_text(json.dumps(cached))
+            converter.side_effect = lambda match, events, league: {
+                "id": str(match['match_id']), "source_match_id": str(match['match_id']),
+                "source": "StatsBomb Open Data", "league": league}
+            _, info = collect.shot_archive(max_matches=1)
+            self.assertEqual(info["focus_open_cohort"],
+                             {"competition_id": 12, "season_id": 27})
+
     def test_no_priority_left_restores_balanced_mode(self):
         selection = [(2, 27), (7, 27), (11, 42)]
         pending = [(2, 27, []), (7, 27, []), (11, 42, [3])]
