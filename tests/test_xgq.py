@@ -45,6 +45,12 @@ class MathTests(unittest.TestCase):
         with self.assertRaises(ValueError):statsbomb_to_row(m,[{'type':{'name':'Shot'},'team':{'id':11},'shot':{}}],'es.1')
 
 class GateTests(unittest.TestCase):
+    def test_latest_verified_match_uses_actual_max_date_not_cache_order(self):
+        rows = history(4)
+        reordered = [rows[-1], *rows[:-1]]
+        snapshot = make_snapshot(reordered, [], date(2026, 10, 10))
+        self.assertEqual(snapshot['coverage']['latest_verified_match'], max(r['date'] for r in rows))
+
     def test_live_unverified_old_data_refused(self):
         rows=history(80)
         f={'league':'es.1','date':'2026-10-10','home_team':'Alpha','away_team':'Bravo'}
