@@ -8,6 +8,8 @@ Never publish provider-derived match rows to the public GitHub repository.
 from __future__ import annotations
 
 from datetime import date, datetime, timezone
+import gzip
+import io
 import json
 import os
 import re
@@ -83,6 +85,13 @@ def fetch(kind, identifier, *, transport=None):
         raise
     if len(raw) > MAX_BYTES:
         raise ValueError('Understat response too large')
+    # Understat can send GZIP even when the client did not ask for compression.
+    # Bound the *decompressed* size as well; never permit a zip-bomb response.
+    if raw.startswith(b'\x1f\x8b'):
+        with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
+            raw = stream.read(MAX_BYTES + 1)
+        if len(raw) > MAX_BYTES:
+            raise ValueError('Understat decoded response too large')
     result = json.loads(raw)
     if not isinstance(result, dict):
         raise ValueError('Expected JSON object')
