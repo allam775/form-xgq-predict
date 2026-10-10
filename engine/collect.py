@@ -241,12 +241,30 @@ def main(argv=None):
     history, shot_health = shot_archive(opts.offline, opts.max_new_matches,
                                         combos if combos else None)
     if opts.__dict__["365_teams"]:
+        if opts.offline:
+            raise ValueError("--offline cannot access 365Scores; omit --365-teams")
         from . import provider365
         if not provider365.enabled():
             raise RuntimeError("365Scores connector not enabled: set XGQ_365_ACCESS_AUTHORIZED=1 only if authorized")
         if not (provider365.publication_allowed() or provider365.private_only()):
             raise RuntimeError("365Scores connector requires either an authorized publication or an owner-confirmed private, Cloudflare-Access-protected deployment. Source usage rights still apply.")
         teams = provider365.read_teams(opts.__dict__["365_teams"])
+        # GitHub public cache excludes 365Scores data by design. Restore the
+        # private D1 summaries before the collector runs; fail closed if a
+        # deployment that expects history cannot retrieve it.
+        from .private_history import verified_row
+        private_path = DATA / "private_365_history.json"
+        if os.getenv("XGQ_365_REQUIRE_PRIVATE_HISTORY") == "1" and not private_path.exists():
+            raise RuntimeError("Private 365 history D1 restore missing; refusing incomplete refresh")
+        private_rows = read_json(private_path, [])
+        if not isinstance(private_rows, list):
+            raise ValueError("Invalid private history JSON")
+        cached_ids = {r["id"] for r in history}
+        for private_row in private_rows:
+            verified_row(private_row)
+            if private_row["id"] not in cached_ids:
+                history.append(private_row)
+                cached_ids.add(private_row["id"])
         if not teams:
             raise RuntimeError("365Scores team ID mapping is empty; no auto-discovery is attempted")
         aliases = read_json(ROOT / "config" / "365_aliases.json", {})
