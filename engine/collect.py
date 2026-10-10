@@ -50,6 +50,20 @@ def read_json(path, default):
 # hard-coding one old La Liga season. These are *historical* datasets, NOT live feeds.
 STATS_BOMB_LEAGUE_IDS = {11: "es.1", 2: "en.1", 9: "de.1", 12: "it.1", 7: "fr.1"}
 
+# Source-catalog checked 2026-10-10: unusually COMPLETE top-flight
+# seasons. Finish an actual season before chasing sparse one-club archives.
+# Every match still requires original per-shot StatsBomb xG event evidence.
+DENSE_OPEN_COHORTS = ((2, 27), (7, 27), (12, 27))
+
+
+def prioritize_dense_cohort(selections, pending):
+    """Focus a full-season sample while auto-collecting; preserve explicit selection behavior."""
+    by_pair = {(comp, season): (comp, queue) for (comp, season, queue) in pending}
+    for pair in DENSE_OPEN_COHORTS:
+        if pair in selections and pair in by_pair and by_pair[pair][1]:
+            return [by_pair[pair]], pair
+    return [(comp, queue) for comp, season, queue in pending], None
+
 
 def choose_open_seasons(competitions, max_seasons_per_league=2):
     """Pure, bounded selector that prioritizes recent available seasons per league."""
@@ -84,13 +98,18 @@ def shot_archive(offline=False, max_matches=80, selections=None, max_seasons_per
                "open_seasons_examined": 0}
     if offline:
         return list(rows.values()), details
-    if selections is None:
+    automatic = selections is None
+    if automatic:
         # Source list remains discoverable if StatsBomb adds further freely
         # published seasons. No guarantee of current-competition coverage.
         competitions = fetch_json(f"{STATS_BOMB}/competitions.json", max_bytes=2_000_000)
         if not isinstance(competitions, list):
             raise ValueError("StatsBomb competition index is invalid")
-        selections = choose_open_seasons(competitions, max_seasons_per_league)
+        discovered = choose_open_seasons(competitions, max_seasons_per_league)
+        available = {(x.get("competition_id"), x.get("season_id")) for x in competitions
+                     if isinstance(x, dict)}
+        selections = [pair for pair in DENSE_OPEN_COHORTS if pair in available]
+        selections += [pair for pair in discovered if pair not in selections]
     if not selections:
         raise ValueError("No eligible open-data competition seasons")
     pending=[]
@@ -107,11 +126,19 @@ def shot_archive(offline=False, max_matches=80, selections=None, max_seasons_per
             details["invalid"] += 1
             continue
         eligible=[]
-        for match in sorted(index, key=lambda x: x.get("match_date", ""), reverse=True):
+        # Feed chronological seasons from kickoff onwards; prevent random slices
+        # or newest-game-first sampling that starves the team's early form.
+        for match in sorted(index, key=lambda x: (x.get("match_date", ""), x.get("match_id", 0))):
             mid=str(match.get("match_id", ""))
             if mid.isdigit() and mid not in known_match_ids and isinstance(match.get("home_score"), int) and isinstance(match.get("away_score"), int):
                 eligible.append(match)
-        pending.append((comp, eligible))
+        pending.append((comp, season, eligible))
+    if automatic:
+        pending, chosen = prioritize_dense_cohort(selections, pending)
+        if chosen is not None:
+            details["focus_open_cohort"] = {"competition_id": chosen[0], "season_id": chosen[1]}
+    else:
+        pending = [(comp, queue) for comp, season, queue in pending]
     # Balanced round-robin across leagues and seasons: one source cannot
     # indefinitely starve every other competition of new shot-level events.
     imported=0
@@ -325,6 +352,13 @@ def main(argv=None):
     p = OUTPUT / "snapshot.json.tmp"
     p.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf8")
     p.replace(OUTPUT / "snapshot.json")
+    # Report research honestly even when the open history is too sparse to
+    # produce ANY out-of-sample prediction; never auto-promote parameters.
+    from .research import benchmark
+    report = benchmark([r for r in history if r.get("source") == "StatsBomb Open Data"])
+    research_target = OUTPUT / "research_report.json"
+    research_target.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf8")
+    print(f"Historical research: {report['status']} ({report.get('reason', 'held-out evaluation')})")
     print(f"Verified shot matches: {len(history)}; fixtures: {len(fixtures)}; "
           f"honest XGQ forecasts: {len(snapshot['forecasts'])}; withheld: {len(snapshot['unavailable'])}")
     return snapshot
