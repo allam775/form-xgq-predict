@@ -83,7 +83,7 @@ jobs:
           done
       - name: Show authentic shot archive progress
         run: |
-          python -c "import json; h=json.load(open('data/shot_history.json')); n=len({r['id'] for r in h if r.get('source') == 'StatsBomb Open Data'}); print(f'Verified StatsBomb shot matches: {n} / 700; remaining: {max(0, 700-n)}')"
+          python -c "import json; h=json.load(open('data/shot_history.json')); n=len({r['id'] for r in h if r.get('source') == 'StatsBomb Open Data'}); print(f'Verified StatsBomb shot matches: {n} / 1359; remaining: {max(0, 1359-n)}')"
       - name: Run chronological XGQ benchmark (research only)
         run: python -m engine.research --input data/shot_history.json --output generated/research_report.json
       - name: Verify coverage and evidence publication gate
