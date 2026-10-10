@@ -35,19 +35,6 @@ jobs:
           node --check site/app.js
           node --check worker/index.js
           node tests/test_worker.mjs
-      - name: Collect only freely published shot data and open fixtures
-        env:
-          XGQ_SHOT_FEED_URL: ${{ secrets.XGQ_SHOT_FEED_URL }}
-          # Deliberately disabled by default. Public reuse needs appropriate permission.
-          XGQ_365_ACCESS_AUTHORIZED: ${{ secrets.XGQ_365_ACCESS_AUTHORIZED }}
-          XGQ_365_PUBLICATION_ALLOWED: ${{ secrets.XGQ_365_PUBLICATION_ALLOWED }}
-          XGQ_365_PRIVATE_ONLY: ${{ secrets.XGQ_365_PRIVATE_ONLY }}
-          XGQ_365_TEAMS_FILE: ${{ vars.XGQ_365_TEAMS_FILE }}
-        run: python -m engine.collect --max-new-matches 50 --statsbomb-selections auto
-      - name: Verify coverage and evidence publication gate
-        run: |
-          python -m engine.validate
-          python -m engine.sql_export
       - name: Configure Cloudflare binding
         env:
           CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
@@ -57,6 +44,38 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file migrations/0001_schema.sql --yes
+      # Restore only when the explicit, rights-gated 365 connector is configured.
+      # Query output goes to a runner-local file, never to Actions logs/artifacts.
+      - name: Restore private D1 match history
+        if: ${{ vars.XGQ_365_TEAMS_FILE != '' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --json --command "SELECT payload FROM private_shot_history ORDER BY id" > "$RUNNER_TEMP/private-history-query.json"
+          python -m engine.private_history decode --input "$RUNNER_TEMP/private-history-query.json" --output data/private_365_history.json
+      - name: Collect only freely published shot data and open fixtures
+        env:
+          XGQ_SHOT_FEED_URL: ${{ secrets.XGQ_SHOT_FEED_URL }}
+          # Deliberately disabled by default. Public reuse needs appropriate permission.
+          XGQ_365_ACCESS_AUTHORIZED: ${{ secrets.XGQ_365_ACCESS_AUTHORIZED }}
+          XGQ_365_PUBLICATION_ALLOWED: ${{ secrets.XGQ_365_PUBLICATION_ALLOWED }}
+          XGQ_365_PRIVATE_ONLY: ${{ secrets.XGQ_365_PRIVATE_ONLY }}
+          XGQ_365_TEAMS_FILE: ${{ vars.XGQ_365_TEAMS_FILE }}
+          XGQ_365_REQUIRE_PRIVATE_HISTORY: '1'
+        run: python -m engine.collect --max-new-matches 50 --statsbomb-selections auto
+      - name: Verify coverage and evidence publication gate
+        run: |
+          python -m engine.validate
+          python -m engine.sql_export
+      - name: Persist private 365 match history in D1
+        if: ${{ vars.XGQ_365_TEAMS_FILE != '' }}
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          python -m engine.private_history export --input data/shot_history.json --output "$RUNNER_TEMP/private-shot-history.sql"
+          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/private-shot-history.sql" --yes
       - name: Publish verified cloud snapshot
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
