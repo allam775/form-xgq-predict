@@ -1,0 +1,111 @@
+{
+  "status": "audited",
+  "as_of": "2026-10-10",
+  "source": "StatsBomb Open Data",
+  "matches": 1359,
+  "unique_match_ids": 1359,
+  "league_count": 5,
+  "largest_league_fraction": 0.3201,
+  "last_verified_match": "2024-05-18",
+  "matches_within_120_days": 0,
+  "historical_only_not_live_form": true,
+  "leagues": {
+    "de.1": {
+      "matches": 63,
+      "first_match_date": "2015-09-12",
+      "last_match_date": "2024-05-18",
+      "last_match_age_days": 875,
+      "within_120_days": 0,
+      "teams": 23,
+      "teams_with_5_or_more_matches": 1,
+      "teams_with_16_or_more_matches": 1,
+      "season_coverage": {
+        "2015/16": 31,
+        "2023/24": 32
+      }
+    },
+    "en.1": {
+      "matches": 412,
+      "first_match_date": "2003-09-26",
+      "last_match_date": "2016-05-17",
+      "last_match_age_days": 3798,
+      "within_120_days": 0,
+      "teams": 29,
+      "teams_with_5_or_more_matches": 20,
+      "teams_with_16_or_more_matches": 20,
+      "season_coverage": {
+        "2003/04": 32,
+        "2015/16": 380
+      }
+    },
+    "es.1": {
+      "matches": 68,
+      "first_match_date": "2019-09-21",
+      "last_match_date": "2021-05-16",
+      "last_match_age_days": 1973,
+      "within_120_days": 0,
+      "teams": 23,
+      "teams_with_5_or_more_matches": 1,
+      "teams_with_16_or_more_matches": 1,
+      "season_coverage": {
+        "2019/20": 28,
+        "2020/21": 40
+      }
+    },
+    "fr.1": {
+      "matches": 435,
+      "first_match_date": "2015-08-07",
+      "last_match_date": "2023-06-03",
+      "last_match_age_days": 1225,
+      "within_120_days": 0,
+      "teams": 27,
+      "teams_with_5_or_more_matches": 20,
+      "teams_with_16_or_more_matches": 20,
+      "season_coverage": {
+        "2015/16": 377,
+        "2021/22": 26,
+        "2022/23": 32
+      }
+    },
+    "it.1": {
+      "matches": 381,
+      "first_match_date": "1986-11-09",
+      "last_match_date": "2016-05-15",
+      "last_match_age_days": 3800,
+      "within_120_days": 0,
+      "teams": 20,
+      "teams_with_5_or_more_matches": 20,
+      "teams_with_16_or_more_matches": 20,
+      "season_coverage": {
+        "1986/87": 1,
+        "2015/16": 380
+      }
+    }
+  },
+  "published_2015_16_coverage": {
+    "en.1": {
+      "verified": 380,
+      "published_index_matches": 380,
+      "remaining_from_published_index": 0,
+      "ratio": 1
+    },
+    "fr.1": {
+      "verified": 377,
+      "published_index_matches": 377,
+      "remaining_from_published_index": 0,
+      "ratio": 1
+    },
+    "it.1": {
+      "verified": 380,
+      "published_index_matches": 380,
+      "remaining_from_published_index": 0,
+      "ratio": 1
+    }
+  },
+  "notes": [
+    "This report audits StatsBomb Open Data only; no private provider rows.",
+    "Published indexes are not official league season totals.",
+    "Different xG providers require independent calibration before mixing.",
+    "Old historical rows alone do not validate a forecast for 2026 fixtures."
+  ]
+}

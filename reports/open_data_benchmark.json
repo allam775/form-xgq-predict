@@ -2,15 +2,18 @@
   "status": "retrospective",
   "method": "league-stratified blocked rolling-origin v1",
   "model": "XGQ-derived pre-match Poisson",
-  "training": 371,
-  "validation_matches": 164,
-  "test_matches": 132,
-  "history": 700,
+  "training": 855,
+  "validation_matches": 275,
+  "test_matches": 229,
+  "history": 1359,
   "max_stale_days": 120,
   "splits": {
     "it.1": {
-      "status": "not_enough_match_days",
-      "days": 9
+      "status": "split",
+      "training_end_exclusive": "2016-02-11",
+      "test_start": "2016-04-03",
+      "days": 98,
+      "matches": 381
     },
     "en.1": {
       "status": "split",
@@ -21,10 +24,10 @@
     },
     "fr.1": {
       "status": "split",
-      "training_end_exclusive": "2022-08-06",
-      "test_start": "2023-02-01",
-      "days": 78,
-      "matches": 124
+      "training_end_exclusive": "2016-04-17",
+      "test_start": "2022-05-08",
+      "days": 172,
+      "matches": 435
     },
     "de.1": {
       "status": "split",
@@ -43,11 +46,11 @@
   },
   "disclaimer": "Research-only. Not live accuracy or proof of predictive improvement.",
   "selection": "validation_only",
-  "validation_eligible": 121,
-  "test_eligible": 91,
+  "validation_eligible": 225,
+  "test_eligible": 169,
   "selected_parameters": {
-    "lookback": 16,
-    "half_life_days": 180,
+    "lookback": 24,
+    "half_life_days": 90,
     "prior_strength": 1.0
   },
   "baseline_parameters": {
@@ -56,29 +59,29 @@
     "prior_strength": 1.0
   },
   "baseline_test": {
-    "tested": 91,
-    "log_loss": 1.011314,
-    "brier": 0.602724,
-    "top_choice_accuracy": 0.538462
+    "tested": 169,
+    "log_loss": 1.011622,
+    "brier": 0.605822,
+    "top_choice_accuracy": 0.532544
   },
   "selected_test": {
-    "tested": 91,
-    "log_loss": 1.009196,
-    "brier": 0.601501,
-    "top_choice_accuracy": 0.516484
+    "tested": 169,
+    "log_loss": 1.017015,
+    "brier": 0.608781,
+    "top_choice_accuracy": 0.508876
   },
-  "log_loss_improvement": 0.002118,
-  "selected_beats_baseline": true,
+  "log_loss_improvement": -0.005393,
+  "selected_beats_baseline": false,
   "candidate_count": 7,
   "paired_day_uncertainty": {
     "method": "paired_bootstrap_by_league_and_match_day",
     "bootstrap_draws": 2000,
     "random_seed": 20261010,
-    "paired_days": 29,
-    "paired_games": 91,
+    "paired_days": 49,
+    "paired_games": 169,
     "log_loss_improvement_ci_95": [
-      -0.00396,
-      0.008331
+      -0.014229,
+      0.002281
     ],
     "ci_strictly_positive": false,
     "interpretation": "Descriptive historical uncertainty; not validation of current-season performance."
@@ -94,8 +97,8 @@
       },
       "challenger": {
         "tested": 89,
-        "log_loss": 1.002051,
-        "brier": 0.59762,
+        "log_loss": 1.007895,
+        "brier": 0.601083,
         "top_choice_accuracy": 0.516854
       }
     },
@@ -109,13 +112,28 @@
       },
       "challenger": {
         "tested": 2,
-        "log_loss": 1.327144,
-        "brier": 0.774239,
+        "log_loss": 1.448629,
+        "brier": 0.840246,
+        "top_choice_accuracy": 0.5
+      }
+    },
+    "it.1": {
+      "tested": 78,
+      "baseline": {
+        "tested": 78,
+        "log_loss": 1.011982,
+        "brier": 0.609435,
+        "top_choice_accuracy": 0.525641
+      },
+      "challenger": {
+        "tested": 78,
+        "log_loss": 1.016354,
+        "brier": 0.611629,
         "top_choice_accuracy": 0.5
       }
     }
   },
-  "test_coverage_ratio": 0.689394,
+  "test_coverage_ratio": 0.737991,
   "historical_evidence_only": true,
   "eligible_for_automatic_production_promotion": false,
   "production_model_unchanged": true
