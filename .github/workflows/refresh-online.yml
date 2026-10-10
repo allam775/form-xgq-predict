@@ -62,14 +62,23 @@ jobs:
         run: |
           npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --json --command "SELECT payload FROM private_shot_history ORDER BY id" > "$RUNNER_TEMP/private-history-query.json"
           python -m engine.private_history decode --input "$RUNNER_TEMP/private-history-query.json" --output data/private_365_history.json
-      - name: Restore private Understat history from D1
-        if: ${{ vars.XGQ_UNDERSTAT_LEAGUES != '' }}
+      - name: Read owner's private Understat opt-in
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --json --command "SELECT payload FROM private_understat_history ORDER BY id" > "$RUNNER_TEMP/understat-private-query.json"
-          python -m engine.understat_private decode --input "$RUNNER_TEMP/understat-private-query.json" --output data/private_understat_history.json
+          # Settings are account-private: no per-user authorization hardcoded in public source.
+          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --json --command "SELECT v FROM metadata WHERE k='understat_collection_config' LIMIT 1" > "$RUNNER_TEMP/understat-owner-opt-in.json"
+          python -m engine.understat_config --input "$RUNNER_TEMP/understat-owner-opt-in.json" --github-env "$GITHUB_ENV"
+      - name: Restore private Understat history from D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "${XGQ_UNDERSTAT_LEAGUES:-}" ]; then
+            npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --json --command "SELECT payload FROM private_understat_history ORDER BY id" > "$RUNNER_TEMP/understat-private-query.json"
+            python -m engine.understat_private decode --input "$RUNNER_TEMP/understat-private-query.json" --output data/private_understat_history.json
+          fi
       - name: Collect only freely published shot data and open fixtures
         env:
           XGQ_SHOT_FEED_URL: ${{ secrets.XGQ_SHOT_FEED_URL }}
@@ -79,10 +88,6 @@ jobs:
           XGQ_365_PRIVATE_ONLY: ${{ secrets.XGQ_365_PRIVATE_ONLY }}
           XGQ_365_TEAMS_FILE: ${{ vars.XGQ_365_TEAMS_FILE }}
           XGQ_365_REQUIRE_PRIVATE_HISTORY: '1'
-          XGQ_UNDERSTAT_ACCESS_AUTHORIZED: ${{ secrets.XGQ_UNDERSTAT_ACCESS_AUTHORIZED }}
-          XGQ_UNDERSTAT_STORAGE_AUTHORIZED: ${{ secrets.XGQ_UNDERSTAT_STORAGE_AUTHORIZED }}
-          XGQ_UNDERSTAT_LEAGUES: ${{ vars.XGQ_UNDERSTAT_LEAGUES }}
-          XGQ_UNDERSTAT_MAX_NEW: '24'
         run: |
           # Complete the published 2015/16 Italian and French cohorts, rather than
           # adding disconnected snippets. The cap avoids runaway downloads.
@@ -111,15 +116,16 @@ jobs:
           python -m engine.private_history export --input data/shot_history.json --output "$RUNNER_TEMP/private-shot-history.sql"
           npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/private-shot-history.sql" --yes
       - name: Persist private Understat match summaries and rolling form
-        if: ${{ vars.XGQ_UNDERSTAT_LEAGUES != '' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          python -m engine.understat_private export --input data/shot_history.json --output "$RUNNER_TEMP/understat-history.sql"
-          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/understat-history.sql" --yes
-          python -m engine.understat_private form --input data/shot_history.json --output "$RUNNER_TEMP/understat-form.sql"
-          npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/understat-form.sql" --yes
+          if [ -n "${XGQ_UNDERSTAT_LEAGUES:-}" ]; then
+            python -m engine.understat_private export --input data/shot_history.json --output "$RUNNER_TEMP/understat-history.sql"
+            npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/understat-history.sql" --yes
+            python -m engine.understat_private form --input data/shot_history.json --output "$RUNNER_TEMP/understat-form.sql"
+            npx --yes wrangler@4.149.0 d1 execute xgq-predictions --remote --file "$RUNNER_TEMP/understat-form.sql" --yes
+          fi
       - name: Publish verified cloud snapshot
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
