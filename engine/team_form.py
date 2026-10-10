@@ -12,7 +12,7 @@ from .xgq import normalized
 WINDOWS = (5, 10, 20)
 
 
-def team_profiles(rows, *, as_of=None, source=None, min_games=1):
+def team_profiles(rows, *, as_of=None, source=None, min_games=1, include_completed_today=False):
     if not isinstance(rows, list):
         raise ValueError('Expected verified compact match history')
     as_of = as_of or date.today().isoformat()
@@ -23,7 +23,10 @@ def team_profiles(rows, *, as_of=None, source=None, min_games=1):
     for r in rows:
         if not isinstance(r, dict) or source and r.get('source') != source:
             continue
-        if r.get('date', '') >= as_of:  # strictly historical; no same-day lookahead
+        # Forecast backtests must NEVER use same-day data. A private post-match
+        # dashboard may include today's results only after the source marked FINAL.
+        match_date = r.get('date', '')
+        if match_date > as_of if include_completed_today else match_date >= as_of:
             continue
         for home in (True, False):
             side = 'h' if home else 'a'
