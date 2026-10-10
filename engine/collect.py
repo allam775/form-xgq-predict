@@ -252,7 +252,10 @@ def make_snapshot(history, fixtures, today):
         raise ValueError("Duplicate shot match identity")
     all_forecasts, unavailable = [], []
     for f in fixtures:
-        pred, reason = predict_xgq(f, history, today.isoformat())
+        # Do not mix Understat/StatsBomb/365Scores xG scales in one prediction.
+        from .team_form import select_history_for_fixture
+        cohort, _ = select_history_for_fixture(history, f, today.isoformat())
+        pred, reason = predict_xgq(f, cohort, today.isoformat())
         if pred:
             pred["league_name"] = f.get("league_name", f["league"])
             pred["kickoff_status"] = f.get("kickoff_status", "unknown")
@@ -273,7 +276,7 @@ def make_snapshot(history, fixtures, today):
                 "withheld_reasons": dict(sorted(Counter(
                     f["reason"] for f in unavailable).items()))},
             "model": "verified-shot-xgq-poisson-v1", "forecasts": all_forecasts,
-            "unavailable": unavailable[:400], "evaluation": holdout_metrics(history, today.isoformat()),
+            "unavailable": unavailable[:400], "evaluation": holdout_metrics([r for r in history if r.get("source")=="StatsBomb Open Data"], today.isoformat()),
             "provenance": ["StatsBomb Open Data (attribution required)",
                             "OpenFootball fixtures (not shot data)"]}
 
@@ -352,6 +355,11 @@ def main(argv=None):
             raise ValueError("Invalid 365Scores team name aliases")
         history, results365 = provider365.collect(history, teams, max_new=opts.__dict__["365_max_new"], aliases=aliases)
         shot_health["provider365"] = results365
+    # Rights-gated private Understat D1 import; disabled unless explicitly configured.
+    from .understat_pipeline import run as run_understat
+    history, understat_health = run_understat(history, asof=today)
+    if understat_health.get('enabled'):
+        shot_health['understat'] = understat_health
     if opts.verified_feed_url:
         if not re.fullmatch(r"https://[^\s?#]+(?:\?[^\s#]*)?", opts.verified_feed_url):
             raise ValueError("Online XGQ source must be HTTPS")
@@ -372,6 +380,8 @@ def main(argv=None):
     snapshot["collection"] = shot_health
     if shot_health.get("provider365"):
         snapshot["provenance"].append("365Scores (opt-in source; subject to provider terms; private mode unless publication authorized)")
+    if shot_health.get('understat'):
+        snapshot['provenance'].append('Understat (private; owner-confirmed source rights)')
     # Club crest URLs are opt-in, with documented display permission / attribution.
     logos = read_json(ROOT / "config" / "club_logos.json", {})
     for pred in snapshot["forecasts"]:
