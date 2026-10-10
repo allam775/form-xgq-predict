@@ -31,3 +31,11 @@ CREATE TABLE IF NOT EXISTS metadata(k TEXT PRIMARY KEY,v TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS private_shot_history (
  id TEXT PRIMARY KEY, payload TEXT NOT NULL
 );
+
+-- Isolated Understat private history and derived team-form snapshots.
+CREATE TABLE IF NOT EXISTS private_understat_history (
+ id TEXT PRIMARY KEY, payload TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS private_understat_form (
+ id TEXT PRIMARY KEY, payload TEXT NOT NULL
+);
