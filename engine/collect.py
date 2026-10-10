@@ -90,13 +90,23 @@ def choose_open_seasons(competitions, max_seasons_per_league=2):
     return output
 
 
+def planned_open_shot_import_quota(max_matches, target_size, cached_rows):
+    """Bound public StatsBomb imports without counting private or other-source rows."""
+    if target_size is None:
+        return max_matches
+    current = {r['id'] for r in cached_rows
+               if isinstance(r, dict) and isinstance(r.get('id'), str)
+               and r.get('source') == 'StatsBomb Open Data'}
+    return min(max_matches, max(0, target_size - len(current)))
+
+
 def shot_archive(offline=False, max_matches=80, selections=None, max_seasons_per_league=2):
     cache = DATA / "shot_history.json"
     existing = read_json(cache, [])
     rows = {r["id"]: r for r in existing if isinstance(r, dict) and "id" in r}
     details = {"cached": len(rows), "imported_statsbomb": 0, "invalid": 0, "unavailable": 0,
                "open_seasons_examined": 0}
-    if offline:
+    if offline or max_matches == 0:
         return list(rows.values()), details
     automatic = selections is None
     if automatic:
@@ -256,6 +266,8 @@ def main(argv=None):
     ap.add_argument("--offline", action="store_true", help="Read only local data/shot_history.json and data/fixtures.json")
     ap.add_argument("--as-of", help="YYYY-MM-DD override for reproducible tests")
     ap.add_argument("--max-new-matches", type=int, default=80)
+    ap.add_argument("--target-history-size", type=int,
+                    help="Optional target count for public StatsBomb shot matches; import only missing rows")
     ap.add_argument("--max-open-seasons", type=int, default=2,
                     help="Max open historical seasons selected per supported league (1..12)")
     ap.add_argument("--verified-feed", help="JSON file of complete owner XGQ shot arrays")
@@ -270,6 +282,8 @@ def main(argv=None):
         ap.error("--max-open-seasons must be in [1,12]")
     if not 0 <= opts.max_new_matches <= 250:
         ap.error("--max-new-matches must be in [0,250]")
+    if opts.target_history_size is not None and opts.target_history_size < 1:
+        ap.error("--target-history-size must be a positive integer")
     today = date.fromisoformat(opts.as_of) if opts.as_of else date.today()
     combos = []
     if opts.statsbomb_selections.strip().lower() != "auto":
@@ -277,8 +291,18 @@ def main(argv=None):
             if part.strip():
                 a,b = part.split(":")
                 combos.append((int(a),int(b)))
-    history, shot_health = shot_archive(opts.offline, opts.max_new_matches,
+    cached_rows = read_json(DATA / "shot_history.json", [])
+    if not isinstance(cached_rows, list):
+        raise ValueError("Invalid cached shot history")
+    public_quota = planned_open_shot_import_quota(
+        opts.max_new_matches, opts.target_history_size, cached_rows)
+    history, shot_health = shot_archive(opts.offline, public_quota,
                                         combos if combos else None, opts.max_open_seasons)
+    if opts.target_history_size is not None:
+        shot_health['target_public_statsbomb_matches'] = opts.target_history_size
+        shot_health['target_public_statsbomb_met'] = (
+            sum(r.get('source') == 'StatsBomb Open Data' for r in history)
+            >= opts.target_history_size)
     if opts.__dict__["365_teams"]:
         if opts.offline:
             raise ValueError("--offline cannot access 365Scores; omit --365-teams")
