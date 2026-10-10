@@ -16,6 +16,7 @@ from collections import Counter, defaultdict
 from datetime import date
 import json
 import math
+from random import Random
 from pathlib import Path
 from .xgq import predict_xgq
 
@@ -125,6 +126,67 @@ def _score(paired):
             "top_choice_accuracy": round(correct / n, 6)}
 
 
+
+def paired_day_bootstrap(baseline, challenger, test_games, *, draws=2000, seed=20261010):
+    """Quantify uncertainty of paired 1X2 log-loss gain, resampling match DAYS.
+
+    Same-league same-day fixtures share conditions; resample all predictions on
+    each (league, date) together rather than pretending matches are independent.
+    Lower/upper are descriptive historical uncertainty, NOT a proof of live skill.
+    """
+    if type(draws) is not int or not 200 <= draws <= 20000:
+        raise ValueError("Bootstrap draws must be between 200 and 20,000")
+    matched = set(baseline).intersection(challenger)
+    blocks = defaultdict(list)
+    for game in test_games:
+        if game["id"] not in matched:
+            continue
+        old_probs, old_label = baseline[game["id"]]
+        new_probs, new_label = challenger[game["id"]]
+        if old_label != new_label:
+            raise ValueError("Paired evaluation outcome mismatch")
+        difference = math.log(max(1e-9, new_probs[new_label])) - math.log(max(1e-9, old_probs[old_label]))
+        blocks[(game["league"], game["date"])].append(difference)
+    grouped = [blocks[key] for key in sorted(blocks)]
+    if not grouped:
+        return {"status": "insufficient", "reason": "no_paired_days"}
+    rng = Random(seed)
+    sample_count = len(grouped)
+    sampled = []
+    for _ in range(draws):
+        total = n = 0
+        for _ in range(sample_count):
+            group = grouped[rng.randrange(sample_count)]
+            total += sum(group)
+            n += len(group)
+        sampled.append(total / n)
+    sampled.sort()
+    low = sampled[int((draws - 1) * .025)]
+    high = sampled[int((draws - 1) * .975)]
+    return {"method": "paired_bootstrap_by_league_and_match_day",
+            "bootstrap_draws": draws, "random_seed": seed,
+            "paired_days": sample_count, "paired_games": len(matched),
+            "log_loss_improvement_ci_95": [round(low, 6), round(high, 6)],
+            "ci_strictly_positive": low > 0,
+            "interpretation": "Descriptive historical uncertainty; not validation of current-season performance."}
+
+
+def league_test_breakdown(baseline, challenger, test_games):
+    """Disclose the competitions contributing to the held-out result."""
+    by_league = defaultdict(list)
+    for game in test_games:
+        ident = game["id"]
+        if ident in baseline and ident in challenger:
+            by_league[game["league"]].append(ident)
+    out = {}
+    for league, ids in sorted(by_league.items()):
+        keys = sorted(set(ids))
+        out[league] = {"tested": len(keys),
+                       "baseline": _score([baseline[k] for k in keys]),
+                       "challenger": _score([challenger[k] for k in keys])}
+    return out
+
+
 def benchmark(history, *, min_validation=25, min_test=25, max_stale_days=120):
     """Select using historical validation; measure held-out baseline and challenger on identical games."""
     games = _valid_history(history)
@@ -177,6 +239,11 @@ def benchmark(history, *, min_validation=25, min_test=25, max_stale_days=120):
                   log_loss_improvement=round(improvement, 6),
                   selected_beats_baseline=improvement > 0,
                   candidate_count=len(viable),
+                  paired_day_uncertainty=paired_day_bootstrap(baseline_test, champion_test, groups["test"]),
+                  test_by_league=league_test_breakdown(baseline_test, champion_test, groups["test"]),
+                  test_coverage_ratio=round(len(matched) / len(groups["test"]), 6),
+                  historical_evidence_only=True,
+                  eligible_for_automatic_production_promotion=False,
                   production_model_unchanged=True)
     return report
 
