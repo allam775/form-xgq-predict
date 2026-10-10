@@ -99,6 +99,22 @@ class UnderstatProviderTests(unittest.TestCase):
         self.assertEqual(len(rows),4)
         self.assertEqual({r['league'] for r in rows}, {'en.1','it.1'})
 
+    def test_real_transport_decodes_gzip_safely(self):
+        from unittest.mock import patch
+        import gzip
+        from engine.provider_understat import fetch
+        class Resp:
+            def __init__(self, b): self.b=b
+            def __enter__(self): return self
+            def __exit__(self, *_): return False
+            def read(self, n): return self.b[:n]
+        compressed = gzip.compress(json.dumps({'dates': []}).encode())
+        with patch('engine.provider_understat.urlopen', return_value=Resp(compressed)):
+            self.assertEqual(fetch('league', ('en.1',2026)), {'dates': []})
+        with patch('engine.provider_understat.urlopen', return_value=Resp(gzip.compress(b'X'*6_000_001))):
+            with self.assertRaisesRegex(ValueError, 'decoded response too large'):
+                fetch('league', ('en.1',2026))
+
     def test_private_d1_roundtrip(self):
         row=parse_match(self.match,detail_payload())
         with tempfile.TemporaryDirectory() as td:
