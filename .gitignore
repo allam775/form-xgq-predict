@@ -17,3 +17,8 @@ wrangler.jsonc.bak
 data/private_365_history.json
 .private-history-query.json
 generated/private-history.sql
+
+# Understat private evidence and scratch files must never reach public GitHub.
+data/private_understat_history.json
+generated/private_understat_history.sql
+generated/private_understat_form.sql
