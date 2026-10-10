@@ -2,10 +2,10 @@
   "status": "retrospective",
   "method": "league-stratified blocked rolling-origin v1",
   "model": "XGQ-derived pre-match Poisson",
-  "training": 283,
-  "validation_matches": 137,
-  "test_matches": 127,
-  "history": 580,
+  "training": 313,
+  "validation_matches": 160,
+  "test_matches": 128,
+  "history": 634,
   "max_stale_days": 120,
   "splits": {
     "it.1": {
@@ -14,10 +14,10 @@
     },
     "en.1": {
       "status": "split",
-      "training_end_exclusive": "2015-12-05",
-      "test_start": "2016-02-03",
-      "days": 115,
-      "matches": 358
+      "training_end_exclusive": "2015-12-26",
+      "test_start": "2016-03-13",
+      "days": 131,
+      "matches": 412
     },
     "de.1": {
       "status": "split",
@@ -43,12 +43,12 @@
   },
   "disclaimer": "Research-only. Not live accuracy or proof of predictive improvement.",
   "selection": "validation_only",
-  "validation_eligible": 98,
-  "test_eligible": 88,
+  "validation_eligible": 121,
+  "test_eligible": 89,
   "selected_parameters": {
-    "lookback": 24,
+    "lookback": 16,
     "half_life_days": 180,
-    "prior_strength": 2.0
+    "prior_strength": 1.0
   },
   "baseline_parameters": {
     "lookback": 16,
@@ -56,51 +56,51 @@
     "prior_strength": 1.0
   },
   "baseline_test": {
-    "tested": 88,
-    "log_loss": 1.01933,
-    "brier": 0.611226,
-    "top_choice_accuracy": 0.5
+    "tested": 89,
+    "log_loss": 1.002021,
+    "brier": 0.597635,
+    "top_choice_accuracy": 0.539326
   },
   "selected_test": {
-    "tested": 88,
-    "log_loss": 1.038961,
-    "brier": 0.623912,
-    "top_choice_accuracy": 0.465909
+    "tested": 89,
+    "log_loss": 1.002051,
+    "brier": 0.59762,
+    "top_choice_accuracy": 0.516854
   },
-  "log_loss_improvement": -0.019631,
+  "log_loss_improvement": -3e-05,
   "selected_beats_baseline": false,
   "candidate_count": 7,
   "paired_day_uncertainty": {
     "method": "paired_bootstrap_by_league_and_match_day",
     "bootstrap_draws": 2000,
     "random_seed": 20261010,
-    "paired_days": 23,
-    "paired_games": 88,
+    "paired_days": 27,
+    "paired_games": 89,
     "log_loss_improvement_ci_95": [
-      -0.042245,
-      0.003446
+      -0.005669,
+      0.005078
     ],
     "ci_strictly_positive": false,
     "interpretation": "Descriptive historical uncertainty; not validation of current-season performance."
   },
   "test_by_league": {
     "en.1": {
-      "tested": 88,
+      "tested": 89,
       "baseline": {
-        "tested": 88,
-        "log_loss": 1.01933,
-        "brier": 0.611226,
-        "top_choice_accuracy": 0.5
+        "tested": 89,
+        "log_loss": 1.002021,
+        "brier": 0.597635,
+        "top_choice_accuracy": 0.539326
       },
       "challenger": {
-        "tested": 88,
-        "log_loss": 1.038961,
-        "brier": 0.623912,
-        "top_choice_accuracy": 0.465909
+        "tested": 89,
+        "log_loss": 1.002051,
+        "brier": 0.59762,
+        "top_choice_accuracy": 0.516854
       }
     }
   },
-  "test_coverage_ratio": 0.692913,
+  "test_coverage_ratio": 0.695312,
   "historical_evidence_only": true,
   "eligible_for_automatic_production_promotion": false,
   "production_model_unchanged": true
