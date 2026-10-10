@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+node_modules/
+.dev.vars
+.wrangler/
+generated/*.tmp
+# DO NOT publish credential files
+.env
+.env.*
+# Snapshots are generated on the cloud runner and published to D1, not committed.
+generated/
+# Local credentials and override files
+wrangler.jsonc.bak
+*.log
+.venv/
+*.bak

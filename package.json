@@ -1,0 +1,13 @@
+{
+  "name":"xgq-predict-standalone",
+  "version":"0.1.0",
+  "private":true,
+  "type":"module",
+  "scripts":{
+    "dev":"wrangler dev --local",
+    "deploy":"wrangler deploy",
+    "db:init":"wrangler d1 execute xgq-predictions --remote --file migrations/0001_schema.sql",
+    "db:seed":"wrangler d1 execute xgq-predictions --remote --file generated/snapshot.sql"
+  },
+  "devDependencies":{"wrangler":"^4.0.0"}
+}

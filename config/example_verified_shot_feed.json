@@ -1,0 +1,13 @@
+[
+  {
+    "league": "es.1",
+    "date": "2025-01-13",
+    "home_team": "EXAMPLE FC",
+    "away_team": "OTHER EXAMPLE FC",
+    "home_goals": 2,
+    "away_goals": 1,
+    "home_shots_xg": [0.03, 0.09, 0.16, 0.35],
+    "away_shots_xg": [0.02, 0.12, 0.27],
+    "source": "illustrative format only – NEVER publish this example"
+  }
+]

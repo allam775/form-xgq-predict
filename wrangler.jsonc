@@ -1,0 +1,20 @@
+{
+  "name": "xgq-predict-standalone",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "xgq-predictions",
+      "database_id": "cb920066-08ec-4566-ac19-2afe54c7c7c2",
+      "remote": true
+    }
+  ]
+}
