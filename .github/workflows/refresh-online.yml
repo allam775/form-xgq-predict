@@ -71,7 +71,16 @@ jobs:
           XGQ_365_PRIVATE_ONLY: ${{ secrets.XGQ_365_PRIVATE_ONLY }}
           XGQ_365_TEAMS_FILE: ${{ vars.XGQ_365_TEAMS_FILE }}
           XGQ_365_REQUIRE_PRIVATE_HISTORY: '1'
-        run: python -m engine.collect --max-new-matches 225 --target-history-size 700 --max-open-seasons 6 --statsbomb-selections auto
+        run: |
+          # Complete the published 2015/16 Italian and French cohorts, rather than
+          # adding disconnected snippets. The cap avoids runaway downloads.
+          for pass in 1 2 3 4; do
+            echo "Coherent historical backfill pass: $pass"
+            python -m engine.collect --max-new-matches 225 --target-history-size 1359 --max-open-seasons 6 --statsbomb-selections auto
+            count=$(python -c "import json; h=json.load(open('data/shot_history.json')); print(sum(x.get('source') == 'StatsBomb Open Data' for x in h))")
+            echo "Verified public shot history after pass $pass: $count / 1359"
+            if [ "$count" -ge 1359 ]; then break; fi
+          done
       - name: Show authentic shot archive progress
         run: |
           python -c "import json; h=json.load(open('data/shot_history.json')); n=len({r['id'] for r in h if r.get('source') == 'StatsBomb Open Data'}); print(f'Verified StatsBomb shot matches: {n} / 700; remaining: {max(0, 700-n)}')"
@@ -108,7 +117,8 @@ jobs:
           # Research report here is computed AFTER stripping all third-party/private rows.
           mkdir -p reports
           python -m engine.research --input data/shot_history.json --output reports/open_data_benchmark.json
-          git add data/shot_history.json reports/open_data_benchmark.json
+          python -m engine.archive_quality --input data/shot_history.json --output reports/open_data_archive_quality.json
+          git add data/shot_history.json reports/open_data_benchmark.json reports/open_data_archive_quality.json
           if ! git diff --cached --quiet; then
             git commit -m 'data: refresh licensed shot history'
             git push
