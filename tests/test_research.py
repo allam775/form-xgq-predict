@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import unittest
 
 from engine.xgq import predict_xgq, strict_row
-from engine.research import CANDIDATES, _replay, _split, benchmark
+from engine.research import CANDIDATES, _replay, _split, benchmark, paired_day_bootstrap, league_test_breakdown
 
 
 def synthetic_games(n=260):
@@ -76,6 +76,38 @@ class ResearchTests(unittest.TestCase):
         self.assertEqual(result["baseline_test"]["tested"], result["selected_test"]["tested"])
         self.assertIn(result["selected_parameters"]["half_life_days"], (60, 90, 180))
         self.assertTrue(result["production_model_unchanged"])
+        self.assertFalse(result["eligible_for_automatic_production_promotion"])
+        self.assertEqual(result["paired_day_uncertainty"]["paired_games"], result["test_eligible"])
+        self.assertEqual(result["paired_day_uncertainty"]["bootstrap_draws"], 2000)
+        self.assertEqual(sum(s["tested"] for s in result["test_by_league"].values()), result["test_eligible"])
+        self.assertGreater(result["test_coverage_ratio"], 0)
+
+    def test_cluster_bootstrap_identical_predictions_zero_gain(self):
+        games = synthetic_games(3)
+        values = {x["id"]: ({"home": .45, "draw": .3, "away": .25}, "home") for x in games}
+        result = paired_day_bootstrap(values, values, games, draws=400)
+        self.assertEqual(result["paired_games"], 3)
+        self.assertEqual(result["log_loss_improvement_ci_95"], [0.0, 0.0])
+        self.assertFalse(result["ci_strictly_positive"])
+
+    def test_cluster_bootstrap_preserves_same_day_and_pairing(self):
+        games = synthetic_games(3)
+        games[1]["date"] = games[0]["date"]
+        old = {x["id"]: ({"home": .25, "draw": .35, "away": .4}, "home") for x in games}
+        new = {x["id"]: ({"home": .5, "draw": .3, "away": .2}, "home") for x in games}
+        result = paired_day_bootstrap(old, new, games, draws=400)
+        self.assertEqual(result["paired_days"], 2)
+        self.assertGreater(result["log_loss_improvement_ci_95"][0], 0)
+        breakdown = league_test_breakdown(old, new, games)
+        self.assertEqual(breakdown["test.1"]["tested"], 3)
+
+    def test_cluster_bootstrap_rejects_mismatched_label(self):
+        games = synthetic_games(1)
+        key = games[0]["id"]
+        old = {key: ({"home": .5, "draw": .3, "away": .2}, "home")}
+        new = {key: ({"home": .2, "draw": .3, "away": .5}, "away")}
+        with self.assertRaises(ValueError):
+            paired_day_bootstrap(old, new, games)
 
     def test_rejects_synthetic_and_duplicate_inputs(self):
         h = synthetic_games(80)
