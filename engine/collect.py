@@ -240,7 +240,7 @@ def make_snapshot(history, fixtures, today):
                 "verified_shot_matches": len(history),
                 # Publication time is NOT the date of the underlying shot evidence.
                 # Keep these separate to avoid presenting historical data as live.
-                "latest_verified_match": history[-1]["date"] if history else None,
+                "latest_verified_match": max(r["date"] for r in history) if history else None,
                 "scheduled_fixtures": len(fixtures), "xgq_forecasts": len(all_forecasts),
                 "withheld_no_verified_xgq": len(unavailable),
                 "withheld_reasons": dict(sorted(Counter(
