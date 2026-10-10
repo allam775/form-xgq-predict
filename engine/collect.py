@@ -56,12 +56,24 @@ STATS_BOMB_LEAGUE_IDS = {11: "es.1", 2: "en.1", 9: "de.1", 12: "it.1", 7: "fr.1"
 DENSE_OPEN_COHORTS = ((2, 27), (7, 27), (12, 27))
 
 
-def prioritize_dense_cohort(selections, pending):
-    """Focus a full-season sample while auto-collecting; preserve explicit selection behavior."""
+def prioritize_dense_cohort(selections, pending, league_counts=None):
+    """Finish dense published seasons; first help the least represented league.
+
+    league_counts uses only existing source-verified StatsBomb match rows. On
+    repeated cloud runs, the focus moves as the smaller archives catch up.
+    Explicit user-supplied season selections never call this selector.
+    """
     by_pair = {(comp, season): (comp, queue) for (comp, season, queue) in pending}
-    for pair in DENSE_OPEN_COHORTS:
-        if pair in selections and pair in by_pair and by_pair[pair][1]:
-            return [by_pair[pair]], pair
+    candidates = [pair for pair in DENSE_OPEN_COHORTS
+                  if pair in selections and pair in by_pair and by_pair[pair][1]]
+    if candidates:
+        # For backwards-compatible callers without counts, preserve published
+        # source priority. Tie-break by deterministic official source ordering.
+        if league_counts is not None:
+            candidates.sort(key=lambda pair: (league_counts.get(pair[0], 0),
+                                              DENSE_OPEN_COHORTS.index(pair)))
+        chosen = candidates[0]
+        return [by_pair[chosen]], chosen
     return [(comp, queue) for comp, season, queue in pending], None
 
 
@@ -144,9 +156,14 @@ def shot_archive(offline=False, max_matches=80, selections=None, max_seasons_per
                 eligible.append(match)
         pending.append((comp, season, eligible))
     if automatic:
-        pending, chosen = prioritize_dense_cohort(selections, pending)
+        league_counts = Counter(int(comp) for row in rows.values()
+                                if row.get("source") == "StatsBomb Open Data"
+                                for comp, league in STATS_BOMB_LEAGUE_IDS.items()
+                                if row.get("league") == league)
+        pending, chosen = prioritize_dense_cohort(selections, pending, league_counts)
         if chosen is not None:
             details["focus_open_cohort"] = {"competition_id": chosen[0], "season_id": chosen[1]}
+            details["focus_reason"] = "least_represented_full_season"
     else:
         pending = [(comp, queue) for comp, season, queue in pending]
     # Balanced round-robin across leagues and seasons: one source cannot
