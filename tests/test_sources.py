@@ -21,6 +21,10 @@ class OpenSeasonTests(unittest.TestCase):
     def test_no_more_than_two_per_league(self):
         records=[{'competition_id':11,'season_id':i,'season_name':f'{2017+i}/{2018+i}'} for i in range(5)]
         self.assertEqual(len(choose_open_seasons(records)),2)
+    def test_deep_archive_opt_in_includes_older_seasons(self):
+        records=[{'competition_id':11,'season_id':i,'season_name':f'{2015+i}/{2016+i}'} for i in range(5)]
+        self.assertEqual(len(choose_open_seasons(records, max_seasons_per_league=8)),5)
+        self.assertEqual(len(choose_open_seasons(records, max_seasons_per_league=2)),2)
     def test_invalid_records_ignored(self):
         self.assertEqual(choose_open_seasons([None,'bad',{'competition_id':11,'season_id':'90','season_name':'2024/2025'}]),[])
 
