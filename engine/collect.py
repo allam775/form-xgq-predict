@@ -226,6 +226,10 @@ def main(argv=None):
     ap.add_argument("--verified-feed", help="JSON file of complete owner XGQ shot arrays")
     ap.add_argument("--verified-feed-url", default=os.getenv("XGQ_SHOT_FEED_URL"), help="HTTPS URL of your OWN verified shot-level JSON export")
     ap.add_argument("--statsbomb-selections", default="auto", help="auto (latest open seasons per league) or comp:season list")
+    ap.add_argument("--365-teams", default=os.environ.get("XGQ_365_TEAMS_FILE", ""),
+                    help="Opt-in 365Scores team-ID mapping file (source terms and deployment rights apply)")
+    ap.add_argument("--365-max-new", type=int, default=24,
+                    help="Maximum newly inspected 365Scores games in this run (<=48)")
     opts = ap.parse_args(argv)
     today = date.fromisoformat(opts.as_of) if opts.as_of else date.today()
     combos = []
@@ -236,6 +240,20 @@ def main(argv=None):
                 combos.append((int(a),int(b)))
     history, shot_health = shot_archive(opts.offline, opts.max_new_matches,
                                         combos if combos else None)
+    if opts.__dict__["365_teams"]:
+        from . import provider365
+        if not provider365.enabled():
+            raise RuntimeError("365Scores connector not enabled: set XGQ_365_ACCESS_AUTHORIZED=1 only if authorized")
+        if not (provider365.publication_allowed() or provider365.private_only()):
+            raise RuntimeError("365Scores connector requires either an authorized publication or an owner-confirmed private, Cloudflare-Access-protected deployment. Source usage rights still apply.")
+        teams = provider365.read_teams(opts.__dict__["365_teams"])
+        if not teams:
+            raise RuntimeError("365Scores team ID mapping is empty; no auto-discovery is attempted")
+        aliases = read_json(ROOT / "config" / "365_aliases.json", {})
+        if not isinstance(aliases, dict) or any(not isinstance(k,str) or not isinstance(v,str) for k,v in aliases.items()):
+            raise ValueError("Invalid 365Scores team name aliases")
+        history, results365 = provider365.collect(history, teams, max_new=opts.__dict__["365_max_new"], aliases=aliases)
+        shot_health["provider365"] = results365
     if opts.verified_feed_url:
         if not re.fullmatch(r"https://[^\s?#]+(?:\?[^\s#]*)?", opts.verified_feed_url):
             raise ValueError("Online XGQ source must be HTTPS")
@@ -254,6 +272,8 @@ def main(argv=None):
     fixtures, issues = find_fixtures(today, opts.offline)
     snapshot = make_snapshot(history, fixtures, today)
     snapshot["collection"] = shot_health
+    if shot_health.get("provider365"):
+        snapshot["provenance"].append("365Scores (opt-in source; subject to provider terms; private mode unless publication authorized)")
     # Club crest URLs are opt-in, with documented display permission / attribution.
     logos = read_json(ROOT / "config" / "club_logos.json", {})
     for pred in snapshot["forecasts"]:
