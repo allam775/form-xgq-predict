@@ -81,7 +81,7 @@ def export(rows, path):
 def export_form(rows, destination, *, as_of=None):
     """Upsert private, derived per-team form into D1, without raw shots."""
     from .team_form import team_profiles
-    profiles = team_profiles(rows, as_of=as_of, source=SOURCE, min_games=1)
+    profiles = team_profiles(rows, as_of=as_of, source=SOURCE, min_games=1, include_completed_today=True)
     statements=[]
     for profile in profiles:
         key=f"{profile['league']}|{profile['team']}"
