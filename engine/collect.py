@@ -13,6 +13,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
 import time
 import re
+from collections import Counter
 from .xgq import normalized, strict_row, statsbomb_to_row, predict_xgq, holdout_metrics
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -210,8 +211,13 @@ def make_snapshot(history, fixtures, today):
     return {"schema_version": 1, "generated_at": datetime.now(timezone.utc).isoformat(),
             "as_of": today.isoformat(), "coverage": {
                 "verified_shot_matches": len(history),
+                # Publication time is NOT the date of the underlying shot evidence.
+                # Keep these separate to avoid presenting historical data as live.
+                "latest_verified_match": history[-1]["date"] if history else None,
                 "scheduled_fixtures": len(fixtures), "xgq_forecasts": len(all_forecasts),
-                "withheld_no_verified_xgq": len(unavailable)},
+                "withheld_no_verified_xgq": len(unavailable),
+                "withheld_reasons": dict(sorted(Counter(
+                    f["reason"] for f in unavailable).items()))},
             "model": "verified-shot-xgq-poisson-v1", "forecasts": all_forecasts,
             "unavailable": unavailable[:400], "evaluation": holdout_metrics(history, today.isoformat()),
             "provenance": ["StatsBomb Open Data (attribution required)",
