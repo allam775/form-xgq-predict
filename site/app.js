@@ -95,3 +95,36 @@ for(const button of document.querySelectorAll('[data-filter]'))button.addEventLi
 $('search').addEventListener('input',render);
 $('league').addEventListener('change',render);
 load();
+// Understat profiles are computed server-side from private verified match summaries.
+// Never derive xGQ from aggregate match xG in the browser.
+async function loadFormTeamList(){
+ const league=$('form-league').value, select=$('form-team');
+ select.replaceChildren(new Option('Choose an available team',''));
+ try {
+  const response=await fetch('/api/team-form-teams?league='+encodeURIComponent(league),{cache:'no-store'});
+  if(!response.ok)throw Error('Unavailable');
+  const payload=await response.json();
+  const teams=Array.isArray(payload.teams)?payload.teams:[];
+  for(const identity of teams){const key=identity.split('|')[1];if(key)select.add(new Option(key.replace(/\b\w/g,c=>c.toUpperCase()),key))}
+  if(!teams.length)$('form-output').textContent='No private Understat team history is available yet. The historical StatsBomb archive is separate.';
+ }catch{$('form-output').textContent='Private team form is unavailable. Other site data is unaffected.'}
+}
+async function loadSelectedForm(){
+ const league=$('form-league').value,team=$('form-team').value;
+ if(!team){$('form-output').textContent='Choose a team with verified Understat history.';return}
+ $('form-output').textContent='Loading verified team form…';
+ try{
+  const r=await fetch('/api/team-form?league='+encodeURIComponent(league)+'&team='+encodeURIComponent(team),{cache:'no-store'});
+  if(!r.ok)throw Error('Form query unavailable');
+  const payload=await r.json(), form=payload.form;
+  if(!form){$('form-output').textContent='This team has no eligible verified Understat match history yet.';return}
+  const blocks=['5','10','20'].map(key=>{const w=form.windows?.[key];
+   if(!w)return '';
+   return `<div class="form-window"><h3>Last ${key} games (${w.n})</h3><p>Attack XGQ <strong>${Number(w.xgq_for).toFixed(4)}</strong></p><p>Conceded XGQ <strong>${Number(w.xgq_against).toFixed(4)}</strong></p><p>xG / xGA <strong>${Number(w.xg_for).toFixed(2)} / ${Number(w.xg_against).toFixed(2)}</strong></p><p>W–D–L <strong>${w.wins}–${w.draws}–${w.losses}</strong></p></div>`;
+  }).join('');
+  $('form-output').innerHTML=`<p><strong>${htmlEscape(team)}</strong> · ${htmlEscape(leagueName(league))} · Latest verified match ${htmlEscape(form.last_seen)} · Understat-only calibrated series.</p><div class="form-windows">${blocks}</div>`;
+ }catch{$('form-output').textContent='Could not load private team form; no substitute estimates were generated.'}
+}
+$('form-league').addEventListener('change',loadFormTeamList);
+$('form-load').addEventListener('click',loadSelectedForm);
+loadFormTeamList();
