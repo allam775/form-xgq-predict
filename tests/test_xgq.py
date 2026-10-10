@@ -71,6 +71,8 @@ class GateTests(unittest.TestCase):
         snapshot=make_snapshot(rows,[good,unsupported],asof)
         self.assertEqual(len(snapshot['forecasts']),1)
         self.assertEqual(len(snapshot['unavailable']),1)
+        self.assertEqual(snapshot['coverage']['withheld_reasons'],{'insufficient_verified_shots':1})
+        self.assertEqual(snapshot['coverage']['latest_verified_match'],rows[-1]['date'])
         self.assertEqual(validate(snapshot),1)
         with TemporaryDirectory() as tmp:
             output=Path(tmp)/'test.sql'
@@ -87,6 +89,8 @@ class GateTests(unittest.TestCase):
     def test_no_fabricated_probabilities(self):
         snapshot=make_snapshot([],[],date(2026,10,10))
         self.assertEqual(snapshot['forecasts'],[])
+        self.assertIsNone(snapshot['coverage']['latest_verified_match'])
+        self.assertEqual(snapshot['coverage']['withheld_reasons'],{})
         self.assertEqual(validate(snapshot),0)
     def test_historical_evaluation_without_coverage_claim(self):
         ev=holdout_metrics(history(25),'2025-07-10')
