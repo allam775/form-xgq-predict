@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import unittest
 
 from engine.xgq import predict_xgq, strict_row
-from engine.research import CANDIDATES, _replay, _split, benchmark, paired_day_bootstrap, league_test_breakdown
+from engine.research import CANDIDATES, _replay, _split, benchmark, paired_day_bootstrap, league_test_breakdown, season_cohort
 
 
 def synthetic_games(n=260):
@@ -53,16 +53,30 @@ class ResearchTests(unittest.TestCase):
         self.assertEqual(pred["probabilities"], pred2["probabilities"])
 
     def test_splits_disjoint_and_date_level(self):
-        games = synthetic_games(200)
+        games = synthetic_games(320)
         parts, meta = _split(games)
         sets = [set(x["id"] for x in v) for v in parts.values()]
         self.assertEqual(len(set.union(*sets)), len(games))
         self.assertEqual(sum(map(len, sets)), len(games))
-        self.assertIn("test.1", meta)
-        self.assertLess(max(g["date"] for g in parts["train"]),
-                        min(g["date"] for g in parts["validation"]))
-        self.assertLess(max(g["date"] for g in parts["validation"]),
-                        min(g["date"] for g in parts["test"]))
+        for season in (2024, 2025):
+            key = f"test.1:{season}/{str(season+1)[-2:]}"
+            self.assertEqual(meta[key]["status"], "split")
+            d = {name: [x["date"] for x in group if season_cohort(x["date"]) == season]
+                 for name, group in parts.items()}
+            self.assertLess(max(d["train"]), min(d["validation"]))
+            self.assertLess(max(d["validation"]), min(d["test"]))
+
+    def test_sparse_new_season_cannot_displace_complete_old_season(self):
+        games = synthetic_games(180)
+        future = dict(games[0])
+        future.update(id="future-ident", source_match_id="future-ident", date="2027-05-05")
+        partitions, meta = _split(games + [future])
+        self.assertEqual(meta["test.1:2024/25"]["status"], "split")
+        self.assertEqual(meta["test.1:2026/27"]["status"], "sparse_season_excluded")
+        self.assertTrue(partitions["validation"])
+        self.assertTrue(partitions["test"])
+        self.assertFalse(any(x["id"] == "future-ident"
+                             for group in partitions.values() for x in group))
 
     def test_reports_insufficient_instead_of_fabricating(self):
         result = benchmark(synthetic_games(40), min_validation=10, min_test=10)
