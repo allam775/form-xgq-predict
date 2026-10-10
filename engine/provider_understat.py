@@ -208,10 +208,25 @@ def collect(existing, leagues, seasons, *, max_new=24, transport=None, today=Non
         if candidate['id'] not in seen_ids:
             fresh.append(candidate)
             seen_ids.add(candidate['id'])
-    # Newest matches first capture current form with bounded per-run cost.
+    # Round-robin by league so a busy league cannot consume the whole budget.
+    # Each league's matches remain newest-first for timely rolling team form.
+    buckets = {league: [] for league in leagues}
+    for candidate in fresh:
+        buckets[candidate['league']].append(candidate)
+    selected = []
+    for idx in range(max((len(queue) for queue in buckets.values()), default=0)):
+        for league in leagues:
+            if idx < len(buckets[league]):
+                selected.append(buckets[league][idx])
+                if len(selected) >= max_new:
+                    break
+        if len(selected) >= max_new:
+            break
     reported['candidate_finals'] = len(fresh)
+    reported['selected_by_league'] = {league: sum(x['league'] == league for x in selected)
+                                      for league in leagues}
     # No more than 48 detail fetches in one run. Don't skip rejected IDs by retrying indefinitely.
-    for m in fresh[:max_new]:
+    for m in selected:
         reported['inspected'] += 1
         try:
             row = parse_match(m, fetch('match', m['id'], transport=transport))
