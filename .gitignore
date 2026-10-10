@@ -12,5 +12,8 @@ generated/
 # Local credentials and override files
 wrangler.jsonc.bak
 *.log
-.venv/
-*.bak
+
+# Third-party-derived private match history must NEVER reach the public repo.
+data/private_365_history.json
+.private-history-query.json
+generated/private-history.sql
