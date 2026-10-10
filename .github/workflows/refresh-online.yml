@@ -71,7 +71,7 @@ jobs:
           XGQ_365_PRIVATE_ONLY: ${{ secrets.XGQ_365_PRIVATE_ONLY }}
           XGQ_365_TEAMS_FILE: ${{ vars.XGQ_365_TEAMS_FILE }}
           XGQ_365_REQUIRE_PRIVATE_HISTORY: '1'
-        run: python -m engine.collect --max-new-matches 80 --max-open-seasons 6 --statsbomb-selections auto
+        run: python -m engine.collect --max-new-matches 225 --target-history-size 700 --max-open-seasons 6 --statsbomb-selections auto
       - name: Run chronological XGQ benchmark (research only)
         run: python -m engine.research --input data/shot_history.json --output generated/research_report.json
       - name: Verify coverage and evidence publication gate
