@@ -76,7 +76,7 @@ def choose_open_seasons(competitions, max_seasons_per_league=2):
     return output
 
 
-def shot_archive(offline=False, max_matches=80, selections=None):
+def shot_archive(offline=False, max_matches=80, selections=None, max_seasons_per_league=2):
     cache = DATA / "shot_history.json"
     existing = read_json(cache, [])
     rows = {r["id"]: r for r in existing if isinstance(r, dict) and "id" in r}
@@ -90,7 +90,7 @@ def shot_archive(offline=False, max_matches=80, selections=None):
         competitions = fetch_json(f"{STATS_BOMB}/competitions.json", max_bytes=2_000_000)
         if not isinstance(competitions, list):
             raise ValueError("StatsBomb competition index is invalid")
-        selections = choose_open_seasons(competitions)
+        selections = choose_open_seasons(competitions, max_seasons_per_league)
     if not selections:
         raise ValueError("No eligible open-data competition seasons")
     pending=[]
@@ -229,6 +229,8 @@ def main(argv=None):
     ap.add_argument("--offline", action="store_true", help="Read only local data/shot_history.json and data/fixtures.json")
     ap.add_argument("--as-of", help="YYYY-MM-DD override for reproducible tests")
     ap.add_argument("--max-new-matches", type=int, default=80)
+    ap.add_argument("--max-open-seasons", type=int, default=2,
+                    help="Max open historical seasons selected per supported league (1..12)")
     ap.add_argument("--verified-feed", help="JSON file of complete owner XGQ shot arrays")
     ap.add_argument("--verified-feed-url", default=os.getenv("XGQ_SHOT_FEED_URL"), help="HTTPS URL of your OWN verified shot-level JSON export")
     ap.add_argument("--statsbomb-selections", default="auto", help="auto (latest open seasons per league) or comp:season list")
@@ -237,6 +239,10 @@ def main(argv=None):
     ap.add_argument("--365-max-new", type=int, default=24,
                     help="Maximum newly inspected 365Scores games in this run (<=48)")
     opts = ap.parse_args(argv)
+    if not 1 <= opts.max_open_seasons <= 12:
+        ap.error("--max-open-seasons must be in [1,12]")
+    if not 0 <= opts.max_new_matches <= 250:
+        ap.error("--max-new-matches must be in [0,250]")
     today = date.fromisoformat(opts.as_of) if opts.as_of else date.today()
     combos = []
     if opts.statsbomb_selections.strip().lower() != "auto":
@@ -245,7 +251,7 @@ def main(argv=None):
                 a,b = part.split(":")
                 combos.append((int(a),int(b)))
     history, shot_health = shot_archive(opts.offline, opts.max_new_matches,
-                                        combos if combos else None)
+                                        combos if combos else None, opts.max_open_seasons)
     if opts.__dict__["365_teams"]:
         if opts.offline:
             raise ValueError("--offline cannot access 365Scores; omit --365-teams")
