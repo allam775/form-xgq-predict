@@ -9,6 +9,7 @@ No candidate is deployed or used to overwrite previously published forecasts.
 """
 from __future__ import annotations
 
+import argparse
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
 from itertools import groupby
@@ -194,7 +195,18 @@ def _record_scores(records, names):
     return {name:score([(r[name],r['outcome']) for r in records]) for name in names}
 
 
-def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
+def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL,
+             split_mode='standard'):
+    """Replay league-blocked predictions on distinct match days.
+
+    expanded_350 uses a 40/15/45 train/validation/test arrangement, giving
+    the fixed historic snapshot a larger *separate* audit. It is NOT a
+    replacement for the standard 60/20/20 benchmark; expanding a past test
+    cannot create pristine, never-seen evidence after earlier research.
+    """
+    if split_mode not in ('standard', 'expanded_350'):
+        raise ValueError('Unknown retrospective split protocol')
+    train_share, test_start_share = (.40, .55) if split_mode == 'expanded_350' else (.60, .80)
     if not isinstance(rows, list):
         raise ValueError('Require verified Understat match list')
     games = [verified_row(r) for r in rows]
@@ -215,9 +227,10 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
         if len(fixtures) < 90 or len(days) < 30:
             coverage[league] = {'status':'sparse', 'matches':len(fixtures), 'match_days':len(days)}
             continue
-        val_date, test_date = days[int(len(days)*.6)], days[int(len(days)*.8)]
+        val_date, test_date = days[int(len(days)*train_share)], days[int(len(days)*test_start_share)]
         coverage[league]={'matches':len(fixtures),'match_days':len(days),
-                          'validation_start':val_date,'test_start':test_date}
+                          'validation_start':val_date,'test_start':test_date,
+                          'train_day_fraction':train_share,'test_day_fraction':1-test_start_share}
         prior = []
         ratings = {}
         for day, group in groupby(fixtures, lambda r:r['date']):
@@ -252,10 +265,16 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
             _update_elo_batch(ratings,batch)
             prior.extend(batch)
     val,test=eligible_by_split['validation'],eligible_by_split['test']
-    report={'status':'insufficient','method':'chronological_60_20_20_by_league_match_day_no_leakage',
+    report={'status':'insufficient','method':('chronological_40_15_45_by_league_match_day_no_leakage' if split_mode == 'expanded_350'
+                                             else 'chronological_60_20_20_by_league_match_day_no_leakage'),
             'source':'Understat private verified per-shot summaries','historical_matches':len(games),
             'latest_evidence_date':max((r['date'] for r in games),default=None),
-            'validation_eligible':len(val),'test_eligible':len(test),'minimum_test':min_test, 'held_out_target':1000, 'held_out_target_met':len(test)>=1000,
+            'validation_eligible':len(val),'test_eligible':len(test),'minimum_test':min_test,
+            'requested_test_target':350 if split_mode == 'expanded_350' else 1000,
+            'requested_test_target_met':len(test)>=(350 if split_mode == 'expanded_350' else 1000),
+            'held_out_target':1000, 'held_out_target_met':len(test)>=1000,
+            'retrospective_overlap_warning':('This enlarged historical audit overlaps matches previously scored in the standard research audit; NOT a new blind forward validation.'
+                                             if split_mode == 'expanded_350' else None),
             'leagues':coverage,'research_only':True,'production_model_unchanged':True,
             'live_forecasts_scored':0,
             'market_odds':{'status':'not_evaluated','reason':'No licensed timestamped pre-match 1X2 odds matched to Understat fixtures'},
@@ -312,6 +331,7 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
             'status':'research_only_do_not_promote',
             'requirements':'out_of_sample_CI_positive_vs_current_goal_champion_and_live_forward_validation',
             'heldout_target':1000,'heldout_target_met':len(test)>=1000,
+            'minimum_expanded_sample_met':len(test)>=350 if split_mode == 'expanded_350' else None,
         },
         'test_scores':scores,
         'test_calibration':{name:_calibration(test,name) for name in ('xgq','challenger','elo','dc_fixed_rho','hybrid')},
@@ -324,11 +344,18 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
     return report
 
 
-def main():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description='Source-isolated historical XGQ model audit')
+    parser.add_argument('--expanded-350', action='store_true',
+                        help='Separate 40/15/45 date-blocked audit with >=350 eligible test matches')
+    opts = parser.parse_args(argv)
+    expanded = opts.expanded_350
     db=D1()
-    result=evaluate(db.history())
-    db.query("INSERT OR REPLACE INTO metadata(k,v) VALUES('understat_championship_report',?)",
-             (json.dumps(result,separators=(',',':')),))
+    result=evaluate(db.history(), min_test=350 if expanded else MIN_EVAL,
+                    split_mode='expanded_350' if expanded else 'standard')
+    report_key = 'understat_expanded_350_report' if expanded else 'understat_championship_report'
+    db.query('INSERT OR REPLACE INTO metadata(k,v) VALUES(?,?)',
+             (report_key,json.dumps(result,separators=(',',':'))))
     # Count & aggregate metrics only; no private match identifiers or match payloads.
     print('Understat championship benchmark:',result['status'],'archive:',result['historical_matches'],
           'validation:',result['validation_eligible'],'test:',result['test_eligible'])
