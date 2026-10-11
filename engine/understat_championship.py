@@ -196,7 +196,7 @@ def _record_scores(records, names):
 
 
 def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL,
-             split_mode='standard'):
+             split_mode='standard', on_splits=None):
     """Replay league-blocked predictions on distinct match days.
 
     expanded_350 uses a 40/15/45 train/validation/test arrangement, giving
@@ -265,6 +265,9 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL,
             _update_elo_batch(ratings,batch)
             prior.extend(batch)
     val,test=eligible_by_split['validation'],eligible_by_split['test']
+    # Research-only observer; one league/day is kept together. Never persist match-level data.
+    if on_splits is not None:
+        on_splits(val,test)
     report={'status':'insufficient','method':('chronological_40_15_45_by_league_match_day_no_leakage' if split_mode == 'expanded_350'
                                              else 'chronological_60_20_20_by_league_match_day_no_leakage'),
             'source':'Understat private verified per-shot summaries','historical_matches':len(games),
