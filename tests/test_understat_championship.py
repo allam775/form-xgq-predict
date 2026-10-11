@@ -70,6 +70,7 @@ class ChampionshipTests(unittest.TestCase):
         swapped=[{**r,'hg': 5-r['hg'],'ag': 4-r['ag']} if r['date']>=test_start else r for r in games]
         b=evaluate(swapped,min_test=15,min_validation=15)
         self.assertEqual(a['selected_challenger'],b['selected_challenger'])
+        self.assertEqual(a['hybrid_selected'],b['hybrid_selected'])
         self.assertEqual(a['validation_champion_log_loss'],b['validation_champion_log_loss'])
 
 
