@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/xgq-52-research.yml'
+      - 'engine/understat_accuracy_lab.py'
 
 permissions:
   contents: read
