@@ -14,8 +14,6 @@ function crest(name, url){
  if(typeof url==='string' && /^https:\/\/[^\s"'<>]+$/i.test(url))return `<span class="crest-wrap">${base}<img class="crest-logo" src="${htmlEscape(url)}" alt="${htmlEscape(name)} club crest" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"/></span>`;
  return base;
 }
-const pendingReasons = {'insufficient_verified_shots':'Verified team shot history insufficient', 'stale_xgq':'Verified shot history is too old', 'small_league_sample':'League sample too small', 'invalid_league_xgq':'Invalid league shot quality', 'invalid_teams':'Fixture identity unverified', 'not_upcoming':'Fixture is not upcoming'};
-const pendingReason = reason => pendingReasons[reason] || 'Shot-level coverage unavailable';
 const leagueNames = {'en.1':'Premier League','de.1':'Bundesliga','es.1':'La Liga','it.1':'Serie A','fr.1':'Ligue 1'};
 const leagueName = league => leagueNames[league] || league || 'Competition';
 const matchAllowed = m => {
@@ -35,7 +33,7 @@ function matchCard(m){
  <div class="probability-labels"><div><strong>${probability(p.home)}</strong><small>HOME</small></div><div><strong>${probability(p.draw)}</strong><small>DRAW</small></div><div><strong>${probability(p.away)}</strong><small>AWAY</small></div></div>
  <div class="card-foot"><span>History: ${htmlEscape(m.history_home)} / ${htmlEscape(m.history_away)} games</span><span>${top.length?'Top score: '+htmlEscape(top[0].score):'Scoreline unavailable'}</span></div></article>`;
 }
-function fixtureCard(m){return `<div class="fixture-row"><div class="fixture-date">${htmlEscape(dateLabel(m.date))}<small>${htmlEscape(leagueName(m.league))}</small></div><div class="fixture-clubs"><span class="tiny-crest">${htmlEscape(initials(m.home))}</span><strong>${htmlEscape(m.home)}</strong><span class="fixture-vs">vs</span><strong>${htmlEscape(m.away)}</strong><span class="tiny-crest">${htmlEscape(initials(m.away))}</span></div><span class="fixture-reason" title="${htmlEscape(pendingReason(m.reason))}">◌ ${htmlEscape(pendingReason(m.reason))}</span></div>`}
+function fixtureCard(m){return `<div class="fixture-row"><div class="fixture-date">${htmlEscape(dateLabel(m.date))}<small>${htmlEscape(leagueName(m.league))}</small></div><div class="fixture-clubs"><span class="tiny-crest">${htmlEscape(initials(m.home))}</span><strong>${htmlEscape(m.home)}</strong><span class="fixture-vs">vs</span><strong>${htmlEscape(m.away)}</strong><span class="tiny-crest">${htmlEscape(initials(m.away))}</span></div><span class="fixture-reason">◌ XGQ coverage pending</span></div>`}
 function render(){
  const forecasts=state.forecasts.filter(matchAllowed);
  $('cards').innerHTML=forecasts.map(matchCard).join('');
@@ -62,18 +60,12 @@ async function load(){
   $('build-date').textContent=health.generated_at||'No dataset has been published';
   const days=health.as_of?Math.floor((Date.now()-Date.parse(`${health.as_of}T00:00:00Z`))/86400000):Infinity;
   const ready=health.status==='ready';
-  // A fresh refresh job can still have years-old underlying shot evidence.
-  const latestMatch=health.coverage?.latest_verified_match;
-  const evidenceAge=latestMatch?Math.floor((Date.now()-Date.parse(`${latestMatch}T00:00:00Z`))/86400000):Infinity;
-  const evidenceOld=evidenceAge>120;
-  $('data-state').textContent=!ready?'Pending':days>2?'Stale':evidenceOld?'Historical':'Online';
-  $('data-updated').textContent=!ready?'Awaiting first release':`Latest verified shot match: ${latestMatch||'unavailable'}`;
-  $('side-status').textContent=!ready?'No data published':days>2?'Snapshot needs refresh':evidenceOld?'Historical shot evidence only':'Verified data online';
+  $('data-state').textContent=!ready?'Pending':days>2?'Stale':'Online';
+  $('data-updated').textContent=!ready?'Awaiting first release':days>2?'Review source freshness':`As of ${health.as_of}`;
+  $('side-status').textContent=!ready?'No data published':days>2?'Published data is stale':'Cloud database online';
   $('side-dot').classList.toggle('live',ready&&days<=2);
   $('coverage-label').textContent=ready?`${state.forecasts.length} verified predictions`:'Awaiting published snapshot';
-  const breakdown=health.coverage?.withheld_reasons||{};
-  const shortfall=Object.entries(breakdown).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([reason,count])=>`${count} ${pendingReason(reason).toLowerCase()}`).join('; ');
-  $('coverage-text').textContent=ready?`${health.coverage?.withheld_no_verified_xgq||0} tracked fixtures withheld. ${shortfall||'Insufficient verified shot evidence'}. Latest verified match: ${latestMatch||'unknown'}.`:'The Worker is online. Link the GitHub scheduled pipeline to publish data and show coverage.';
+  $('coverage-text').textContent=ready?`${health.coverage?.withheld_no_verified_xgq||0} tracked fixtures lack adequate recent verified XGQ evidence. Coverage updates when the cloud pipeline runs.`:'The Worker is online. Link the GitHub scheduled pipeline to publish data and show coverage.';
   const e=health.evaluation||{};
   $('evidence-note').textContent=e.status==='retrospective'?`Historical walk-forward evaluation: ${e.tested} matches · log loss ${e.log_loss} · Brier ${e.brier} · first-choice accuracy ${probability(e.top_choice_accuracy)}. No guarantee of future accuracy.`:`Independent accuracy assessment unavailable (${e.tested||0} evaluated historical matches). We do not publish a performance claim without adequate tests.`;
   const currentLeague=$('league').value;
@@ -95,6 +87,7 @@ for(const button of document.querySelectorAll('[data-filter]'))button.addEventLi
 $('search').addEventListener('input',render);
 $('league').addEventListener('change',render);
 load();
+
 // Understat profiles are computed server-side from private verified match summaries.
 // Never derive xGQ from aggregate match xG in the browser.
 async function loadFormTeamList(){
@@ -128,3 +121,35 @@ async function loadSelectedForm(){
 $('form-league').addEventListener('change',loadFormTeamList);
 $('form-load').addEventListener('click',loadSelectedForm);
 loadFormTeamList();
+
+
+// Protected weekly research summary. The server returns aggregated evidence only.
+async function loadWeeklyAudit(){
+ const status=$('audit-status'),summary=$('audit-summary'),footer=$('audit-footnote');
+ if(!status || !summary || !footer)return;
+ try{
+  const response=await fetch('/api/research-weekly',{cache:'no-store'});
+  if(!response.ok)throw Error('Weekly report unavailable');
+  const data=await response.json();
+  const r=data.report;
+  if(!r){status.textContent='The first weekly evaluation has not run yet.';return;}
+  status.textContent=`${r.historical_matches ?? 0} verified Understat matches · ${r.test_eligible ?? 0} eligible held-out matches · generated ${r.generated_at || 'unknown'}`;
+  if(r.status!=='retrospective'){
+   summary.textContent=`Evaluation withheld: ${r.reason || 'insufficient chronological evidence'}.`;
+   return;
+  }
+  const models=[['xgq','Production XGQ'],['elo','Elo baseline'],['dc_fixed_rho','Fixed-rho goal baseline'],['naive','League frequency'],['challenger','Research form challenger']];
+  const fmt=value=>Number.isFinite(Number(value))?Number(value).toFixed(4):'—';
+  const line=([key,label])=>{const m=r.test_scores?.[key];
+   return m?`<tr><th scope="row">${htmlEscape(label)}</th><td>${htmlEscape(fmt(m.log_loss))}</td><td>${htmlEscape(fmt(m.brier))}</td><td>${htmlEscape(probability(m.top_choice_accuracy))}</td></tr>`:'';};
+  summary.innerHTML=`<div class="audit-scroll"><table class="audit-table"><thead><tr><th>Model</th><th>Log Loss ↓</th><th>Brier ↓</th><th>Top choice ↑</th></tr></thead><tbody>${models.map(line).join('')}</tbody></table></div>`;
+  const cal=r.test_calibration?.xgq?.classwise_expected_calibration_error;
+  const ci=r.paired_uncertainty?.challenger?.log_loss_gain_over_xgq_ci95;
+  const textCI=Array.isArray(ci)?`Research challenger 95% paired log-loss gain CI: ${ci.map(fmt).join(' to ')}.`:'Confidence interval unavailable.';
+  footer.textContent=`XGQ classwise calibration error: ${fmt(cal)}. ${textCI} Retrospective only; live forecast hit rate not established. Market comparison: ${r.market_odds?.status || 'unavailable'}.`;
+ }catch{
+  status.textContent='Private weekly research data is currently unavailable.';
+  summary.textContent='';
+ }
+}
+loadWeeklyAudit();
