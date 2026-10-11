@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/weekly-xgq-audit.yml'
+      - 'engine/understat_hybrid.py'
+      - 'engine/understat_championship.py'
+      - 'tests/test_understat_hybrid.py'
   schedule:
     # Each Sunday at 10:11 Egypt (UTC+3), subject to GitHub schedule delays.
     - cron: '11 7 * * 0'
@@ -30,6 +33,7 @@ jobs:
       - name: Run offline chronological benchmark regression suite
         run: |
           python -m unittest discover -s tests -p 'test_understat_championship.py' -v
+          python -m unittest discover -s tests -p 'test_understat_hybrid.py' -v
           python -m unittest discover -s tests -v
       - name: Compare only prior-match forecasts against same-fixture baselines in private D1
         env:
