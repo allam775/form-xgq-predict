@@ -144,8 +144,14 @@ jobs:
           mkdir -p reports
           python -m engine.research --input data/shot_history.json --output reports/open_data_benchmark.json
           python -m engine.archive_quality --input data/shot_history.json --output reports/open_data_archive_quality.json
-          git add data/shot_history.json reports/open_data_benchmark.json reports/open_data_archive_quality.json
-          if ! git diff --cached --quiet; then
+          # The research JSON contains generated timestamps: do not create
+          # a public git commit when only report metadata changes.
+          git add data/shot_history.json
+          if git diff --cached --quiet; then
+            echo "Public StatsBomb cache unchanged; no commit required."
+          else
+            git add reports/open_data_benchmark.json reports/open_data_archive_quality.json
             git commit -m 'data: refresh licensed shot history'
+            git pull --rebase origin main
             git push
           fi
