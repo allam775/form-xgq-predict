@@ -138,7 +138,7 @@ async function loadWeeklyAudit(){
    summary.textContent=`Evaluation withheld: ${r.reason || 'insufficient chronological evidence'}.`;
    return;
   }
-  const models=[['xgq','Production XGQ'],['elo','Elo baseline'],['dc_fixed_rho','Fixed-rho goal baseline'],['naive','League frequency'],['challenger','Research form challenger']];
+  const models=[['xgq','Production XGQ'],['dc_fixed_rho','Fixed-rho goal baseline'],['hybrid','Opponent-adjusted XGQ hybrid (research)'],['elo','Elo baseline'],['naive','League frequency'],['challenger','Research form challenger']];
   const fmt=value=>Number.isFinite(Number(value))?Number(value).toFixed(4):'—';
   const line=([key,label])=>{const m=r.test_scores?.[key];
    return m?`<tr><th scope="row">${htmlEscape(label)}</th><td>${htmlEscape(fmt(m.log_loss))}</td><td>${htmlEscape(fmt(m.brier))}</td><td>${htmlEscape(probability(m.top_choice_accuracy))}</td></tr>`:'';};
@@ -146,7 +146,11 @@ async function loadWeeklyAudit(){
   const cal=r.test_calibration?.xgq?.classwise_expected_calibration_error;
   const ci=r.paired_uncertainty?.challenger?.log_loss_gain_over_xgq_ci95;
   const textCI=Array.isArray(ci)?`Research challenger 95% paired log-loss gain CI: ${ci.map(fmt).join(' to ')}.`:'Confidence interval unavailable.';
-  footer.textContent=`XGQ classwise calibration error: ${fmt(cal)}. ${textCI} Retrospective only; live forecast hit rate not established. Market comparison: ${r.market_odds?.status || 'unavailable'}.`;
+  const hybrid=r.hybrid_selected;
+  const hc=r.hybrid_vs_goal_champion_ci?.log_loss_gain_over_goal_model_ci95;
+  const hcText=Array.isArray(hc)?`Hybrid vs goal baseline 95% gain CI: ${hc.map(fmt).join(' to ')}.`:'Hybrid vs goal baseline CI unavailable.';
+  const params=hybrid?`Research hybrid was selected using validation only (shot blend ${fmt(hybrid.goal_shot_blend)}, XGQ influence ${fmt(hybrid.shot_xgq_influence)}).`:'';
+  footer.textContent=`XGQ calibration error: ${fmt(cal)}. ${textCI} ${params} ${hcText} Research only, no production promotion. Live forecast hit rate not established. Market comparison: ${r.market_odds?.status || 'unavailable'}.`;
  }catch{
   status.textContent='Private weekly research data is currently unavailable.';
   summary.textContent='';
