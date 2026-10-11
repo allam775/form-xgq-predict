@@ -1,0 +1,41 @@
+name: Private Understat historical backfill
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/understat-backfill.yml'
+      - 'engine/understat_backfill.py'
+      - 'engine/understat_d1.py'
+  schedule:
+    # Scheduled jobs run on GitHub, never on the owner's device.
+    # GitHub may delay scheduled tasks. 3 bounded passes/day until target reached.
+    - cron: '41 1,9,15 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: form-xgq-online
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source adapters without live provider access
+        run: |
+          python -m unittest discover -s tests -p 'test_understat_backfill.py' -v
+          python -m unittest discover -s tests -v
+      - name: Collect owner-authorized historical shots into PRIVATE D1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m engine.understat_backfill --max-new 250 --min-interval 1.2
