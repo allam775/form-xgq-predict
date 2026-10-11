@@ -42,6 +42,14 @@ export default {
         const {results}=await env.DB.prepare(sql).bind(...values,limit).all();
         return json({forecasts:results.map(r=>JSON.parse(r.payload))});
       }
+      // Summary metrics only; Cloudflare Access protects the site and this endpoint.
+      // The historical match rows and model input samples never leave private D1.
+      if(url.pathname==='/api/research-weekly') {
+        const result=await env.DB.prepare("SELECT v FROM metadata WHERE k='understat_championship_report'").first();
+        if(!result || typeof result.v!=='string') return privateJson({status:'not_run'});
+        const payload=JSON.parse(result.v);
+        return privateJson({report:payload});
+      }
       if(url.pathname==='/api/team-form-teams') {
         const league=url.searchParams.get('league');
         if(league && !/^(en|de|es|it|fr)\.1$/.test(league)) return privateJson({error:'Bad league'},400);
