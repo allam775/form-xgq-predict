@@ -172,8 +172,25 @@ def main(argv=None):
     parser.add_argument('--expected-history',type=int,default=EXPECTED_REFERENCE_HISTORY)
     args=parser.parse_args(argv)
     db=D1()
-    report=research(db.history(),expected_history=args.expected_history)
-    db.query("INSERT OR REPLACE INTO metadata(k,v) VALUES('understat_accuracy_52_search',?)",
+    # Freeze the EXACT identities of the reference 983-match research sample.
+    # The refresh scheduler may add earlier-season matches during this run;
+    # avoid quietly changing the 393-match evaluation split.
+    frozen=db.query("SELECT v FROM metadata WHERE k='understat_accuracy_52_original_983_ids' LIMIT 1")
+    if len(frozen)!=1:
+        raise RuntimeError('Private 983-match sample identity snapshot missing')
+    ids=json.loads(frozen[0]['v'])
+    if (not isinstance(ids,list) or len(ids)!=EXPECTED_REFERENCE_HISTORY
+            or len(set(ids))!=len(ids)):
+        raise RuntimeError('Corrupt fixed research-sample identity list')
+    archived=db.history()
+    lookup={row['id']:row for row in archived}
+    if len(set(ids)-set(lookup)):
+        raise RuntimeError('Previously frozen private match identities are missing')
+    frozen_rows=[lookup[id_] for id_ in ids]
+    report=research(frozen_rows,expected_history=args.expected_history)
+    report['current_full_archive_matches']=len(archived)
+    report['reference_sample_identity_freeze']=True
+    db.query("INSERT OR REPLACE INTO metadata(k,v) VALUES('understat_accuracy_52_search',?)", 
              (json.dumps(report,separators=(',',':')),))
     print('52pct audit research:',report.get('status'),'tests:',report.get('test_matches',0))
     if report.get('status')=='exploratory_research_only':
