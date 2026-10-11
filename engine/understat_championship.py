@@ -21,6 +21,7 @@ from .understat_private import verified_row
 from .understat_quality import OUTCOMES, actual_outcome, historical_league_baseline, score
 from .understat_d1 import D1
 from .xgq import predict_xgq, weighted_form, poisson_probabilities
+from .understat_hybrid import HYBRID_CANDIDATES, hybrid_probs
 
 # Preregistered simple alternatives; validation determines the challenger.
 VARIANTS = ((0.0, 0.0), (0.25, 0.0), (0.50, 0.0),
@@ -240,6 +241,10 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
                     item={'league':league,'date':day,'outcome':actual_outcome(match),
                           'xgq':_probabilities(*(forecast['probabilities'][k] for k in OUTCOMES)),
                           'naive':base_probs,'elo':elo,'dc_fixed_rho':dc}
+                    # Goal/shot hybrid candidates are pre-registered and computed
+                    # exclusively from completed matches before this match day.
+                    item['hybrids']={f'{w:.2f}_{q:.2f}': hybrid_probs(
+                        recent,match,dc,(w,q)) for w,q in HYBRID_CANDIDATES}
                     # Generate only pre-specified variants using pre-day evidence.
                     item['variants']={f'{strength:.2f}_{shrink:.2f}':_variant_probs(
                         forecast,prior,match,base_probs,(strength,shrink)) for strength,shrink in VARIANTS}
@@ -262,24 +267,59 @@ def evaluate(rows, *, min_test=MIN_EVAL, min_validation=MIN_EVAL):
     def vkey(params): return f'{params[0]:.2f}_{params[1]:.2f}'
     rank=sorted(VARIANTS,key=lambda p:(score([(r['variants'][vkey(p)],r['outcome']) for r in val])['log_loss'],p!=VARIANTS[0],p))
     selected=rank[0]
+    # Tune the blend ONLY on validation, using the exact same eligible games.
+    def hybrid_key(params): return f'{params[0]:.2f}_{params[1]:.2f}'
+    eligible_hybrids=[]
+    for params in HYBRID_CANDIDATES:
+        key=hybrid_key(params)
+        paired=[r for r in val if r['hybrids'].get(key) is not None]
+        if len(paired)!=len(val):
+            continue
+        metric=score([(r['hybrids'][key],r['outcome']) for r in paired])
+        eligible_hybrids.append((metric['log_loss'],params))
+    if not eligible_hybrids:
+        report['reason']='no_hybrid_candidate_with_complete_validation'
+        return report
+    hybrid_params=min(eligible_hybrids,key=lambda x:(x[0],x[1]))[1]
+    key=hybrid_key(hybrid_params)
+    if any(r['hybrids'].get(key) is None for r in test):
+        report['reason']='hybrid_missing_on_heldout_games'
+        return report
+    hybrid_validation=score([(r['hybrids'][key],r['outcome']) for r in val])
     # Report on *identical* untouched held-out games; selection used validation only.
     for rec in test:
         rec['challenger']=rec['variants'][vkey(selected)]
+        rec['hybrid']=rec['hybrids'][key]
+        del rec['hybrids']
         del rec['variants']
-    names=('xgq','naive','elo','dc_fixed_rho','challenger')
+    names=('xgq','naive','elo','dc_fixed_rho','challenger','hybrid')
     scores=_record_scores(test,names)
+    goal_ci=_paired_ci(test,'hybrid',baseline='dc_fixed_rho')
+    if 'log_loss_gain_over_xgq_ci95' in goal_ci:
+        goal_ci['log_loss_gain_over_goal_model_ci95']=goal_ci.pop('log_loss_gain_over_xgq_ci95')
+    goal_ci['baseline_model']='dc_fixed_rho'
     report.update({
         'status':'retrospective',
         'selected_challenger':{'recent_form_weight':selected[0],
                                'league_frequency_shrinkage':selected[1],
                                'chosen_by':'validation_log_loss_only'},
         'validation_champion_log_loss':score([(r['variants'][vkey(selected)],r['outcome']) for r in val])['log_loss'],
+        'hybrid_selected':{'goal_shot_blend':hybrid_params[0],
+                           'shot_xgq_influence':hybrid_params[1],
+                           'selection':'validation_only',
+                           'validation_log_loss':hybrid_validation['log_loss']},
+        'hybrid_adoption_gate':{
+            'status':'research_only_do_not_promote',
+            'requirements':'out_of_sample_CI_positive_vs_current_goal_champion_and_live_forward_validation',
+            'heldout_target':1000,'heldout_target_met':len(test)>=1000,
+        },
         'test_scores':scores,
-        'test_calibration':{name:_calibration(test,name) for name in ('xgq','challenger','elo','dc_fixed_rho')},
-        'paired_uncertainty':{name:_paired_ci(test,name) for name in ('naive','elo','dc_fixed_rho','challenger')},
+        'test_calibration':{name:_calibration(test,name) for name in ('xgq','challenger','elo','dc_fixed_rho','hybrid')},
+        'paired_uncertainty':{name:_paired_ci(test,name) for name in ('naive','elo','dc_fixed_rho','challenger','hybrid')},
+        'hybrid_vs_goal_champion_ci':goal_ci,
         'test_by_league':{league:_record_scores([r for r in test if r['league']==league],names)
                           for league in sorted({r['league'] for r in test})},
-        'warning':'Retrospective small-sample results. Fixed-rho score model is NOT a fully fitted Dixon-Coles model.'
+        'warning':'Research hybrid uses pre-day opponent-adjusted xG/xGA/XGQ; DC-only is a valid selected option. No production promotion.'
     })
     return report
 
