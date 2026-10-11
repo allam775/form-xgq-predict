@@ -1,0 +1,35 @@
+name: XGQ exploratory 52pct decision research
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/xgq-52-research.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: form-xgq-online
+  cancel-in-progress: false
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate research scripts locally without provider calls
+        run: |
+          python -m unittest discover -s tests -p 'test_understat_accuracy_lab.py' -v
+          python -m unittest discover -s tests -p 'test_understat_championship.py' -v
+      - name: Run exact historical 393-match accuracy search privately
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m engine.understat_accuracy_lab --expected-history 983
