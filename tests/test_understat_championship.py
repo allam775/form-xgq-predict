@@ -62,6 +62,40 @@ class ChampionshipTests(unittest.TestCase):
         with self.assertRaises(ValueError):evaluate(rows+[rows[0]])
         with self.assertRaises(ValueError):evaluate([{**rows[0],'source':'StatsBomb Open Data'}])
 
+    def test_expanded_350_protocol_is_predeclared_and_never_fakes_threshold(self):
+        rows = sample_matches(400)
+        insufficient = evaluate(rows, min_test=350, min_validation=15,
+                                split_mode='expanded_350')
+        self.assertEqual(insufficient['status'], 'insufficient')
+        self.assertEqual(insufficient['requested_test_target'], 350)
+        self.assertFalse(insufficient['requested_test_target_met'])
+        self.assertEqual(insufficient['method'],
+                         'chronological_40_15_45_by_league_match_day_no_leakage')
+        self.assertIn('overlaps', insufficient['retrospective_overlap_warning'])
+        broader = evaluate(rows, min_test=15, min_validation=15,
+                           split_mode='expanded_350')
+        original = evaluate(rows, min_test=15, min_validation=15)
+        self.assertEqual(broader['status'], 'retrospective', broader)
+        self.assertGreater(broader['test_eligible'], original['test_eligible'])
+        self.assertEqual(broader['test_scores']['hybrid']['tested'], broader['test_eligible'])
+        dates = broader['leagues']['en.1']
+        self.assertLess(dates['validation_start'], dates['test_start'])
+        self.assertEqual(dates['train_day_fraction'], .4)
+        with self.assertRaises(ValueError):
+            evaluate(rows, split_mode='user_chosen_after_results')
+
+    def test_expanded_validation_unaffected_by_future_test_outcomes(self):
+        rows = sample_matches(400)
+        baseline = evaluate(rows, min_test=15, min_validation=15,
+                            split_mode='expanded_350')
+        cutoff = baseline['leagues']['en.1']['test_start']
+        changed = [{**r, 'hg':4-r['hg'], 'ag':3-r['ag']}
+                   if r['date']>=cutoff else r for r in rows]
+        alternate = evaluate(changed, min_test=15, min_validation=15,
+                             split_mode='expanded_350')
+        self.assertEqual(baseline['selected_challenger'], alternate['selected_challenger'])
+        self.assertEqual(baseline['hybrid_selected'], alternate['hybrid_selected'])
+
     def test_test_labels_cannot_select_model_or_change_past_elo(self):
         games=sample_matches(400)
         a=evaluate(games,min_test=15,min_validation=15)
