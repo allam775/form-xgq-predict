@@ -27,13 +27,13 @@ function matchCard(m){
  if(Math.abs(sum-100)>1||[home,draw,away].some(x=>!Number.isFinite(x)))return '';
  const top=Array.isArray(p.scorelines)?p.scorelines.slice(0,3):[];
  return `<article class="match-card glass"><div class="match-meta"><span class="competition-label"><i></i> ${htmlEscape(m.league_name||leagueName(m.league))}</span><span>${htmlEscape(dateLabel(m.date))} ${m.same_day_unverified?'· Kickoff not confirmed':''}</span></div>
- <div class="team-layout"><div class="team">${crest(m.home,m.home_logo_url)}<strong>${htmlEscape(m.home)}</strong><small>HOME</small></div><div class="match-versus"><span>VS</span><small>${htmlEscape(m.time_source||'Time unverified')}</small></div><div class="team">${crest(m.away,m.away_logo_url)}<strong>${htmlEscape(m.away)}</strong><small>AWAY</small></div></div>
+ <div class="team-layout"><div class="team">${crest(m.home,m.home_logo_url||clubCrest(m.league,m.home))}<strong>${htmlEscape(m.home)}</strong><small>HOME</small></div><div class="match-versus"><span>VS</span><small>${htmlEscape(m.time_source||'Time unverified')}</small></div><div class="team">${crest(m.away,m.away_logo_url||clubCrest(m.league,m.away))}<strong>${htmlEscape(m.away)}</strong><small>AWAY</small></div></div>
  <div class="verified-mark"><span>◉ VERIFIED XGQ MODEL</span><span>Shot-level evidence</span></div>
  <div class="probability-bar"><span style="width:${home}%"></span><span style="width:${draw}%"></span><span style="width:${away}%"></span></div>
  <div class="probability-labels"><div><strong>${probability(p.home)}</strong><small>HOME</small></div><div><strong>${probability(p.draw)}</strong><small>DRAW</small></div><div><strong>${probability(p.away)}</strong><small>AWAY</small></div></div>
  <div class="card-foot"><span>History: ${htmlEscape(m.history_home)} / ${htmlEscape(m.history_away)} games</span><span>${top.length?'Top score: '+htmlEscape(top[0].score):'Scoreline unavailable'}</span></div></article>`;
 }
-function fixtureCard(m){return `<div class="fixture-row"><div class="fixture-date">${htmlEscape(dateLabel(m.date))}<small>${htmlEscape(leagueName(m.league))}</small></div><div class="fixture-clubs"><span class="tiny-crest">${htmlEscape(initials(m.home))}</span><strong>${htmlEscape(m.home)}</strong><span class="fixture-vs">vs</span><strong>${htmlEscape(m.away)}</strong><span class="tiny-crest">${htmlEscape(initials(m.away))}</span></div><span class="fixture-reason">◌ XGQ coverage pending</span></div>`}
+function fixtureCard(m){return `<div class="fixture-row"><div class="fixture-date">${htmlEscape(dateLabel(m.date))}<small>${htmlEscape(leagueName(m.league))}</small></div><div class="fixture-clubs">${crest(m.home,clubCrest(m.league,m.home))}<strong>${htmlEscape(m.home)}</strong><span class="fixture-vs">vs</span><strong>${htmlEscape(m.away)}</strong>${crest(m.away,clubCrest(m.league,m.away))}</div><span class="fixture-reason">◌ XGQ coverage pending</span></div>`}
 function render(){
  const forecasts=state.forecasts.filter(matchAllowed);
  $('cards').innerHTML=forecasts.map(matchCard).join('');
