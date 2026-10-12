@@ -85,3 +85,17 @@
 /* Six-section navigation remains usable on narrow devices. */
 @media(max-width:780px){.nav-links{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;gap:3px}.nav-links a{white-space:nowrap;flex-shrink:0}}
 .daily-disclaimer a{color:#7ddfd8;text-decoration:underline;text-underline-offset:3px}
+
+
+/* Honest prospective challenger panel; NEVER hide the minimum sample gate. */
+.daily-challenger{border-radius:17px;padding:22px;margin-top:14px;display:grid;grid-template-columns:minmax(210px,.7fr) minmax(0,1.3fr);align-items:start;gap:20px}
+.daily-challenger h3{margin:10px 0 7px;font-size:17px}
+.daily-challenger p{color:#8eafc6;font-size:11px;line-height:1.65;margin:0}
+.daily-challenger-report{font-size:12px;color:#bed8e7}
+.daily-challenger-report>p{margin:0 0 9px;color:#9cdad2}
+.shadow-progress{height:7px;overflow:hidden;border-radius:15px;background:#1f344a;margin-bottom:8px}
+.shadow-progress span{height:100%;background:#65d6b9;display:block;border-radius:15px}
+.daily-challenger .audit-scroll{margin-top:9px}
+.daily-challenger .audit-table{min-width:340px}
+.daily-challenger .audit-table td,.daily-challenger .audit-table th{padding:8px 10px}
+@media(max-width:770px){.daily-challenger{grid-template-columns:minmax(0,1fr)}}
