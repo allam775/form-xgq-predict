@@ -78,3 +78,6 @@
 @media(max-width:1020px){.daily-insights{grid-template-columns:repeat(2,minmax(0,1fr))}.daily-cards{grid-template-columns:1fr}.daily-heading-note{white-space:normal}}
 @media(max-width:670px){.daily-controls{gap:10px}.daily-field{flex:1;min-width:145px}.daily-field input,.daily-field select{width:100%;min-width:0}.daily-update{max-width:none;width:100%;text-align:left;margin:0;padding:2px 0}.daily-feed-heading,.daily-bottom{flex-direction:column;align-items:stretch;gap:10px}.daily-league-history{justify-content:flex-start}.daily-club b{font-size:12px}.daily-match{padding:17px}.daily-match .crest-wrap,.daily-match .crest-placeholder{height:40px;width:40px;border-radius:12px}.daily-prob-label div{font-size:15px}.daily-insight strong{font-size:23px}.daily-insight{padding:16px}}
 @media(max-width:400px){.daily-club{gap:5px}.daily-versus{gap:2px}.daily-club b{font-size:11px}.daily-match-meta{flex-wrap:wrap}.daily-insights{gap:8px}.daily-insight{padding:13px}.daily-insight small{letter-spacing:.4px}}
+
+.fixture-clubs .crest-wrap,.fixture-clubs .crest-placeholder{width:26px;height:26px;border-radius:8px;font-size:9px}
+.fixture-clubs .crest-logo{padding:2px;border-radius:7px}
