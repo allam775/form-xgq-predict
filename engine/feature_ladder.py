@@ -191,15 +191,20 @@ def run_stage1(rows, *, min_test=80):
     gain=_paired_ci([{"league":r["league"],"date":r["date"],
             "outcome":r["actual"],"xgq":r["dc_fixed_rho"],"stage1":r["stage1"]}
             for r in test], "stage1",baseline="xgq")
-    report.update(status="retrospective",selected={"params":chosen,
-        "selected_by":"prior_validation_log_loss_only"},
-        validation_selected=val_chosen,test_scores=scores,
-        "stage1_vs_dc_logloss_ci95":gain,
-        "test_by_league":{league:{name:_metrics([r for r in test if r["league"]==league],name)
-                         for name in names}
-                    for league in sorted({r["league"] for r in test})},
-        "test_candidate_count":len(STAGE1_CANDIDATES),
-        "private_match_level_records_written":0)
+    report.update({
+        "status": "retrospective",
+        "selected": {"params": chosen,
+                     "selected_by": "prior_validation_log_loss_only"},
+        "validation_selected": val_chosen,
+        "test_scores": scores,
+        "stage1_vs_dc_logloss_ci95": gain,
+        "test_by_league": {league: {
+            name: _metrics([r for r in test if r["league"] == league], name)
+            for name in names}
+            for league in sorted({r["league"] for r in test})},
+        "test_candidate_count": len(STAGE1_CANDIDATES),
+        "private_match_level_records_written": 0,
+    })
     return report
 
 
