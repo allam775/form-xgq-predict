@@ -155,12 +155,28 @@ def compare(frozen, grades, *, min_pairs=GATE_PAIRS):
     }
 
 
+def _load_payloads(db, table):
+    """D1 may cap result row counts; never silently audit a truncated ledger."""
+    if table not in ("private_daily_forecasts", "private_daily_grades"):
+        raise ValueError("Unexpected audit table")
+    output, offset = [], 0
+    while True:
+        page = db.query(
+            f"SELECT payload FROM {table} ORDER BY id LIMIT ? OFFSET ?",
+            (250, offset))
+        output.extend(json.loads(row["payload"]) for row in page)
+        if len(output) > 20000:
+            raise ValueError("Prospective audit ledger exceeds safety limit")
+        if len(page) < 250:
+            break
+        offset += len(page)
+    return output
+
+
 def main():
     db = D1()
-    frozen = [json.loads(x["payload"]) for x in
-              db.query("SELECT payload FROM private_daily_forecasts ORDER BY id")]
-    grades = [json.loads(x["payload"]) for x in
-              db.query("SELECT payload FROM private_daily_grades ORDER BY id")]
+    frozen = _load_payloads(db, "private_daily_forecasts")
+    grades = _load_payloads(db, "private_daily_grades")
     report = compare(frozen, grades)
     db.query("INSERT OR REPLACE INTO metadata(k,v) VALUES(?,?)",
              (REPORT_KEY, json.dumps(report, separators=(",", ":"))))
