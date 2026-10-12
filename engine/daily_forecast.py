@@ -109,7 +109,7 @@ def _forecast(fixture, league_rows, ratings, *, now):
     primary, reason = predict_xgq(source_fixture, prior, fixture["date"])
     if primary is None:
         return None, reason or "unavailable_verified_shot_form"
-    models = {"xgq_production_formula": normalize_probabilities(primary["probabilities"])}
+    models = {"xgq_production_formula": normalize_probabilities({k: primary["probabilities"][k] for k in OUTCOMES})}
     goal_baseline = _dc_baseline(prior, fixture)
     if goal_baseline:
         models["goal_fixed_rho"] = normalize_probabilities(goal_baseline)
