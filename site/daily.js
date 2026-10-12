@@ -73,6 +73,31 @@ function renderDaily(){
  '<div class="daily-empty glass">No frozen 1X2 predictions are available for this date and competition. Matches are never invented or backfilled after kickoff.</div>';
  $('daily-count').textContent=cards.length+' frozen';
 }
+function renderChallenger(c){
+ const node=$('daily-challenger-report');
+ if(!node)return;
+ if(!c){
+  node.textContent='No forward-tested challenger audit is available yet. Production XGQ remains unchanged.';
+  return;
+ }
+ const n=Number(c.paired_verified_matches)||0, target=Number(c.min_forward_pairs)||350;
+ const x=c.xgq||{},g=c.goal_fixed_rho||{};
+ const progress=Math.min(100,Math.max(0,100*n/target));
+ const verdict=c.gate_met?'Statistical promotion gate reached — manual review required':
+  n<target?'Accumulating genuine future results. Do not promote based on historical tuning.':
+  'No statistically supported promotion. Keep production unchanged.';
+ node.innerHTML=
+  '<p><strong>'+htmlEscape(n)+' / '+htmlEscape(target)+'</strong> paired, verified matches · '+
+  htmlEscape(verdict)+'</p>'+
+  '<div class="shadow-progress"><span style="width:'+progress.toFixed(2)+'%"></span></div>'+
+  '<div class="audit-scroll"><table class="audit-table"><thead><tr><th>Model</th><th>Hit rate</th><th>Log Loss ↓</th><th>Brier ↓</th></tr></thead><tbody>'+
+  '<tr><th>Production XGQ</th><td>'+dailyPct(x.top_choice_accuracy)+'</td><td>'+
+   dailyFloat(x.log_loss)+'</td><td>'+dailyFloat(x.brier)+'</td></tr>'+
+  '<tr><th>Fixed-rho goal challenger</th><td>'+dailyPct(g.top_choice_accuracy)+'</td><td>'+
+   dailyFloat(g.log_loss)+'</td><td>'+dailyFloat(g.brier)+'</td></tr>'+
+  '</tbody></table></div>';
+}
+
 async function loadDaily(){
  const date=$('daily-date').value,league=$('daily-league').value,info=$('daily-update');
  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){info.textContent='Select a valid date.';return}
@@ -93,6 +118,7 @@ async function loadDaily(){
   $('daily-accuracy').textContent=score.graded>0?dailyPct(score.accuracy):'—';
   $('daily-correct').textContent=score.graded>0?score.correct+' correct out of '+score.graded+' verified results':'Awaiting first verified result';
   $('daily-loss').textContent=score.graded>0?dailyFloat(score.log_loss)+' / '+dailyFloat(score.brier):'— / —';
+  renderChallenger(score.comparison);
   const perLeague=Array.isArray(score.by_league)?score.by_league:[];
   $('daily-league-history').innerHTML=perLeague.length?perLeague.map(x=>
    '<div class="daily-history-chip"><span>'+htmlEscape(leagueName(x.league))+'</span>'+
@@ -108,6 +134,7 @@ async function loadDaily(){
   ['daily-frozen','daily-graded','daily-accuracy'].forEach(id=>$(id).textContent='—');
   $('daily-correct').textContent='No confirmed result loaded';
   $('daily-loss').textContent='— / —';
+  renderChallenger(null);
  }
 }
 $('daily-date').value=cairoDate();
