@@ -85,7 +85,22 @@ export default {
           "FROM private_daily_grades g JOIN private_daily_forecasts f ON f.id=g.id "+
           "GROUP BY json_extract(f.payload,'$.league') ORDER BY league").all();
         const count=Number(scored?.n)||0;
-        return privateJson({status:count?'scored':'awaiting_verified_results',
+        // Owner-computed aggregated forward-only shadow report; never include D1 rows.
+        const shadowRow=await env.DB.prepare(
+          "SELECT v FROM metadata WHERE k='understat_forward_shadow_championship' LIMIT 1"
+        ).first();
+        const shadow=shadowRow&&typeof shadowRow.v==='string'?JSON.parse(shadowRow.v):null;
+        const comparison=shadow?{
+          status:shadow.status,primary:shadow.primary,challenger:shadow.challenger,
+          paired_verified_matches:shadow.paired_verified_matches,
+          min_forward_pairs:shadow.min_forward_pairs,gate_met:shadow.gate_met===true,
+          requires_manual_approval_to_switch:true,
+          xgq:shadow.xgq,goal_fixed_rho:shadow.goal_fixed_rho,
+          goal_over_xgq_log_loss_gain:shadow.goal_over_xgq_log_loss_gain,
+          paired_log_loss_ci95:shadow.paired_log_loss_ci95,
+          by_league_paired_counts:shadow.by_league_paired_counts
+        }:null;
+        return privateJson({status:count?'scored':'awaiting_verified_results',comparison,
           model:'xgq_production_formula',total_frozen:Number(total?.n)||0,
           graded:count,pending:Math.max(0,(Number(total?.n)||0)-count),
           correct:Number(scored?.correct)||0,
