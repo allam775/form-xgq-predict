@@ -10,6 +10,8 @@ on:
     branches: [main]
     paths:
       - 'engine/daily_forecast.py'
+      - 'engine/forward_shadow.py'
+      - 'tests/test_forward_shadow.py'
       - 'tests/test_daily_forecast.py'
       - '.github/workflows/daily-five-leagues.yml'
   schedule:
@@ -34,6 +36,7 @@ jobs:
       - name: Verify daily pre-match and immutability regressions
         run: |
           python -m unittest discover -s tests -p 'test_daily_forecast.py' -v
+          python -m unittest discover -s tests -p 'test_forward_shadow.py' -v
           python -m unittest discover -s tests -p 'test_prematch_ledger.py' -v
       - name: Grade any subsequently verified final results
         env:
@@ -47,3 +50,9 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
         run: python -m engine.daily_forecast freeze
+      - name: Audit forward model competition (fixed DC baseline vs production XGQ)
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m engine.forward_shadow
