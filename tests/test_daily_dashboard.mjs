@@ -25,6 +25,14 @@ const db={
      args})};
    },
    async first(){
+    if(sql.includes('understat_forward_shadow_championship'))return {v:JSON.stringify({
+      status:'collecting_prospective_evidence',primary:'xgq_production_formula',challenger:'goal_fixed_rho',
+      paired_verified_matches:1,min_forward_pairs:350,gate_met:false,
+      xgq:{tested:1,top_choice_accuracy:0,log_loss:1.3471,brier:0.8125},
+      goal_fixed_rho:{tested:1,top_choice_accuracy:1,log_loss:0.6,brier:0.3},
+      by_league_paired_counts:{'en.1':1},
+      private_payload:'DO NOT LEAK',
+    })};
     if(sql.includes('COUNT(*) AS n FROM private_daily_forecasts'))return {n:4};
     if(sql.includes('COUNT(*) AS n,')&&sql.includes('private_daily_grades'))
      return {n:1,correct:0,log_loss:1.3471,brier:0.8125};
@@ -66,6 +74,12 @@ assert.equal(score.pending,3);
 assert.equal(score.accuracy,0);
 assert.equal(score.log_loss,1.3471);
 assert.equal(score.by_league[0].league,'en.1');
+assert.equal(score.comparison.paired_verified_matches,1);
+assert.equal(score.comparison.min_forward_pairs,350);
+assert.equal(score.comparison.gate_met,false);
+assert.equal(score.comparison.goal_fixed_rho.log_loss,0.6);
+assert.ok(!JSON.stringify(score.comparison).includes('DO NOT LEAK'));
+
 assert.ok(sqlCalls.some(sql=>sql.includes('LEFT JOIN private_daily_grades')));
 assert.ok(sqlCalls.every(sql=>!sql.includes('private_understat_history')));
 console.log('Daily D1 dashboard API contract: 20 checks passed');
