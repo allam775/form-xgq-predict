@@ -10,7 +10,7 @@
 <div class="app-shell">
 <header class="navbar glass">
  <a class="logo" href="#top" aria-label="XGQ Predict home"><span class="logo-symbol">X<span>·</span></span><span class="brand-text"><strong>XGQ <b>PREDICT</b></strong><small>FOOTBALL INTELLIGENCE</small></span></a>
- <nav class="nav-links" aria-label="Primary navigation"><a class="active" href="#matches">Predictions</a><a href="#form">Team form</a><a href="#audit">Weekly audit</a><a href="#method">The model</a><a href="#coverage">Data transparency</a></nav>
+ <nav class="nav-links" aria-label="Primary navigation"><a class="active" href="#daily">Today's picks</a><a href="#matches">Match centre</a><a href="#form">Team form</a><a href="#audit">Weekly audit</a><a href="#method">The model</a><a href="#coverage">Data transparency</a></nav>
  <div class="nav-state"><span class="dot" id="side-dot"></span><span id="side-status">Checking cloud data</span></div>
 </header>
 <main id="top">
@@ -18,7 +18,7 @@
   <div class="hero-copy"><div class="mini-tag"><span class="pulse"></span> XGQ PREDICTION ENGINE <span class="tag-sep">/</span> VERIFIED SHOT DATA</div>
    <h1>Football predictions.<br/><span>Without the guesswork.</span></h1>
    <p>Go beyond the final score. Explore pre-match probabilities built on real shot quality, with the evidence and data coverage behind every forecast.</p>
-   <div class="hero-buttons"><a class="cta" href="#matches">Explore match centre <span>↗</span></a><a class="secondary-cta" href="#method">Explore methodology →</a></div>
+   <div class="hero-buttons"><a class="cta" href="#daily">Today's predictions <span>↗</span></a><a class="secondary-cta" href="#method">Explore methodology →</a></div>
    <div class="data-note"><span class="small-dot"></span> <span>Never substitutes results-only estimates for verified XGQ inputs.</span></div>
   </div>
   <div class="hero-side" aria-hidden="true">
@@ -28,6 +28,32 @@
   </div>
  </section>
  <section class="data-ribbon" aria-label="Model status"><div class="metric"><span class="metric-label">VERIFIED MATCHES</span><strong id="shot-count">—</strong><small>With per-shot xG arrays</small></div><div class="metric"><span class="metric-label">QUALIFIED FORECASTS</span><strong id="prediction-count">—</strong><small>No synthetic probabilities</small></div><div class="metric"><span class="metric-label">CLOUD STATUS</span><strong id="data-state">Checking…</strong><small id="data-updated">Source freshness</small></div><div class="metric"><span class="metric-label">MODEL FOUNDATION</span><strong class="metric-model">XGQ <span>×</span> Poisson</strong><small>Pre-match, evidence-gated</small></div></section>
+ <section class="section daily-section" id="daily">
+  <div class="section-heading daily-heading">
+   <div><div class="section-eyebrow"><span>LIVE</span> FIVE-LEAGUE DAILY FORECAST LEDGER</div>
+    <h2>Today's predictions. <span>Verified before kickoff.</span></h2>
+    <p>Frozen 1X2 probabilities from the daily XGQ model. Final scores are recorded separately when verified — no hindsight edits.</p></div>
+   <div class="daily-heading-note"><span class="small-dot"></span> SOURCE: VERIFIED PRE-MATCH XGQ · TIMEZONE: CAIRO</div>
+  </div>
+  <div class="daily-controls glass">
+   <div class="daily-field"><label for="daily-date">Match date</label><input id="daily-date" type="date" aria-label="Choose match date"/></div>
+   <div class="daily-field"><label for="daily-league">Competition</label><select id="daily-league" aria-label="Filter daily league"><option value="all">All five leagues</option><option value="en.1">Premier League</option><option value="es.1">La Liga</option><option value="it.1">Serie A</option><option value="de.1">Bundesliga</option><option value="fr.1">Ligue 1</option></select></div>
+   <button id="daily-reload" class="daily-refresh" type="button">↻ Refresh results</button>
+   <div id="daily-update" class="daily-update" aria-live="polite">Loading today's frozen forecasts…</div>
+  </div>
+  <div class="daily-insights" aria-label="Forward-tested model accuracy">
+   <div class="daily-insight glass"><small>FROZEN PICKS</small><strong id="daily-frozen">—</strong><span>Predictions saved before kickoff</span></div>
+   <div class="daily-insight glass"><small>VERIFIED FINALS</small><strong id="daily-graded">—</strong><span>Only completed, source-verified games</span></div>
+   <div class="daily-insight glass"><small>LIVE HIT RATE</small><strong id="daily-accuracy">—</strong><span id="daily-correct">Awaiting the first graded result</span></div>
+   <div class="daily-insight glass"><small>LOG LOSS / BRIER</small><strong id="daily-loss">— / —</strong><span>Probability quality, lower is better</span></div>
+  </div>
+  <div class="daily-feed-heading"><h3>Daily match board <span id="daily-count">—</span></h3><p>First-choice outcome is the highest of home / draw / away — not a guaranteed winner.</p></div>
+  <div id="daily-cards" class="daily-cards" aria-live="polite">
+   <div class="daily-empty glass">Loading daily forecasts from the private model ledger…</div>
+  </div>
+  <div class="daily-bottom glass"><div class="daily-history-label"><h3>Live accuracy by league</h3><p>Prospective predictions only. Historical backtests are shown separately below.</p></div><div id="daily-league-history" class="daily-league-history" aria-live="polite">Waiting for verified match outcomes.</div></div>
+  <p class="daily-disclaimer">Club crests are displayed for editorial identification only. All trademarks and crests belong to their respective owners. Understat shot histories and team-level evidence remain private.</p>
+ </section>
  <section class="section" id="matches">
   <div class="section-heading"><div><div class="section-eyebrow"><span>01</span> THE MATCH CENTRE</div><h2>Upcoming <span>match intelligence.</span></h2><p>Today's schedule and the next fixtures, with probabilities only where recent XGQ evidence qualifies.</p></div><div class="section-right"><span id="asof-header">Awaiting first data release</span><span id="count-chip" class="count-chip">— verified predictions</span></div></div>
   <div class="match-workspace"><div class="workspace-main">
@@ -55,8 +81,8 @@
     <p id="audit-footnote" class="form-results">Research-only. No model is automatically promoted to live predictions.</p>
   </div>
  </section>
- <section class="section" id="method"><div class="section-heading"><div><div class="section-eyebrow"><span>03</span> THE METHODOLOGY</div><h2>Built on <span>evidence, not hype.</span></h2><p>Our forecasts have strict quality gates. No shot-level evidence means no XGQ probability.</p></div></div><div class="method-cards"><article class="method-card glass"><div class="method-number">01 / MEASURE</div><div class="method-icon">◎</div><h3>Chance quality</h3><div class="method-formula">Σ(xG²) <span>÷</span> shots</div><p>XGQ weights real shot quality; aggregate match xG alone is not enough.</p></article><article class="method-card glass"><div class="method-number">02 / ESTIMATE</div><div class="method-icon">↗</div><h3>Before kickoff</h3><div class="method-formula">XGQ <span>→</span> 1X2</div><p>Home and away shot-quality profiles feed the probability model without same-day results leaking in.</p></article><article class="method-card glass"><div class="method-number">03 / AUDIT</div><div class="method-icon">◫</div><h3>Test the probabilities</h3><div class="method-formula">LOG LOSS <span>+</span> BRIER</div><p>Historical performance is only stated when time-ordered evaluation is sufficiently supported.</p></article></div><div id="evidence-note" class="evidence-strip">Checking historical evaluation…</div></section>
- <section class="section coverage-section" id="coverage"><div class="coverage-grid"><div><div class="section-eyebrow"><span>04</span> OPEN DATA POLICY</div><h2>Transparency is <span>part of the model.</span></h2><p>OpenFootball provides openly licensed fixture records but may be delayed. StatsBomb Open Data includes select historical per-shot event files, not live coverage of every league. We will not use unlicensed feeds to silently fill gaps.</p><div class="links-row"><a href="https://github.com/openfootball/football.json" target="_blank" rel="noopener noreferrer">OpenFootball ↗</a><a href="https://github.com/hudl/open-data" target="_blank" rel="noopener noreferrer">StatsBomb Open Data ↗</a></div><p class="attribution">Analysis based on StatsBomb Open Data where stated. Source credit and logo attribution must be maintained as required by their published terms.</p></div><div class="promise-card glass"><span>OUR PUBLICATION RULE</span><strong>Missing data ≠ a prediction.</strong><p>Instead of made-up percentages, the site explains when evidence is too old, insufficient or unavailable.</p><span class="promise-check">✓ Independent website · cloud API · no local PC required to serve visitors</span></div></div></section>
+ <section class="section" id="method"><div class="section-heading"><div><div class="section-eyebrow"><span>04</span> THE METHODOLOGY</div><h2>Built on <span>evidence, not hype.</span></h2><p>Our forecasts have strict quality gates. No shot-level evidence means no XGQ probability.</p></div></div><div class="method-cards"><article class="method-card glass"><div class="method-number">01 / MEASURE</div><div class="method-icon">◎</div><h3>Chance quality</h3><div class="method-formula">Σ(xG²) <span>÷</span> shots</div><p>XGQ weights real shot quality; aggregate match xG alone is not enough.</p></article><article class="method-card glass"><div class="method-number">02 / ESTIMATE</div><div class="method-icon">↗</div><h3>Before kickoff</h3><div class="method-formula">XGQ <span>→</span> 1X2</div><p>Home and away shot-quality profiles feed the probability model without same-day results leaking in.</p></article><article class="method-card glass"><div class="method-number">03 / AUDIT</div><div class="method-icon">◫</div><h3>Test the probabilities</h3><div class="method-formula">LOG LOSS <span>+</span> BRIER</div><p>Historical performance is only stated when time-ordered evaluation is sufficiently supported.</p></article></div><div id="evidence-note" class="evidence-strip">Checking historical evaluation…</div></section>
+ <section class="section coverage-section" id="coverage"><div class="coverage-grid"><div><div class="section-eyebrow"><span>05</span> OPEN DATA POLICY</div><h2>Transparency is <span>part of the model.</span></h2><p>OpenFootball provides openly licensed fixture records but may be delayed. StatsBomb Open Data includes select historical per-shot event files, not live coverage of every league. We will not use unlicensed feeds to silently fill gaps.</p><div class="links-row"><a href="https://github.com/openfootball/football.json" target="_blank" rel="noopener noreferrer">OpenFootball ↗</a><a href="https://github.com/hudl/open-data" target="_blank" rel="noopener noreferrer">StatsBomb Open Data ↗</a></div><p class="attribution">Analysis based on StatsBomb Open Data where stated. Source credit and logo attribution must be maintained as required by their published terms.</p></div><div class="promise-card glass"><span>OUR PUBLICATION RULE</span><strong>Missing data ≠ a prediction.</strong><p>Instead of made-up percentages, the site explains when evidence is too old, insufficient or unavailable.</p><span class="promise-check">✓ Independent website · cloud API · no local PC required to serve visitors</span></div></div></section>
  </main>
  <footer><a href="#top" class="footer-brand">XGQ <span>PREDICT</span></a><span>Independent football forecasting · built for transparency</span><span>Not betting advice · no guaranteed outcomes</span></footer>
 </div>
