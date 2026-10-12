@@ -81,3 +81,7 @@
 
 .fixture-clubs .crest-wrap,.fixture-clubs .crest-placeholder{width:26px;height:26px;border-radius:8px;font-size:9px}
 .fixture-clubs .crest-logo{padding:2px;border-radius:7px}
+
+/* Six-section navigation remains usable on narrow devices. */
+@media(max-width:780px){.nav-links{justify-content:flex-start;overflow-x:auto;scrollbar-width:thin;gap:3px}.nav-links a{white-space:nowrap;flex-shrink:0}}
+.daily-disclaimer a{color:#7ddfd8;text-decoration:underline;text-underline-offset:3px}
