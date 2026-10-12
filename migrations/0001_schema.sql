@@ -39,3 +39,13 @@ CREATE TABLE IF NOT EXISTS private_understat_history (
 CREATE TABLE IF NOT EXISTS private_understat_form (
  id TEXT PRIMARY KEY, payload TEXT NOT NULL
 );
+
+-- Immutable daily pre-match model forecasts and independently verified grading.
+CREATE TABLE IF NOT EXISTS private_daily_forecasts (
+ id TEXT PRIMARY KEY, payload TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_private_daily_forecasts_date
+ ON private_daily_forecasts(json_extract(payload,'$.date'));
+CREATE TABLE IF NOT EXISTS private_daily_grades (
+ id TEXT PRIMARY KEY, payload TEXT NOT NULL
+);
