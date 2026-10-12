@@ -1,7 +1,7 @@
 """Phase 1 research regression; use only synthetic fixtures, no Understat access."""
 import unittest
 from datetime import date, timedelta
-from tests.test_understat_championship import sample_matches
+from test_understat_championship import sample_matches
 from engine.feature_ladder import stage1_probs, _shot_volume, STAGE1_CANDIDATES, run_stage1
 from engine.understat_championship import _dc_baseline
 
