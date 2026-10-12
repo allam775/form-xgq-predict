@@ -42,6 +42,58 @@ export default {
         const {results}=await env.DB.prepare(sql).bind(...values,limit).all();
         return json({forecasts:results.map(r=>JSON.parse(r.payload))});
       }
+      // Expose ONLY the model's own frozen 1X2 summary and verified score.
+      // Never return private shot history, form samples or provider credentials.
+      if(url.pathname==='/api/daily-forecasts') {
+        const date=url.searchParams.get('date');
+        const league=url.searchParams.get('league');
+        if(!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(Date.parse(date+'T00:00:00Z')))
+          return privateJson({error:'Valid date required'},400);
+        if(league && !/^(en|de|es|it|fr)\.1$/.test(league))
+          return privateJson({error:'Bad league'},400);
+        const sql="SELECT f.payload AS forecast,g.payload AS grade FROM private_daily_forecasts f "+
+          "LEFT JOIN private_daily_grades g ON g.id=f.id "+
+          "WHERE json_extract(f.payload,'$.date')=?"+
+          (league?" AND json_extract(f.payload,'$.league')=?":"")+
+          " ORDER BY json_extract(f.payload,'$.kickoff_utc') ASC LIMIT 120";
+        const {results}=await env.DB.prepare(sql).bind(...(league?[date,league]:[date])).all();
+        const items=results.map(r=>{
+          const f=JSON.parse(r.forecast),g=r.grade?JSON.parse(r.grade):null;
+          const p=f.models?.xgq_production_formula;
+          if(f.status!=='frozen'||!p||!['home','draw','away'].every(k=>typeof p[k]==='number'))
+            return null;
+          return {id:f.id,date:f.date,league:f.league,home:f.home,away:f.away,
+            kickoff_utc:f.kickoff_utc,frozen_at_utc:f.frozen_at_utc,
+            probabilities:{home:p.home,draw:p.draw,away:p.away},
+            pick:f.picks?.xgq_production_formula,
+            graded:!!g,actual:g?{home_goals:g.hg,away_goals:g.ag,
+              outcome:g.outcome,correct:g.models?.xgq_production_formula?.correct===true}:null};
+        }).filter(Boolean);
+        return privateJson({date,league:league||'all',forecasts:items});
+      }
+      if(url.pathname==='/api/daily-performance') {
+        const total=await env.DB.prepare("SELECT COUNT(*) AS n FROM private_daily_forecasts").first();
+        const scored=await env.DB.prepare(
+          "SELECT COUNT(*) AS n, "+
+          "SUM(CASE WHEN json_extract(payload,'$.models.xgq_production_formula.correct')=1 THEN 1 ELSE 0 END) AS correct, "+
+          "AVG(json_extract(payload,'$.models.xgq_production_formula.log_loss')) AS log_loss, "+
+          "AVG(json_extract(payload,'$.models.xgq_production_formula.brier')) AS brier "+
+          "FROM private_daily_grades").first();
+        const {results}=await env.DB.prepare(
+          "SELECT json_extract(f.payload,'$.league') AS league,COUNT(*) AS n,"+
+          "SUM(CASE WHEN json_extract(g.payload,'$.models.xgq_production_formula.correct')=1 THEN 1 ELSE 0 END) AS correct "+
+          "FROM private_daily_grades g JOIN private_daily_forecasts f ON f.id=g.id "+
+          "GROUP BY json_extract(f.payload,'$.league') ORDER BY league").all();
+        const count=Number(scored?.n)||0;
+        return privateJson({status:count?'scored':'awaiting_verified_results',
+          model:'xgq_production_formula',total_frozen:Number(total?.n)||0,
+          graded:count,pending:Math.max(0,(Number(total?.n)||0)-count),
+          correct:Number(scored?.correct)||0,
+          accuracy:count?(Number(scored.correct)||0)/count:null,
+          log_loss:count?Number(scored.log_loss):null,
+          brier:count?Number(scored.brier):null,
+          by_league:results.map(r=>({league:r.league,graded:Number(r.n)||0,correct:Number(r.correct)||0}))});
+      }
       // Summary metrics only; Cloudflare Access protects the site and this endpoint.
       // The historical match rows and model input samples never leave private D1.
       if(url.pathname==='/api/research-weekly') {
