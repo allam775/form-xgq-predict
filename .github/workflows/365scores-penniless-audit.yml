@@ -1,0 +1,36 @@
+name: Penniless 365Scores offline connector audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/365scores-penniless-audit.yml'
+permissions:
+  contents: read
+jobs:
+  offline-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate per-shot xG and provider response structures offline
+        run: python -m unittest discover -s tests -p 'test_provider365.py' -v
+      - name: Validate missing-shot rejection and competition identity offline
+        run: python -m unittest discover -s tests -p 'test_365_regressions.py' -v
+      - name: Validate privacy-safe D1 history serialization offline
+        run: python -m unittest discover -s tests -p 'test_private_history.py' -v
+      - name: Verify opt-in and no provider network request
+        run: |
+          python - <<'PY'
+          import json
+          from engine import provider365
+          assert not provider365.enabled({})
+          assert not provider365.publication_allowed({})
+          assert not provider365.private_only({})
+          data=json.load(open('config/365_teams.json',encoding='utf-8'))
+          assert all(x['league'] in ('en.1','de.1','es.1','it.1','fr.1') for x in data)
+          print('OK: offline tests only; no 365Scores network call, secrets, live ingestion or public redistribution')
+          PY
