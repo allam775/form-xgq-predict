@@ -51,11 +51,12 @@ jobs:
           assert all(r['matches'][i]['status']=='ACTUAL' for i in range(18))
           assert sum(x['status']=='PREDICTION' for x in r['matches'])==126
           assert len(r['expected_league_table'])==36
-          assert all(x['scoreline_method']=='UNCONDITIONAL_EXACT_SCORE_MODE'
+          assert all(x['scoreline_method']=='ONE_SEEDED_RANDOM_REALIZATION'
                      for x in r['matches'] if x['status']=='PREDICTION')
           assert all(len(x['top_scorelines'])==5 and
-                     x['top_scorelines'][0]['scoreline']==x['scoreline']
-                     and abs(x['top_scorelines'][0]['probability']-x['score_probability'])<1e-6
+                     x['top_scorelines'][0]['scoreline']==x['modal_scoreline']
+                     and abs(x['top_scorelines'][0]['probability']-x['modal_score_probability'])<1e-6
+                     and x['scenario_scoreline']==x['scoreline']
                      for x in r['matches'] if x['status']=='PREDICTION')
           assert all(len(x['top_scorelines'])==0 and x['score_probability'] is None
                      for x in r['matches'] if x['status']=='ACTUAL')
@@ -64,8 +65,10 @@ jobs:
           assert sum(z['expected_points'] for z in r['expected_league_table'])>300
           assert r['scoreline_diagnostics']['sum_draw_probabilities']>15
           assert r['scoreline_diagnostics']['sampled_draw_count']>0
+          assert len(r['scoreline_diagnostics']['future_one_sample_score_counts'])>=10
           assert all(abs(x['home_probability']+x['draw_probability']+x['away_probability']-1)<3e-6 for x in r['matches'] if x['status']=='PREDICTION')
-          assert all(x['home_probability'] is None and x['pick'] is None for x in r['matches'] if x['status']=='ACTUAL')
+          assert all(x['home_probability'] is None and x['pick'] is None
+                     and x['modal_scoreline'] is None for x in r['matches'] if x['status']=='ACTUAL')
           assert sum(x['Pts'] for x in r['league_table'])<=432
           assert len(r['scenario_bracket']['playoff'])==8
           assert len(r['scenario_bracket']['round_of_16'])==8
