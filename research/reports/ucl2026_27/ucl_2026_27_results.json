@@ -73,6 +73,53 @@
     "Viking"
   ],
   "n_simulations": 6000,
+  "scoreline_diagnostics": {
+    "previous_2026_10_13_release_unique_future_scorelines": 6,
+    "prior_release_forced_1x2_winner_then_chose_conditional_score": true,
+    "future_modal_exact_score_counts": {
+      "0-2": 8,
+      "1-1": 98,
+      "2-0": 20
+    },
+    "future_one_sample_score_counts": {
+      "0-0": 7,
+      "0-1": 10,
+      "0-2": 9,
+      "0-3": 4,
+      "0-4": 4,
+      "1-0": 11,
+      "1-1": 11,
+      "1-2": 8,
+      "1-3": 5,
+      "1-4": 3,
+      "1-5": 1,
+      "2-0": 12,
+      "2-1": 9,
+      "2-2": 7,
+      "2-3": 2,
+      "3-0": 2,
+      "3-1": 6,
+      "3-2": 4,
+      "3-3": 1,
+      "4-0": 2,
+      "4-1": 2,
+      "4-2": 2,
+      "5-2": 1,
+      "5-5": 1,
+      "6-1": 1,
+      "8-1": 1
+    },
+    "modal_draw_count": 98,
+    "sampled_draw_count": 27,
+    "sum_draw_probabilities": 31.073,
+    "draws_as_top_1x2": 0,
+    "mean_exact_score_mode_probability": 0.12118,
+    "score_mode_can_disagree_with_1x2_pick": true,
+    "main_league_table_is_expected": true,
+    "actual_round1_scores_untouched": true
+  },
+  "displayed_modal_score_is_unconditional": true,
+  "example_table_is_one_seeded_draw_not_the_forecast": true,
   "champion_favorites": [
     {
       "team": "Barcelona",
@@ -127,158 +174,165 @@
   "scenario_bracket": {
     "playoff": [
       {
-        "a": "Sporting CP",
-        "b": "Shakhtar Donetsk",
-        "winner": "Sporting CP"
-      },
-      {
-        "a": "Aston Villa",
-        "b": "Feyenoord",
-        "winner": "Aston Villa"
-      },
-      {
-        "a": "Dortmund",
-        "b": "Fenerbahce",
-        "winner": "Fenerbahce"
+        "a": "Napoli",
+        "b": "Stuttgart",
+        "winner": "Stuttgart"
       },
       {
         "a": "Liverpool",
-        "b": "Villarreal",
+        "b": "Aston Villa",
         "winner": "Liverpool"
       },
       {
-        "a": "Manchester United",
-        "b": "Lens",
-        "winner": "Lens"
+        "a": "Real Madrid",
+        "b": "Feyenoord",
+        "winner": "Real Madrid"
       },
       {
-        "a": "PSV",
-        "b": "Club Brugge",
-        "winner": "PSV"
+        "a": "Atletico Madrid",
+        "b": "Shakhtar Donetsk",
+        "winner": "Atletico Madrid"
+      },
+      {
+        "a": "Club Brugge",
+        "b": "Sporting CP",
+        "winner": "Club Brugge"
+      },
+      {
+        "a": "AEK",
+        "b": "Lens",
+        "winner": "AEK"
       },
       {
         "a": "Roma",
-        "b": "Porto",
-        "winner": "Porto"
+        "b": "Villarreal",
+        "winner": "Roma"
       },
       {
-        "a": "Real Betis",
-        "b": "Como",
-        "winner": "Real Betis"
+        "a": "Arsenal",
+        "b": "RB Leipzig",
+        "winner": "RB Leipzig"
       }
     ],
     "round_of_16": [
       {
-        "a": "Manchester City",
-        "b": "Porto",
-        "winner": "Porto"
-      },
-      {
-        "a": "Real Madrid",
-        "b": "Real Betis",
-        "winner": "Real Madrid"
-      },
-      {
-        "a": "Arsenal",
-        "b": "Lens",
-        "winner": "Arsenal"
-      },
-      {
-        "a": "PSG",
-        "b": "PSV",
-        "winner": "PSG"
+        "a": "Bayern Munich",
+        "b": "Roma",
+        "winner": "Roma"
       },
       {
         "a": "Barcelona",
-        "b": "Fenerbahce",
+        "b": "RB Leipzig",
         "winner": "Barcelona"
       },
       {
-        "a": "Bayern Munich",
-        "b": "Liverpool",
-        "winner": "Bayern Munich"
+        "a": "Manchester City",
+        "b": "Club Brugge",
+        "winner": "Manchester City"
+      },
+      {
+        "a": "Dortmund",
+        "b": "AEK",
+        "winner": "Dortmund"
+      },
+      {
+        "a": "Real Betis",
+        "b": "Real Madrid",
+        "winner": "Real Betis"
       },
       {
         "a": "Inter",
-        "b": "Sporting CP",
-        "winner": "Sporting CP"
+        "b": "Atletico Madrid",
+        "winner": "Inter"
       },
       {
-        "a": "Atletico Madrid",
-        "b": "Aston Villa",
-        "winner": "Atletico Madrid"
+        "a": "PSG",
+        "b": "Stuttgart",
+        "winner": "PSG"
+      },
+      {
+        "a": "Manchester United",
+        "b": "Liverpool",
+        "winner": "Liverpool"
       }
     ],
     "quarter_final": [
       {
-        "a": "Porto",
-        "b": "Real Madrid",
-        "winner": "Real Madrid"
-      },
-      {
-        "a": "Arsenal",
-        "b": "PSG",
-        "winner": "Arsenal"
-      },
-      {
-        "a": "Barcelona",
-        "b": "Bayern Munich",
+        "a": "Roma",
+        "b": "Barcelona",
         "winner": "Barcelona"
       },
       {
-        "a": "Sporting CP",
-        "b": "Atletico Madrid",
-        "winner": "Sporting CP"
+        "a": "Manchester City",
+        "b": "Dortmund",
+        "winner": "Dortmund"
+      },
+      {
+        "a": "Real Betis",
+        "b": "Inter",
+        "winner": "Inter"
+      },
+      {
+        "a": "PSG",
+        "b": "Liverpool",
+        "winner": "PSG"
       }
     ],
     "semi_final": [
       {
-        "a": "Real Madrid",
-        "b": "Arsenal",
-        "winner": "Arsenal"
+        "a": "Barcelona",
+        "b": "Dortmund",
+        "winner": "Barcelona"
       },
       {
-        "a": "Barcelona",
-        "b": "Sporting CP",
-        "winner": "Barcelona"
+        "a": "Inter",
+        "b": "PSG",
+        "winner": "PSG"
       }
     ],
     "final": {
-      "a": "Arsenal",
-      "b": "Barcelona",
-      "winner": "Arsenal"
+      "a": "Barcelona",
+      "b": "PSG",
+      "winner": "Barcelona"
     },
-    "champion": "Arsenal"
+    "champion": "Barcelona"
   },
   "illustrative_favored_bracket": {
     "playoff": [
       {
-        "a": "Sporting CP",
-        "b": "Shakhtar Donetsk",
-        "winner": "Sporting CP",
-        "p_a": 0.6326,
-        "p_b": 0.3674
+        "a": "Inter",
+        "b": "Fenerbahce",
+        "winner": "Inter",
+        "p_a": 0.8047,
+        "p_b": 0.1953
+      },
+      {
+        "a": "Atletico Madrid",
+        "b": "Villarreal",
+        "winner": "Atletico Madrid",
+        "p_a": 0.7467,
+        "p_b": 0.2533
+      },
+      {
+        "a": "Real Betis",
+        "b": "Napoli",
+        "winner": "Real Betis",
+        "p_a": 0.6011,
+        "p_b": 0.3989
       },
       {
         "a": "Aston Villa",
-        "b": "Feyenoord",
+        "b": "Shakhtar Donetsk",
         "winner": "Aston Villa",
-        "p_a": 0.6281,
-        "p_b": 0.3719
+        "p_a": 0.6192,
+        "p_b": 0.3808
       },
       {
-        "a": "Dortmund",
-        "b": "Villarreal",
-        "winner": "Dortmund",
-        "p_a": 0.6642,
-        "p_b": 0.3358
-      },
-      {
-        "a": "Liverpool",
-        "b": "Fenerbahce",
-        "winner": "Liverpool",
-        "p_a": 0.7468,
-        "p_b": 0.2532
+        "a": "Sporting CP",
+        "b": "Como",
+        "winner": "Sporting CP",
+        "p_a": 0.7218,
+        "p_b": 0.2782
       },
       {
         "a": "Manchester United",
@@ -288,13 +342,6 @@
         "p_b": 0.2584
       },
       {
-        "a": "PSV",
-        "b": "Club Brugge",
-        "winner": "PSV",
-        "p_a": 0.5089,
-        "p_b": 0.4911
-      },
-      {
         "a": "Roma",
         "b": "Porto",
         "winner": "Roma",
@@ -302,27 +349,34 @@
         "p_b": 0.4104
       },
       {
-        "a": "Real Betis",
-        "b": "Como",
-        "winner": "Real Betis",
-        "p_a": 0.735,
-        "p_b": 0.265
+        "a": "PSV",
+        "b": "Club Brugge",
+        "winner": "PSV",
+        "p_a": 0.5089,
+        "p_b": 0.4911
       }
     ],
     "round_of_16": [
       {
-        "a": "Manchester City",
+        "a": "Barcelona",
         "b": "Roma",
-        "winner": "Manchester City",
-        "p_a": 0.6175,
-        "p_b": 0.3825
+        "winner": "Barcelona",
+        "p_a": 0.681,
+        "p_b": 0.319
       },
       {
         "a": "Real Madrid",
-        "b": "Real Betis",
+        "b": "PSV",
         "winner": "Real Madrid",
-        "p_a": 0.6995,
-        "p_b": 0.3005
+        "p_a": 0.7163,
+        "p_b": 0.2837
+      },
+      {
+        "a": "Bayern Munich",
+        "b": "Sporting CP",
+        "winner": "Bayern Munich",
+        "p_a": 0.7129,
+        "p_b": 0.2871
       },
       {
         "a": "Arsenal",
@@ -332,209 +386,102 @@
         "p_b": 0.2996
       },
       {
-        "a": "PSG",
-        "b": "PSV",
-        "winner": "PSG",
-        "p_a": 0.7018,
-        "p_b": 0.2982
+        "a": "Manchester City",
+        "b": "Real Betis",
+        "winner": "Manchester City",
+        "p_a": 0.6777,
+        "p_b": 0.3223
       },
       {
-        "a": "Bayern Munich",
-        "b": "Dortmund",
-        "winner": "Bayern Munich",
-        "p_a": 0.652,
-        "p_b": 0.348
-      },
-      {
-        "a": "Barcelona",
-        "b": "Liverpool",
-        "winner": "Barcelona",
-        "p_a": 0.6008,
-        "p_b": 0.3992
-      },
-      {
-        "a": "Atletico Madrid",
-        "b": "Sporting CP",
-        "winner": "Atletico Madrid",
-        "p_a": 0.662,
-        "p_b": 0.338
-      },
-      {
-        "a": "Inter",
+        "a": "Liverpool",
         "b": "Aston Villa",
+        "winner": "Liverpool",
+        "p_a": 0.6384,
+        "p_b": 0.3616
+      },
+      {
+        "a": "PSG",
+        "b": "Inter",
         "winner": "Inter",
-        "p_a": 0.6933,
-        "p_b": 0.3067
+        "p_a": 0.4977,
+        "p_b": 0.5023
+      },
+      {
+        "a": "Dortmund",
+        "b": "Atletico Madrid",
+        "winner": "Atletico Madrid",
+        "p_a": 0.4119,
+        "p_b": 0.5881
       }
     ],
     "quarter_final": [
       {
-        "a": "Manchester City",
+        "a": "Barcelona",
         "b": "Real Madrid",
-        "winner": "Real Madrid",
-        "p_a": 0.4707,
-        "p_b": 0.5293
-      },
-      {
-        "a": "Arsenal",
-        "b": "PSG",
-        "winner": "Arsenal",
-        "p_a": 0.5145,
-        "p_b": 0.4855
+        "winner": "Barcelona",
+        "p_a": 0.5385,
+        "p_b": 0.4615
       },
       {
         "a": "Bayern Munich",
-        "b": "Barcelona",
-        "winner": "Barcelona",
-        "p_a": 0.4732,
-        "p_b": 0.5268
+        "b": "Arsenal",
+        "winner": "Bayern Munich",
+        "p_a": 0.5173,
+        "p_b": 0.4827
       },
       {
-        "a": "Atletico Madrid",
-        "b": "Inter",
+        "a": "Manchester City",
+        "b": "Liverpool",
+        "winner": "Manchester City",
+        "p_a": 0.5617,
+        "p_b": 0.4383
+      },
+      {
+        "a": "Inter",
+        "b": "Atletico Madrid",
         "winner": "Inter",
-        "p_a": 0.4619,
-        "p_b": 0.5381
+        "p_a": 0.5381,
+        "p_b": 0.4619
       }
     ],
     "semi_final": [
       {
-        "a": "Real Madrid",
-        "b": "Arsenal",
-        "winner": "Real Madrid",
-        "p_a": 0.5057,
-        "p_b": 0.4943
+        "a": "Barcelona",
+        "b": "Bayern Munich",
+        "winner": "Barcelona",
+        "p_a": 0.5268,
+        "p_b": 0.4732
       },
       {
-        "a": "Barcelona",
+        "a": "Manchester City",
         "b": "Inter",
-        "winner": "Barcelona",
-        "p_a": 0.5487,
-        "p_b": 0.4513
+        "winner": "Inter",
+        "p_a": 0.4875,
+        "p_b": 0.5125
       }
     ],
     "final": {
-      "a": "Real Madrid",
-      "b": "Barcelona",
+      "a": "Barcelona",
+      "b": "Inter",
       "winner": "Barcelona",
-      "p_a": 0.4741,
-      "p_b": 0.5259
+      "p_a": 0.5327,
+      "p_b": 0.4673
     },
     "note": "Illustrative permissible pairing path; no official knockout draw exists yet."
   },
   "league_table": [
     {
-      "team": "Manchester City",
-      "pot": 1,
-      "P": 8,
-      "W": 4,
-      "D": 4,
-      "L": 0,
-      "GF": 12,
-      "GA": 4,
-      "GD": 8,
-      "Pts": 16,
-      "rank": 1,
-      "route": "direct_ro16",
-      "top8": 0.6345,
-      "top24": 0.982,
-      "r16": 0.26183,
-      "qf": 0.58033,
-      "sf": 0.33517,
-      "final": 0.17983,
-      "champion": 0.09067,
-      "expected_points": 15.83867,
-      "mean_rank": 7.7605,
-      "rank_low_90": 1,
-      "rank_high_90": 20
-    },
-    {
-      "team": "Real Madrid",
-      "pot": 1,
-      "P": 8,
-      "W": 4,
-      "D": 4,
-      "L": 0,
-      "GF": 12,
-      "GA": 5,
-      "GD": 7,
-      "Pts": 16,
-      "rank": 2,
-      "route": "direct_ro16",
-      "top8": 0.6815,
-      "top24": 0.9905,
-      "r16": 0.23583,
-      "qf": 0.61267,
-      "sf": 0.36117,
-      "final": 0.20717,
-      "champion": 0.10967,
-      "expected_points": 16.34217,
-      "mean_rank": 6.98317,
-      "rank_low_90": 1,
-      "rank_high_90": 18
-    },
-    {
-      "team": "Arsenal",
-      "pot": 1,
-      "P": 8,
-      "W": 4,
-      "D": 4,
-      "L": 0,
-      "GF": 11,
-      "GA": 4,
-      "GD": 7,
-      "Pts": 16,
-      "rank": 3,
-      "route": "direct_ro16",
-      "top8": 0.64367,
-      "top24": 0.98433,
-      "r16": 0.25933,
-      "qf": 0.60967,
-      "sf": 0.3615,
-      "final": 0.20317,
-      "champion": 0.10517,
-      "expected_points": 15.956,
-      "mean_rank": 7.6405,
-      "rank_low_90": 1,
-      "rank_high_90": 19
-    },
-    {
-      "team": "PSG",
-      "pot": 1,
-      "P": 8,
-      "W": 3,
-      "D": 5,
-      "L": 0,
-      "GF": 15,
-      "GA": 6,
-      "GD": 9,
-      "Pts": 14,
-      "rank": 4,
-      "route": "direct_ro16",
-      "top8": 0.5775,
-      "top24": 0.97233,
-      "r16": 0.30133,
-      "qf": 0.5685,
-      "sf": 0.33033,
-      "final": 0.18933,
-      "champion": 0.10067,
-      "expected_points": 15.09533,
-      "mean_rank": 8.69217,
-      "rank_low_90": 1,
-      "rank_high_90": 22
-    },
-    {
       "team": "Bayern Munich",
       "pot": 1,
       "P": 8,
-      "W": 3,
-      "D": 5,
+      "W": 7,
+      "D": 1,
       "L": 0,
-      "GF": 14,
-      "GA": 5,
-      "GD": 9,
-      "Pts": 14,
-      "rank": 5,
+      "GF": 23,
+      "GA": 3,
+      "GD": 20,
+      "Pts": 22,
+      "rank": 1,
       "route": "direct_ro16",
       "top8": 0.7105,
       "top24": 0.991,
@@ -552,14 +499,14 @@
       "team": "Barcelona",
       "pot": 1,
       "P": 8,
-      "W": 3,
-      "D": 5,
-      "L": 0,
-      "GF": 14,
-      "GA": 6,
-      "GD": 8,
-      "Pts": 14,
-      "rank": 6,
+      "W": 7,
+      "D": 0,
+      "L": 1,
+      "GF": 23,
+      "GA": 7,
+      "GD": 16,
+      "Pts": 21,
+      "rank": 2,
       "route": "direct_ro16",
       "top8": 0.70583,
       "top24": 0.992,
@@ -574,42 +521,67 @@
       "rank_high_90": 17
     },
     {
-      "team": "Atletico Madrid",
+      "team": "Manchester City",
       "pot": 1,
       "P": 8,
-      "W": 3,
-      "D": 4,
+      "W": 7,
+      "D": 0,
       "L": 1,
-      "GF": 11,
+      "GF": 20,
       "GA": 6,
-      "GD": 5,
-      "Pts": 13,
-      "rank": 7,
+      "GD": 14,
+      "Pts": 21,
+      "rank": 3,
       "route": "direct_ro16",
-      "top8": 0.357,
-      "top24": 0.91983,
-      "r16": 0.40417,
-      "qf": 0.439,
-      "sf": 0.238,
-      "final": 0.11933,
-      "champion": 0.06,
-      "expected_points": 13.35417,
-      "mean_rank": 12.44533,
+      "top8": 0.6345,
+      "top24": 0.982,
+      "r16": 0.26183,
+      "qf": 0.58033,
+      "sf": 0.33517,
+      "final": 0.17983,
+      "champion": 0.09067,
+      "expected_points": 15.83867,
+      "mean_rank": 7.7605,
+      "rank_low_90": 1,
+      "rank_high_90": 20
+    },
+    {
+      "team": "Dortmund",
+      "pot": 2,
+      "P": 8,
+      "W": 6,
+      "D": 1,
+      "L": 1,
+      "GF": 15,
+      "GA": 6,
+      "GD": 9,
+      "Pts": 19,
+      "rank": 4,
+      "route": "direct_ro16",
+      "top8": 0.3965,
+      "top24": 0.93967,
+      "r16": 0.34567,
+      "qf": 0.3775,
+      "sf": 0.17867,
+      "final": 0.06983,
+      "champion": 0.02533,
+      "expected_points": 14.01183,
+      "mean_rank": 11.62933,
       "rank_low_90": 2,
-      "rank_high_90": 27
+      "rank_high_90": 26
     },
     {
       "team": "Inter",
       "pot": 1,
       "P": 8,
-      "W": 3,
-      "D": 4,
-      "L": 1,
-      "GF": 11,
-      "GA": 6,
-      "GD": 5,
-      "Pts": 13,
-      "rank": 8,
+      "W": 5,
+      "D": 1,
+      "L": 2,
+      "GF": 19,
+      "GA": 10,
+      "GD": 9,
+      "Pts": 16,
+      "rank": 5,
       "route": "direct_ro16",
       "top8": 0.42467,
       "top24": 0.93183,
@@ -624,92 +596,117 @@
       "rank_high_90": 26
     },
     {
-      "team": "Sporting CP",
+      "team": "Real Betis",
       "pot": 2,
       "P": 8,
-      "W": 2,
-      "D": 6,
-      "L": 0,
-      "GF": 11,
-      "GA": 7,
-      "GD": 4,
-      "Pts": 12,
-      "rank": 9,
-      "route": "playoff",
-      "top8": 0.26317,
-      "top24": 0.88317,
-      "r16": 0.34533,
-      "qf": 0.24333,
-      "sf": 0.08717,
-      "final": 0.02967,
-      "champion": 0.01033,
-      "expected_points": 12.82367,
-      "mean_rank": 14.17133,
-      "rank_low_90": 3,
-      "rank_high_90": 28
-    },
-    {
-      "team": "Aston Villa",
-      "pot": 2,
-      "P": 8,
-      "W": 2,
-      "D": 6,
-      "L": 0,
-      "GF": 11,
-      "GA": 8,
-      "GD": 3,
-      "Pts": 12,
-      "rank": 10,
-      "route": "playoff",
-      "top8": 0.30967,
-      "top24": 0.91183,
-      "r16": 0.32833,
-      "qf": 0.25883,
-      "sf": 0.08517,
-      "final": 0.0255,
-      "champion": 0.00983,
-      "expected_points": 13.31817,
-      "mean_rank": 13.19683,
+      "W": 5,
+      "D": 1,
+      "L": 2,
+      "GF": 18,
+      "GA": 10,
+      "GD": 8,
+      "Pts": 16,
+      "rank": 6,
+      "route": "direct_ro16",
+      "top8": 0.31067,
+      "top24": 0.91017,
+      "r16": 0.34,
+      "qf": 0.2925,
+      "sf": 0.11383,
+      "final": 0.04083,
+      "champion": 0.015,
+      "expected_points": 13.32017,
+      "mean_rank": 13.17767,
       "rank_low_90": 2,
       "rank_high_90": 27
     },
     {
-      "team": "Dortmund",
+      "team": "Manchester United",
       "pot": 2,
       "P": 8,
-      "W": 2,
-      "D": 6,
-      "L": 0,
+      "W": 4,
+      "D": 3,
+      "L": 1,
+      "GF": 19,
+      "GA": 10,
+      "GD": 9,
+      "Pts": 15,
+      "rank": 7,
+      "route": "direct_ro16",
+      "top8": 0.2565,
+      "top24": 0.87183,
+      "r16": 0.34117,
+      "qf": 0.24967,
+      "sf": 0.09333,
+      "final": 0.033,
+      "champion": 0.013,
+      "expected_points": 12.447,
+      "mean_rank": 14.54967,
+      "rank_low_90": 3,
+      "rank_high_90": 29
+    },
+    {
+      "team": "PSG",
+      "pot": 1,
+      "P": 8,
+      "W": 5,
+      "D": 0,
+      "L": 3,
+      "GF": 21,
+      "GA": 15,
+      "GD": 6,
+      "Pts": 15,
+      "rank": 8,
+      "route": "direct_ro16",
+      "top8": 0.5775,
+      "top24": 0.97233,
+      "r16": 0.30133,
+      "qf": 0.5685,
+      "sf": 0.33033,
+      "final": 0.18933,
+      "champion": 0.10067,
+      "expected_points": 15.09533,
+      "mean_rank": 8.69217,
+      "rank_low_90": 1,
+      "rank_high_90": 22
+    },
+    {
+      "team": "Napoli",
+      "pot": 3,
+      "P": 8,
+      "W": 5,
+      "D": 0,
+      "L": 3,
       "GF": 11,
-      "GA": 8,
-      "GD": 3,
-      "Pts": 12,
-      "rank": 11,
+      "GA": 7,
+      "GD": 4,
+      "Pts": 15,
+      "rank": 9,
       "route": "playoff",
-      "top8": 0.3965,
-      "top24": 0.93967,
-      "r16": 0.34567,
-      "qf": 0.3775,
-      "sf": 0.17867,
-      "final": 0.06983,
-      "champion": 0.02533,
-      "expected_points": 14.01183,
-      "mean_rank": 11.62933,
-      "rank_low_90": 2,
-      "rank_high_90": 26
+      "top8": 0.064,
+      "top24": 0.60217,
+      "r16": 0.22567,
+      "qf": 0.09167,
+      "sf": 0.02533,
+      "final": 0.0065,
+      "champion": 0.00117,
+      "expected_points": 9.60567,
+      "mean_rank": 21.72,
+      "rank_low_90": 8,
+      "rank_high_90": 34
     },
     {
       "team": "Liverpool",
       "pot": 1,
       "P": 8,
-      "W": 2,
-      "D": 6,
-      "L": 0,
+      "W": 4,
+      "D": 3,
+      "L": 1,
       "GF": 10,
       "GA": 7,
       "GD": 3,
-      "Pts": 12,
-      "rank": 12,
+      "Pts": 15,
+      "rank": 10,
       "route": "playoff",
       "top8": 0.57283,
       "top24": 0.97617,
@@ -724,66 +721,116 @@
       "rank_high_90": 21
     },
     {
-      "team": "Manchester United",
-      "pot": 2,
+      "team": "Real Madrid",
+      "pot": 1,
       "P": 8,
-      "W": 1,
-      "D": 7,
-      "L": 0,
-      "GF": 11,
-      "GA": 7,
-      "GD": 4,
-      "Pts": 10,
-      "rank": 13,
+      "W": 4,
+      "D": 2,
+      "L": 2,
+      "GF": 14,
+      "GA": 11,
+      "GD": 3,
+      "Pts": 14,
+      "rank": 11,
       "route": "playoff",
-      "top8": 0.2565,
-      "top24": 0.87183,
-      "r16": 0.34117,
-      "qf": 0.24967,
-      "sf": 0.09333,
-      "final": 0.033,
-      "champion": 0.013,
-      "expected_points": 12.447,
-      "mean_rank": 14.54967,
-      "rank_low_90": 3,
-      "rank_high_90": 29
+      "top8": 0.6815,
+      "top24": 0.9905,
+      "r16": 0.23583,
+      "qf": 0.61267,
+      "sf": 0.36117,
+      "final": 0.20717,
+      "champion": 0.10967,
+      "expected_points": 16.34217,
+      "mean_rank": 6.98317,
+      "rank_low_90": 1,
+      "rank_high_90": 18
     },
     {
-      "team": "PSV",
+      "team": "Atletico Madrid",
+      "pot": 1,
+      "P": 8,
+      "W": 3,
+      "D": 4,
+      "L": 1,
+      "GF": 17,
+      "GA": 12,
+      "GD": 5,
+      "Pts": 13,
+      "rank": 12,
+      "route": "playoff",
+      "top8": 0.357,
+      "top24": 0.91983,
+      "r16": 0.40417,
+      "qf": 0.439,
+      "sf": 0.238,
+      "final": 0.11933,
+      "champion": 0.06,
+      "expected_points": 13.35417,
+      "mean_rank": 12.44533,
+      "rank_low_90": 2,
+      "rank_high_90": 27
+    },
+    {
+      "team": "Club Brugge",
       "pot": 2,
       "P": 8,
-      "W": 1,
-      "D": 7,
-      "L": 0,
-      "GF": 9,
-      "GA": 7,
-      "GD": 2,
-      "Pts": 10,
+      "W": 4,
+      "D": 1,
+      "L": 3,
+      "GF": 13,
+      "GA": 10,
+      "GD": 3,
+      "Pts": 13,
+      "rank": 13,
+      "route": "playoff",
+      "top8": 0.08633,
+      "top24": 0.65633,
+      "r16": 0.2955,
+      "qf": 0.145,
+      "sf": 0.05217,
+      "final": 0.01683,
+      "champion": 0.0045,
+      "expected_points": 10.04717,
+      "mean_rank": 20.5225,
+      "rank_low_90": 7,
+      "rank_high_90": 33
+    },
+    {
+      "team": "AEK",
+      "pot": 4,
+      "P": 8,
+      "W": 4,
+      "D": 1,
+      "L": 3,
+      "GF": 10,
+      "GA": 10,
+      "GD": 0,
+      "Pts": 13,
       "rank": 14,
       "route": "playoff",
-      "top8": 0.12567,
-      "top24": 0.73917,
-      "r16": 0.32167,
-      "qf": 0.167,
-      "sf": 0.05617,
-      "final": 0.01767,
-      "champion": 0.00567,
-      "expected_points": 10.95,
-      "mean_rank": 18.47133,
-      "rank_low_90": 5,
-      "rank_high_90": 32
+      "top8": 0.02683,
+      "top24": 0.4435,
+      "r16": 0.09867,
+      "qf": 0.02183,
+      "sf": 0.00433,
+      "final": 0.00083,
+      "champion": 0.00033,
+      "expected_points": 8.77617,
+      "mean_rank": 24.54233,
+      "rank_low_90": 11,
+      "rank_high_90": 34
     },
     {
       "team": "Roma",
       "pot": 2,
       "P": 8,
-      "W": 1,
-      "D": 7,
-      "L": 0,
-      "GF": 9,
-      "GA": 7,
-      "GD": 2,
-      "Pts": 10,
+      "W": 4,
+      "D": 1,
+      "L": 3,
+      "GF": 13,
+      "GA": 14,
+      "GD": -1,
+      "Pts": 13,
       "rank": 15,
       "route": "playoff",
       "top8": 0.2385,
@@ -799,142 +846,42 @@
       "rank_high_90": 29
     },
     {
-      "team": "Real Betis",
-      "pot": 2,
+      "team": "Arsenal",
+      "pot": 1,
       "P": 8,
-      "W": 1,
-      "D": 7,
-      "L": 0,
-      "GF": 10,
-      "GA": 9,
-      "GD": 1,
-      "Pts": 10,
+      "W": 4,
+      "D": 0,
+      "L": 4,
+      "GF": 14,
+      "GA": 11,
+      "GD": 3,
+      "Pts": 12,
       "rank": 16,
       "route": "playoff",
-      "top8": 0.31067,
-      "top24": 0.91017,
-      "r16": 0.34,
-      "qf": 0.2925,
-      "sf": 0.11383,
-      "final": 0.04083,
-      "champion": 0.015,
-      "expected_points": 13.32017,
-      "mean_rank": 13.17767,
-      "rank_low_90": 2,
-      "rank_high_90": 27
-    },
-    {
-      "team": "Porto",
-      "pot": 2,
-      "P": 8,
-      "W": 1,
-      "D": 6,
-      "L": 1,
-      "GF": 8,
-      "GA": 8,
-      "GD": 0,
-      "Pts": 9,
-      "rank": 17,
-      "route": "playoff",
-      "top8": 0.10283,
-      "top24": 0.69633,
-      "r16": 0.3085,
-      "qf": 0.155,
-      "sf": 0.0605,
-      "final": 0.01783,
-      "champion": 0.008,
-      "expected_points": 10.55567,
-      "mean_rank": 19.568,
-      "rank_low_90": 6,
-      "rank_high_90": 33
-    },
-    {
-      "team": "Como",
-      "pot": 4,
-      "P": 8,
-      "W": 1,
-      "D": 5,
-      "L": 2,
-      "GF": 9,
-      "GA": 10,
-      "GD": -1,
-      "Pts": 8,
-      "rank": 18,
-      "route": "playoff",
-      "top8": 0.062,
-      "top24": 0.6105,
-      "r16": 0.161,
-      "qf": 0.041,
-      "sf": 0.007,
-      "final": 0.0005,
-      "champion": 0.00033,
-      "expected_points": 9.77733,
-      "mean_rank": 21.51367,
-      "rank_low_90": 8,
-      "rank_high_90": 33
-    },
-    {
-      "team": "Lens",
-      "pot": 4,
-      "P": 8,
-      "W": 1,
-      "D": 5,
-      "L": 2,
-      "GF": 8,
-      "GA": 11,
-      "GD": -3,
-      "Pts": 8,
-      "rank": 19,
-      "route": "playoff",
-      "top8": 0.05367,
-      "top24": 0.57983,
-      "r16": 0.15033,
-      "qf": 0.03433,
-      "sf": 0.00567,
-      "final": 0.00117,
-      "champion": 0.00017,
-      "expected_points": 9.739,
-      "mean_rank": 22.03133,
-      "rank_low_90": 8,
-      "rank_high_90": 34
-    },
-    {
-      "team": "Club Brugge",
-      "pot": 2,
-      "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
-      "GF": 9,
-      "GA": 10,
-      "GD": -1,
-      "Pts": 7,
-      "rank": 20,
-      "route": "playoff",
-      "top8": 0.08633,
-      "top24": 0.65633,
-      "r16": 0.2955,
-      "qf": 0.145,
-      "sf": 0.05217,
-      "final": 0.01683,
-      "champion": 0.0045,
-      "expected_points": 10.04717,
-      "mean_rank": 20.5225,
-      "rank_low_90": 7,
-      "rank_high_90": 33
+      "top8": 0.64367,
+      "top24": 0.98433,
+      "r16": 0.25933,
+      "qf": 0.60967,
+      "sf": 0.3615,
+      "final": 0.20317,
+      "champion": 0.10517,
+      "expected_points": 15.956,
+      "mean_rank": 7.6405,
+      "rank_low_90": 1,
+      "rank_high_90": 19
     },
     {
       "team": "Villarreal",
       "pot": 3,
       "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
-      "GF": 9,
-      "GA": 10,
-      "GD": -1,
-      "Pts": 7,
-      "rank": 21,
+      "W": 4,
+      "D": 0,
+      "L": 4,
+      "GF": 13,
+      "GA": 12,
+      "GD": 1,
+      "Pts": 12,
+      "rank": 17,
       "route": "playoff",
       "top8": 0.06267,
       "top24": 0.58017,
@@ -949,52 +896,77 @@
       "rank_high_90": 34
     },
     {
-      "team": "Fenerbahce",
+      "team": "RB Leipzig",
       "pot": 3,
       "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
+      "W": 3,
+      "D": 3,
+      "L": 2,
       "GF": 7,
-      "GA": 9,
-      "GD": -2,
-      "Pts": 7,
-      "rank": 22,
+      "GA": 10,
+      "GD": -3,
+      "Pts": 12,
+      "rank": 18,
       "route": "playoff",
-      "top8": 0.0565,
-      "top24": 0.5855,
-      "r16": 0.20417,
-      "qf": 0.0685,
-      "sf": 0.01933,
+      "top8": 0.034,
+      "top24": 0.48317,
+      "r16": 0.18983,
+      "qf": 0.0665,
+      "sf": 0.01583,
       "final": 0.00333,
-      "champion": 0.00183,
-      "expected_points": 9.5765,
-      "mean_rank": 21.91383,
-      "rank_low_90": 8,
-      "rank_high_90": 34
+      "champion": 0.0005,
+      "expected_points": 8.81433,
+      "mean_rank": 24.0415,
+      "rank_low_90": 10,
+      "rank_high_90": 35
     },
     {
-      "team": "Shakhtar Donetsk",
-      "pot": 3,
+      "team": "Sporting CP",
+      "pot": 2,
       "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
-      "GF": 7,
-      "GA": 9,
-      "GD": -2,
-      "Pts": 7,
-      "rank": 23,
+      "W": 3,
+      "D": 2,
+      "L": 3,
+      "GF": 12,
+      "GA": 13,
+      "GD": -1,
+      "Pts": 11,
+      "rank": 19,
       "route": "playoff",
-      "top8": 0.05417,
-      "top24": 0.588,
-      "r16": 0.2,
-      "qf": 0.06717,
-      "sf": 0.02017,
-      "final": 0.006,
-      "champion": 0.0015,
-      "expected_points": 9.583,
-      "mean_rank": 21.94033,
+      "top8": 0.26317,
+      "top24": 0.88317,
+      "r16": 0.34533,
+      "qf": 0.24333,
+      "sf": 0.08717,
+      "final": 0.02967,
+      "champion": 0.01033,
+      "expected_points": 12.82367,
+      "mean_rank": 14.17133,
+      "rank_low_90": 3,
+      "rank_high_90": 28
+    },
+    {
+      "team": "Lens",
+      "pot": 4,
+      "P": 8,
+      "W": 3,
+      "D": 1,
+      "L": 4,
+      "GF": 11,
+      "GA": 11,
+      "GD": 0,
+      "Pts": 10,
+      "rank": 20,
+      "route": "playoff",
+      "top8": 0.05367,
+      "top24": 0.57983,
+      "r16": 0.15033,
+      "qf": 0.03433,
+      "sf": 0.00567,
+      "final": 0.00117,
+      "champion": 0.00017,
+      "expected_points": 9.739,
+      "mean_rank": 22.03133,
       "rank_low_90": 8,
       "rank_high_90": 34
     },
@@ -1002,14 +974,14 @@
       "team": "Feyenoord",
       "pot": 3,
       "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
+      "W": 2,
+      "D": 4,
+      "L": 2,
       "GF": 8,
-      "GA": 12,
-      "GD": -4,
-      "Pts": 7,
-      "rank": 24,
+      "GA": 10,
+      "GD": -2,
+      "Pts": 10,
+      "rank": 21,
       "route": "playoff",
       "top8": 0.03567,
       "top24": 0.473,
@@ -1024,18 +996,43 @@
       "rank_high_90": 35
     },
     {
+      "team": "Shakhtar Donetsk",
+      "pot": 3,
+      "P": 8,
+      "W": 2,
+      "D": 3,
+      "L": 3,
+      "GF": 8,
+      "GA": 10,
+      "GD": -2,
+      "Pts": 9,
+      "rank": 22,
+      "route": "playoff",
+      "top8": 0.05417,
+      "top24": 0.588,
+      "r16": 0.2,
+      "qf": 0.06717,
+      "sf": 0.02017,
+      "final": 0.006,
+      "champion": 0.0015,
+      "expected_points": 9.583,
+      "mean_rank": 21.94033,
+      "rank_low_90": 8,
+      "rank_high_90": 34
+    },
+    {
       "team": "Stuttgart",
       "pot": 4,
       "P": 8,
-      "W": 1,
-      "D": 4,
+      "W": 2,
+      "D": 3,
       "L": 3,
-      "GF": 7,
-      "GA": 11,
+      "GF": 8,
+      "GA": 12,
       "GD": -4,
-      "Pts": 7,
-      "rank": 25,
-      "route": "eliminated",
+      "Pts": 9,
+      "rank": 23,
+      "route": "playoff",
       "top8": 0.0345,
       "top24": 0.5,
       "r16": 0.11367,
@@ -1049,17 +1046,92 @@
       "rank_high_90": 34
     },
     {
+      "team": "Aston Villa",
+      "pot": 2,
+      "P": 8,
+      "W": 2,
+      "D": 2,
+      "L": 4,
+      "GF": 10,
+      "GA": 13,
+      "GD": -3,
+      "Pts": 8,
+      "rank": 24,
+      "route": "playoff",
+      "top8": 0.30967,
+      "top24": 0.91183,
+      "r16": 0.32833,
+      "qf": 0.25883,
+      "sf": 0.08517,
+      "final": 0.0255,
+      "champion": 0.00983,
+      "expected_points": 13.31817,
+      "mean_rank": 13.19683,
+      "rank_low_90": 2,
+      "rank_high_90": 27
+    },
+    {
+      "team": "PSV",
+      "pot": 2,
+      "P": 8,
+      "W": 2,
+      "D": 2,
+      "L": 4,
+      "GF": 7,
+      "GA": 11,
+      "GD": -4,
+      "Pts": 8,
+      "rank": 25,
+      "route": "eliminated",
+      "top8": 0.12567,
+      "top24": 0.73917,
+      "r16": 0.32167,
+      "qf": 0.167,
+      "sf": 0.05617,
+      "final": 0.01767,
+      "champion": 0.00567,
+      "expected_points": 10.95,
+      "mean_rank": 18.47133,
+      "rank_low_90": 5,
+      "rank_high_90": 32
+    },
+    {
+      "team": "Como",
+      "pot": 4,
+      "P": 8,
+      "W": 2,
+      "D": 2,
+      "L": 4,
+      "GF": 12,
+      "GA": 19,
+      "GD": -7,
+      "Pts": 8,
+      "rank": 26,
+      "route": "eliminated",
+      "top8": 0.062,
+      "top24": 0.6105,
+      "r16": 0.161,
+      "qf": 0.041,
+      "sf": 0.007,
+      "final": 0.0005,
+      "champion": 0.00033,
+      "expected_points": 9.77733,
+      "mean_rank": 21.51367,
+      "rank_low_90": 8,
+      "rank_high_90": 33
+    },
+    {
       "team": "Bodo Glimt",
       "pot": 3,
       "P": 8,
-      "W": 0,
-      "D": 7,
-      "L": 1,
-      "GF": 7,
-      "GA": 12,
-      "GD": -5,
-      "Pts": 7,
-      "rank": 26,
+      "W": 2,
+      "D": 2,
+      "L": 4,
+      "GF": 8,
+      "GA": 15,
+      "GD": -7,
+      "Pts": 8,
+      "rank": 27,
       "route": "eliminated",
       "top8": 0.032,
       "top24": 0.44617,
@@ -1074,77 +1146,27 @@
       "rank_high_90": 35
     },
     {
-      "team": "AEK",
-      "pot": 4,
+      "team": "Fenerbahce",
+      "pot": 3,
       "P": 8,
       "W": 1,
       "D": 4,
       "L": 3,
-      "GF": 5,
-      "GA": 10,
-      "GD": -5,
+      "GF": 9,
+      "GA": 16,
+      "GD": -7,
       "Pts": 7,
-      "rank": 27,
-      "route": "eliminated",
-      "top8": 0.02683,
-      "top24": 0.4435,
-      "r16": 0.09867,
-      "qf": 0.02183,
-      "sf": 0.00433,
-      "final": 0.00083,
-      "champion": 0.00033,
-      "expected_points": 8.77617,
-      "mean_rank": 24.54233,
-      "rank_low_90": 11,
-      "rank_high_90": 34
-    },
-    {
-      "team": "Lille",
-      "pot": 3,
-      "P": 8,
-      "W": 0,
-      "D": 6,
-      "L": 2,
-      "GF": 8,
-      "GA": 11,
-      "GD": -3,
-      "Pts": 6,
       "rank": 28,
       "route": "eliminated",
-      "top8": 0.0255,
-      "top24": 0.4555,
-      "r16": 0.1645,
-      "qf": 0.04867,
-      "sf": 0.01217,
-      "final": 0.00283,
-      "champion": 0.00067,
-      "expected_points": 8.43017,
-      "mean_rank": 24.553,
-      "rank_low_90": 11,
-      "rank_high_90": 35
-    },
-    {
-      "team": "Napoli",
-      "pot": 3,
-      "P": 8,
-      "W": 0,
-      "D": 6,
-      "L": 2,
-      "GF": 6,
-      "GA": 9,
-      "GD": -3,
-      "Pts": 6,
-      "rank": 29,
-      "route": "eliminated",
-      "top8": 0.064,
-      "top24": 0.60217,
-      "r16": 0.22567,
-      "qf": 0.09167,
-      "sf": 0.02533,
-      "final": 0.0065,
-      "champion": 0.00117,
-      "expected_points": 9.60567,
-      "mean_rank": 21.72,
+      "top8": 0.0565,
+      "top24": 0.5855,
+      "r16": 0.20417,
+      "qf": 0.0685,
+      "sf": 0.01933,
+      "final": 0.00333,
+      "champion": 0.00183,
+      "expected_points": 9.5765,
+      "mean_rank": 21.91383,
       "rank_low_90": 8,
       "rank_high_90": 34
     },
@@ -1152,14 +1174,14 @@
       "team": "Galatasaray",
       "pot": 3,
       "P": 8,
-      "W": 0,
-      "D": 6,
-      "L": 2,
-      "GF": 7,
-      "GA": 11,
-      "GD": -4,
+      "W": 1,
+      "D": 3,
+      "L": 4,
+      "GF": 9,
+      "GA": 14,
+      "GD": -5,
       "Pts": 6,
-      "rank": 30,
+      "rank": 29,
       "route": "eliminated",
       "top8": 0.03433,
       "top24": 0.4625,
@@ -1174,117 +1196,17 @@
       "rank_high_90": 35
     },
     {
-      "team": "RB Leipzig",
-      "pot": 3,
-      "P": 8,
-      "W": 0,
-      "D": 6,
-      "L": 2,
-      "GF": 7,
-      "GA": 12,
-      "GD": -5,
-      "Pts": 6,
-      "rank": 31,
-      "route": "eliminated",
-      "top8": 0.034,
-      "top24": 0.48317,
-      "r16": 0.18983,
-      "qf": 0.0665,
-      "sf": 0.01583,
-      "final": 0.00333,
-      "champion": 0.0005,
-      "expected_points": 8.81433,
-      "mean_rank": 24.0415,
-      "rank_low_90": 10,
-      "rank_high_90": 35
-    },
-    {
-      "team": "LASK",
-      "pot": 4,
-      "P": 8,
-      "W": 0,
-      "D": 5,
-      "L": 3,
-      "GF": 5,
-      "GA": 10,
-      "GD": -5,
-      "Pts": 5,
-      "rank": 32,
-      "route": "eliminated",
-      "top8": 0.00633,
-      "top24": 0.21067,
-      "r16": 0.045,
-      "qf": 0.0075,
-      "sf": 0.00083,
-      "final": 0.00017,
-      "champion": 0.0,
-      "expected_points": 6.371,
-      "mean_rank": 29.21467,
-      "rank_low_90": 16,
-      "rank_high_90": 36
-    },
-    {
-      "team": "Sabah",
-      "pot": 4,
-      "P": 8,
-      "W": 0,
-      "D": 5,
-      "L": 3,
-      "GF": 5,
-      "GA": 13,
-      "GD": -8,
-      "Pts": 5,
-      "rank": 33,
-      "route": "eliminated",
-      "top8": 0.00383,
-      "top24": 0.18817,
-      "r16": 0.04167,
-      "qf": 0.00733,
-      "sf": 0.00167,
-      "final": 0.0,
-      "champion": 0.0,
-      "expected_points": 6.3625,
-      "mean_rank": 29.74817,
-      "rank_low_90": 17,
-      "rank_high_90": 36
-    },
-    {
-      "team": "Slovan Bratislava",
-      "pot": 4,
-      "P": 8,
-      "W": 0,
-      "D": 5,
-      "L": 3,
-      "GF": 6,
-      "GA": 15,
-      "GD": -9,
-      "Pts": 5,
-      "rank": 34,
-      "route": "eliminated",
-      "top8": 0.009,
-      "top24": 0.23867,
-      "r16": 0.05267,
-      "qf": 0.00833,
-      "sf": 0.00067,
-      "final": 0.0,
-      "champion": 0.0,
-      "expected_points": 6.95867,
-      "mean_rank": 28.6315,
-      "rank_low_90": 15,
-      "rank_high_90": 36
-    },
-    {
       "team": "Slavia Prague",
       "pot": 4,
       "P": 8,
-      "W": 0,
-      "D": 4,
-      "L": 4,
-      "GF": 6,
-      "GA": 13,
-      "GD": -7,
-      "Pts": 4,
-      "rank": 35,
+      "W": 2,
+      "D": 0,
+      "L": 6,
+      "GF": 7,
+      "GA": 16,
+      "GD": -9,
+      "Pts": 6,
+      "rank": 30,
       "route": "eliminated",
       "top8": 0.0035,
       "top24": 0.15783,
@@ -1299,17 +1221,67 @@
       "rank_high_90": 36
     },
     {
+      "team": "LASK",
+      "pot": 4,
+      "P": 8,
+      "W": 1,
+      "D": 2,
+      "L": 5,
+      "GF": 7,
+      "GA": 11,
+      "GD": -4,
+      "Pts": 5,
+      "rank": 31,
+      "route": "eliminated",
+      "top8": 0.00633,
+      "top24": 0.21067,
+      "r16": 0.045,
+      "qf": 0.0075,
+      "sf": 0.00083,
+      "final": 0.00017,
+      "champion": 0.0,
+      "expected_points": 6.371,
+      "mean_rank": 29.21467,
+      "rank_low_90": 16,
+      "rank_high_90": 36
+    },
+    {
+      "team": "Porto",
+      "pot": 2,
+      "P": 8,
+      "W": 1,
+      "D": 2,
+      "L": 5,
+      "GF": 5,
+      "GA": 10,
+      "GD": -5,
+      "Pts": 5,
+      "rank": 32,
+      "route": "eliminated",
+      "top8": 0.10283,
+      "top24": 0.69633,
+      "r16": 0.3085,
+      "qf": 0.155,
+      "sf": 0.0605,
+      "final": 0.01783,
+      "champion": 0.008,
+      "expected_points": 10.55567,
+      "mean_rank": 19.568,
+      "rank_low_90": 6,
+      "rank_high_90": 33
+    },
+    {
       "team": "Viking",
       "pot": 4,
       "P": 8,
-      "W": 0,
-      "D": 4,
-      "L": 4,
-      "GF": 5,
-      "GA": 13,
-      "GD": -8,
-      "Pts": 4,
-      "rank": 36,
+      "W": 1,
+      "D": 2,
+      "L": 5,
+      "GF": 8,
+      "GA": 21,
+      "GD": -13,
+      "Pts": 5,
+      "rank": 33,
       "route": "eliminated",
       "top8": 0.00367,
       "top24": 0.17983,
@@ -1322,6 +1294,911 @@
       "mean_rank": 29.78767,
       "rank_low_90": 17,
       "rank_high_90": 36
+    },
+    {
+      "team": "Lille",
+      "pot": 3,
+      "P": 8,
+      "W": 1,
+      "D": 1,
+      "L": 6,
+      "GF": 8,
+      "GA": 18,
+      "GD": -10,
+      "Pts": 4,
+      "rank": 34,
+      "route": "eliminated",
+      "top8": 0.0255,
+      "top24": 0.4555,
+      "r16": 0.1645,
+      "qf": 0.04867,
+      "sf": 0.01217,
+      "final": 0.00283,
+      "champion": 0.00067,
+      "expected_points": 8.43017,
+      "mean_rank": 24.553,
+      "rank_low_90": 11,
+      "rank_high_90": 35
+    },
+    {
+      "team": "Slovan Bratislava",
+      "pot": 4,
+      "P": 8,
+      "W": 1,
+      "D": 1,
+      "L": 6,
+      "GF": 8,
+      "GA": 19,
+      "GD": -11,
+      "Pts": 4,
+      "rank": 35,
+      "route": "eliminated",
+      "top8": 0.009,
+      "top24": 0.23867,
+      "r16": 0.05267,
+      "qf": 0.00833,
+      "sf": 0.00067,
+      "final": 0.0,
+      "champion": 0.0,
+      "expected_points": 6.95867,
+      "mean_rank": 28.6315,
+      "rank_low_90": 15,
+      "rank_high_90": 36
+    },
+    {
+      "team": "Sabah",
+      "pot": 4,
+      "P": 8,
+      "W": 1,
+      "D": 0,
+      "L": 7,
+      "GF": 6,
+      "GA": 21,
+      "GD": -15,
+      "Pts": 3,
+      "rank": 36,
+      "route": "eliminated",
+      "top8": 0.00383,
+      "top24": 0.18817,
+      "r16": 0.04167,
+      "qf": 0.00733,
+      "sf": 0.00167,
+      "final": 0.0,
+      "champion": 0.0,
+      "expected_points": 6.3625,
+      "mean_rank": 29.74817,
+      "rank_low_90": 17,
+      "rank_high_90": 36
+    }
+  ],
+  "expected_league_table": [
+    {
+      "team": "Barcelona",
+      "pot": 1,
+      "expected_W": 4.9232,
+      "expected_D": 1.603,
+      "expected_L": 1.4738,
+      "expected_GF": 18.4773,
+      "expected_GA": 8.3987,
+      "expected_GD": 10.0787,
+      "expected_points": 16.3725,
+      "mean_rank": 6.56333,
+      "rank_low_90": 1,
+      "rank_high_90": 17,
+      "top8": 0.70583,
+      "top24": 0.992,
+      "r16": 0.224,
+      "qf": 0.64817,
+      "sf": 0.4055,
+      "final": 0.24467,
+      "champion": 0.14233,
+      "rank": 1,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Real Madrid",
+      "pot": 1,
+      "expected_W": 4.9102,
+      "expected_D": 1.6117,
+      "expected_L": 1.4782,
+      "expected_GF": 15.2252,
+      "expected_GA": 8.2562,
+      "expected_GD": 6.969,
+      "expected_points": 16.34217,
+      "mean_rank": 6.98317,
+      "rank_low_90": 1,
+      "rank_high_90": 18,
+      "top8": 0.6815,
+      "top24": 0.9905,
+      "r16": 0.23583,
+      "qf": 0.61267,
+      "sf": 0.36117,
+      "final": 0.20717,
+      "champion": 0.10967,
+      "rank": 2,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Bayern Munich",
+      "pot": 1,
+      "expected_W": 4.8703,
+      "expected_D": 1.585,
+      "expected_L": 1.5447,
+      "expected_GF": 18.4157,
+      "expected_GA": 7.585,
+      "expected_GD": 10.8307,
+      "expected_points": 16.196,
+      "mean_rank": 6.69533,
+      "rank_low_90": 1,
+      "rank_high_90": 18,
+      "top8": 0.7105,
+      "top24": 0.991,
+      "r16": 0.21967,
+      "qf": 0.63017,
+      "sf": 0.37783,
+      "final": 0.22717,
+      "champion": 0.1245,
+      "rank": 3,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Arsenal",
+      "pot": 1,
+      "expected_W": 4.77,
+      "expected_D": 1.646,
+      "expected_L": 1.584,
+      "expected_GF": 13.8848,
+      "expected_GA": 7.4293,
+      "expected_GD": 6.4555,
+      "expected_points": 15.956,
+      "mean_rank": 7.6405,
+      "rank_low_90": 1,
+      "rank_high_90": 19,
+      "top8": 0.64367,
+      "top24": 0.98433,
+      "r16": 0.25933,
+      "qf": 0.60967,
+      "sf": 0.3615,
+      "final": 0.20317,
+      "champion": 0.10517,
+      "rank": 4,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Manchester City",
+      "pot": 1,
+      "expected_W": 4.7338,
+      "expected_D": 1.6372,
+      "expected_L": 1.629,
+      "expected_GF": 15.062,
+      "expected_GA": 7.8483,
+      "expected_GD": 7.2137,
+      "expected_points": 15.83867,
+      "mean_rank": 7.7605,
+      "rank_low_90": 1,
+      "rank_high_90": 20,
+      "top8": 0.6345,
+      "top24": 0.982,
+      "r16": 0.26183,
+      "qf": 0.58033,
+      "sf": 0.33517,
+      "final": 0.17983,
+      "champion": 0.09067,
+      "rank": 5,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Liverpool",
+      "pot": 1,
+      "expected_W": 4.5685,
+      "expected_D": 1.728,
+      "expected_L": 1.7035,
+      "expected_GF": 14.0272,
+      "expected_GA": 8.66,
+      "expected_GD": 5.3672,
+      "expected_points": 15.4335,
+      "mean_rank": 8.793,
+      "rank_low_90": 1,
+      "rank_high_90": 21,
+      "top8": 0.57283,
+      "top24": 0.97617,
+      "r16": 0.27733,
+      "qf": 0.48317,
+      "sf": 0.24617,
+      "final": 0.1225,
+      "champion": 0.05317,
+      "rank": 6,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "PSG",
+      "pot": 1,
+      "expected_W": 4.4503,
+      "expected_D": 1.7443,
+      "expected_L": 1.8053,
+      "expected_GF": 18.0925,
+      "expected_GA": 9.195,
+      "expected_GD": 8.8975,
+      "expected_points": 15.09533,
+      "mean_rank": 8.69217,
+      "rank_low_90": 1,
+      "rank_high_90": 22,
+      "top8": 0.5775,
+      "top24": 0.97233,
+      "r16": 0.30133,
+      "qf": 0.5685,
+      "sf": 0.33033,
+      "final": 0.18933,
+      "champion": 0.10067,
+      "rank": 7,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Dortmund",
+      "pot": 2,
+      "expected_W": 4.0727,
+      "expected_D": 1.7938,
+      "expected_L": 2.1335,
+      "expected_GF": 13.7308,
+      "expected_GA": 10.5302,
+      "expected_GD": 3.2007,
+      "expected_points": 14.01183,
+      "mean_rank": 11.62933,
+      "rank_low_90": 2,
+      "rank_high_90": 26,
+      "top8": 0.3965,
+      "top24": 0.93967,
+      "r16": 0.34567,
+      "qf": 0.3775,
+      "sf": 0.17867,
+      "final": 0.06983,
+      "champion": 0.02533,
+      "rank": 8,
+      "route": "direct_ro16"
+    },
+    {
+      "team": "Inter",
+      "pot": 1,
+      "expected_W": 4.0828,
+      "expected_D": 1.575,
+      "expected_L": 2.3422,
+      "expected_GF": 14.9348,
+      "expected_GA": 9.1493,
+      "expected_GD": 5.7855,
+      "expected_points": 13.8235,
+      "mean_rank": 11.3495,
+      "rank_low_90": 2,
+      "rank_high_90": 26,
+      "top8": 0.42467,
+      "top24": 0.93183,
+      "r16": 0.37683,
+      "qf": 0.50767,
+      "sf": 0.30067,
+      "final": 0.16517,
+      "champion": 0.08967,
+      "rank": 9,
+      "route": "playoff"
+    },
+    {
+      "team": "Atletico Madrid",
+      "pot": 1,
+      "expected_W": 3.9158,
+      "expected_D": 1.6067,
+      "expected_L": 2.4775,
+      "expected_GF": 14.4172,
+      "expected_GA": 9.4307,
+      "expected_GD": 4.9865,
+      "expected_points": 13.35417,
+      "mean_rank": 12.44533,
+      "rank_low_90": 2,
+      "rank_high_90": 27,
+      "top8": 0.357,
+      "top24": 0.91983,
+      "r16": 0.40417,
+      "qf": 0.439,
+      "sf": 0.238,
+      "final": 0.11933,
+      "champion": 0.06,
+      "rank": 10,
+      "route": "playoff"
+    },
+    {
+      "team": "Real Betis",
+      "pot": 2,
+      "expected_W": 3.8527,
+      "expected_D": 1.7622,
+      "expected_L": 2.3852,
+      "expected_GF": 13.5092,
+      "expected_GA": 11.4498,
+      "expected_GD": 2.0593,
+      "expected_points": 13.32017,
+      "mean_rank": 13.17767,
+      "rank_low_90": 2,
+      "rank_high_90": 27,
+      "top8": 0.31067,
+      "top24": 0.91017,
+      "r16": 0.34,
+      "qf": 0.2925,
+      "sf": 0.11383,
+      "final": 0.04083,
+      "champion": 0.015,
+      "rank": 11,
+      "route": "playoff"
+    },
+    {
+      "team": "Aston Villa",
+      "pot": 2,
+      "expected_W": 3.8437,
+      "expected_D": 1.7872,
+      "expected_L": 2.3692,
+      "expected_GF": 13.3102,
+      "expected_GA": 11.2285,
+      "expected_GD": 2.0817,
+      "expected_points": 13.31817,
+      "mean_rank": 13.19683,
+      "rank_low_90": 2,
+      "rank_high_90": 27,
+      "top8": 0.30967,
+      "top24": 0.91183,
+      "r16": 0.32833,
+      "qf": 0.25883,
+      "sf": 0.08517,
+      "final": 0.0255,
+      "champion": 0.00983,
+      "rank": 12,
+      "route": "playoff"
+    },
+    {
+      "team": "Sporting CP",
+      "pot": 2,
+      "expected_W": 3.6745,
+      "expected_D": 1.8002,
+      "expected_L": 2.5253,
+      "expected_GF": 12.966,
+      "expected_GA": 10.6873,
+      "expected_GD": 2.2787,
+      "expected_points": 12.82367,
+      "mean_rank": 14.17133,
+      "rank_low_90": 3,
+      "rank_high_90": 28,
+      "top8": 0.26317,
+      "top24": 0.88317,
+      "r16": 0.34533,
+      "qf": 0.24333,
+      "sf": 0.08717,
+      "final": 0.02967,
+      "champion": 0.01033,
+      "rank": 13,
+      "route": "playoff"
+    },
+    {
+      "team": "Manchester United",
+      "pot": 2,
+      "expected_W": 3.5388,
+      "expected_D": 1.8305,
+      "expected_L": 2.6307,
+      "expected_GF": 13.771,
+      "expected_GA": 9.9957,
+      "expected_GD": 3.7753,
+      "expected_points": 12.447,
+      "mean_rank": 14.54967,
+      "rank_low_90": 3,
+      "rank_high_90": 29,
+      "top8": 0.2565,
+      "top24": 0.87183,
+      "r16": 0.34117,
+      "qf": 0.24967,
+      "sf": 0.09333,
+      "final": 0.033,
+      "champion": 0.013,
+      "rank": 14,
+      "route": "playoff"
+    },
+    {
+      "team": "Roma",
+      "pot": 2,
+      "expected_W": 3.2102,
+      "expected_D": 2.7372,
+      "expected_L": 2.0527,
+      "expected_GF": 12.5205,
+      "expected_GA": 9.723,
+      "expected_GD": 2.7975,
+      "expected_points": 12.36767,
+      "mean_rank": 14.94867,
+      "rank_low_90": 3,
+      "rank_high_90": 29,
+      "top8": 0.2385,
+      "top24": 0.86633,
+      "r16": 0.396,
+      "qf": 0.303,
+      "sf": 0.138,
+      "final": 0.05367,
+      "champion": 0.0225,
+      "rank": 15,
+      "route": "playoff"
+    },
+    {
+      "team": "PSV",
+      "pot": 2,
+      "expected_W": 2.714,
+      "expected_D": 2.808,
+      "expected_L": 2.478,
+      "expected_GF": 11.0803,
+      "expected_GA": 10.4862,
+      "expected_GD": 0.5942,
+      "expected_points": 10.95,
+      "mean_rank": 18.47133,
+      "rank_low_90": 5,
+      "rank_high_90": 32,
+      "top8": 0.12567,
+      "top24": 0.73917,
+      "r16": 0.32167,
+      "qf": 0.167,
+      "sf": 0.05617,
+      "final": 0.01767,
+      "champion": 0.00567,
+      "rank": 16,
+      "route": "playoff"
+    },
+    {
+      "team": "Porto",
+      "pot": 2,
+      "expected_W": 2.907,
+      "expected_D": 1.8347,
+      "expected_L": 3.2583,
+      "expected_GF": 10.3703,
+      "expected_GA": 10.8645,
+      "expected_GD": -0.4942,
+      "expected_points": 10.55567,
+      "mean_rank": 19.568,
+      "rank_low_90": 6,
+      "rank_high_90": 33,
+      "top8": 0.10283,
+      "top24": 0.69633,
+      "r16": 0.3085,
+      "qf": 0.155,
+      "sf": 0.0605,
+      "final": 0.01783,
+      "champion": 0.008,
+      "rank": 17,
+      "route": "playoff"
+    },
+    {
+      "team": "Club Brugge",
+      "pot": 2,
+      "expected_W": 2.7455,
+      "expected_D": 1.8107,
+      "expected_L": 3.4438,
+      "expected_GF": 12.134,
+      "expected_GA": 12.45,
+      "expected_GD": -0.316,
+      "expected_points": 10.04717,
+      "mean_rank": 20.5225,
+      "rank_low_90": 7,
+      "rank_high_90": 33,
+      "top8": 0.08633,
+      "top24": 0.65633,
+      "r16": 0.2955,
+      "qf": 0.145,
+      "sf": 0.05217,
+      "final": 0.01683,
+      "champion": 0.0045,
+      "rank": 18,
+      "route": "playoff"
+    },
+    {
+      "team": "Como",
+      "pot": 4,
+      "expected_W": 2.702,
+      "expected_D": 1.6713,
+      "expected_L": 3.6267,
+      "expected_GF": 11.9535,
+      "expected_GA": 13.7143,
+      "expected_GD": -1.7608,
+      "expected_points": 9.77733,
+      "mean_rank": 21.51367,
+      "rank_low_90": 8,
+      "rank_high_90": 33,
+      "top8": 0.062,
+      "top24": 0.6105,
+      "r16": 0.161,
+      "qf": 0.041,
+      "sf": 0.007,
+      "final": 0.0005,
+      "champion": 0.00033,
+      "rank": 19,
+      "route": "playoff"
+    },
+    {
+      "team": "Lens",
+      "pot": 4,
+      "expected_W": 2.687,
+      "expected_D": 1.678,
+      "expected_L": 3.635,
+      "expected_GF": 11.0467,
+      "expected_GA": 14.7287,
+      "expected_GD": -3.682,
+      "expected_points": 9.739,
+      "mean_rank": 22.03133,
+      "rank_low_90": 8,
+      "rank_high_90": 34,
+      "top8": 0.05367,
+      "top24": 0.57983,
+      "r16": 0.15033,
+      "qf": 0.03433,
+      "sf": 0.00567,
+      "final": 0.00117,
+      "champion": 0.00017,
+      "rank": 20,
+      "route": "playoff"
+    },
+    {
+      "team": "Napoli",
+      "pot": 3,
+      "expected_W": 2.5938,
+      "expected_D": 1.8242,
+      "expected_L": 3.582,
+      "expected_GF": 9.6952,
+      "expected_GA": 10.7282,
+      "expected_GD": -1.033,
+      "expected_points": 9.60567,
+      "mean_rank": 21.72,
+      "rank_low_90": 8,
+      "rank_high_90": 34,
+      "top8": 0.064,
+      "top24": 0.60217,
+      "r16": 0.22567,
+      "qf": 0.09167,
+      "sf": 0.02533,
+      "final": 0.0065,
+      "champion": 0.00117,
+      "rank": 21,
+      "route": "playoff"
+    },
+    {
+      "team": "Shakhtar Donetsk",
+      "pot": 3,
+      "expected_W": 2.2627,
+      "expected_D": 2.795,
+      "expected_L": 2.9423,
+      "expected_GF": 9.9268,
+      "expected_GA": 11.56,
+      "expected_GD": -1.6332,
+      "expected_points": 9.583,
+      "mean_rank": 21.94033,
+      "rank_low_90": 8,
+      "rank_high_90": 34,
+      "top8": 0.05417,
+      "top24": 0.588,
+      "r16": 0.2,
+      "qf": 0.06717,
+      "sf": 0.02017,
+      "final": 0.006,
+      "champion": 0.0015,
+      "rank": 22,
+      "route": "playoff"
+    },
+    {
+      "team": "Fenerbahce",
+      "pot": 3,
+      "expected_W": 2.2535,
+      "expected_D": 2.816,
+      "expected_L": 2.9305,
+      "expected_GF": 9.8765,
+      "expected_GA": 11.4577,
+      "expected_GD": -1.5812,
+      "expected_points": 9.5765,
+      "mean_rank": 21.91383,
+      "rank_low_90": 8,
+      "rank_high_90": 34,
+      "top8": 0.0565,
+      "top24": 0.5855,
+      "r16": 0.20417,
+      "qf": 0.0685,
+      "sf": 0.01933,
+      "final": 0.00333,
+      "champion": 0.00183,
+      "rank": 23,
+      "route": "playoff"
+    },
+    {
+      "team": "Villarreal",
+      "pot": 3,
+      "expected_W": 2.5383,
+      "expected_D": 1.8232,
+      "expected_L": 3.6385,
+      "expected_GF": 11.7928,
+      "expected_GA": 13.0027,
+      "expected_GD": -1.2098,
+      "expected_points": 9.43817,
+      "mean_rank": 22.05717,
+      "rank_low_90": 8,
+      "rank_high_90": 34,
+      "top8": 0.06267,
+      "top24": 0.58017,
+      "r16": 0.21683,
+      "qf": 0.0805,
+      "sf": 0.0215,
+      "final": 0.0045,
+      "champion": 0.00117,
+      "rank": 24,
+      "route": "playoff"
+    },
+    {
+      "team": "Stuttgart",
+      "pot": 4,
+      "expected_W": 2.4725,
+      "expected_D": 1.6462,
+      "expected_L": 3.8813,
+      "expected_GF": 10.5268,
+      "expected_GA": 14.4687,
+      "expected_GD": -3.9418,
+      "expected_points": 9.06367,
+      "mean_rank": 23.6555,
+      "rank_low_90": 10,
+      "rank_high_90": 34,
+      "top8": 0.0345,
+      "top24": 0.5,
+      "r16": 0.11367,
+      "qf": 0.02217,
+      "sf": 0.0025,
+      "final": 0.00033,
+      "champion": 0.0,
+      "rank": 25,
+      "route": "eliminated"
+    },
+    {
+      "team": "Feyenoord",
+      "pot": 3,
+      "expected_W": 2.336,
+      "expected_D": 1.843,
+      "expected_L": 3.821,
+      "expected_GF": 10.1217,
+      "expected_GA": 15.2557,
+      "expected_GD": -5.134,
+      "expected_points": 8.851,
+      "mean_rank": 24.13767,
+      "rank_low_90": 10,
+      "rank_high_90": 35,
+      "top8": 0.03567,
+      "top24": 0.473,
+      "r16": 0.16467,
+      "qf": 0.05233,
+      "sf": 0.01333,
+      "final": 0.00283,
+      "champion": 0.00083,
+      "rank": 26,
+      "route": "eliminated"
+    },
+    {
+      "team": "RB Leipzig",
+      "pot": 3,
+      "expected_W": 2.3513,
+      "expected_D": 1.7603,
+      "expected_L": 3.8883,
+      "expected_GF": 10.3763,
+      "expected_GA": 14.6868,
+      "expected_GD": -4.3105,
+      "expected_points": 8.81433,
+      "mean_rank": 24.0415,
+      "rank_low_90": 10,
+      "rank_high_90": 35,
+      "top8": 0.034,
+      "top24": 0.48317,
+      "r16": 0.18983,
+      "qf": 0.0665,
+      "sf": 0.01583,
+      "final": 0.00333,
+      "champion": 0.0005,
+      "rank": 27,
+      "route": "eliminated"
+    },
+    {
+      "team": "AEK",
+      "pot": 4,
+      "expected_W": 2.3785,
+      "expected_D": 1.6407,
+      "expected_L": 3.9808,
+      "expected_GF": 7.9498,
+      "expected_GA": 13.273,
+      "expected_GD": -5.3232,
+      "expected_points": 8.77617,
+      "mean_rank": 24.54233,
+      "rank_low_90": 11,
+      "rank_high_90": 34,
+      "top8": 0.02683,
+      "top24": 0.4435,
+      "r16": 0.09867,
+      "qf": 0.02183,
+      "sf": 0.00433,
+      "final": 0.00083,
+      "champion": 0.00033,
+      "rank": 28,
+      "route": "eliminated"
+    },
+    {
+      "team": "Bodo Glimt",
+      "pot": 3,
+      "expected_W": 2.292,
+      "expected_D": 1.8613,
+      "expected_L": 3.8467,
+      "expected_GF": 8.9438,
+      "expected_GA": 15.22,
+      "expected_GD": -6.2762,
+      "expected_points": 8.73733,
+      "mean_rank": 24.64583,
+      "rank_low_90": 10,
+      "rank_high_90": 35,
+      "top8": 0.032,
+      "top24": 0.44617,
+      "r16": 0.1565,
+      "qf": 0.04983,
+      "sf": 0.01367,
+      "final": 0.00217,
+      "champion": 0.00083,
+      "rank": 29,
+      "route": "eliminated"
+    },
+    {
+      "team": "Galatasaray",
+      "pot": 3,
+      "expected_W": 2.2722,
+      "expected_D": 1.7987,
+      "expected_L": 3.9292,
+      "expected_GF": 9.9693,
+      "expected_GA": 13.5915,
+      "expected_GD": -3.6222,
+      "expected_points": 8.61517,
+      "mean_rank": 24.37617,
+      "rank_low_90": 10,
+      "rank_high_90": 35,
+      "top8": 0.03433,
+      "top24": 0.4625,
+      "r16": 0.1585,
+      "qf": 0.048,
+      "sf": 0.013,
+      "final": 0.00217,
+      "champion": 0.00067,
+      "rank": 30,
+      "route": "eliminated"
+    },
+    {
+      "team": "Lille",
+      "pot": 3,
+      "expected_W": 2.208,
+      "expected_D": 1.8062,
+      "expected_L": 3.9858,
+      "expected_GF": 10.6488,
+      "expected_GA": 13.563,
+      "expected_GD": -2.9142,
+      "expected_points": 8.43017,
+      "mean_rank": 24.553,
+      "rank_low_90": 11,
+      "rank_high_90": 35,
+      "top8": 0.0255,
+      "top24": 0.4555,
+      "r16": 0.1645,
+      "qf": 0.04867,
+      "sf": 0.01217,
+      "final": 0.00283,
+      "champion": 0.00067,
+      "rank": 31,
+      "route": "eliminated"
+    },
+    {
+      "team": "Slovan Bratislava",
+      "pot": 4,
+      "expected_W": 1.739,
+      "expected_D": 1.7417,
+      "expected_L": 4.5193,
+      "expected_GF": 8.881,
+      "expected_GA": 18.1072,
+      "expected_GD": -9.2262,
+      "expected_points": 6.95867,
+      "mean_rank": 28.6315,
+      "rank_low_90": 15,
+      "rank_high_90": 36,
+      "top8": 0.009,
+      "top24": 0.23867,
+      "r16": 0.05267,
+      "qf": 0.00833,
+      "sf": 0.00067,
+      "final": 0.0,
+      "champion": 0.0,
+      "rank": 32,
+      "route": "eliminated"
+    },
+    {
+      "team": "LASK",
+      "pot": 4,
+      "expected_W": 1.5572,
+      "expected_D": 1.6995,
+      "expected_L": 4.7433,
+      "expected_GF": 7.2943,
+      "expected_GA": 13.543,
+      "expected_GD": -6.2487,
+      "expected_points": 6.371,
+      "mean_rank": 29.21467,
+      "rank_low_90": 16,
+      "rank_high_90": 36,
+      "top8": 0.00633,
+      "top24": 0.21067,
+      "r16": 0.045,
+      "qf": 0.0075,
+      "sf": 0.00083,
+      "final": 0.00017,
+      "champion": 0.0,
+      "rank": 33,
+      "route": "eliminated"
+    },
+    {
+      "team": "Sabah",
+      "pot": 4,
+      "expected_W": 1.5685,
+      "expected_D": 1.657,
+      "expected_L": 4.7745,
+      "expected_GF": 7.3605,
+      "expected_GA": 16.8295,
+      "expected_GD": -9.469,
+      "expected_points": 6.3625,
+      "mean_rank": 29.74817,
+      "rank_low_90": 17,
+      "rank_high_90": 36,
+      "top8": 0.00383,
+      "top24": 0.18817,
+      "r16": 0.04167,
+      "qf": 0.00733,
+      "sf": 0.00167,
+      "final": 0.0,
+      "champion": 0.0,
+      "rank": 34,
+      "route": "eliminated"
+    },
+    {
+      "team": "Viking",
+      "pot": 4,
+      "expected_W": 1.517,
+      "expected_D": 1.6177,
+      "expected_L": 4.8653,
+      "expected_GF": 8.2672,
+      "expected_GA": 16.065,
+      "expected_GD": -7.7978,
+      "expected_points": 6.16867,
+      "mean_rank": 29.78767,
+      "rank_low_90": 17,
+      "rank_high_90": 36,
+      "top8": 0.00367,
+      "top24": 0.17983,
+      "r16": 0.041,
+      "qf": 0.00767,
+      "sf": 0.00083,
+      "final": 0.0,
+      "champion": 0.0,
+      "rank": 35,
+      "route": "eliminated"
+    },
+    {
+      "team": "Slavia Prague",
+      "pot": 4,
+      "expected_W": 1.3882,
+      "expected_D": 1.6157,
+      "expected_L": 4.9962,
+      "expected_GF": 9.0378,
+      "expected_GA": 16.4355,
+      "expected_GD": -7.3977,
+      "expected_points": 5.78017,
+      "mean_rank": 30.3315,
+      "rank_low_90": 18,
+      "rank_high_90": 36,
+      "top8": 0.0035,
+      "top24": 0.15783,
+      "r16": 0.03283,
+      "qf": 0.0055,
+      "sf": 0.00083,
+      "final": 0.00017,
+      "champion": 0.0,
+      "rank": 36,
+      "route": "eliminated"
     }
   ],
   "matches": [
@@ -1337,6 +2214,15 @@
         0
       ],
       "scoreline": "1-0",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1359,6 +2245,15 @@
         3
       ],
       "scoreline": "2-3",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        2,
+        3
+      ],
+      "scenario_scoreline": "2-3",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1381,6 +2276,15 @@
         2
       ],
       "scoreline": "3-2",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        3,
+        2
+      ],
+      "scenario_scoreline": "3-2",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1403,6 +2307,15 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1425,6 +2338,15 @@
         3
       ],
       "scoreline": "2-3",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        2,
+        3
+      ],
+      "scenario_scoreline": "2-3",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1447,6 +2369,15 @@
         1
       ],
       "scoreline": "2-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1469,6 +2400,15 @@
         1
       ],
       "scoreline": "5-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        5,
+        1
+      ],
+      "scenario_scoreline": "5-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1491,6 +2431,15 @@
         1
       ],
       "scoreline": "3-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1513,6 +2462,15 @@
         1
       ],
       "scoreline": "2-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1535,6 +2493,15 @@
         1
       ],
       "scoreline": "6-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        6,
+        1
+      ],
+      "scenario_scoreline": "6-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1557,6 +2524,15 @@
         1
       ],
       "scoreline": "3-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1579,6 +2555,15 @@
         1
       ],
       "scoreline": "0-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1601,6 +2586,15 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1623,6 +2617,15 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1645,6 +2648,15 @@
         1
       ],
       "scoreline": "4-1",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        4,
+        1
+      ],
+      "scenario_scoreline": "4-1",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1667,6 +2679,15 @@
         0
       ],
       "scoreline": "5-0",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        5,
+        0
+      ],
+      "scenario_scoreline": "5-0",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1689,6 +2710,15 @@
         0
       ],
       "scoreline": "4-0",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        4,
+        0
+      ],
+      "scenario_scoreline": "4-0",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1711,6 +2741,15 @@
         3
       ],
       "scoreline": "2-3",
+      "scoreline_method": "ACTUAL",
+      "score_probability": null,
+      "top_scorelines": [],
+      "scenario_score": [
+        2,
+        3
+      ],
+      "scenario_scoreline": "2-3",
+      "scenario_scoreline_method": "ACTUAL",
       "pick": null,
       "home_probability": null,
       "draw_probability": null,
@@ -1733,6 +2772,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.121908,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.121908
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.095361
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.088114
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.081963
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.066615
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.255235,
       "draw_probability": 0.258399,
@@ -1755,6 +2824,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131328,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131328
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.09016
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.08968
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077449
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.074016
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.421493,
       "draw_probability": 0.275569,
@@ -1777,6 +2876,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118198,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.118198
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.106601
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.101886
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097542
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.081631
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.653721,
       "draw_probability": 0.213639,
@@ -1799,6 +2928,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.11602,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.11602
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097864
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.090468
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.090096
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.063386
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.538579,
       "draw_probability": 0.246014,
@@ -1821,6 +2980,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.109803,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.109803
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098075
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.096101
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.091244
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.063977
+        }
+      ],
+      "scenario_score": [
+        4,
+        2
+      ],
+      "scenario_scoreline": "4-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.58041,
       "draw_probability": 0.23269,
@@ -1843,6 +3032,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110682,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.110682
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.099805
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097677
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.095552
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.06498
+        }
+      ],
+      "scenario_score": [
+        1,
+        3
+      ],
+      "scenario_scoreline": "1-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.183024,
       "draw_probability": 0.23302,
@@ -1865,6 +3084,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.129272,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.129272
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.083313
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.082232
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.07831
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.076511
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.359941,
       "draw_probability": 0.272606,
@@ -1887,6 +3136,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110549,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.110549
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.095312
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.092095
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.091588
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.084058
+        }
+      ],
+      "scenario_score": [
+        0,
+        4
+      ],
+      "scenario_scoreline": "0-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.123014,
       "draw_probability": 0.194603,
@@ -1909,6 +3188,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.128657,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.128657
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089378
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.084169
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075816
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.072081
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.416037,
       "draw_probability": 0.2714,
@@ -1931,6 +3240,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124341,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124341
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.094936
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.091494
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.083154
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.070213
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.481412,
       "draw_probability": 0.261973,
@@ -1953,6 +3292,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110497,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.110497
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.109908
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.105663
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.098741
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.070857
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.160802,
       "draw_probability": 0.231658,
@@ -1975,6 +3344,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.12715,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.12715
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.088186
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.080359
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.077602
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.069478
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.324839,
       "draw_probability": 0.269533,
@@ -1997,6 +3396,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123772,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123772
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.097047
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096464
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.089451
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.072249
+        }
+      ],
+      "scenario_score": [
+        3,
+        0
+      ],
+      "scenario_scoreline": "3-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.505761,
       "draw_probability": 0.259877,
@@ -2019,6 +3448,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.122922,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.122922
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.09903
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097084
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.092237
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.072492
+        }
+      ],
+      "scenario_score": [
+        1,
+        3
+      ],
+      "scenario_scoreline": "1-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.517609,
       "draw_probability": 0.257929,
@@ -2041,6 +3500,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.129211,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.129211
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.097054
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.092048
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.08256
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.078702
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.270739,
       "draw_probability": 0.270907,
@@ -2063,6 +3552,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127107,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127107
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089032
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.081446
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.076535
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.069626
+        }
+      ],
+      "scenario_score": [
+        6,
+        1
+      ],
+      "scenario_scoreline": "6-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.413179,
       "draw_probability": 0.26929,
@@ -2085,6 +3604,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.128393,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.128393
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.091474
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.088003
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.075
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.072962
+        }
+      ],
+      "scenario_score": [
+        3,
+        2
+      ],
+      "scenario_scoreline": "3-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.437539,
       "draw_probability": 0.270294,
@@ -2107,6 +3656,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126096,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126096
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089823
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.081128
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.07544
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.069429
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.421906,
       "draw_probability": 0.267653,
@@ -2129,6 +3708,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.121051,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.121051
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.099936
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097773
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.094997
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.071388
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.532542,
       "draw_probability": 0.254003,
@@ -2151,6 +3760,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.116892,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.116892
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.104335
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.102619
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097668
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.07112
+        }
+      ],
+      "scenario_score": [
+        0,
+        4
+      ],
+      "scenario_scoreline": "0-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.190826,
       "draw_probability": 0.245084,
@@ -2173,6 +3812,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110965,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.110965
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.095392
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.092703
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.092377
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.08398
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.680391,
       "draw_probability": 0.195671,
@@ -2195,6 +3864,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131836,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131836
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.08888
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088564
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077749
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075529
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.410892,
       "draw_probability": 0.276635,
@@ -2217,6 +3916,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.111789,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.111789
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.101697
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.09857
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.097924
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.065147
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.582919,
       "draw_probability": 0.235143,
@@ -2239,6 +3968,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118968,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.118968
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.099744
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.090353
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089325
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.078083
+        }
+      ],
+      "scenario_score": [
+        3,
+        0
+      ],
+      "scenario_scoreline": "3-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.749188,
       "draw_probability": 0.164607,
@@ -2261,6 +4020,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.125619,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.125619
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.084813
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.08108
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.075357
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.070452
+        }
+      ],
+      "scenario_score": [
+        1,
+        4
+      ],
+      "scenario_scoreline": "1-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.379751,
       "draw_probability": 0.267617,
@@ -2283,6 +4072,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.128271,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.128271
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.092457
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.092342
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.079576
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.075108
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.453975,
       "draw_probability": 0.269268,
@@ -2305,6 +4124,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.101142,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.101142
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.097226
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097096
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.086924
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.073561
+        }
+      ],
+      "scenario_score": [
+        0,
+        3
+      ],
+      "scenario_scoreline": "0-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.147589,
       "draw_probability": 0.20816,
@@ -2327,6 +4176,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.122771,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.122771
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.094911
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.088215
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.081197
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.067406
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.260006,
       "draw_probability": 0.259947,
@@ -2349,6 +4228,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.133652,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.133652
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.096818
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089105
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.084054
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.076798
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.424223,
       "draw_probability": 0.280405,
@@ -2371,6 +4280,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.109289,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.109289
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.106774
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.101129
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.099041
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.07305
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.621031,
       "draw_probability": 0.22419,
@@ -2393,6 +4332,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.109413,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.109413
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.099197
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.098745
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.092872
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.064771
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.586441,
       "draw_probability": 0.231932,
@@ -2415,6 +4384,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124384,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124384
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.090802
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.080649
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.073926
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.070612
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.433589,
       "draw_probability": 0.264948,
@@ -2437,6 +4436,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.107263,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.107263
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096584
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.095724
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.091101
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.079237
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.662338,
       "draw_probability": 0.20278,
@@ -2459,6 +4488,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.109927,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.109927
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.100493
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098498
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.096472
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.077636
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.647399,
       "draw_probability": 0.211809,
@@ -2481,6 +4540,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.119452,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.119452
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097912
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.09555
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.09238
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.067893
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.531549,
       "draw_probability": 0.251466,
@@ -2503,6 +4592,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.111457,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.111457
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.105515
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.102315
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098876
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.0752
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.630125,
       "draw_probability": 0.221404,
@@ -2525,6 +4644,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.13224,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.13224
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.087589
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.087432
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077987
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.076977
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.321859,
       "draw_probability": 0.277482,
@@ -2547,6 +4696,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.117153,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.117153
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097542
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089676
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.088225
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.06375
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.528053,
       "draw_probability": 0.248637,
@@ -2569,6 +4748,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124095,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124095
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.084701
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.081219
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.073325
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.068803
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.37959,
       "draw_probability": 0.265969,
@@ -2591,6 +4800,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110447,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.110447
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.101607
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097495
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.097184
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.066312
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.588074,
       "draw_probability": 0.232166,
@@ -2613,6 +4852,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113073,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.113073
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097693
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.092519
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.090531
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.061998
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.202885,
       "draw_probability": 0.239642,
@@ -2635,6 +4904,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.134853,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.134853
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.093155
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.086363
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.084868
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.080609
+        }
+      ],
+      "scenario_score": [
+        3,
+        2
+      ],
+      "scenario_scoreline": "3-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.3991,
       "draw_probability": 0.282924,
@@ -2657,6 +4956,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131911,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131911
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.088663
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088374
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077793
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075778
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.409144,
       "draw_probability": 0.276792,
@@ -2679,6 +5008,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126683,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126683
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.084276
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.081381
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.076444
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.072289
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.37597,
       "draw_probability": 0.268771,
@@ -2701,6 +5060,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118951,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.118951
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097393
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.09112
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.088207
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.06553
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.227643,
       "draw_probability": 0.251713,
@@ -2723,6 +5112,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.115138,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.115138
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.101216
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.099505
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097155
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.081819
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.132737,
       "draw_probability": 0.208764,
@@ -2745,6 +5164,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126809,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126809
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.100378
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.09525
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.089075
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077146
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.240978,
       "draw_probability": 0.265861,
@@ -2767,6 +5216,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127495,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127495
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.093067
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.092746
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.080976
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.074722
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.461225,
       "draw_probability": 0.267623,
@@ -2789,6 +5268,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127085,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127085
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.093943
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.09355
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.082485
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.074385
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.468585,
       "draw_probability": 0.266785,
@@ -2811,6 +5320,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131361,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131361
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.090086
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089615
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077469
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.074106
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.420862,
       "draw_probability": 0.275638,
@@ -2833,6 +5372,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.117366,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.117366
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097097
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.087923
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.086054
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.063013
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.231852,
       "draw_probability": 0.24993,
@@ -2855,6 +5424,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123993,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123993
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.08865
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.077137
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.076927
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.066317
+        }
+      ],
+      "scenario_score": [
+        4,
+        2
+      ],
+      "scenario_scoreline": "4-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.412707,
       "draw_probability": 0.265425,
@@ -2877,6 +5476,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.115139,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.115139
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.098225
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096484
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.095793
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.084477
+        }
+      ],
+      "scenario_score": [
+        1,
+        5
+      ],
+      "scenario_scoreline": "1-5",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.124976,
       "draw_probability": 0.201228,
@@ -2899,6 +5528,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131857,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131857
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.08882
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088511
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077761
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075598
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.410409,
       "draw_probability": 0.276679,
@@ -2921,6 +5580,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.121955,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.121955
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.099523
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097462
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.093695
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.071922
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.525463,
       "draw_probability": 0.255901,
@@ -2943,6 +5632,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131661,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131661
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.087346
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.086433
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.077322
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.076862
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.323932,
       "draw_probability": 0.27644,
@@ -2965,6 +5684,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124044,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124044
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.100241
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.09668
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.092118
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.074209
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.512884,
       "draw_probability": 0.260133,
@@ -2987,6 +5736,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.12691,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.12691
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.092378
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.088335
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.076939
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.071787
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.450468,
       "draw_probability": 0.267342,
@@ -3009,6 +5788,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.132421,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.132421
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.086877
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.086805
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.078093
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.077745
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.326956,
       "draw_probability": 0.277861,
@@ -3031,6 +5840,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.106073,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.106073
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.104113
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.099123
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.095534
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.072669
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.624957,
       "draw_probability": 0.219843,
@@ -3053,6 +5892,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113533,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.113533
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097106
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.086184
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.085333
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.060524
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.536423,
       "draw_probability": 0.243283,
@@ -3075,6 +5944,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113471,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.113471
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.103379
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.101475
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098304
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.06711
+        }
+      ],
+      "scenario_score": [
+        4,
+        1
+      ],
+      "scenario_scoreline": "4-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.580828,
       "draw_probability": 0.238064,
@@ -3097,6 +5996,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.120351,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.120351
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097592
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.095141
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.091091
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.068403
+        }
+      ],
+      "scenario_score": [
+        2,
+        3
+      ],
+      "scenario_scoreline": "2-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.222346,
       "draw_probability": 0.253359,
@@ -3119,6 +6048,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113256,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.113256
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.094943
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.094255
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.092378
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.085878
+        }
+      ],
+      "scenario_score": [
+        0,
+        4
+      ],
+      "scenario_scoreline": "0-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.121065,
       "draw_probability": 0.194448,
@@ -3141,6 +6100,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126094,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126094
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.092717
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.088444
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.077867
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.071193
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.277572,
       "draw_probability": 0.265698,
@@ -3163,6 +6152,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118764,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.118764
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.099022
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.090814
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089567
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.07882
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.746086,
       "draw_probability": 0.166205,
@@ -3185,6 +6204,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.133219,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.133219
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.091406
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.087905
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.081023
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.076825
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.312144,
       "draw_probability": 0.279301,
@@ -3207,6 +6256,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.111571,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.111571
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.095834
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088968
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.082313
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.076566
+        }
+      ],
+      "scenario_score": [
+        4,
+        0
+      ],
+      "scenario_scoreline": "4-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.751051,
       "draw_probability": 0.161111,
@@ -3229,6 +6308,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131548,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131548
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089641
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.089229
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077579
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.074639
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.417141,
       "draw_probability": 0.27603,
@@ -3251,6 +6360,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.115035,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.115035
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.098243
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.098143
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.097447
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.066118
+        }
+      ],
+      "scenario_score": [
+        0,
+        3
+      ],
+      "scenario_scoreline": "0-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.194698,
       "draw_probability": 0.241868,
@@ -3273,6 +6412,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.117759,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.117759
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096418
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.086462
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.083937
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.063122
+        }
+      ],
+      "scenario_score": [
+        5,
+        2
+      ],
+      "scenario_scoreline": "5-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.507869,
       "draw_probability": 0.251331,
@@ -3295,6 +6464,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.13006,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.13006
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088986
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.085979
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075895
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.074355
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.412872,
       "draw_probability": 0.273604,
@@ -3317,6 +6516,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131745,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131745
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.089133
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.088785
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077695
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.075236
+        }
+      ],
+      "scenario_score": [
+        1,
+        4
+      ],
+      "scenario_scoreline": "1-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.310605,
       "draw_probability": 0.276443,
@@ -3339,6 +6568,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.114302,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.114302
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098353
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.096813
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.095425
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.064623
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.563592,
       "draw_probability": 0.24082,
@@ -3361,6 +6620,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.132367,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.132367
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.0871
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.087001
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.078062
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.077506
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.325367,
       "draw_probability": 0.277749,
@@ -3383,6 +6672,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123322,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123322
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.0933
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.087277
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.079259
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.06867
+        }
+      ],
+      "scenario_score": [
+        1,
+        3
+      ],
+      "scenario_scoreline": "1-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.471795,
       "draw_probability": 0.260466,
@@ -3405,6 +6724,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126214,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126214
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.09239
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.089545
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.078684
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.072139
+        }
+      ],
+      "scenario_score": [
+        0,
+        4
+      ],
+      "scenario_scoreline": "0-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.276669,
       "draw_probability": 0.265529,
@@ -3427,6 +6776,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.122217,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.122217
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.092599
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.082456
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.074896
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.069972
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.460642,
       "draw_probability": 0.260181,
@@ -3449,6 +6828,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.116673,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.116673
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.104897
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.084662
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.082711
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.075732
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.781823,
       "draw_probability": 0.146106,
@@ -3471,6 +6880,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.120736,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.120736
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.095652
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.088447
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.083395
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.065814
+        }
+      ],
+      "scenario_score": [
+        4,
+        0
+      ],
+      "scenario_scoreline": "4-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.493956,
       "draw_probability": 0.256026,
@@ -3493,6 +6932,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131877,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131877
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.082976
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.081831
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.081662
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.080475
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.366608,
       "draw_probability": 0.27684,
@@ -3515,6 +6984,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.107108,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.107108
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.101262
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.099232
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.093358
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.067497
+        }
+      ],
+      "scenario_score": [
+        8,
+        1
+      ],
+      "scenario_scoreline": "8-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.601546,
       "draw_probability": 0.226939,
@@ -3537,6 +7036,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131687,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131687
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.089287
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.088919
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077661
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.075057
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.309467,
       "draw_probability": 0.276322,
@@ -3559,6 +7088,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.13104,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.13104
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088741
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.087442
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.076128
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.07578
+        }
+      ],
+      "scenario_score": [
+        2,
+        3
+      ],
+      "scenario_scoreline": "2-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.411422,
       "draw_probability": 0.275237,
@@ -3581,6 +7140,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.128727,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.128727
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.087258
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.080938
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.078659
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.071951
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.331269,
       "draw_probability": 0.271976,
@@ -3603,6 +7192,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131555,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131555
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.089624
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.089213
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077583
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.07466
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.306962,
       "draw_probability": 0.276045,
@@ -3625,6 +7244,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124065,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124065
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.10218
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096629
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.093709
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.075483
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.517169,
       "draw_probability": 0.260107,
@@ -3647,6 +7296,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127518,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127518
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.090934
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.085677
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.073287
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.073282
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.297354,
       "draw_probability": 0.268995,
@@ -3669,6 +7348,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127774,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127774
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.085223
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.081014
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.077447
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.072678
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.348803,
       "draw_probability": 0.2708,
@@ -3691,6 +7400,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.129415,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.129415
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.089857
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.087083
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.074313
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.074171
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.304403,
       "draw_probability": 0.272174,
@@ -3713,6 +7452,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118501,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.118501
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097668
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.093501
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.091077
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.066476
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.218474,
       "draw_probability": 0.249949,
@@ -3735,6 +7504,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.131759,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.131759
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089094
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.088751
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077703
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.075282
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.412631,
       "draw_probability": 0.276473,
@@ -3757,6 +7556,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113235,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.113235
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097579
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.094675
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.092718
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.063199
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.199079,
       "draw_probability": 0.2391,
@@ -3779,6 +7608,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.132058,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.132058
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.084526
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.082326
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.081815
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.080386
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.354258,
       "draw_probability": 0.276891,
@@ -3801,6 +7660,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124187,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124187
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.092807
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.087857
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.078936
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.069781
+        }
+      ],
+      "scenario_score": [
+        3,
+        3
+      ],
+      "scenario_scoreline": "3-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.466468,
       "draw_probability": 0.261883,
@@ -3823,6 +7712,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.11004,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.11004
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.107234
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.102373
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.099042
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.073176
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.62081,
       "draw_probability": 0.225011,
@@ -3845,6 +7764,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123935,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123935
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.106516
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.097394
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096655
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.077905
+        }
+      ],
+      "scenario_score": [
+        2,
+        2
+      ],
+      "scenario_scoreline": "2-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.526202,
       "draw_probability": 0.260018,
@@ -3867,6 +7816,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124876,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.124876
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.107239
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.09198
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.087209
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.074479
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.769944,
       "draw_probability": 0.155066,
@@ -3889,6 +7868,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.119559,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.119559
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096491
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.088413
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.084575
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.065045
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.239567,
       "draw_probability": 0.253751,
@@ -3911,6 +7920,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.12948,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.12948
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.085578
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.081093
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.079835
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.074473
+        }
+      ],
+      "scenario_score": [
+        0,
+        3
+      ],
+      "scenario_scoreline": "0-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.385221,
       "draw_probability": 0.272868,
@@ -3933,6 +7972,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.128695,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.128695
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.091874
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.091843
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.078458
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.075355
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.281653,
       "draw_probability": 0.270158,
@@ -3955,6 +8024,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.104566,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.104566
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.104017
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.098982
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.094187
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.071773
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.156985,
       "draw_probability": 0.219979,
@@ -3977,6 +8076,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.122634,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.122634
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.092745
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.083595
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.07583
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.069574
+        }
+      ],
+      "scenario_score": [
+        1,
+        4
+      ],
+      "scenario_scoreline": "1-4",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.276991,
       "draw_probability": 0.260465,
@@ -3999,6 +8128,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.126367,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.126367
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.091851
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.086937
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.07584
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.071168
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.447598,
       "draw_probability": 0.266445,
@@ -4021,6 +8180,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.100545,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.100545
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.099149
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097991
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.087403
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.071705
+        }
+      ],
+      "scenario_score": [
+        1,
+        2
+      ],
+      "scenario_scoreline": "1-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.15384,
       "draw_probability": 0.212556,
@@ -4043,6 +8232,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.125746,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.125746
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.092297
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.086907
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.076499
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.070509
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.281955,
       "draw_probability": 0.265323,
@@ -4065,6 +8284,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123754,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123754
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.093424
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.089834
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.081467
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.070243
+        }
+      ],
+      "scenario_score": [
+        1,
+        3
+      ],
+      "scenario_scoreline": "1-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.262753,
       "draw_probability": 0.260588,
@@ -4087,6 +8336,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.123918,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.123918
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.098457
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096636
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.090654
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.073079
+        }
+      ],
+      "scenario_score": [
+        1,
+        3
+      ],
+      "scenario_scoreline": "1-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.230833,
       "draw_probability": 0.26002,
@@ -4109,6 +8388,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.122588,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.122588
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.105187
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.090366
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.08777
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.074937
+        }
+      ],
+      "scenario_score": [
+        3,
+        2
+      ],
+      "scenario_scoreline": "3-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.766036,
       "draw_probability": 0.156516,
@@ -4131,6 +8440,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.114119,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.114119
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.099271
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098216
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.097797
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.065755
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.569528,
       "draw_probability": 0.239881,
@@ -4153,6 +8492,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.108143,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.108143
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.101488
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.09842
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.095696
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.075893
+        }
+      ],
+      "scenario_score": [
+        5,
+        5
+      ],
+      "scenario_scoreline": "5-5",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.640351,
       "draw_probability": 0.214037,
@@ -4175,6 +8544,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.118192,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.118192
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.104358
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.09933
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096682
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.083698
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.662607,
       "draw_probability": 0.208268,
@@ -4197,6 +8596,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124473,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124473
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.098107
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096358
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.089732
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.073407
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.504253,
       "draw_probability": 0.261185,
@@ -4219,6 +8648,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.110536,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.110536
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097911
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.093884
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.089824
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.063388
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.571796,
       "draw_probability": 0.23477,
@@ -4241,6 +8700,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113471,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.113471
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.098747
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.087796
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.082785
+        },
+        {
+          "scoreline": "3-1",
+          "probability": 0.07636
+        }
+      ],
+      "scenario_score": [
+        2,
+        1
+      ],
+      "scenario_scoreline": "2-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.760524,
       "draw_probability": 0.156711,
@@ -4263,6 +8752,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.11692,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.11692
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.100751
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.099472
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.097882
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.069151
+        }
+      ],
+      "scenario_score": [
+        0,
+        1
+      ],
+      "scenario_scoreline": "0-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.196679,
       "draw_probability": 0.245301,
@@ -4285,6 +8804,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.129109,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.129109
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.085258
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.08035
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.080175
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.074347
+        }
+      ],
+      "scenario_score": [
+        0,
+        0
+      ],
+      "scenario_scoreline": "0-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.382973,
       "draw_probability": 0.272269,
@@ -4307,6 +8856,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.124345,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.124345
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.09819
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096424
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.089947
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.073331
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.233689,
       "draw_probability": 0.260916,
@@ -4329,6 +8908,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.114637,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.114637
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.096223
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.094159
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.091709
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.086838
+        }
+      ],
+      "scenario_score": [
+        1,
+        0
+      ],
+      "scenario_scoreline": "1-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.68837,
       "draw_probability": 0.193483,
@@ -4351,6 +8960,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.115022,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.115022
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098468
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.09562
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.094806
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.064647
+        }
+      ],
+      "scenario_score": [
+        3,
+        1
+      ],
+      "scenario_scoreline": "3-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.557973,
       "draw_probability": 0.242545,
@@ -4373,6 +9012,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.113566,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.113566
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.09771
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.097195
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.097085
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.08244
+        }
+      ],
+      "scenario_score": [
+        2,
+        0
+      ],
+      "scenario_scoreline": "2-0",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.666215,
       "draw_probability": 0.204332,
@@ -4395,6 +9064,36 @@
         0
       ],
       "scoreline": "2-0",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.103688,
+      "top_scorelines": [
+        {
+          "scoreline": "2-0",
+          "probability": 0.103688
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.102268
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098728
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.092119
+        },
+        {
+          "scoreline": "3-0",
+          "probability": 0.072224
+        }
+      ],
+      "scenario_score": [
+        1,
+        1
+      ],
+      "scenario_scoreline": "1-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.62817,
       "draw_probability": 0.217011,
@@ -4417,6 +9116,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.12315,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.12315
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.097427
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096768
+        },
+        {
+          "scoreline": "0-2",
+          "probability": 0.090469
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.071886
+        }
+      ],
+      "scenario_score": [
+        3,
+        2
+      ],
+      "scenario_scoreline": "3-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.2302,
       "draw_probability": 0.258572,
@@ -4439,6 +9168,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.115682,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.115682
+        },
+        {
+          "scoreline": "2-0",
+          "probability": 0.100064
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.100023
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.098324
+        },
+        {
+          "scoreline": "0-0",
+          "probability": 0.067751
+        }
+      ],
+      "scenario_score": [
+        4,
+        1
+      ],
+      "scenario_scoreline": "4-1",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "home",
       "home_probability": 0.565254,
       "draw_probability": 0.242838,
@@ -4461,6 +9220,36 @@
         1
       ],
       "scoreline": "1-1",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.127737,
+      "top_scorelines": [
+        {
+          "scoreline": "1-1",
+          "probability": 0.127737
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.084905
+        },
+        {
+          "scoreline": "2-1",
+          "probability": 0.081096
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.077578
+        },
+        {
+          "scoreline": "1-0",
+          "probability": 0.072919
+        }
+      ],
+      "scenario_score": [
+        0,
+        3
+      ],
+      "scenario_scoreline": "0-3",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.350604,
       "draw_probability": 0.270549,
@@ -4483,6 +9272,36 @@
         2
       ],
       "scoreline": "0-2",
+      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "score_probability": 0.107227,
+      "top_scorelines": [
+        {
+          "scoreline": "0-2",
+          "probability": 0.107227
+        },
+        {
+          "scoreline": "1-2",
+          "probability": 0.096598
+        },
+        {
+          "scoreline": "1-1",
+          "probability": 0.095784
+        },
+        {
+          "scoreline": "0-1",
+          "probability": 0.09111
+        },
+        {
+          "scoreline": "0-3",
+          "probability": 0.079173
+        }
+      ],
+      "scenario_score": [
+        0,
+        2
+      ],
+      "scenario_scoreline": "0-2",
+      "scenario_scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "pick": "away",
       "home_probability": 0.135064,
       "draw_probability": 0.202907,
