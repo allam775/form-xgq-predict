@@ -98,7 +98,8 @@ export default {
           xgq:shadow.xgq,goal_fixed_rho:shadow.goal_fixed_rho,
           goal_over_xgq_log_loss_gain:shadow.goal_over_xgq_log_loss_gain,
           paired_log_loss_ci95:shadow.paired_log_loss_ci95,
-          by_league_paired_counts:shadow.by_league_paired_counts
+          by_league_paired_counts:shadow.by_league_paired_counts,
+          stage1_volume_challenger:shadow.stage1_volume_challenger
         }:null;
         return privateJson({status:count?'scored':'awaiting_verified_results',comparison,
           model:'xgq_production_formula',total_frozen:Number(total?.n)||0,
