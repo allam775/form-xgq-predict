@@ -284,6 +284,15 @@ def main():
         try:sources[name]=fn()
         except Exception as e:
             sources[name]={"status":"unavailable","reason":type(e).__name__}
+    # This repository is public: NEVER publish per-game 365Scores details.
+    # Keep in-memory diagnostic details only during processing and retain a
+    # league-agnostic summary of reason counts, not scorelines/shot arrays.
+    private=sources.get("365scores_legacy_authorized_pilot")
+    if isinstance(private,dict) and isinstance(private.get("details"),list):
+        reasons=Counter(d.get("status","unidentified") for d in private["details"])
+        private["detail_diagnostic_status_counts"]=dict(sorted(reasons.items()))
+        private["matches_inspected"]=len(private["details"])
+        del private["details"]
     report={
       "created_at_utc":start.isoformat(),
       "scope":"zero-cost bounded source samples; private XGQ inputs unchanged",
