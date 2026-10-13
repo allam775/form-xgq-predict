@@ -8,10 +8,11 @@ ROOT=Path(__file__).resolve().parent
 OUT=ROOT/'reports'
 OUT.mkdir(exist_ok=True)
 URLS={
- 'wc':'https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json',
- 'intl':'https://raw.githubusercontent.com/martj42/international_results/master/results.csv',
- 'detail':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/main/matches_detailed.csv',
- 'stats':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/main/match_team_stats.csv'}
+ 'wc':'https://raw.githubusercontent.com/openfootball/worldcup.json/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json',
+ 'intl':'https://raw.githubusercontent.com/martj42/international_results/d5bd6de012c87e2f325de602ae77fe2f9ab61ef3/results.csv',
+ 'detail':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/matches_detailed.csv',
+ 'stats':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/match_team_stats.csv'},
+ 'meta':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/matches.csv'
 ALIASES={'USA':'United States','Czechia':'Czech Republic','Bosnia & Herzegovina':'Bosnia and Herzegovina','Türkiye':'Turkey','Côte d’Ivoire':'Ivory Coast',"Côte d'Ivoire":'Ivory Coast','Cabo Verde':'Cape Verde','Congo DR':'DR Congo','IR Iran':'Iran'}
 def N(s):return ALIASES.get(s.strip(),s.strip())
 def get(u):
@@ -50,7 +51,10 @@ def load():
   raise ValueError('Expected 104 unique official WC matches')
  secondary=list(csv.DictReader(io.StringIO(raw['detail'])))
  stats=list(csv.DictReader(io.StringIO(raw['stats'])))
- if len(secondary)!=104 or len(stats)!=208:raise ValueError('Incomplete 104/208 stat source')
+ meta=list(csv.DictReader(io.StringIO(raw['meta'])))
+ if len(secondary)!=104 or len(stats)!=208 or len(meta)!=104:
+  raise ValueError('Incomplete 104/208 match-stat coverage')
+ bymeta={r['match_id']:r for r in meta}
  # Source A uses stadium-local dates; Source B uses UTC dates.
  # Validate the same ordered teams with at most one-day clock rollover.
  bykey={(g['home'],g['away']):g for g in games}
@@ -65,6 +69,10 @@ def load():
    raise ValueError('Fixture sources disagree by more than one calendar day')
   match_shots=bynum[s['match_id']]
   if len(match_shots)!=2:raise ValueError('Wrong shot event coverage')
+  reference=bymeta.get(s['match_id'])
+  if reference is None or [x['team_id'] for x in match_shots]!=[
+      reference['home_team_id'],reference['away_team_id']]:
+   raise ValueError('Team-shot row ordering does not match official home/away side')
   verified= g['et'] if g['et'] else [g['hg'],g['ag']]
   if verified!=[int(s['home_score']),int(s['away_score'])]:
    raise ValueError('Contradictory official final score for fixture '+s['match_id'])
