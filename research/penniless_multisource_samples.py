@@ -208,6 +208,14 @@ def _shot_diagnostics(payload,match_id):
                 continue
         if v is not None:shots[team].append(v)
     cid,name,country=_competition(match)
+    display=str(match.get("competitionDisplayName") or "").strip().casefold()
+    known_competitions=(payload.get("competitions") or []) if isinstance(payload,dict) else []
+    catalog=next((item for item in known_competitions
+                  if isinstance(item,dict) and
+                  str(item.get("id") or "")==str(cid) and
+                  str(item.get("name") or "").strip().casefold()==display),
+                 None)
+    catalog_verified=bool(display and catalog and catalog.get("countryId") is not None)
     def safe_fieldnames(obj):
         return sorted(str(k) for k in obj.keys()
                       if isinstance(k,str) and re.search(
@@ -217,19 +225,28 @@ def _shot_diagnostics(payload,match_id):
     if bad:status="missing_individual_shot_xg"
     elif unassigned:status="shots_without_team"
     elif not shots[hi] or not shots[ai]:status="missing_one_team_shots"
-    elif not name or not country:status="missing_competition_identity"
-    # Score may be omitted from detail JSON; never invent it.
+    elif not ((name and country) or catalog_verified):
+        status="missing_competition_identity"
+    # 365Scores sometimes serializes actual integer goal counts as 1.0.
+    # Accept ONLY an exact integral float within 0..30, never decimal goals.
+    def verified_score(side,direction):
+        v=side.get("score")
+        if type(v) is float and v.is_integer() and 0<=v<=30:
+            return int(v)
+        from engine.provider365 import _score
+        return _score(match,direction,side)
     score_ok=True
     try:
-        from engine.provider365 import _score
-        score=[_score(match,"home",home),_score(match,"away",away)]
+        score=[verified_score(home,"home"),verified_score(away,"away")]
     except (ValueError,KeyError,TypeError):
         score_ok=False
     # Return only counts and Boolean checks, not raw provider data / derived xGQ.
     return {"status":status,"shot_events":len(shots[hi])+len(shots[ai]),
             "home_shots_detected":len(shots[hi]),"away_shots_detected":len(shots[ai]),
             "shots_missing_xg":bad,"shots_unassigned":unassigned,
-            "score_present":score_ok,"competition_identity_present":bool(name and country),
+            "score_present":score_ok,
+            "competition_identity_present":bool((name and country) or catalog_verified),
+            "competition_catalog_identity_confirmed":catalog_verified,
             "competition_display_name_present":bool(match.get("competitionDisplayName")),
             "home_score_field_kind":type(home.get("score")).__name__,
             "away_score_field_kind":type(away.get("score")).__name__,
@@ -348,6 +365,11 @@ def main():
             r.get("home_score_field_kind","missing") for r in private["details"]))
         private["games_with_competition_display_name"]=sum(
             bool(r.get("competition_display_name_present")) for r in private["details"])
+        private["games_with_competition_catalog_match"]=sum(
+            bool(r.get("competition_catalog_identity_confirmed"))
+            for r in private["details"])
+        private["games_with_readable_final_score"]=sum(
+            bool(r.get("score_present")) for r in private["details"])
         for field in ("home_score_nested_fields","away_score_nested_fields",
                       "root_competition_item_fields"):
             private["observed_"+field]=sorted(set(
