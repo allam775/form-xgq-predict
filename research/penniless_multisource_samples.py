@@ -135,18 +135,42 @@ def run_football_data():
                 "has_individual_shot_xg":False}
 
 
+def get_prefix(url,limit=10_000):
+    """Retrieve only an initial byte range from a large MIT-licensed CSV."""
+    p=urlparse(url)
+    if p.scheme!="https" or p.hostname!="raw.githubusercontent.com":
+        raise ValueError("Unapproved open dataset location")
+    req=Request(url,headers={"Accept":"text/csv",
+                             "User-Agent":"Penniless-XGQ-Research/0.4",
+                             "Range":f"bytes=0-{limit-1}"})
+    with urlopen(req,timeout=25) as res:
+        raw=res.read(limit)
+    return raw.decode("utf-8-sig",errors="replace")
+
+
 def run_clubelo_catalog():
-    """MIT-licensed club results/Elo dataset; don't bulk download 11+45 MB."""
-    try:
-        raw=get(URLS["clubelo_catalog"],limit=100_000)
-        return {"status":"metadata_sample_only","readme_bytes":len(raw.encode()),
-                "elo_csv_reference_present":"EloRatings.csv" in raw,
-                "match_csv_reference_present":"Matches.csv" in raw,
-                "large_files_downloaded":0,
-                "license":"MIT (repository license; verify dataset provenance separately)"}
-    except Exception as e:
-        return {"status":"unavailable","reason":type(e).__name__,
-                "large_files_downloaded":0}
+    """Actual small historical Elo+match CSV header samples; NO bulk download."""
+    root="https://raw.githubusercontent.com/xgabora/Club-Football-Match-Data/main/data/"
+    result={"status":"not_started","license":"MIT repository license",
+            "large_files_downloaded":0,"csv_samples":{}}
+    for kind,name in (("elo_ratings","EloRatings.csv"),
+                      ("club_matches","Matches.csv")):
+        try:
+            prefix=get_prefix(root+name)
+            reader=csv.reader(io.StringIO(prefix))
+            header=next(reader)
+            next(reader)
+            result["csv_samples"][kind]={
+                "readable_header":True,
+                "first_fields":header[:25],
+                "sample_first_rows_requested":True,
+                "bytes_downloaded_max":10_000}
+        except Exception as e:
+            result["csv_samples"][kind]={"readable_header":False,
+                                          "reason":type(e).__name__}
+    result["status"]="real_csv_sample_available" if all(
+       x["readable_header"] for x in result["csv_samples"].values()) else "partial_or_unavailable"
+    return result
 
 
 def _shot_diagnostics(payload,match_id):
@@ -184,6 +208,11 @@ def _shot_diagnostics(payload,match_id):
                 continue
         if v is not None:shots[team].append(v)
     cid,name,country=_competition(match)
+    def safe_fieldnames(obj):
+        return sorted(str(k) for k in obj.keys()
+                      if isinstance(k,str) and re.search(
+                          r"score|competit|league|tourna|stat|result|chart|game|team|fixture",
+                          k,re.I))[:35] if isinstance(obj,dict) else []
     status="partial_unverified"
     if bad:status="missing_individual_shot_xg"
     elif unassigned:status="shots_without_team"
@@ -201,6 +230,10 @@ def _shot_diagnostics(payload,match_id):
             "home_shots_detected":len(shots[hi]),"away_shots_detected":len(shots[ai]),
             "shots_missing_xg":bad,"shots_unassigned":unassigned,
             "score_present":score_ok,"competition_identity_present":bool(name and country),
+            "game_field_names":safe_fieldnames(match),
+            "home_field_names":safe_fieldnames(home),
+            "away_field_names":safe_fieldnames(away),
+            "root_field_names":safe_fieldnames(payload),
             "independent_team_shot_totals_matched":False,
             "accepted_complete_xgq":False}
 
@@ -292,6 +325,13 @@ def main():
         reasons=Counter(d.get("status","unidentified") for d in private["details"])
         private["detail_diagnostic_status_counts"]=dict(sorted(reasons.items()))
         private["matches_inspected"]=len(private["details"])
+        # Share field NAME patterns only, never provider field values or
+        # per-match shot series, scores, xG or match IDs.
+        for field in ("game_field_names","home_field_names",
+                      "away_field_names","root_field_names"):
+            private["observed_"+field]=sorted(set(
+                name for row in private["details"]
+                for name in row.get(field,[])))[:45]
         del private["details"]
     report={
       "created_at_utc":start.isoformat(),
