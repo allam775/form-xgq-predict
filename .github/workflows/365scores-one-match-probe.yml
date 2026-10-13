@@ -1,0 +1,34 @@
+name: One-match 365Scores owner-authorized XGQ probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/365_one_match_probe.py
+      - .github/workflows/365scores-one-match-probe.yml
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: penniless-single-provider-technical-probe
+  cancel-in-progress: false
+jobs:
+  inspect-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: "Owner authorized: issue ONE known 365Scores match request"
+        run: |
+          python -m research.365_one_match_probe
+      - name: Upload only privacy-safe diagnostics (no raw events)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-match-365scores-tech-probe
+          path: research/reports/365scores_one_match_probe.json
+          if-no-files-found: warn
+          retention-days: 3
