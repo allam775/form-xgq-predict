@@ -82,6 +82,16 @@ function renderChallenger(c){
  }
  const n=Number(c.paired_verified_matches)||0, target=Number(c.min_forward_pairs)||350;
  const x=c.xgq||{},g=c.goal_fixed_rho||{};
+ const volume=c.stage1_volume_challenger||null;
+ const vc=volume?Number(volume.paired_verified_matches)||0:0;
+ const volumeText=volume?
+  '<div class="shadow-volume"><p><strong>Stage-1 shot volume + XGQ</strong> · '+vc+
+  ' forward-paired matches only (older fixtures excluded)</p>'+
+  '<p>Stage-1 hit rate '+dailyPct(volume.stage1_volume_xgq?.top_choice_accuracy)+
+  ' · goal baseline on same games '+dailyPct(volume.goal_fixed_rho?.top_choice_accuracy)+
+  ' · Log Loss '+dailyFloat(volume.stage1_volume_xgq?.log_loss)+
+  ' vs '+dailyFloat(volume.goal_fixed_rho?.log_loss)+'.</p></div>':
+  '<p>Shot-volume future test has not started on source-verified fixtures yet.</p>';
  const progress=Math.min(100,Math.max(0,100*n/target));
  const verdict=c.gate_met?'Statistical promotion gate reached — manual review required':
   n<target?'Accumulating genuine future results. Do not promote based on historical tuning.':
@@ -95,7 +105,7 @@ function renderChallenger(c){
    dailyFloat(x.log_loss)+'</td><td>'+dailyFloat(x.brier)+'</td></tr>'+
   '<tr><th>Fixed-rho goal challenger</th><td>'+dailyPct(g.top_choice_accuracy)+'</td><td>'+
    dailyFloat(g.log_loss)+'</td><td>'+dailyFloat(g.brier)+'</td></tr>'+
-  '</tbody></table></div>';
+  '</tbody></table></div>'+volumeText;
 }
 
 async function loadDaily(){
