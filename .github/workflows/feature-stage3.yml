@@ -1,0 +1,31 @@
+name: Five-league historical stage 3 opponent and venue study
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'engine/stage3_form.py'
+      - 'tests/test_stage3_form.py'
+      - '.github/workflows/feature-stage3.yml'
+permissions:
+  contents: read
+concurrency:
+  group: form-xgq-stage3-research
+  cancel-in-progress: false
+jobs:
+  opponent-form-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify prior-date Elo, 5-10-20-game form and venue shrinkage
+        run: python -m unittest discover -s tests -p 'test_stage3_form.py' -v
+      - name: Audit stage 3 on identical historical dates as the stage 1 goal and XGQ models
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m engine.stage3_form
