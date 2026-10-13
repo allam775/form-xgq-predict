@@ -1,22 +1,22 @@
 ﻿id,date,matchday,home,away,status,scoreline,pick,home_probability,draw_probability,away_probability,score_lambda_home,score_lambda_away,home_form_games,away_form_games,model_is_cross_league_adaptation
-1,2026-09-08,1,AEK,LASK,ACTUAL,1-0,home,0.428857,0.274719,0.296424,1.4918,1.2037,0,0,True
-2,2026-09-08,1,Club Brugge,Aston Villa,ACTUAL,2-3,home,0.410653,0.275557,0.313791,1.5009,1.2246,0,16,True
-3,2026-09-08,1,Dortmund,Villarreal,ACTUAL,3-2,home,0.53849,0.251156,0.210354,1.8281,1.0159,16,16,True
-4,2026-09-08,1,Porto,Manchester City,ACTUAL,0-2,away,0.278048,0.265838,0.456114,1.1837,1.7132,0,16,True
-5,2026-09-08,1,Lille,Real Betis,ACTUAL,2-3,away,0.318897,0.279289,0.401814,1.2429,1.3731,16,16,True
-6,2026-09-08,1,Real Madrid,Inter,ACTUAL,2-1,home,0.433937,0.266149,0.299915,1.655,1.3455,16,16,True
-7,2026-09-09,1,Barcelona,Feyenoord,ACTUAL,5-1,home,0.689812,0.19209,0.118098,2.5668,0.7704,16,0,True
-8,2026-09-09,1,Stuttgart,Viking,ACTUAL,3-1,home,0.424277,0.267397,0.308326,1.604,1.378,16,0,True
-9,2026-09-09,1,Liverpool,Atletico Madrid,ACTUAL,2-1,home,0.390996,0.274477,0.334527,1.3577,1.4004,16,16,True
-10,2026-09-09,1,PSG,Slovan Bratislava,ACTUAL,6-1,home,0.758148,0.160584,0.081268,2.7367,0.6986,16,0,True
-11,2026-09-09,1,Sporting CP,Galatasaray,ACTUAL,3-1,home,0.521541,0.256924,0.221534,1.7161,1.0463,0,0,True
-12,2026-09-09,1,Napoli,Arsenal,ACTUAL,0-1,away,0.221168,0.254225,0.524607,1.0666,1.7853,16,16,True
-13,2026-09-10,1,Fenerbahce,Roma,ACTUAL,1-1,away,0.277447,0.26241,0.460143,1.1443,1.8186,0,16,True
-14,2026-09-10,1,PSV,Shakhtar Donetsk,ACTUAL,1-1,home,0.503914,0.261264,0.234822,1.6713,1.0744,0,0,True
-15,2026-09-10,1,Como,RB Leipzig,ACTUAL,4-1,away,0.323858,0.268361,0.407781,1.3754,1.6282,16,16,True
-16,2026-09-10,1,Bayern Munich,Bodo Glimt,ACTUAL,5-0,home,0.683878,0.193952,0.12217,2.5668,0.8249,16,0,True
-17,2026-09-10,1,Manchester United,Sabah,ACTUAL,4-0,home,0.633454,0.218275,0.148271,2.1162,0.9132,16,0,True
-18,2026-09-10,1,Slavia Prague,Lens,ACTUAL,2-3,home,0.379149,0.270835,0.350016,1.4626,1.4831,0,16,True
+1,2026-09-08,1,AEK,LASK,ACTUAL,1-0,,,,,,,,,True
+2,2026-09-08,1,Club Brugge,Aston Villa,ACTUAL,2-3,,,,,,,,,True
+3,2026-09-08,1,Dortmund,Villarreal,ACTUAL,3-2,,,,,,,,,True
+4,2026-09-08,1,Porto,Manchester City,ACTUAL,0-2,,,,,,,,,True
+5,2026-09-08,1,Lille,Real Betis,ACTUAL,2-3,,,,,,,,,True
+6,2026-09-08,1,Real Madrid,Inter,ACTUAL,2-1,,,,,,,,,True
+7,2026-09-09,1,Barcelona,Feyenoord,ACTUAL,5-1,,,,,,,,,True
+8,2026-09-09,1,Stuttgart,Viking,ACTUAL,3-1,,,,,,,,,True
+9,2026-09-09,1,Liverpool,Atletico Madrid,ACTUAL,2-1,,,,,,,,,True
+10,2026-09-09,1,PSG,Slovan Bratislava,ACTUAL,6-1,,,,,,,,,True
+11,2026-09-09,1,Sporting CP,Galatasaray,ACTUAL,3-1,,,,,,,,,True
+12,2026-09-09,1,Napoli,Arsenal,ACTUAL,0-1,,,,,,,,,True
+13,2026-09-10,1,Fenerbahce,Roma,ACTUAL,1-1,,,,,,,,,True
+14,2026-09-10,1,PSV,Shakhtar Donetsk,ACTUAL,1-1,,,,,,,,,True
+15,2026-09-10,1,Como,RB Leipzig,ACTUAL,4-1,,,,,,,,,True
+16,2026-09-10,1,Bayern Munich,Bodo Glimt,ACTUAL,5-0,,,,,,,,,True
+17,2026-09-10,1,Manchester United,Sabah,ACTUAL,4-0,,,,,,,,,True
+18,2026-09-10,1,Slavia Prague,Lens,ACTUAL,2-3,,,,,,,,,True
 19,2026-10-13,2,Lens,Sporting CP,PREDICTION,1-2,away,0.255235,0.258399,0.486366,1.2623,1.7183,16,0,True
 20,2026-10-13,2,Sabah,Slavia Prague,PREDICTION,1-0,home,0.421493,0.275569,0.302938,1.475,1.2174,0,0,True
 21,2026-10-13,2,Arsenal,Lille,PREDICTION,2-0,home,0.653721,0.213639,0.13264,2.1132,0.7706,16,16,True
