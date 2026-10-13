@@ -415,13 +415,17 @@ def main():
     'status':'ACTUAL' if observed is not None else 'PREDICTION',
     'score':list(observed) if observed is not None else p['score'],
     'scoreline':f"{(observed or p['score'])[0]}-{(observed or p['score'])[1]}",
-    'pick':p['pick'],'home_probability':round(p['p']['home'],6),
-    'draw_probability':round(p['p']['draw'],6),
-    'away_probability':round(p['p']['away'],6),
-    'score_lambda_home':round(p['lambda_home'],4),
-    'score_lambda_away':round(p['lambda_away'],4),
-    'home_form_games':form.get(m['home'],{}).get('games',0),
-    'away_form_games':form.get(m['away'],{}).get('games',0),
+    # The September games are actual results. Retrospectively-calculated
+    # probabilities would use October evidence and MUST NEVER be displayed
+    # as September pre-kickoff predictions.
+    'pick':p['pick'] if observed is None else None,
+    'home_probability':round(p['p']['home'],6) if observed is None else None,
+    'draw_probability':round(p['p']['draw'],6) if observed is None else None,
+    'away_probability':round(p['p']['away'],6) if observed is None else None,
+    'score_lambda_home':round(p['lambda_home'],4) if observed is None else None,
+    'score_lambda_away':round(p['lambda_away'],4) if observed is None else None,
+    'home_form_games':form.get(m['home'],{}).get('games',0) if observed is None else None,
+    'away_form_games':form.get(m['away'],{}).get('games',0) if observed is None else None,
     'model_is_cross_league_adaptation':True})
  projected=score_table(matches,'score')
  for i,t in enumerate(projected,1):
