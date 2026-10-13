@@ -51,13 +51,18 @@ def load():
  secondary=list(csv.DictReader(io.StringIO(raw['detail'])))
  stats=list(csv.DictReader(io.StringIO(raw['stats'])))
  if len(secondary)!=104 or len(stats)!=208:raise ValueError('Incomplete 104/208 stat source')
- bykey={(g['date'],g['home'],g['away']):g for g in games}
+ # Source A uses stadium-local dates; Source B uses UTC dates.
+ # Validate the same ordered teams with at most one-day clock rollover.
+ bykey={(g['home'],g['away']):g for g in games}
+ if len(bykey)!=104:raise ValueError('Repeated national pairing needs explicit disambiguation')
  bynum=defaultdict(list)
  for s in stats:bynum[s['match_id']].append(s)
  for s in secondary:
-  key=(s['date'],N(s['home_team_name']),N(s['away_team_name']))
-  if key not in bykey:raise ValueError('Secondary match identity mismatch '+str(key))
+  key=(N(s['home_team_name']),N(s['away_team_name']))
+  if key not in bykey:raise ValueError('Secondary team identity mismatch '+str(key))
   g=bykey[key]
+  if abs((date.fromisoformat(g['date'])-date.fromisoformat(s['date'])).days)>1:
+   raise ValueError('Fixture sources disagree by more than one calendar day')
   match_shots=bynum[s['match_id']]
   if len(match_shots)!=2:raise ValueError('Wrong shot event coverage')
   verified= g['et'] if g['et'] else [g['hg'],g['ag']]
