@@ -1,0 +1,2464 @@
+{
+  "season": "2025-26",
+  "source": "https://github.com/openfootball/champions-league/blob/master/2025-26/cl.txt",
+  "source_note": "Raw fixture facts transcribed from openfootball; 90-minute results for 2 extra-time fixtures verified against club match reports; final 1-1 at 90 and 120, 4-3 penalties.",
+  "matches": [
+    {
+      "id": 1,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "Athletic Club",
+      "away": "Arsenal",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 2,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "PSV",
+      "away": "Union Saint Gilloise",
+      "goals_90": [
+        1,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 3,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "Juventus",
+      "away": "Dortmund",
+      "goals_90": [
+        4,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 4,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "Benfica",
+      "away": "Qarabag",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 5,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "Tottenham",
+      "away": "Villarreal",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 6,
+      "date": "2025-09-16",
+      "phase": "League, Matchday 1",
+      "home": "Real Madrid",
+      "away": "Marseille",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 7,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "Slavia Prague",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 8,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "Olympiacos",
+      "away": "Pafos",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 9,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "Ajax",
+      "away": "Inter",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 10,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "Liverpool",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 11,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "PSG",
+      "away": "Atalanta",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 12,
+      "date": "2025-09-17",
+      "phase": "League, Matchday 1",
+      "home": "Bayern Munich",
+      "away": "Chelsea",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 13,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Copenhagen",
+      "away": "Leverkusen",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 14,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Club Brugge",
+      "away": "Monaco",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 15,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Newcastle United",
+      "away": "Barcelona",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 16,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Manchester City",
+      "away": "Napoli",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 17,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Frankfurt",
+      "away": "Galatasaray",
+      "goals_90": [
+        5,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 18,
+      "date": "2025-09-18",
+      "phase": "League, Matchday 1",
+      "home": "Sporting CP",
+      "away": "Kairat Almaty",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 19,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Atalanta",
+      "away": "Club Brugge",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 20,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Kairat Almaty",
+      "away": "Real Madrid",
+      "goals_90": [
+        0,
+        5
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 21,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Galatasaray",
+      "away": "Liverpool",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 22,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Atletico Madrid",
+      "away": "Frankfurt",
+      "goals_90": [
+        5,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 23,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Marseille",
+      "away": "Ajax",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 24,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Bodo Glimt",
+      "away": "Tottenham",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 25,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Pafos",
+      "away": "Bayern Munich",
+      "goals_90": [
+        1,
+        5
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 26,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Chelsea",
+      "away": "Benfica",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 27,
+      "date": "2025-09-30",
+      "phase": "League, Matchday 2",
+      "home": "Inter",
+      "away": "Slavia Prague",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 28,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Qarabag",
+      "away": "Copenhagen",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 29,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Union Saint Gilloise",
+      "away": "Newcastle United",
+      "goals_90": [
+        0,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 30,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Dortmund",
+      "away": "Athletic Club",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 31,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Barcelona",
+      "away": "PSG",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 32,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Monaco",
+      "away": "Manchester City",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 33,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Leverkusen",
+      "away": "PSV",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 34,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Arsenal",
+      "away": "Olympiacos",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 35,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Villarreal",
+      "away": "Juventus",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 36,
+      "date": "2025-10-01",
+      "phase": "League, Matchday 2",
+      "home": "Napoli",
+      "away": "Sporting CP",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 37,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Barcelona",
+      "away": "Olympiacos",
+      "goals_90": [
+        6,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 38,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Kairat Almaty",
+      "away": "Pafos",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 39,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Union Saint Gilloise",
+      "away": "Inter",
+      "goals_90": [
+        0,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 40,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Copenhagen",
+      "away": "Dortmund",
+      "goals_90": [
+        2,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 41,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Leverkusen",
+      "away": "PSG",
+      "goals_90": [
+        2,
+        7
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 42,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Villarreal",
+      "away": "Manchester City",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 43,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Arsenal",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 44,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "Newcastle United",
+      "away": "Benfica",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 45,
+      "date": "2025-10-21",
+      "phase": "League, Matchday 3",
+      "home": "PSV",
+      "away": "Napoli",
+      "goals_90": [
+        6,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 46,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Galatasaray",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 47,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Athletic Club",
+      "away": "Qarabag",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 48,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Frankfurt",
+      "away": "Liverpool",
+      "goals_90": [
+        1,
+        5
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 49,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Atalanta",
+      "away": "Slavia Prague",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 50,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Sporting CP",
+      "away": "Marseille",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 51,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Monaco",
+      "away": "Tottenham",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 52,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Bayern Munich",
+      "away": "Club Brugge",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 53,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Chelsea",
+      "away": "Ajax",
+      "goals_90": [
+        5,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 54,
+      "date": "2025-10-22",
+      "phase": "League, Matchday 3",
+      "home": "Real Madrid",
+      "away": "Juventus",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 55,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Slavia Prague",
+      "away": "Arsenal",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 56,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Napoli",
+      "away": "Frankfurt",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 57,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Juventus",
+      "away": "Sporting CP",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 58,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Atletico Madrid",
+      "away": "Union Saint Gilloise",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 59,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Tottenham",
+      "away": "Copenhagen",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 60,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Bodo Glimt",
+      "away": "Monaco",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 61,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Olympiacos",
+      "away": "PSV",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 62,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "PSG",
+      "away": "Bayern Munich",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 63,
+      "date": "2025-11-04",
+      "phase": "League, Matchday 4",
+      "home": "Liverpool",
+      "away": "Real Madrid",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 64,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Pafos",
+      "away": "Villarreal",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 65,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Qarabag",
+      "away": "Chelsea",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 66,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Inter",
+      "away": "Kairat Almaty",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 67,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Manchester City",
+      "away": "Dortmund",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 68,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Club Brugge",
+      "away": "Barcelona",
+      "goals_90": [
+        3,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 69,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Benfica",
+      "away": "Leverkusen",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 70,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Marseille",
+      "away": "Atalanta",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 71,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Ajax",
+      "away": "Galatasaray",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 72,
+      "date": "2025-11-05",
+      "phase": "League, Matchday 4",
+      "home": "Newcastle United",
+      "away": "Athletic Club",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 73,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Ajax",
+      "away": "Benfica",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 74,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Galatasaray",
+      "away": "Union Saint Gilloise",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 75,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Dortmund",
+      "away": "Villarreal",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 76,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Manchester City",
+      "away": "Leverkusen",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 77,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Bodo Glimt",
+      "away": "Juventus",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 78,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Marseille",
+      "away": "Newcastle United",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 79,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Slavia Prague",
+      "away": "Athletic Club",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 80,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Napoli",
+      "away": "Qarabag",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 81,
+      "date": "2025-11-25",
+      "phase": "League, Matchday 5",
+      "home": "Chelsea",
+      "away": "Barcelona",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 82,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Pafos",
+      "away": "Monaco",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 83,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Copenhagen",
+      "away": "Kairat Almaty",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 84,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Liverpool",
+      "away": "PSV",
+      "goals_90": [
+        1,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 85,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "PSG",
+      "away": "Tottenham",
+      "goals_90": [
+        5,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 86,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Frankfurt",
+      "away": "Atalanta",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 87,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Sporting CP",
+      "away": "Club Brugge",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 88,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Arsenal",
+      "away": "Bayern Munich",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 89,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Olympiacos",
+      "away": "Real Madrid",
+      "goals_90": [
+        3,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 90,
+      "date": "2025-11-26",
+      "phase": "League, Matchday 5",
+      "home": "Atletico Madrid",
+      "away": "Inter",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 91,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Kairat Almaty",
+      "away": "Olympiacos",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 92,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Bayern Munich",
+      "away": "Sporting CP",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 93,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Barcelona",
+      "away": "Frankfurt",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 94,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "PSV",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 95,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Union Saint Gilloise",
+      "away": "Marseille",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 96,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Tottenham",
+      "away": "Slavia Prague",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 97,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Monaco",
+      "away": "Galatasaray",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 98,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Atalanta",
+      "away": "Chelsea",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 99,
+      "date": "2025-12-09",
+      "phase": "League, Matchday 6",
+      "home": "Inter",
+      "away": "Liverpool",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 100,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Villarreal",
+      "away": "Copenhagen",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 101,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Qarabag",
+      "away": "Ajax",
+      "goals_90": [
+        2,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 102,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Dortmund",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 103,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Athletic Club",
+      "away": "PSG",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 104,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Leverkusen",
+      "away": "Newcastle United",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 105,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Club Brugge",
+      "away": "Arsenal",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 106,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Benfica",
+      "away": "Napoli",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 107,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Juventus",
+      "away": "Pafos",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 108,
+      "date": "2025-12-10",
+      "phase": "League, Matchday 6",
+      "home": "Real Madrid",
+      "away": "Manchester City",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 109,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Kairat Almaty",
+      "away": "Club Brugge",
+      "goals_90": [
+        1,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 110,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Bodo Glimt",
+      "away": "Manchester City",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 111,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Tottenham",
+      "away": "Dortmund",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 112,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Sporting CP",
+      "away": "PSG",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 113,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Olympiacos",
+      "away": "Leverkusen",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 114,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Villarreal",
+      "away": "Ajax",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 115,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Copenhagen",
+      "away": "Napoli",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 116,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Real Madrid",
+      "away": "Monaco",
+      "goals_90": [
+        6,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 117,
+      "date": "2026-01-20",
+      "phase": "League, Matchday 7",
+      "home": "Inter",
+      "away": "Arsenal",
+      "goals_90": [
+        1,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 118,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Qarabag",
+      "away": "Frankfurt",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 119,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Galatasaray",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 120,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Marseille",
+      "away": "Liverpool",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 121,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Slavia Prague",
+      "away": "Barcelona",
+      "goals_90": [
+        2,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 122,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Atalanta",
+      "away": "Athletic Club",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 123,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Juventus",
+      "away": "Benfica",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 124,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Newcastle United",
+      "away": "PSV",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 125,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Bayern Munich",
+      "away": "Union Saint Gilloise",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 126,
+      "date": "2026-01-21",
+      "phase": "League, Matchday 7",
+      "home": "Chelsea",
+      "away": "Pafos",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 127,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Liverpool",
+      "away": "Qarabag",
+      "goals_90": [
+        6,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 128,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Barcelona",
+      "away": "Copenhagen",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 129,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Manchester City",
+      "away": "Galatasaray",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 130,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Leverkusen",
+      "away": "Villarreal",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 131,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Arsenal",
+      "away": "Kairat Almaty",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 132,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Union Saint Gilloise",
+      "away": "Atalanta",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 133,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Club Brugge",
+      "away": "Marseille",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 134,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Frankfurt",
+      "away": "Tottenham",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 135,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Monaco",
+      "away": "Juventus",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 136,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Atletico Madrid",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 137,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Athletic Club",
+      "away": "Sporting CP",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 138,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Ajax",
+      "away": "Olympiacos",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 139,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "PSG",
+      "away": "Newcastle United",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 140,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Pafos",
+      "away": "Slavia Prague",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 141,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "PSV",
+      "away": "Bayern Munich",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 142,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Napoli",
+      "away": "Chelsea",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 143,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Benfica",
+      "away": "Real Madrid",
+      "goals_90": [
+        4,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 144,
+      "date": "2026-01-28",
+      "phase": "League, Matchday 8",
+      "home": "Dortmund",
+      "away": "Inter",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 145,
+      "date": "2026-02-17",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Galatasaray",
+      "away": "Juventus",
+      "goals_90": [
+        5,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 146,
+      "date": "2026-02-17",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Benfica",
+      "away": "Real Madrid",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 147,
+      "date": "2026-02-17",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Monaco",
+      "away": "PSG",
+      "goals_90": [
+        2,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 148,
+      "date": "2026-02-17",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Dortmund",
+      "away": "Atalanta",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 149,
+      "date": "2026-02-18",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Qarabag",
+      "away": "Newcastle United",
+      "goals_90": [
+        1,
+        6
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 150,
+      "date": "2026-02-18",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Club Brugge",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        3,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 151,
+      "date": "2026-02-18",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Olympiacos",
+      "away": "Leverkusen",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 152,
+      "date": "2026-02-18",
+      "phase": "Playoffs, Matchday 1",
+      "home": "Bodo Glimt",
+      "away": "Inter",
+      "goals_90": [
+        3,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 153,
+      "date": "2026-02-24",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Atletico Madrid",
+      "away": "Club Brugge",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 154,
+      "date": "2026-02-24",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Newcastle United",
+      "away": "Qarabag",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 155,
+      "date": "2026-02-24",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Leverkusen",
+      "away": "Olympiacos",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 156,
+      "date": "2026-02-24",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Inter",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 157,
+      "date": "2026-02-25",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Atalanta",
+      "away": "Dortmund",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 158,
+      "date": "2026-02-25",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Real Madrid",
+      "away": "Benfica",
+      "goals_90": [
+        2,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 159,
+      "date": "2026-02-25",
+      "phase": "Playoffs, Matchday 2",
+      "home": "PSG",
+      "away": "Monaco",
+      "goals_90": [
+        2,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 160,
+      "date": "2026-02-25",
+      "phase": "Playoffs, Matchday 2",
+      "home": "Juventus",
+      "away": "Galatasaray",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": "3-2",
+      "penalties": null
+    },
+    {
+      "id": 161,
+      "date": "2026-03-10",
+      "phase": "Finals, Round of 16",
+      "home": "Galatasaray",
+      "away": "Liverpool",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 162,
+      "date": "2026-03-10",
+      "phase": "Finals, Round of 16",
+      "home": "Atalanta",
+      "away": "Bayern Munich",
+      "goals_90": [
+        1,
+        6
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 163,
+      "date": "2026-03-10",
+      "phase": "Finals, Round of 16",
+      "home": "Newcastle United",
+      "away": "Barcelona",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 164,
+      "date": "2026-03-10",
+      "phase": "Finals, Round of 16",
+      "home": "Atletico Madrid",
+      "away": "Tottenham",
+      "goals_90": [
+        5,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 165,
+      "date": "2026-03-11",
+      "phase": "Finals, Round of 16",
+      "home": "Leverkusen",
+      "away": "Arsenal",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 166,
+      "date": "2026-03-11",
+      "phase": "Finals, Round of 16",
+      "home": "PSG",
+      "away": "Chelsea",
+      "goals_90": [
+        5,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 167,
+      "date": "2026-03-11",
+      "phase": "Finals, Round of 16",
+      "home": "Real Madrid",
+      "away": "Manchester City",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 168,
+      "date": "2026-03-11",
+      "phase": "Finals, Round of 16",
+      "home": "Bodo Glimt",
+      "away": "Sporting CP",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 169,
+      "date": "2026-03-17",
+      "phase": "Finals, Round of 16",
+      "home": "Sporting CP",
+      "away": "Bodo Glimt",
+      "goals_90": [
+        3,
+        0
+      ],
+      "after_120": "5-0",
+      "penalties": null
+    },
+    {
+      "id": 170,
+      "date": "2026-03-17",
+      "phase": "Finals, Round of 16",
+      "home": "Chelsea",
+      "away": "PSG",
+      "goals_90": [
+        0,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 171,
+      "date": "2026-03-17",
+      "phase": "Finals, Round of 16",
+      "home": "Manchester City",
+      "away": "Real Madrid",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 172,
+      "date": "2026-03-17",
+      "phase": "Finals, Round of 16",
+      "home": "Arsenal",
+      "away": "Leverkusen",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 173,
+      "date": "2026-03-18",
+      "phase": "Finals, Round of 16",
+      "home": "Barcelona",
+      "away": "Newcastle United",
+      "goals_90": [
+        7,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 174,
+      "date": "2026-03-18",
+      "phase": "Finals, Round of 16",
+      "home": "Liverpool",
+      "away": "Galatasaray",
+      "goals_90": [
+        4,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 175,
+      "date": "2026-03-18",
+      "phase": "Finals, Round of 16",
+      "home": "Bayern Munich",
+      "away": "Atalanta",
+      "goals_90": [
+        4,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 176,
+      "date": "2026-03-18",
+      "phase": "Finals, Round of 16",
+      "home": "Tottenham",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        3,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 177,
+      "date": "2026-04-07",
+      "phase": "Finals, Quarterfinals",
+      "home": "Real Madrid",
+      "away": "Bayern Munich",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 178,
+      "date": "2026-04-07",
+      "phase": "Finals, Quarterfinals",
+      "home": "Sporting CP",
+      "away": "Arsenal",
+      "goals_90": [
+        0,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 179,
+      "date": "2026-04-08",
+      "phase": "Finals, Quarterfinals",
+      "home": "PSG",
+      "away": "Liverpool",
+      "goals_90": [
+        2,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 180,
+      "date": "2026-04-08",
+      "phase": "Finals, Quarterfinals",
+      "home": "Barcelona",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 181,
+      "date": "2026-04-14",
+      "phase": "Finals, Quarterfinals",
+      "home": "Liverpool",
+      "away": "PSG",
+      "goals_90": [
+        0,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 182,
+      "date": "2026-04-14",
+      "phase": "Finals, Quarterfinals",
+      "home": "Atletico Madrid",
+      "away": "Barcelona",
+      "goals_90": [
+        1,
+        2
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 183,
+      "date": "2026-04-15",
+      "phase": "Finals, Quarterfinals",
+      "home": "Bayern Munich",
+      "away": "Real Madrid",
+      "goals_90": [
+        4,
+        3
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 184,
+      "date": "2026-04-15",
+      "phase": "Finals, Quarterfinals",
+      "home": "Arsenal",
+      "away": "Sporting CP",
+      "goals_90": [
+        0,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 185,
+      "date": "2026-04-28",
+      "phase": "Finals, Semifinals",
+      "home": "PSG",
+      "away": "Bayern Munich",
+      "goals_90": [
+        5,
+        4
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 186,
+      "date": "2026-04-29",
+      "phase": "Finals, Semifinals",
+      "home": "Atletico Madrid",
+      "away": "Arsenal",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 187,
+      "date": "2026-05-05",
+      "phase": "Finals, Semifinals",
+      "home": "Arsenal",
+      "away": "Atletico Madrid",
+      "goals_90": [
+        1,
+        0
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 188,
+      "date": "2026-05-06",
+      "phase": "Finals, Semifinals",
+      "home": "Bayern Munich",
+      "away": "PSG",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": null,
+      "penalties": null
+    },
+    {
+      "id": 189,
+      "date": "2026-05-30",
+      "phase": "Finals, Final",
+      "home": "PSG",
+      "away": "Arsenal",
+      "goals_90": [
+        1,
+        1
+      ],
+      "after_120": "1-1",
+      "penalties": "4-3"
+    }
+  ]
+}
