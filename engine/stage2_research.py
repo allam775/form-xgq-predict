@@ -105,8 +105,10 @@ def run_stage2(rows,creativity, *, min_test=80):
                 recent=[r for r in prior if r["date"]>=cutoff]
                 if len(recent)>=40:
                     for m in batch:
-                        if not all("creative" in r for r in recent[-12:]):
-                            # Withhold until the private supplement is dense enough.
+                        available=sum("creative" in r for r in recent)
+                        if available<60 or available<.50*len(recent):
+                            # Withhold if real pre-match creativity coverage is sparse.
+                            # No season totals or fabricated metrics can fill gaps.
                             continue
                         fixture={"date":day,"league":league,"h":m["h"],"a":m["a"]}
                         base,_=predict_xgq({"league":league,"date":day,
