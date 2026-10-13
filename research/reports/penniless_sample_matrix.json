@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-13T08:32:17.805420+00:00",
+  "created_at_utc": "2026-10-13T08:34:28.568458+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -73,12 +73,54 @@
       "season": "2025-26 EPL"
     },
     "club_elo_catalog": {
-      "status": "metadata_sample_only",
-      "readme_bytes": 19917,
-      "elo_csv_reference_present": false,
-      "match_csv_reference_present": false,
+      "status": "real_csv_sample_available",
+      "license": "MIT repository license",
       "large_files_downloaded": 0,
-      "license": "MIT (repository license; verify dataset provenance separately)"
+      "csv_samples": {
+        "elo_ratings": {
+          "readable_header": true,
+          "first_fields": [
+            "date",
+            "club",
+            "country",
+            "elo"
+          ],
+          "sample_first_rows_requested": true,
+          "bytes_downloaded_max": 10000
+        },
+        "club_matches": {
+          "readable_header": true,
+          "first_fields": [
+            "Division",
+            "MatchDate",
+            "MatchTime",
+            "HomeTeam",
+            "AwayTeam",
+            "HomeElo",
+            "AwayElo",
+            "Form3Home",
+            "Form5Home",
+            "Form3Away",
+            "Form5Away",
+            "FTHome",
+            "FTAway",
+            "FTResult",
+            "HTHome",
+            "HTAway",
+            "HTResult",
+            "HomeShots",
+            "AwayShots",
+            "HomeTarget",
+            "AwayTarget",
+            "HomeFouls",
+            "AwayFouls",
+            "HomeCorners",
+            "AwayCorners"
+          ],
+          "sample_first_rows_requested": true,
+          "bytes_downloaded_max": 10000
+        }
+      }
     },
     "365scores_legacy_authorized_pilot": {
       "status": "candidate_samples_inspected",
@@ -95,7 +137,37 @@
         "missing_competition_identity": 3,
         "no_chart_events": 1
       },
-      "matches_inspected": 4
+      "matches_inspected": 4,
+      "observed_game_field_names": [
+        "awayCompetitor",
+        "chartEvents",
+        "competitionDisplayName",
+        "competitionId",
+        "gameStageHasTable",
+        "gameTime",
+        "gameTimeAndStatusDisplayType",
+        "gameTimeDisplay",
+        "hasShotChart",
+        "hasStats",
+        "homeCompetitor",
+        "preciseGameTime",
+        "shortStatusText",
+        "statusGroup",
+        "statusId",
+        "statusText"
+      ],
+      "observed_home_field_names": [
+        "mainCompetitionId",
+        "score"
+      ],
+      "observed_away_field_names": [
+        "mainCompetitionId",
+        "score"
+      ],
+      "observed_root_field_names": [
+        "competitions",
+        "game"
+      ]
     }
   }
 }
