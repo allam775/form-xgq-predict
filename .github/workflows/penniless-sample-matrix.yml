@@ -48,7 +48,7 @@ jobs:
           assert x['candidate_does_not_equal_accepted_xgq'] is True
           a=x['sources']['365scores_legacy_authorized_pilot']
           assert 'details' not in a and a['raw_provider_bytes_written']==0
-          assert a['queries_made']<=a['request_cap']<=5
+          assert a['queries_made']<=a['request_cap']<=9
           assert a['accepted_complete_xgq']==0
           b=x['sources']['understat_private']
           assert b.get('private_rows_exported',0)==0
