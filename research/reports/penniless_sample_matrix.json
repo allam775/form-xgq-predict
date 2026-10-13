@@ -1,0 +1,101 @@
+{
+  "created_at_utc": "2026-10-13T08:32:17.805420+00:00",
+  "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
+  "production_modified": false,
+  "all_live_sources_unrestricted": false,
+  "candidate_does_not_equal_accepted_xgq": true,
+  "source_count": 6,
+  "sources": {
+    "understat_private": {
+      "status": "existing_private_shot_history",
+      "rows_available": 2785,
+      "by_league": {
+        "de.1": 557,
+        "en.1": 558,
+        "es.1": 556,
+        "fr.1": 557,
+        "it.1": 557
+      },
+      "private_rows_exported": 0,
+      "is_fresh_365scores_source": false,
+      "note": "Already collected privately; this batch only examines counts."
+    },
+    "statsbomb_open": {
+      "status": "sampled_public_shot_events",
+      "index_matches": 380,
+      "sampled": 2,
+      "accepted": 2,
+      "rejected": {},
+      "samples": [
+        {
+          "date": "2015-08-08",
+          "source_match_id": "3754078",
+          "home": "Chelsea",
+          "away": "Swansea City",
+          "home_shots": 10,
+          "away_shots": 16,
+          "home_xg": 0.486011,
+          "away_xg": 2.471848,
+          "home_xgq": 0.00446559,
+          "away_xgq": 0.0575093,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2015-08-08",
+          "source_match_id": "3754097",
+          "home": "Manchester United",
+          "away": "Tottenham Hotspur",
+          "home_shots": 9,
+          "away_shots": 9,
+          "home_xg": 0.525077,
+          "away_xg": 0.584646,
+          "home_xgq": 0.00396675,
+          "away_xgq": 0.00880413,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        }
+      ],
+      "license_note": "StatsBomb Open Data: attribute Hudl StatsBomb"
+    },
+    "openfootball": {
+      "status": "results_only",
+      "source_games_detected": 189,
+      "shot_level_xg": false,
+      "sample_season": "2025-26 UCL"
+    },
+    "football_data_uk": {
+      "status": "results_and_aggregates_only",
+      "rows": 380,
+      "column_count": 132,
+      "has_home_away_shots": true,
+      "has_individual_shot_xg": false,
+      "season": "2025-26 EPL"
+    },
+    "club_elo_catalog": {
+      "status": "metadata_sample_only",
+      "readme_bytes": 19917,
+      "elo_csv_reference_present": false,
+      "match_csv_reference_present": false,
+      "large_files_downloaded": 0,
+      "license": "MIT (repository license; verify dataset provenance separately)"
+    },
+    "365scores_legacy_authorized_pilot": {
+      "status": "candidate_samples_inspected",
+      "known_configured_team_id": "224",
+      "request_cap": 5,
+      "queries_made": 5,
+      "accepted_complete_xgq": 0,
+      "source_authorization": "owner reports prior private XGQ consent",
+      "bulk_scope_not_assumed": true,
+      "raw_provider_bytes_written": 0,
+      "listings_with_configured_team": 21,
+      "total_shot_events_with_individual_xg": 95,
+      "detail_diagnostic_status_counts": {
+        "missing_competition_identity": 3,
+        "no_chart_events": 1
+      },
+      "matches_inspected": 4
+    }
+  }
+}
