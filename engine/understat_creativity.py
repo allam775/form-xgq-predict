@@ -104,18 +104,18 @@ def enrich(db, *, max_new=100, pause=1.2, fetcher=fetch, sleeper=time.sleep):
         if len(page)<250:break
     historical=db.history()
     uncollected=[r for r in historical if r["id"] not in known]
-    # Balance by league and historical date. Reverse newest/oldest on each pass
-    # so previous-season validation periods will receive coverage, not just today.
+    # Stratify each safe enrichment batch across historical periods and leagues.
+    leagues=sorted({r["league"] for r in uncollected})
     pools={league:sorted((r for r in uncollected if r["league"]==league),
-                          key=lambda r:(r["date"],r["id"]))
-           for league in sorted({r["league"] for r in uncollected})}
+                         key=lambda r:(r["date"],r["id"])) for league in leagues}
     selection=[]
-    tick=0
-    while len(selection)<max_new and any(pools.values()):
-        for league in pools:
-            if pools[league] and len(selection)<max_new:
-                selection.append(pools[league].pop(0 if tick%2==0 else -1))
-        tick+=1
+    quota=(max_new+max(1,len(leagues))-1)//max(1,len(leagues))
+    for league in leagues:
+        records=pools[league]
+        n=min(len(records),quota,max_new-len(selection))
+        for j in range(n):
+            position=min(len(records)-1,((2*j+1)*len(records))//(2*n))
+            selection.append(records[position])
     inserted=rejected=0
     for old in selection:
         try:
