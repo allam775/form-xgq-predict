@@ -1,0 +1,17 @@
+# UEFA 2026-27 UCL league phase: date; round; home>away[=actual score]
+2026-09-08;1;AEK>LASK=1-0;Club Brugge>Aston Villa=2-3;Dortmund>Villarreal=3-2;Porto>Manchester City=0-2;Lille>Real Betis=2-3;Real Madrid>Inter=2-1
+2026-09-09;1;Barcelona>Feyenoord=5-1;Stuttgart>Viking=3-1;Liverpool>Atletico Madrid=2-1;PSG>Slovan Bratislava=6-1;Sporting CP>Galatasaray=3-1;Napoli>Arsenal=0-1
+2026-09-10;1;Fenerbahce>Roma=1-1;PSV>Shakhtar Donetsk=1-1;Como>RB Leipzig=4-1;Bayern Munich>Bodo Glimt=5-0;Manchester United>Sabah=4-0;Slavia Prague>Lens=2-3
+2026-10-13;2;Lens>Sporting CP;Sabah>Slavia Prague;Arsenal>Lille;Atletico Madrid>Manchester United;Inter>Club Brugge;Galatasaray>Barcelona;RB Leipzig>PSV;Viking>Bayern Munich;Villarreal>Napoli
+2026-10-14;2;Feyenoord>Como;LASK>Liverpool;Roma>Real Madrid;Aston Villa>Fenerbahce;Shakhtar Donetsk>AEK;Bodo Glimt>Dortmund;Manchester City>PSG;Real Betis>Porto;Slovan Bratislava>Stuttgart
+2026-10-20;3;Fenerbahce>Slavia Prague;Sabah>Dortmund;Roma>Slovan Bratislava;Porto>PSV;Liverpool>Villarreal;Manchester City>AEK;PSG>Barcelona;Napoli>Bodo Glimt;Stuttgart>Atletico Madrid
+2026-10-21;3;Como>Manchester United;Lille>Galatasaray;Aston Villa>Viking;Club Brugge>Lens;Bayern Munich>Arsenal;Inter>Shakhtar Donetsk;Real Madrid>RB Leipzig;Real Betis>Feyenoord;Sporting CP>LASK
+2026-11-03;4;Shakhtar Donetsk>Sporting CP;Galatasaray>Stuttgart;Atletico Madrid>Bayern Munich;Barcelona>Aston Villa;Feyenoord>Inter;Bodo Glimt>Lille;LASK>Slovan Bratislava;Manchester United>Roma;Villarreal>PSG
+2026-11-04;4;AEK>Real Madrid;Fenerbahce>Liverpool;Dortmund>Real Betis;Porto>Napoli;PSV>Club Brugge;RB Leipzig>Manchester City;Lens>Como;Slavia Prague>Arsenal;Viking>Sabah
+2026-11-24;5;Bodo Glimt>LASK;Galatasaray>Aston Villa;Arsenal>Dortmund;Como>AEK;Feyenoord>Porto;Manchester City>Napoli;RB Leipzig>Lens;Real Madrid>PSV;Slovan Bratislava>Real Betis
+2026-11-25;5;Sabah>Barcelona;Slavia Prague>Villarreal;Atletico Madrid>Viking;Club Brugge>Liverpool;Inter>Stuttgart;Shakhtar Donetsk>Fenerbahce;Lille>Bayern Munich;PSG>Roma;Sporting CP>Manchester United
+2026-12-08;6;Viking>Feyenoord;Villarreal>Sabah;AEK>Galatasaray;Roma>Sporting CP;Aston Villa>PSG;Barcelona>Manchester City;Bayern Munich>Slavia Prague;Manchester United>RB Leipzig;Napoli>Club Brugge
+2026-12-09;6;Real Betis>Como;Slovan Bratislava>Shakhtar Donetsk;Arsenal>Real Madrid;Dortmund>Inter;LASK>Fenerbahce;Liverpool>Porto;PSV>Atletico Madrid;Lens>Bodo Glimt;Stuttgart>Lille
+2027-01-19;7;Bodo Glimt>Atletico Madrid;Galatasaray>Feyenoord;AEK>Roma;Aston Villa>Dortmund;Inter>Liverpool;Porto>Slavia Prague;Lille>Slovan Bratislava;Real Madrid>LASK;Stuttgart>Club Brugge
+2027-01-20;7;Fenerbahce>Villarreal;Sabah>Napoli;Como>PSG;Manchester United>Bayern Munich;RB Leipzig>Shakhtar Donetsk;Lens>Manchester City;Real Betis>Arsenal;Sporting CP>Barcelona;Viking>PSV
+2027-01-27;8;Arsenal>Sabah;Roma>Lille;Atletico Madrid>Fenerbahce;Dortmund>AEK;Club Brugge>Bodo Glimt;Bayern Munich>Real Betis;Barcelona>Como;Shakhtar Donetsk>Real Madrid;Feyenoord>RB Leipzig;LASK>Porto;Liverpool>Lens;Manchester City>Sporting CP;PSG>Galatasaray;PSV>Stuttgart;Slavia Prague>Aston Villa;Napoli>Viking;Villarreal>Manchester United;Slovan Bratislava>Inter
