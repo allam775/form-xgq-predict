@@ -1,55 +1,64 @@
-# Penniless XGQ — 365Scores zero-cost, private-research feasibility audit
-Date: 2026-10-13
+# دراسة جدوى تجربة 365Scores المجانية — مشروع Penniless XGQ
 
-## Project rule
-**Zero cost.** No paid API, paid plan, commercial data license or fee is proposed. Evaluate 365Scores only for private, not-for-profit research where source access/storage terms allow it. This document neither claims that public visibility grants data-mining rights nor instructs bypassing restrictions.
+**تاريخ الفحص:** 13 أكتوبر 2026
 
-## Verified public website evidence (human-readable page, NOT verified API dataset)
+**قاعدة المشروع:** صفر تكلفة. لا اشتراكات ولا واجهات مدفوعة. ندرس استخدام 365Scores في بحث شخصي غير تجاري، من دون اعتبار إتاحة المعلومات على الموقع تصريحًا تلقائيًا باستخراجها أو تخزينها آليًا.
 
-| Scope | Real match page | Actual team-level evidence displayed | Individual-shot xG preview |
+## 1. ما الذي تأكدنا من توفره على صفحات 365Scores العامة؟
+
+راجعنا صفحات مباريات حقيقية تعرض **إجمالي xG وعدد التسديدات للفريقين**، بالإضافة إلى **خريطة التسديدات التي تظهر قيم xG لتسديدات فردية**:
+
+| البطولة | المباراة والرابط | إحصاءات الفريقين المعروضة | مثال xG فردي ظاهر |
 |---|---|---|---|
-| UCL 2025/26 | https://www.365scores.com/football/match/uefa-champions-league-572/club-brugge-monaco-471-1169-572 | Club Brugge 26 shots, xG 3.28; Monaco 13 shots, xG 1.55 | Nicolò Tresoldi goal 0.47 xG |
-| UCL 2025/26 | https://www.365scores.com/football/match/uefa-champions-league-572/atletico-madrid-eintracht-frankfurt-134-337-572 | Atlético xG 4.53 / 18 shots; Frankfurt 0.59 / 6 | Giacomo Raspadori shot 0.56 xG |
-| UCL 2025/26 | https://www.365scores.com/football/match/uefa-champions-league-572/arsenal-club-brugge-104-1169-572 | Shot Map exposed on match page | Noni Madueke goal 0.02 xG |
-| Portuguese Liga | https://www.365scores.com/football/match/liga-portugal-73/avs-sporting-cp-890-27176-73 | AVS 11 shots xG 1.66; Sporting 20 shots xG 3.36 | Rafael Nel goal 0.97 xG |
-| Turkish Süper Lig | https://www.365scores.com/en-uk/football/match/super-lig-78/kasimpasa-rizespor-960-962-78 | Kasımpaşa 13 shots xG 0.73; Rizespor 14 shots xG 1.42 | Halil Dervişoğlu goal 0.41 xG |
+| دوري أبطال أوروبا 2025/26 | [كلوب بروج 4–1 موناكو](https://www.365scores.com/football/match/uefa-champions-league-572/club-brugge-monaco-471-1169-572) | كلوب بروج 26 تسديدة و3.28 xG؛ موناكو 13 و1.55 | تسديدة نيكولو تريسولدي 0.47 |
+| دوري أبطال أوروبا 2025/26 | [أتلتيكو مدريد 5–1 فرانكفورت](https://www.365scores.com/football/match/uefa-champions-league-572/atletico-madrid-eintracht-frankfurt-134-337-572) | أتلتيكو 18 تسديدة و4.53 xG؛ فرانكفورت 6 و0.59 | تسديدة جياكومو راسبادوري 0.56 |
+| دوري أبطال أوروبا 2025/26 | [كلوب بروج 0–3 أرسنال](https://www.365scores.com/football/match/uefa-champions-league-572/arsenal-club-brugge-104-1169-572) | خريطة تسديدات للمباراة | تسديدة نوني مادويكي 0.02 |
+| الدوري البرتغالي | [AVS 1–1 سبورتنج](https://www.365scores.com/football/match/liga-portugal-73/avs-sporting-cp-890-27176-73) | AVS: عدد 11 و1.66 xG؛ سبورتنج: عدد 20 و3.36 | تسديدة رافائيل نيل 0.97 |
+| الدوري التركي | [قاسم باشا 0–3 ريزه سبور](https://www.365scores.com/en-uk/football/match/super-lig-78/kasimpasa-rizespor-960-962-78) | قاسم باشا 13 تسديدة و0.73 xG؛ ريزه سبور 14 و1.42 | تسديدة خليل درويش أوغلو 0.41 |
 
-**Interpretation:** The publicly displayed *sample* for these pages confirms shot-level values and match totals are shown to visitors. It does NOT establish that every shot's xG is accessible in a supported API, that all seasons are complete, or that programmatic collection/storage is authorized.
+**ما لا تثبته الصفحات:** لا يمكن الجزم بأننا نستطيع الحصول على جميع قيم xG الفردية لكل تسديدة في كل مباراة من مصدر برمجي مسموح، ولا أن المواسم الكاملة متاحة. ما ظهر في النص المفهرس قد يكون تسديدة واحدة من خريطة كبيرة.
 
-## Existing connector reality
-- Code already exists at `engine/provider365.py`.
-- `config/365_teams.json` currently contains one configured team (numeric team id 224, league `it.1`); no teams outside 5 major leagues are supported by `KNOWN_LEAGUES` or `private_history` yet.
-- `XGQ_365_ACCESS_AUTHORIZED` is opt-in and off by default. `XGQ_365_PUBLICATION_ALLOWED` is off. Private publication protections are not a substitute for source authorization.
-- The connector knows only two historically observed endpoint *shapes*, but they are not a published, licensed developer API.
-- Existing `parse_game` rejects absent individual shot xG, invalid team attribution, wrong competition, and incomplete final-match identification. It does not guarantee that an upstream `chartEvents` array contains *all* attempted shots. Before a real XGQ import, compare each side's **observed shot event count** with independently shown match shot totals and check `sum(shot_xg)` against provider team xG within rounding tolerance (e.g. 0.005 per rounded value plus 0.02 tolerance). Treat any mismatch as not verified.
+## 2. ماذا وجدنا بالفعل داخل مشروع GitHub؟
 
-## Actual offline verification performed
-A self-contained GitHub Actions workflow ran on 2026-10-13:
-https://github.com/allam775/form-xgq-predict/actions/runs/38366348098
+- موصل تجريبي باسم `engine/provider365.py` موجود مسبقًا، ومعطل افتراضيًا.
+- يتحقق من حصول كل تسديدة مقبولة على قيمة xG منفردة، ويستبعد المباريات غير المنتهية أو مجهولة المسابقة أو غير المنسوبة للفريق الصحيح.
+- يدعم حاليًا الدوريات الخمسة الكبرى فقط، ولا يدعم دوري الأبطال أو البرتغالي والتركي والهولندي والبلجيكي بصورة مباشرة. وسنحتاج إضافة هذه المسابقات بصورة تجريبية قبل استعمالها.
+- ملف `config/365_teams.json` يحتوي معرّف فريق واحد في الدوري الإيطالي، وليس لدينا قائمة موثقة للفرق الأوروبية كلها.
+- `XGQ_365_ACCESS_AUTHORIZED` غير مفعّل افتراضيًا؛ والإذن الفني ليس إثباتًا للحق في استخراج المحتوى. بيانات 365 الخاصة لا تُنشر في GitHub العام.
+- **ثغرة تحقق منهجية:** وجود قيم xG للأحداث في `chartEvents` لا يكفي للتأكد من أن *كل* التسديدات موجودة. قبل حساب XGQ، يلزم مطابقة عدد الأحداث مع عدد التسديدات المعروض لكل فريق، ثم مطابقة مجموع xG الفردي مع xG الإجمالي في حدود أخطاء التقريب.
 
-- **11** contract tests for per-shot xG parser and opt-in flags passed.
-- **7** regression tests for 365Scores adapter passed.
-- **4** private-D1 history serialization tests passed.
-- **22 / 22 tests passed**. No 365Scores API request was made and no live response format was validated.
-- No production deployment, cloud shot ingestion, public 365Scores data redistribution, or paid services occurred.
+## 3. اختبار عملي أجري في 13 أكتوبر 2026
 
-## Terms: what is and isn't confirmed
-- The terms at https://www.terms.365scores.com/publisher address **advertising publishers**, and prohibit robot/scraper data gathering of advertising materials for those publishers. They cannot automatically be treated as the complete policy for an independent ordinary non-commercial researcher.
-- General site terms at https://www.365scores.com/ar/pages/terms were discoverable, but their complete operative text was not retrievable during this audit, and no documented public research API license was confirmed. Non-commercial intent alone does not establish a data-extraction right.
-- Contact for a free, small, private academic/research pilot: **Contact@365scores.com**, published at https://www.365scores.com/en-us/pages/contact . Request explicit allowance for research collection, local storage of derived per-match aggregates, desired limits and prohibited redistribution. Do not enable scraping before permission is resolved.
+شغّلنا سير عمل مستقلًا مجانيًا على GitHub Actions:
 
-## Concrete next steps under Penniless rules
-1. Request **free research permission**, not a paid subscription, for a small sample (e.g. 10-20 matches from the 2025/26 UCL and Portuguese/Turkish leagues). Ask specifically about shot-event xG and reuse/storage of compact private XGQ summaries.
-2. When permitted, conduct **1–3 bounded live match probes** with the owner's known match IDs (no enumeration, authentication bypass, rotating IPs, spoofed browser headers, or public publishing). Inspect counts, xG values and event completeness privately; stop at 401/403/429.
-3. In a separate experimental branch/path, add league IDs/aliases for authorized competitions and test their accurate team names, dates, scores, and leagues before scaling; do not modify five-league production forecast.
-4. Compute exact XGQ only after every shot has a verified per-event xG and counts reconcile with the published totals. Historical predictions must only use snapshots from strictly earlier match dates.
-5. Run matched 189-game historical UCL audit + separate frozen prospective ledger; publish only **model-generated aggregate performance** where authorized.
-6. If authorization or complete per-shot values are not available, retain non-network, manually reviewed public-reference analysis or pivot to genuinely open-data providers. **No cost, no invented XGQ.**
+[نتيجة تشغيل اختبار موصل 365Scores](https://github.com/allam775/form-xgq-predict/actions/runs/38366348098)
 
-## What would count as successful proof
-- A documented source and permitted research acquisition path.
-- Every accepted match has genuine xG for *all shots of both teams*, matching verified counts and consistent xG totals.
-- No missing matches silently treated as zero; explicit coverage % by country, league, season, team and match.
-- At least 350 matched, chronological, held-out football predictions before claiming >52% out-of-sample 1X2 accuracy.
+| نوع الاختبار | النتيجة |
+|---|---:|
+| اختبارات قراءة قيم xG الفردية والتحقق من المدخلات | 11 من 11 ناجحة |
+| اختبارات أخطاء الموصل وتحديد المسابقة | 7 من 7 ناجحة |
+| اختبارات حفظ السجل الخاص في Cloudflare D1 | 4 من 4 ناجحة |
+| **الإجمالي** | **22 من 22 ناجحة** |
 
-**Current verdict:** VISUAL SHOT-xG COVERAGE CONFIRMED / OFFLINE PARSER PASSED / LIVE PROGRAMMATIC DATA RIGHTS, COMPLETENESS AND INGESTION NOT CONFIRMED.
+**حدود النجاح:** هذه اختبارات *دون اتصال بمصدر 365Scores*. لم تُرسل طلبات حية ولم تُحفظ بيانات مصدر خاص ولم يُعدل نموذج الإنتاج. لذا هي إثبات لصلاحية التصميم المبدئية، لا نجاحًا لاتصال API الحقيقي.
+
+## 4. ماذا بشأن السماح بالوصول؟
+
+وجدنا [شروط الناشرين لدى 365Scores](https://www.terms.365scores.com/publisher) التي تقيّد جمع المواد الإعلانية آليًا، لكنها موجهة تحديدًا لأطراف اتفاق الناشر الإعلاني؛ **لا يكفي إسقاطها تلقائيًا على مستخدم فردي عادي**. أمّا [صفحة الشروط العامة](https://www.365scores.com/ar/pages/terms) فلم نستطع قراءة نصها الكامل للتحقق من حقوق الجمع والنسخ والاستخدام البحثي. ولم نجد وثيقة رسمية تؤكد وجود API مجاني مرخّص لجمع خرائط التسديدات.
+
+كوننا لا نربح مالًا **لا يساوي إذنًا تلقائيًا بالاستخراج أو التخزين الآلي**. ويمكن طلب موافقة بحثية مجانية محدودة بدل أي اشتراك، عبر `Contact@365scores.com` المذكور في [صفحة الاتصال الرسمية](https://www.365scores.com/en-us/pages/contact).
+
+## 5. خطوات التجربة إذا تأكد سماح الوصول البحثي
+
+1. نختبر عينة صغيرة من 10–20 مباراة من دوري الأبطال والبرتغالي والتركي، بلا مقابل وبلا نشر البيانات الخام.
+2. نبدأ باتصال محدود للغاية لعدد 1–3 مباريات معرّفة مسبقًا؛ لا تخمين معرّفات أو تجاوز حجب أو تكرار طلبات بعد 401/403/429.
+3. لكل مباراة نتحقق من هوية الفريقين والمسابقة وتاريخها ونتيجة الـ90 دقيقة، ثم عدد كل تسديدات الفريق، وقيم xG المنفردة ومجموعها.
+4. نرفض المباراة كاملة عند نقص بيانات تسديدة واحدة أو عدم تطابق العدد/مجموع xG. نقيس نسبة التغطية حسب البطولة والموسم بدل إدخال أصفار وهمية.
+5. إذا توافرت بيانات كاملة ومصرّح بها، نحسب XGQ الأصلي من **مربعات قيم xG للتسديدات**، مع الاحتفاظ بتاريخ المباراة والتحقق من عدم استخدام أي بيانات مستقبلية عند التوقع.
+6. نقارن النموذج الجديد بتجربة دوري الأبطال ذات 189 مباراة، ثم نختبره مستقبلًا على توقعات مُجمّدة قبل انطلاق المباريات.
+
+## الحكم الحالي
+
+**تم إثبات وجود قيم xG فردية على صفحات دوري الأبطال والبرتغالي والتركي، ونجحت اختبارات الموصل الداخلية 22/22. لم نثبت بعد وجود اتصال آلي مصرح به أو بيانات تسديدات كاملة قابلة للتخزين.**
+
+الهدف لم يتغير: **Penniless Model = بيانات حقيقية + صفر تكلفة + لا xG مختلق + نتائج بحثية صادقة.**
