@@ -431,16 +431,19 @@ def main():
   p=calc(m,rating,form);preds[m['id']]=p
   observed=m['actual']
   modal=list(observed) if observed is not None else p['score']
-  # An *unbiased random realization* from the full exact-score distribution.
-  # This sample is ONLY a possible season for an illustrative 36-team table.
+  # One independently sampled exact result: an illustration, NEVER a claim
+  # to be the single most likely exact score or a certain 90-minute score.
   scenario=list(observed) if observed is not None else list(sample_grid(p['grid'],scenario_rng))
+  sampled_prob=p['grid'][scenario[0]][scenario[1]] if observed is None else None
   matches.append({'id':m['id'],'date':m['date'],'matchday':m['round'],
     'home':m['home'],'away':m['away'],
     'status':'ACTUAL' if observed is not None else 'PREDICTION',
-    'score':modal,
-    'scoreline':f"{modal[0]}-{modal[1]}",
-    'scoreline_method':'ACTUAL' if observed is not None else 'UNCONDITIONAL_EXACT_SCORE_MODE',
-    'score_probability':round(p['score_probability'],6) if observed is None else None,
+    'score':scenario,
+    'scoreline':f"{scenario[0]}-{scenario[1]}",
+    'scoreline_method':'ACTUAL' if observed is not None else 'ONE_SEEDED_RANDOM_REALIZATION',
+    'score_probability':round(sampled_prob,6) if observed is None else None,
+    'modal_scoreline':f"{modal[0]}-{modal[1]}" if observed is None else None,
+    'modal_score_probability':round(p['score_probability'],6) if observed is None else None,
     'top_scorelines':[{'scoreline':str(z['score'][0])+'-'+str(z['score'][1]),
                        'probability':round(z['probability'],6)}
                       for z in p['top_scorelines']] if observed is None else [],
@@ -498,13 +501,13 @@ def main():
  diagnostics={
   'previous_2026_10_13_release_unique_future_scorelines':6,
   'prior_release_forced_1x2_winner_then_chose_conditional_score':True,
-  'future_modal_exact_score_counts':dict(sorted(Counter(m['scoreline'] for m in futures).items())),
+  'future_modal_exact_score_counts':dict(sorted(Counter(m['modal_scoreline'] for m in futures).items())),
   'future_one_sample_score_counts':dict(sorted(Counter(m['scenario_scoreline'] for m in futures).items())),
-  'modal_draw_count':sum(m['score'][0]==m['score'][1] for m in futures),
+  'modal_draw_count':sum(m['modal_scoreline'].split('-')[0]==m['modal_scoreline'].split('-')[1] for m in futures),
   'sampled_draw_count':sum(m['scenario_score'][0]==m['scenario_score'][1] for m in futures),
   'sum_draw_probabilities':round(sum(m['draw_probability'] for m in futures),3),
   'draws_as_top_1x2':sum(m['pick']=='draw' for m in futures),
-  'mean_exact_score_mode_probability':round(sum(m['score_probability'] for m in futures)/len(futures),5),
+  'mean_exact_score_mode_probability':round(sum(m['modal_score_probability'] for m in futures)/len(futures),5),
   'score_mode_can_disagree_with_1x2_pick':True,
   'main_league_table_is_expected':True,
   'actual_round1_scores_untouched':True,
@@ -521,7 +524,8 @@ def main():
   'teams_without_domestic_xg':sorted(TEAM_NAMES-set(form)),
   'n_simulations':REPS,
   'scoreline_diagnostics':diagnostics,
-  'displayed_modal_score_is_unconditional':True,
+  'displayed_score_is_one_sample_scenario':True,
+  'modal_exact_score_is_unconstrained':True,
   'example_table_is_one_seeded_draw_not_the_forecast':True,
   'champion_favorites':[
     {'team':t,'prob':round(v['champion'],5)} for t,v in winners[:12]],
