@@ -6,6 +6,7 @@ on:
     paths:
       - 'research/ucl_2026_27.py'
       - 'research/ucl_2026_27_fixtures.txt'
+      - 'tests/test_ucl_scoreline.py'
       - '.github/workflows/ucl2026-27.yml'
 permissions:
   contents: write
@@ -21,6 +22,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Regress no forced winner-only scoreline, honest draws and Poisson score distribution
+        run: python -m unittest discover -s tests -p 'test_ucl_scoreline.py' -v
       - name: Verify all actual UEFA fixtures and complete balanced Swiss phase
         run: |
           python - <<'PY'
@@ -47,6 +50,20 @@ jobs:
           assert len(set(x['team'] for x in r['league_table']))==36
           assert all(r['matches'][i]['status']=='ACTUAL' for i in range(18))
           assert sum(x['status']=='PREDICTION' for x in r['matches'])==126
+          assert len(r['expected_league_table'])==36
+          assert all(x['scoreline_method']=='UNCONDITIONAL_EXACT_SCORE_MODE'
+                     for x in r['matches'] if x['status']=='PREDICTION')
+          assert all(len(x['top_scorelines'])==5 and
+                     x['top_scorelines'][0]['scoreline']==x['scoreline']
+                     and abs(x['top_scorelines'][0]['probability']-x['score_probability'])<1e-6
+                     for x in r['matches'] if x['status']=='PREDICTION')
+          assert all(len(x['top_scorelines'])==0 and x['score_probability'] is None
+                     for x in r['matches'] if x['status']=='ACTUAL')
+          assert all(sum(y['probability'] for y in x['top_scorelines'])<=1.00001
+                     for x in r['matches'] if x['status']=='PREDICTION')
+          assert sum(z['expected_points'] for z in r['expected_league_table'])>300
+          assert r['scoreline_diagnostics']['sum_draw_probabilities']>15
+          assert r['scoreline_diagnostics']['sampled_draw_count']>0
           assert all(abs(x['home_probability']+x['draw_probability']+x['away_probability']-1)<3e-6 for x in r['matches'] if x['status']=='PREDICTION')
           assert all(x['home_probability'] is None and x['pick'] is None for x in r['matches'] if x['status']=='ACTUAL')
           assert sum(x['Pts'] for x in r['league_table'])<=432
@@ -61,7 +78,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/reports/ucl2026_27/ucl_2026_27_results.json research/reports/ucl2026_27/ucl_2026_27_matches.csv research/reports/ucl2026_27/ucl_2026_27_table.csv
+          git add research/reports/ucl2026_27/ucl_2026_27_results.json research/reports/ucl2026_27/ucl_2026_27_matches.csv research/reports/ucl2026_27/ucl_2026_27_table.csv research/reports/ucl2026_27/ucl_2026_27_expected_table.csv
           if ! git diff --cached --quiet; then
             git commit -m "research: 144 UCL match scorelines, full final league table and title scenarios"
             git push origin HEAD:main
