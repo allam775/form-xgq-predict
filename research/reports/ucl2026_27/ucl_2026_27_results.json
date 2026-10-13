@@ -118,7 +118,8 @@
     "main_league_table_is_expected": true,
     "actual_round1_scores_untouched": true
   },
-  "displayed_modal_score_is_unconditional": true,
+  "displayed_score_is_one_sample_scenario": true,
+  "modal_exact_score_is_unconstrained": true,
   "example_table_is_one_seeded_draw_not_the_forecast": true,
   "champion_favorites": [
     {
@@ -2216,6 +2217,8 @@
       "scoreline": "1-0",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         1,
@@ -2247,6 +2250,8 @@
       "scoreline": "2-3",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         2,
@@ -2278,6 +2283,8 @@
       "scoreline": "3-2",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         3,
@@ -2309,6 +2316,8 @@
       "scoreline": "0-2",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         0,
@@ -2340,6 +2349,8 @@
       "scoreline": "2-3",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         2,
@@ -2371,6 +2382,8 @@
       "scoreline": "2-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         2,
@@ -2402,6 +2415,8 @@
       "scoreline": "5-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         5,
@@ -2433,6 +2448,8 @@
       "scoreline": "3-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         3,
@@ -2464,6 +2481,8 @@
       "scoreline": "2-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         2,
@@ -2495,6 +2514,8 @@
       "scoreline": "6-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         6,
@@ -2526,6 +2547,8 @@
       "scoreline": "3-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         3,
@@ -2557,6 +2580,8 @@
       "scoreline": "0-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         0,
@@ -2588,6 +2613,8 @@
       "scoreline": "1-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         1,
@@ -2619,6 +2646,8 @@
       "scoreline": "1-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         1,
@@ -2650,6 +2679,8 @@
       "scoreline": "4-1",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         4,
@@ -2681,6 +2712,8 @@
       "scoreline": "5-0",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         5,
@@ -2712,6 +2745,8 @@
       "scoreline": "4-0",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         4,
@@ -2743,6 +2778,8 @@
       "scoreline": "2-3",
       "scoreline_method": "ACTUAL",
       "score_probability": null,
+      "modal_scoreline": null,
+      "modal_score_probability": null,
       "top_scorelines": [],
       "scenario_score": [
         2,
@@ -2768,12 +2805,14 @@
       "away": "Sporting CP",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.121908,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.03901,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.121908,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -2820,12 +2859,14 @@
       "away": "Slavia Prague",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131328,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.073667,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131328,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -2876,8 +2917,10 @@
         0
       ],
       "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.118198,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.118198,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -2924,12 +2967,14 @@
       "away": "Manchester United",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.11602,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.053174,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.11602,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -2976,12 +3021,14 @@
       "away": "Club Brugge",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        4,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.109803,
+      "scoreline": "4-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.016126,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.109803,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3029,11 +3076,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110682,
+      "scoreline": "1-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.063014,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.110682,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3081,11 +3130,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.129272,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.076511,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.129272,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3133,11 +3184,13 @@
       "status": "PREDICTION",
       "score": [
         0,
-        2
+        4
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110549,
+      "scoreline": "0-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.048659,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.110549,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -3184,12 +3237,14 @@
       "away": "Napoli",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.128657,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.089378,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.128657,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3236,12 +3291,14 @@
       "away": "Como",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124341,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.070213,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124341,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3288,12 +3345,14 @@
       "away": "Liverpool",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110497,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.105663,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.110497,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3340,12 +3399,14 @@
       "away": "Real Madrid",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.12715,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.077602,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.12715,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3392,12 +3453,14 @@
       "away": "Fenerbahce",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        3,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123772,
+      "scoreline": "3-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.050237,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123772,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3445,11 +3508,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.122922,
+      "scoreline": "1-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.021015,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.122922,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3496,12 +3561,14 @@
       "away": "Dortmund",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.129211,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.067804,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.129211,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3548,12 +3615,14 @@
       "away": "PSG",
       "status": "PREDICTION",
       "score": [
-        1,
+        6,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.127107,
+      "scoreline": "6-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.001306,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127107,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3600,12 +3669,14 @@
       "away": "Porto",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        3,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.128393,
+      "scoreline": "3-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.028659,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.128393,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3652,12 +3723,14 @@
       "away": "Stuttgart",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126096,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.049134,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126096,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3705,11 +3778,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.121051,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.099936,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.121051,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3756,12 +3831,14 @@
       "away": "Dortmund",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        4
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.116892,
+      "scoreline": "0-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.028552,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.116892,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3808,12 +3885,14 @@
       "away": "Slovan Bratislava",
       "status": "PREDICTION",
       "score": [
-        2,
+        1,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110965,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.092377,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.110965,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -3860,12 +3939,14 @@
       "away": "PSV",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131836,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.074362,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131836,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3912,12 +3993,14 @@
       "away": "Villarreal",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.111789,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.101697,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.111789,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -3964,12 +4047,14 @@
       "away": "AEK",
       "status": "PREDICTION",
       "score": [
-        2,
+        3,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.118968,
+      "scoreline": "3-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.099744,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.118968,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -4017,11 +4102,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        4
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.125619,
+      "scoreline": "1-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.013716,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.125619,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4069,11 +4156,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.128271,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.092457,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.128271,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4121,11 +4210,13 @@
       "status": "PREDICTION",
       "score": [
         0,
-        2
+        3
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.101142,
+      "scoreline": "0-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.073561,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.101142,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -4172,12 +4263,14 @@
       "away": "Manchester United",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.122771,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.05583,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.122771,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4224,12 +4317,14 @@
       "away": "Galatasaray",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.133652,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.049987,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.133652,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4276,12 +4371,14 @@
       "away": "Viking",
       "status": "PREDICTION",
       "score": [
-        2,
+        0,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.109289,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.06232,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.109289,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -4328,12 +4425,14 @@
       "away": "Lens",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.109413,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.098745,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.109413,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4380,12 +4479,14 @@
       "away": "Arsenal",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124384,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.048049,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124384,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4436,8 +4537,10 @@
         0
       ],
       "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.107263,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.107263,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -4485,11 +4588,13 @@
       "status": "PREDICTION",
       "score": [
         2,
-        0
+        2
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.109927,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.044142,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.109927,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -4536,12 +4641,14 @@
       "away": "Feyenoord",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.119452,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.05368,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.119452,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4589,11 +4696,13 @@
       "status": "PREDICTION",
       "score": [
         2,
-        0
+        1
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.111457,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.098876,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.111457,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -4644,8 +4753,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.13224,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.13224,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4696,8 +4807,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.117153,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.117153,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4748,8 +4861,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.124095,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124095,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4797,11 +4912,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110447,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.097184,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.110447,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4848,12 +4965,14 @@
       "away": "Inter",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113073,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.092519,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.113073,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4900,12 +5019,14 @@
       "away": "Lille",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        3,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.134853,
+      "scoreline": "3-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.024221,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.134853,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -4953,11 +5074,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131911,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.075778,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131911,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5004,12 +5127,14 @@
       "away": "Roma",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126683,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.084276,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126683,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5057,11 +5182,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.118951,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.097393,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.118951,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5108,12 +5235,14 @@
       "away": "Real Madrid",
       "status": "PREDICTION",
       "score": [
-        0,
-        2
+        1,
+        1
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.115138,
+      "scoreline": "1-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.099505,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.115138,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -5160,12 +5289,14 @@
       "away": "Liverpool",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126809,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.077146,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126809,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5212,12 +5343,14 @@
       "away": "Real Betis",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.127495,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.074722,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127495,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5264,12 +5397,14 @@
       "away": "Napoli",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.127085,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.042617,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127085,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5316,12 +5451,14 @@
       "away": "Club Brugge",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131361,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.072812,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131361,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5368,12 +5505,14 @@
       "away": "Manchester City",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.117366,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.034371,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.117366,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5420,12 +5559,14 @@
       "away": "Como",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        4,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123993,
+      "scoreline": "4-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.012108,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123993,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5472,12 +5613,14 @@
       "away": "Arsenal",
       "status": "PREDICTION",
       "score": [
-        0,
-        2
+        1,
+        5
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.115139,
+      "scoreline": "1-5",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.017234,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.115139,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -5524,12 +5667,14 @@
       "away": "Sabah",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131857,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.088511,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131857,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5576,12 +5721,14 @@
       "away": "LASK",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.121955,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.05069,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.121955,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5632,8 +5779,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.131661,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131661,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5680,12 +5829,14 @@
       "away": "Dortmund",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124044,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.05906,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124044,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5733,11 +5884,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.12691,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.070669,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.12691,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5784,12 +5937,14 @@
       "away": "Porto",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.132421,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.078093,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.132421,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5840,8 +5995,10 @@
         0
       ],
       "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.106073,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.106073,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -5889,11 +6046,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113533,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.085333,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.113533,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5940,12 +6099,14 @@
       "away": "PSV",
       "status": "PREDICTION",
       "score": [
-        1,
+        4,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113471,
+      "scoreline": "4-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.029143,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.113471,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -5992,12 +6153,14 @@
       "away": "Real Betis",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.120351,
+      "scoreline": "2-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.03057,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.120351,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6045,11 +6208,13 @@
       "status": "PREDICTION",
       "score": [
         0,
-        2
+        4
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113256,
+      "scoreline": "0-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.049569,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.113256,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -6096,12 +6261,14 @@
       "away": "Villarreal",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126094,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.077867,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126094,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6149,11 +6316,13 @@
       "status": "PREDICTION",
       "score": [
         2,
-        0
+        2
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.118764,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.034722,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.118764,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -6200,12 +6369,14 @@
       "away": "Liverpool",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.133219,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.052814,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.133219,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6252,12 +6423,14 @@
       "away": "Stuttgart",
       "status": "PREDICTION",
       "score": [
-        2,
+        4,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.111571,
+      "scoreline": "4-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.062682,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.111571,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -6304,12 +6477,14 @@
       "away": "Fenerbahce",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131548,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.043577,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131548,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6356,12 +6531,14 @@
       "away": "Bayern Munich",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.115035,
+      "scoreline": "0-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.061007,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.115035,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6408,12 +6585,14 @@
       "away": "Roma",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        5,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.117759,
+      "scoreline": "5-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.005226,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.117759,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6464,8 +6643,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.13006,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.13006,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6513,11 +6694,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        4
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131745,
+      "scoreline": "1-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.015678,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131745,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6564,12 +6747,14 @@
       "away": "Sabah",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.114302,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.061383,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.114302,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6616,12 +6801,14 @@
       "away": "Galatasaray",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.132367,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.077506,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.132367,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6669,11 +6856,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123322,
+      "scoreline": "1-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.026892,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123322,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6720,12 +6909,14 @@
       "away": "PSG",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        4
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126214,
+      "scoreline": "0-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.017111,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126214,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6773,11 +6964,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.122217,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.069972,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.122217,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6824,12 +7017,14 @@
       "away": "Slavia Prague",
       "status": "PREDICTION",
       "score": [
-        2,
+        1,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.116673,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.082711,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.116673,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -6876,12 +7071,14 @@
       "away": "RB Leipzig",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        4,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.120736,
+      "scoreline": "4-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.020386,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.120736,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6928,12 +7125,14 @@
       "away": "Club Brugge",
       "status": "PREDICTION",
       "score": [
-        1,
+        2,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131877,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.082976,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131877,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -6980,12 +7179,14 @@
       "away": "Como",
       "status": "PREDICTION",
       "score": [
-        1,
+        8,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.107108,
+      "scoreline": "8-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.000317,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.107108,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7033,11 +7234,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131687,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.088919,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131687,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7084,12 +7287,14 @@
       "away": "Real Madrid",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.13104,
+      "scoreline": "2-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.023083,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.13104,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7136,12 +7341,14 @@
       "away": "Inter",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.128727,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.03467,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.128727,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7192,8 +7399,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.131555,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131555,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7244,8 +7453,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.124065,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124065,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7292,12 +7503,14 @@
       "away": "Atletico Madrid",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.127518,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.073287,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127518,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7348,8 +7561,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.127774,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127774,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7396,12 +7611,14 @@
       "away": "Lille",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.129415,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.087083,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.129415,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7448,12 +7665,14 @@
       "away": "Atletico Madrid",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.118501,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.093501,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.118501,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7500,12 +7719,14 @@
       "away": "Feyenoord",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.131759,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.054765,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.131759,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7553,11 +7774,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113235,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.097579,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.113235,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7605,11 +7828,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.132058,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.082326,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.132058,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7656,12 +7881,14 @@
       "away": "Liverpool",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        3,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124187,
+      "scoreline": "3-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.011637,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124187,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7708,12 +7935,14 @@
       "away": "Slavia Prague",
       "status": "PREDICTION",
       "score": [
-        2,
-        0
+        0,
+        1
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.11004,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.041827,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.11004,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -7760,12 +7989,14 @@
       "away": "Slovan Bratislava",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123935,
+      "scoreline": "2-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.048137,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123935,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7812,12 +8043,14 @@
       "away": "LASK",
       "status": "PREDICTION",
       "score": [
-        2,
-        0
+        0,
+        2
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124876,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.009581,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.124876,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -7868,8 +8101,10 @@
         1
       ],
       "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.119559,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.119559,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7916,12 +8151,14 @@
       "away": "Villarreal",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.12948,
+      "scoreline": "0-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.025171,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.12948,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -7968,12 +8205,14 @@
       "away": "Napoli",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.128695,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.091874,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.128695,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8020,12 +8259,14 @@
       "away": "PSG",
       "status": "PREDICTION",
       "score": [
-        0,
-        2
+        1,
+        0
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.104566,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.039304,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.104566,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -8073,11 +8314,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        4
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.122634,
+      "scoreline": "1-4",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.021576,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.122634,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8124,12 +8367,14 @@
       "away": "Shakhtar Donetsk",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.126367,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.071039,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.126367,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8176,12 +8421,14 @@
       "away": "Manchester City",
       "status": "PREDICTION",
       "score": [
-        0,
+        1,
         2
       ],
-      "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.100545,
+      "scoreline": "1-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.097991,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.100545,
       "top_scorelines": [
         {
           "scoreline": "0-2",
@@ -8229,11 +8476,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.125746,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.064799,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.125746,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8281,11 +8530,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123754,
+      "scoreline": "1-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.051554,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123754,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8333,11 +8584,13 @@
       "status": "PREDICTION",
       "score": [
         1,
-        1
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.123918,
+      "scoreline": "1-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.054259,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.123918,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8384,12 +8637,14 @@
       "away": "Sabah",
       "status": "PREDICTION",
       "score": [
-        2,
-        0
+        3,
+        2
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.122588,
+      "scoreline": "3-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.026792,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.122588,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -8436,12 +8691,14 @@
       "away": "Lille",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.114119,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.061334,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.114119,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8488,12 +8745,14 @@
       "away": "Fenerbahce",
       "status": "PREDICTION",
       "score": [
-        2,
-        0
+        5,
+        5
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.108143,
+      "scoreline": "5-5",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 8.8e-05,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.108143,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -8540,12 +8799,14 @@
       "away": "AEK",
       "status": "PREDICTION",
       "score": [
-        2,
+        1,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.118192,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.104358,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.118192,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -8592,12 +8853,14 @@
       "away": "Bodo Glimt",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124473,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.089732,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124473,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8644,12 +8907,14 @@
       "away": "Real Betis",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        2,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.110536,
+      "scoreline": "2-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.093884,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.110536,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8697,11 +8962,13 @@
       "status": "PREDICTION",
       "score": [
         2,
-        0
+        1
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.113471,
+      "scoreline": "2-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.087796,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.113471,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -8748,12 +9015,14 @@
       "away": "Real Madrid",
       "status": "PREDICTION",
       "score": [
-        1,
+        0,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.11692,
+      "scoreline": "0-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.100751,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.11692,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8800,12 +9069,14 @@
       "away": "RB Leipzig",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        0
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.129109,
+      "scoreline": "0-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.072472,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.129109,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8852,12 +9123,14 @@
       "away": "Porto",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.124345,
+      "scoreline": "0-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.089947,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.124345,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -8904,12 +9177,14 @@
       "away": "Lens",
       "status": "PREDICTION",
       "score": [
-        2,
+        1,
         0
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.114637,
+      "scoreline": "1-0",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.094159,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.114637,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -8956,12 +9231,14 @@
       "away": "Sporting CP",
       "status": "PREDICTION",
       "score": [
-        1,
+        3,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.115022,
+      "scoreline": "3-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.061021,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.115022,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -9012,8 +9289,10 @@
         0
       ],
       "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.113566,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.113566,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -9060,12 +9339,14 @@
       "away": "Stuttgart",
       "status": "PREDICTION",
       "score": [
-        2,
-        0
+        1,
+        1
       ],
-      "scoreline": "2-0",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.103688,
+      "scoreline": "1-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.102268,
+      "modal_scoreline": "2-0",
+      "modal_score_probability": 0.103688,
       "top_scorelines": [
         {
           "scoreline": "2-0",
@@ -9112,12 +9393,14 @@
       "away": "Aston Villa",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        3,
+        2
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.12315,
+      "scoreline": "3-2",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.0185,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.12315,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -9164,12 +9447,14 @@
       "away": "Viking",
       "status": "PREDICTION",
       "score": [
-        1,
+        4,
         1
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.115682,
+      "scoreline": "4-1",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.027983,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.115682,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -9216,12 +9501,14 @@
       "away": "Manchester United",
       "status": "PREDICTION",
       "score": [
-        1,
-        1
+        0,
+        3
       ],
-      "scoreline": "1-1",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
-      "score_probability": 0.127737,
+      "scoreline": "0-3",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
+      "score_probability": 0.029933,
+      "modal_scoreline": "1-1",
+      "modal_score_probability": 0.127737,
       "top_scorelines": [
         {
           "scoreline": "1-1",
@@ -9272,8 +9559,10 @@
         2
       ],
       "scoreline": "0-2",
-      "scoreline_method": "UNCONDITIONAL_EXACT_SCORE_MODE",
+      "scoreline_method": "ONE_SEEDED_RANDOM_REALIZATION",
       "score_probability": 0.107227,
+      "modal_scoreline": "0-2",
+      "modal_score_probability": 0.107227,
       "top_scorelines": [
         {
           "scoreline": "0-2",
