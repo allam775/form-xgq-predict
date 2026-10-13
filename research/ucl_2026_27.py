@@ -396,6 +396,8 @@ def simulation(fixtures,pred,base_table,models,reps=REPS):
   rows=score_table(round_games,'sample')
   for pos,row in enumerate(rows,1):
    t=row['team'];table_total[t]+=row['Pts'];cnt[t]['rank_total']+=pos;cnt[t]['pos_'+str(pos)]+=1
+   for field in ('W','D','L','GF','GA','GD'):
+    cnt[t]['total_'+field]+=row[field]
    if pos<=8:cnt[t]['top8']+=1
    if pos<=24:cnt[t]['top24']+=1
   p16,r16,qf,semi,win=bracket(rows,models,rng)
@@ -408,6 +410,8 @@ def simulation(fixtures,pred,base_table,models,reps=REPS):
  for t in sorted(TEAM_NAMES):
   report[t]={k:cnt[t][k]/reps for k in ('top8','top24','r16','qf','sf','final','champion')}
   report[t]['expected_points']=table_total[t]/reps
+  for field in ('W','D','L','GF','GA','GD'):
+   report[t]['expected_'+field]=cnt[t]['total_'+field]/reps
   report[t]['mean_rank']=cnt[t]['rank_total']/reps
   positions=[i for i in range(1,37) for _ in range(cnt[t]['pos_'+str(i)])]
   report[t]['rank_low_90']=positions[int(.05*(reps-1))]
@@ -422,17 +426,29 @@ def main():
  rating=make_ratings(fixture)
  preds={}
  matches=[]
+ scenario_rng=random.Random(SEED+2222)
  for m in fixture:
   p=calc(m,rating,form);preds[m['id']]=p
   observed=m['actual']
+  modal=list(observed) if observed is not None else p['score']
+  # An *unbiased random realization* from the full exact-score distribution.
+  # This sample is ONLY a possible season for an illustrative 36-team table.
+  scenario=list(observed) if observed is not None else list(sample_grid(p['grid'],scenario_rng))
   matches.append({'id':m['id'],'date':m['date'],'matchday':m['round'],
     'home':m['home'],'away':m['away'],
     'status':'ACTUAL' if observed is not None else 'PREDICTION',
-    'score':list(observed) if observed is not None else p['score'],
-    'scoreline':f"{(observed or p['score'])[0]}-{(observed or p['score'])[1]}",
-    # The September games are actual results. Retrospectively-calculated
-    # probabilities would use October evidence and MUST NEVER be displayed
-    # as September pre-kickoff predictions.
+    'score':modal,
+    'scoreline':f"{modal[0]}-{modal[1]}",
+    'scoreline_method':'ACTUAL' if observed is not None else 'UNCONDITIONAL_EXACT_SCORE_MODE',
+    'score_probability':round(p['score_probability'],6) if observed is None else None,
+    'top_scorelines':[{'scoreline':str(z['score'][0])+'-'+str(z['score'][1]),
+                       'probability':round(z['probability'],6)}
+                      for z in p['top_scorelines']] if observed is None else [],
+    'scenario_score':scenario,
+    'scenario_scoreline':f"{scenario[0]}-{scenario[1]}",
+    'scenario_scoreline_method':'ACTUAL' if observed is not None else 'ONE_SEEDED_RANDOM_REALIZATION',
+    # September matches are ACTUAL. Never label a retrospectively computed
+    # probability as a prediction from the pre-kickoff time.
     'pick':p['pick'] if observed is None else None,
     'home_probability':round(p['p']['home'],6) if observed is None else None,
     'draw_probability':round(p['p']['draw'],6) if observed is None else None,
@@ -442,7 +458,11 @@ def main():
     'home_form_games':form.get(m['home'],{}).get('games',0) if observed is None else None,
     'away_form_games':form.get(m['away'],{}).get('games',0) if observed is None else None,
     'model_is_cross_league_adaptation':True})
- projected=score_table(matches,'score')
+ # DO NOT fill standings by taking a joint 1X2 winner in every game.
+ # The table below is ONE reproducible season drawn from the entire matrix,
+ # including ties, upsets and high/low scores; the *proper* projection is
+ # the mean over all Monte Carlo seasons (computed below).
+ projected=score_table(matches,'scenario_score')
  for i,t in enumerate(projected,1):
   t['rank']=i;t['route']='direct_ro16' if i<=8 else 'playoff' if i<=24 else 'eliminated'
  models=precompute_all(TEAM_NAMES,rating,form)
@@ -455,6 +475,40 @@ def main():
  for r in projected:
   r.update({k:round(monte[r['team']][k],5) for k in ('top8','top24','r16','qf','sf','final','champion','expected_points','mean_rank')})
   r.update({k:monte[r['team']][k] for k in ('rank_low_90','rank_high_90')})
+ # Separate the expected table (not a single simulated season) from the
+ # optional fully coherent seeded sample season.
+ expected=sorted(({'team':t,'pot':TEAM_POT[t],
+                   'expected_'+k:round(v['expected_'+k],4)
+                   for k in ('W','D','L','GF','GA','GD')}
+                  |{'expected_points':round(v['expected_points'],5),
+                    'mean_rank':round(v['mean_rank'],5),
+                    'rank_low_90':v['rank_low_90'],
+                    'rank_high_90':v['rank_high_90']}
+                  |{k:round(v[k],5) for k in
+                     ('top8','top24','r16','qf','sf','final','champion')}
+                  for t,v in monte.items()),
+                 key=lambda r:(-r['expected_points'],-r['top8'],r['team']))
+ for i,r in enumerate(expected,1):
+  r['rank']=i
+  r['route']='direct_ro16' if i<=8 else 'playoff' if i<=24 else 'eliminated'
+ # An expected table is the recommended ranking; illustrative bracket uses
+ # this mean standing only to create a CONDITIONAL, non-UEFA draw example.
+ favorite_draw=most_likely_bracket(expected,models)
+ futures=[m for m in matches if m['status']=='PREDICTION']
+ diagnostics={
+  'previous_2026_10_13_release_unique_future_scorelines':6,
+  'prior_release_forced_1x2_winner_then_chose_conditional_score':True,
+  'future_modal_exact_score_counts':dict(sorted(Counter(m['scoreline'] for m in futures).items())),
+  'future_one_sample_score_counts':dict(sorted(Counter(m['scenario_scoreline'] for m in futures).items())),
+  'modal_draw_count':sum(m['score'][0]==m['score'][1] for m in futures),
+  'sampled_draw_count':sum(m['scenario_score'][0]==m['scenario_score'][1] for m in futures),
+  'sum_draw_probabilities':round(sum(m['draw_probability'] for m in futures),3),
+  'draws_as_top_1x2':sum(m['pick']=='draw' for m in futures),
+  'mean_exact_score_mode_probability':round(sum(m['score_probability'] for m in futures)/len(futures),5),
+  'score_mode_can_disagree_with_1x2_pick':True,
+  'main_league_table_is_expected':True,
+  'actual_round1_scores_untouched':True,
+ }
  record={
   'as_of':CUTOFF,'season':'2026-27','format':'36 teams 144 league games and conditional 2027 knockouts',
   'model':'UEFA pot prior + D1 five-league shot-volume/xG/XGQ shrinkage + DC correlated goals',
@@ -465,24 +519,36 @@ def main():
   'total_actual':18,'total_predicted':126,'history_private_matches':n_history,
   'actual_first_round_only':True,'domestic_form_teams':len(form),
   'teams_without_domestic_xg':sorted(TEAM_NAMES-set(form)),
-  'n_simulations':REPS,'champion_favorites':[
+  'n_simulations':REPS,
+  'scoreline_diagnostics':diagnostics,
+  'displayed_modal_score_is_unconditional':True,
+  'example_table_is_one_seeded_draw_not_the_forecast':True,
+  'champion_favorites':[
     {'team':t,'prob':round(v['champion'],5)} for t,v in winners[:12]],
   'one_sample_bracket_is_official':False,
   'scenario_bracket':draw,
   'illustrative_favored_bracket':favorite_draw,
   'league_table':projected,
+  'expected_league_table':expected,
   'matches':matches}
  REPORT.mkdir(parents=True,exist_ok=True)
  (REPORT/'ucl_2026_27_results.json').write_text(json.dumps(record,indent=2,ensure_ascii=False))
  with (REPORT/'ucl_2026_27_matches.csv').open('w',newline='',encoding='utf-8-sig') as fp:
   cols=[k for k in matches[0] if k!='score'];out=csv.DictWriter(fp,fieldnames=cols)
   out.writeheader();out.writerows([{k:m[k] for k in cols} for m in matches])
+ with (REPORT/'ucl_2026_27_expected_table.csv').open('w',newline='',encoding='utf-8-sig') as fp:
+  cols=['rank','team','pot','expected_points','expected_W','expected_D','expected_L',
+        'expected_GF','expected_GA','expected_GD','mean_rank',
+        'rank_low_90','rank_high_90','route','top8','top24','r16','qf','sf','final','champion']
+  out=csv.DictWriter(fp,fieldnames=cols)
+  out.writeheader();out.writerows([{k:r[k] for k in cols} for r in expected])
  with (REPORT/'ucl_2026_27_table.csv').open('w',newline='',encoding='utf-8-sig') as fp:
   cols=['rank','team','pot','P','W','D','L','GF','GA','GD','Pts','route','top8','top24','r16','qf','sf','final','champion','expected_points','mean_rank','rank_low_90','rank_high_90']
   out=csv.DictWriter(fp,fieldnames=cols);out.writeheader();out.writerows([{k:r[k] for k in cols} for r in projected])
  print(json.dumps({'ok':True,'actual':18,'predicted':126,
   'teams_with_private_domestic_form':len(form),'history_count':n_history,
-  'top_table':[(r['team'],r['Pts']) for r in projected[:12]],
+  'expected_table':[(r['team'],r['expected_points']) for r in expected[:12]],
+  'scoreline_diagnostics':diagnostics,
   'top_champions':record['champion_favorites'][:9]},ensure_ascii=False))
  return record
 
