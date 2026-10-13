@@ -60,6 +60,17 @@ def probe():
     out["match_identity_confirms_expected"]=received_id==MATCH_ID
     if received_id!=MATCH_ID:
         out["outcome"]="unexpected_match_identity";return out
+    # Public match facts only; avoid event arrays, cookies, session headers or PII.
+    out["match_date"]=provider365._date(match)
+    home_meta=provider365._side(match,"home")
+    away_meta=provider365._side(match,"away")
+    out["home_club_name"]=str(home_meta.get("name") or home_meta.get("displayName") or "")[:80]
+    out["away_club_name"]=str(away_meta.get("name") or away_meta.get("displayName") or "")[:80]
+    out["final_score"]=[provider365._score(match,"home",home_meta),
+                        provider365._score(match,"away",away_meta)]
+    out["competition_id"]=str(comp_id) if (comp_id:=(provider365._competition(match)[0])) else None
+    out["provider_competition_field_names"]=[
+        k for k in match.keys() if any(w in k.lower() for w in ("competit","league","tournament"))][:12]
     out["is_final"]=provider365._final(match)
     if not out["is_final"]:
         out["outcome"]="not_completed";return out
@@ -79,6 +90,7 @@ def probe():
         out["outcome"]="no_chart_events_array";return out
     out["chart_events_total"]=len(events)
     counts={h:0,a:0}
+    xsums={h:0.,a:0.}
     invalid_xg=unassigned=0
     for evt in events:
         if not isinstance(evt,dict):
@@ -99,9 +111,13 @@ def probe():
                 unassigned+=1
                 continue
         counts[team]+=1
+        if shot_xg is not None:
+            xsums[team]+=shot_xg
     out["recognized_shot_events"]=sum(counts.values())+unassigned
     out["home_shot_events"]=counts[h]
     out["away_shot_events"]=counts[a]
+    out["home_shot_xg_sum"]=round(xsums[h],4)
+    out["away_shot_xg_sum"]=round(xsums[a],4)
     out["shot_events_with_missing_xg"]=invalid_xg
     out["shot_events_unassigned"]=unassigned
     out["valid_individual_xg_for_observed_events"]=(
