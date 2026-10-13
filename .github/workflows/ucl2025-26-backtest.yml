@@ -6,6 +6,7 @@ on:
     paths:
       - research/ucl2025_26_fixtures.json
       - research/ucl_2025_26.py
+      - research/ucl_2025_26_preseason.py
       - tests/test_ucl2025_26.py
       - .github/workflows/ucl2025-26-backtest.yml
 permissions:
@@ -31,6 +32,12 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
         run: python -m research.ucl_2025_26
+      - name: Pre-season snapshot: simulate tournament before opening round without actual UCL outcomes
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m research.ucl_2025_26_preseason
       - name: Validate 90-minute outcome and paired model denominators
         run: |
           python - <<'PY'
@@ -41,6 +48,12 @@ jobs:
           assert sum(j['actual_outcome_counts'].values())==189
           assert j['final']['actual_score_90']=='1-1'
           assert j['final']['penalties']=='4-3'
+          preseason=json.loads(Path('research/reports/ucl2025_26/ucl_2025_26_preseason_sim.json').read_text())
+          assert preseason['simulations']==3000
+          assert preseason['historical_fixtures_used_as_known_in_august_2025']==144
+          assert preseason['future_knockout_opponents_used']==0
+          assert len(preseason['expected_league_table'])==36
+          assert abs(sum(t['champion'] for t in preseason['expected_league_table'])-1)<.001
           assert all(x['matches']==189 for x in j['scores'].values())
           assert sum(len(x) for x in [list(j['matches'])])==189
           assert j['shot_coverage_both_team_match_count']+j['shot_coverage_missing_one_or_both']==189
@@ -54,7 +67,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/reports/ucl2025_26/ucl_2025_26_backtest.json research/reports/ucl2025_26/ucl_2025_26_predictions.csv
+          git add research/reports/ucl2025_26/ucl_2025_26_backtest.json research/reports/ucl2025_26/ucl_2025_26_predictions.csv research/reports/ucl2025_26/ucl_2025_26_preseason_sim.json research/reports/ucl2025_26/ucl_2025_26_preseason_table.csv
           if ! git diff --cached --quiet; then
             git commit -m "research: validated 189-match 2025-26 UCL historical comparison"
             git push origin HEAD:main
