@@ -27,9 +27,6 @@ CUTOFF='2026-10-13'
 SEED=20261013
 REPS=6000
 OUTCOMES=('home','draw','away')
-POTS={
- 1:'PSG Bayern Munich Real Madrid Liverpool Inter Manchester City Arsenal Barcelona Atletico Madrid'.split(' / '),
-}
 # Explicit, UEFA-drawn 2026/27 pots. Exact names are declared, not estimated.
 POTS={
  1:('PSG','Bayern Munich','Real Madrid','Liverpool','Inter','Manchester City','Arsenal','Barcelona','Atletico Madrid'),
@@ -135,17 +132,19 @@ def profiles(history):
  return result,league_stats,len(history)
 
 
-def poiss(mu,cap=7):
+def poiss(mu,max_goals=12):
+ """Normalized individual scores 0..12; never mislabel 7+ as seven goals."""
  probs=[math.exp(-mu)]
- for n in range(1,cap):
+ for n in range(1,max_goals+1):
   probs.append(probs[-1]*mu/n)
- probs.append(max(0,1-sum(probs)))
- return probs
+ total=sum(probs)
+ return [x/total for x in probs]
 
 
 def joint(home,away,rho=-.08):
  """Low-score Dixon–Coles correction to independent Poisson."""
- hp,ap=poiss(clip(home,.18,4.1)),poiss(clip(away,.18,4.1))
+ home,away=clip(home,.18,4.1),clip(away,.18,4.1)
+ hp,ap=poiss(home),poiss(away)
  grid=[]
  for i,h in enumerate(hp):
   row=[]
@@ -170,7 +169,23 @@ def onex2(grid):
 
 
 def blend(a,b,w=.5):
- return [[(1-w)*a[i][j]+w*b[i][j] for j in range(8)] for i in range(8)]
+ if len(a)!=len(b) or any(len(a[i])!=len(b[i]) for i in range(len(a))):
+  raise ValueError('Cannot blend incompatible score distributions')
+ return [[(1-w)*a[i][j]+w*b[i][j] for j in range(len(a[i]))]
+         for i in range(len(a))]
+
+
+def ranked_scorelines(grid,limit=5):
+ """Highest individual scoreline probabilities, irrespective of the 1X2 pick.
+
+ The most probable exact score can be a DRAW while an outright win is the
+ largest summed 1X2 probability: this is mathematically valid, not a bug.
+ """
+ all_scores=[{'score':[i,j],'probability':v}
+             for i,row in enumerate(grid) for j,v in enumerate(row)]
+ all_scores.sort(key=lambda r:(-r['probability'],sum(r['score']),r['score'][0],r['score'][1]))
+ return all_scores[:limit]
+
 
 
 def calc(match,rating,form):
@@ -193,11 +208,11 @@ def calc(match,rating,form):
  mixed=blend(base,extra)
  probs=onex2(mixed)
  chosen=max(probs,key=probs.get)
- # Score mode conditional on selected outcome; makes table coherent with pick.
- possible=[(mixed[i][j],i,j) for i in range(8) for j in range(8)
-           if ('home' if i>j else 'away' if i<j else 'draw')==chosen]
- _,hi,ai=max(possible)
- return {'p':probs,'score':[hi,ai],'pick':chosen,
+ top=ranked_scorelines(mixed,limit=5)
+ # Do NOT constrain the exact-score mode to the preferred 1X2 category.
+ # The 1X2 pick aggregates ALL wins/draws/losses, unlike one exact score.
+ return {'p':probs,'score':top[0]['score'],'score_probability':top[0]['probability'],
+         'top_scorelines':top,'pick':chosen,
          'lambda_home':lamb_h*modifier(h,a),'lambda_away':lamb_a*modifier(a,h),
          'grid':mixed,'pure_goals':onex2(base)}
 
@@ -243,7 +258,7 @@ def sample_grid(grid,rng):
   for j,p in enumerate(row):
    s+=p
    if value<=s:return i,j
- return 7,7
+ return len(grid)-1,len(grid[-1])-1
 
 
 def advance(a,b,models,rng,*,neutral=False):
