@@ -1,0 +1,59 @@
+name: 2026 World Cup full 104-match national-adapted replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/worldcup2026_model.py'
+      - '.github/workflows/worldcup2026-replay.yml'
+permissions:
+  contents: write
+concurrency:
+  group: xgq-worldcup26-independent-replay
+  cancel-in-progress: false
+jobs:
+  historical-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify source compiles
+        run: python -m py_compile research/worldcup2026_model.py
+      - name: Replay all 104 pre-day 1X2 World Cup matches without hindsight
+        run: python -m research.worldcup2026_model
+      - name: Check all matches and probability constraints
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          folder=Path('research/reports')
+          summary=json.loads((folder/'summary.json').read_text())
+          rows=json.loads((folder/'matches.json').read_text())
+          assert len(rows)==104 and summary['match_count']==104
+          assert len({r['match_id'] for r in rows})==104
+          assert summary['exact_per_shot_xgq_available'] is False
+          assert all(abs(sum(r['models'][k]['probabilities'].values())-1)<1e-8
+                     for r in rows for k in r['models'])
+          assert all(r['probability_home']>=0 and r['probability_draw']>=0 and
+                     r['probability_away']>=0 for r in rows)
+          assert all(r['date']>='2026-06-11' for r in rows)
+          assert all(r['prior_wc_shots_h']==0 and r['prior_wc_shots_a']==0
+                     for r in rows if r['date']=='2026-06-11')
+          final=next(r for r in rows if r['stage']=='Final')
+          assert final['score_90']=='0-0' and final['score_after_extra']=='1-0'
+          print('104 independent matches and final extra-time distinction verified.')
+          PY
+      - name: Save reproducible aggregate and 104-match research reports
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/reports/summary.json research/reports/matches.json research/reports/matches.csv
+          if git diff --cached --quiet; then
+            echo "No research changes"
+          else
+            git commit -m "research: 104-match World Cup 2026 retrospective national model report"
+            git push origin HEAD:main
+          fi
