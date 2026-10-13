@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/365scores-penniless-audit.yml'
+      - 'engine/penniless_365_pilot.py'
+      - 'tests/test_penniless_365_pilot.py'
 permissions:
   contents: read
 jobs:
@@ -16,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Validate European UCL and seven national leagues shot completeness and xG totals offline
+        run: python -m unittest discover -s tests -p 'test_penniless_365_pilot.py' -v
       - name: Validate per-shot xG and provider response structures offline
         run: python -m unittest discover -s tests -p 'test_provider365.py' -v
       - name: Validate missing-shot rejection and competition identity offline
