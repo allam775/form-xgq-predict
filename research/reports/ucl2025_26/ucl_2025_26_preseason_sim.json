@@ -1,0 +1,600 @@
+{
+  "status": "PRESEASON_REWIND_USING_AFTER_SEASON_MODEL_COEFFICIENTS",
+  "cutoff": "2025-09-16",
+  "model_parameters_from_later_research": true,
+  "historical_fixtures_used_as_known_in_august_2025": 144,
+  "future_results_used": 0,
+  "future_knockout_opponents_used": 0,
+  "actual_season_title_winner": "PSG",
+  "target": "league Swiss table and hypothetical playoff/title odds",
+  "simulations": 3000,
+  "domestic_matches_before_start": 667,
+  "teams_with_authentic_prestart_domestic_form": 22,
+  "clubs_without_5_prior_domestic_shot_games": [
+    "Ajax",
+    "Benfica",
+    "Bodo Glimt",
+    "Club Brugge",
+    "Copenhagen",
+    "Galatasaray",
+    "Kairat Almaty",
+    "Olympiacos",
+    "PSV",
+    "Pafos",
+    "Qarabag",
+    "Slavia Prague",
+    "Sporting CP",
+    "Union Saint Gilloise"
+  ],
+  "champion_favorites": [
+    {
+      "team": "Bayern Munich",
+      "prob": 0.14167
+    },
+    {
+      "team": "PSG",
+      "prob": 0.11967
+    },
+    {
+      "team": "Dortmund",
+      "prob": 0.10867
+    },
+    {
+      "team": "Chelsea",
+      "prob": 0.096
+    },
+    {
+      "team": "Real Madrid",
+      "prob": 0.08867
+    },
+    {
+      "team": "Barcelona",
+      "prob": 0.086
+    },
+    {
+      "team": "Manchester City",
+      "prob": 0.076
+    },
+    {
+      "team": "Inter",
+      "prob": 0.07067
+    },
+    {
+      "team": "Liverpool",
+      "prob": 0.06567
+    },
+    {
+      "team": "Arsenal",
+      "prob": 0.02467
+    },
+    {
+      "team": "Atalanta",
+      "prob": 0.02433
+    },
+    {
+      "team": "Frankfurt",
+      "prob": 0.01767
+    },
+    {
+      "team": "Atletico Madrid",
+      "prob": 0.01733
+    },
+    {
+      "team": "Juventus",
+      "prob": 0.01633
+    },
+    {
+      "team": "Villarreal",
+      "prob": 0.012
+    }
+  ],
+  "paris_title_chance": 0.11967,
+  "expected_league_table": [
+    {
+      "team": "Bayern Munich",
+      "pot": 1,
+      "expected_points": 15.441,
+      "top8": 0.61733,
+      "top24": 0.975,
+      "final": 0.24133,
+      "champion": 0.14167,
+      "rank_mean": 8.103,
+      "rank_ci90": [
+        1,
+        22
+      ]
+    },
+    {
+      "team": "Dortmund",
+      "pot": 1,
+      "expected_points": 15.2587,
+      "top8": 0.60033,
+      "top24": 0.96167,
+      "final": 0.204,
+      "champion": 0.10867,
+      "rank_mean": 8.532,
+      "rank_ci90": [
+        1,
+        23
+      ]
+    },
+    {
+      "team": "Real Madrid",
+      "pot": 1,
+      "expected_points": 14.979,
+      "top8": 0.566,
+      "top24": 0.964,
+      "final": 0.17367,
+      "champion": 0.08867,
+      "rank_mean": 9.073,
+      "rank_ci90": [
+        1,
+        23
+      ]
+    },
+    {
+      "team": "PSG",
+      "pot": 1,
+      "expected_points": 14.9687,
+      "top8": 0.56433,
+      "top24": 0.96033,
+      "final": 0.215,
+      "champion": 0.11967,
+      "rank_mean": 9.08,
+      "rank_ci90": [
+        1,
+        23
+      ]
+    },
+    {
+      "team": "Barcelona",
+      "pot": 1,
+      "expected_points": 14.5777,
+      "top8": 0.517,
+      "top24": 0.95133,
+      "final": 0.167,
+      "champion": 0.086,
+      "rank_mean": 9.791,
+      "rank_ci90": [
+        1,
+        24
+      ]
+    },
+    {
+      "team": "Chelsea",
+      "pot": 1,
+      "expected_points": 14.4773,
+      "top8": 0.49467,
+      "top24": 0.94567,
+      "final": 0.177,
+      "champion": 0.096,
+      "rank_mean": 10.04,
+      "rank_ci90": [
+        1,
+        25
+      ]
+    },
+    {
+      "team": "Liverpool",
+      "pot": 1,
+      "expected_points": 14.4343,
+      "top8": 0.49267,
+      "top24": 0.946,
+      "final": 0.13767,
+      "champion": 0.06567,
+      "rank_mean": 10.233,
+      "rank_ci90": [
+        1,
+        25
+      ]
+    },
+    {
+      "team": "Inter",
+      "pot": 1,
+      "expected_points": 14.3673,
+      "top8": 0.50033,
+      "top24": 0.947,
+      "final": 0.139,
+      "champion": 0.07067,
+      "rank_mean": 10.18,
+      "rank_ci90": [
+        1,
+        25
+      ]
+    },
+    {
+      "team": "Manchester City",
+      "pot": 1,
+      "expected_points": 14.1657,
+      "top8": 0.46933,
+      "top24": 0.93067,
+      "final": 0.14467,
+      "champion": 0.076,
+      "rank_mean": 10.712,
+      "rank_ci90": [
+        1,
+        26
+      ]
+    },
+    {
+      "team": "Atletico Madrid",
+      "pot": 2,
+      "expected_points": 12.5317,
+      "top8": 0.29333,
+      "top24": 0.84733,
+      "final": 0.04667,
+      "champion": 0.01733,
+      "rank_mean": 14.526,
+      "rank_ci90": [
+        2,
+        30
+      ]
+    },
+    {
+      "team": "Atalanta",
+      "pot": 2,
+      "expected_points": 12.4987,
+      "top8": 0.28867,
+      "top24": 0.85467,
+      "final": 0.05067,
+      "champion": 0.02433,
+      "rank_mean": 14.532,
+      "rank_ci90": [
+        2,
+        30
+      ]
+    },
+    {
+      "team": "Arsenal",
+      "pot": 2,
+      "expected_points": 12.45,
+      "top8": 0.28267,
+      "top24": 0.84667,
+      "final": 0.05733,
+      "champion": 0.02467,
+      "rank_mean": 14.703,
+      "rank_ci90": [
+        3,
+        30
+      ]
+    },
+    {
+      "team": "Juventus",
+      "pot": 2,
+      "expected_points": 12.3807,
+      "top8": 0.27067,
+      "top24": 0.84333,
+      "final": 0.042,
+      "champion": 0.01633,
+      "rank_mean": 14.891,
+      "rank_ci90": [
+        2,
+        30
+      ]
+    },
+    {
+      "team": "Frankfurt",
+      "pot": 2,
+      "expected_points": 12.364,
+      "top8": 0.27467,
+      "top24": 0.845,
+      "final": 0.045,
+      "champion": 0.01767,
+      "rank_mean": 14.953,
+      "rank_ci90": [
+        3,
+        30
+      ]
+    },
+    {
+      "team": "Villarreal",
+      "pot": 2,
+      "expected_points": 12.18,
+      "top8": 0.25367,
+      "top24": 0.82167,
+      "final": 0.03467,
+      "champion": 0.012,
+      "rank_mean": 15.416,
+      "rank_ci90": [
+        3,
+        31
+      ]
+    },
+    {
+      "team": "Leverkusen",
+      "pot": 2,
+      "expected_points": 11.831,
+      "top8": 0.22767,
+      "top24": 0.79667,
+      "final": 0.03233,
+      "champion": 0.01133,
+      "rank_mean": 16.267,
+      "rank_ci90": [
+        3,
+        32
+      ]
+    },
+    {
+      "team": "Benfica",
+      "pot": 2,
+      "expected_points": 11.315,
+      "top8": 0.18333,
+      "top24": 0.753,
+      "final": 0.01767,
+      "champion": 0.00467,
+      "rank_mean": 17.583,
+      "rank_ci90": [
+        4,
+        32
+      ]
+    },
+    {
+      "team": "Club Brugge",
+      "pot": 2,
+      "expected_points": 11.209,
+      "top8": 0.16633,
+      "top24": 0.736,
+      "final": 0.024,
+      "champion": 0.007,
+      "rank_mean": 17.89,
+      "rank_ci90": [
+        4,
+        32
+      ]
+    },
+    {
+      "team": "Napoli",
+      "pot": 3,
+      "expected_points": 11.0987,
+      "top8": 0.167,
+      "top24": 0.727,
+      "final": 0.015,
+      "champion": 0.00433,
+      "rank_mean": 18.174,
+      "rank_ci90": [
+        4,
+        33
+      ]
+    },
+    {
+      "team": "Marseille",
+      "pot": 3,
+      "expected_points": 9.815,
+      "top8": 0.085,
+      "top24": 0.607,
+      "final": 0.00733,
+      "champion": 0.00133,
+      "rank_mean": 21.307,
+      "rank_ci90": [
+        6,
+        34
+      ]
+    },
+    {
+      "team": "Olympiacos",
+      "pot": 3,
+      "expected_points": 9.6373,
+      "top8": 0.08533,
+      "top24": 0.58167,
+      "final": 0.004,
+      "champion": 0.00067,
+      "rank_mean": 21.848,
+      "rank_ci90": [
+        6,
+        35
+      ]
+    },
+    {
+      "team": "Ajax",
+      "pot": 3,
+      "expected_points": 9.6127,
+      "top8": 0.08367,
+      "top24": 0.57367,
+      "final": 0.00633,
+      "champion": 0.001,
+      "rank_mean": 21.925,
+      "rank_ci90": [
+        6,
+        34
+      ]
+    },
+    {
+      "team": "Slavia Prague",
+      "pot": 3,
+      "expected_points": 9.484,
+      "top8": 0.07133,
+      "top24": 0.565,
+      "final": 0.00333,
+      "champion": 0.00067,
+      "rank_mean": 22.286,
+      "rank_ci90": [
+        7,
+        35
+      ]
+    },
+    {
+      "team": "Bodo Glimt",
+      "pot": 3,
+      "expected_points": 9.3457,
+      "top8": 0.06433,
+      "top24": 0.55,
+      "final": 0.00233,
+      "champion": 0.00067,
+      "rank_mean": 22.588,
+      "rank_ci90": [
+        7,
+        35
+      ]
+    },
+    {
+      "team": "Sporting CP",
+      "pot": 3,
+      "expected_points": 9.187,
+      "top8": 0.06467,
+      "top24": 0.52433,
+      "final": 0.00333,
+      "champion": 0.00067,
+      "rank_mean": 22.982,
+      "rank_ci90": [
+        7,
+        35
+      ]
+    },
+    {
+      "team": "PSV",
+      "pot": 3,
+      "expected_points": 9.1373,
+      "top8": 0.05733,
+      "top24": 0.51467,
+      "final": 0.00333,
+      "champion": 0.001,
+      "rank_mean": 23.076,
+      "rank_ci90": [
+        8,
+        35
+      ]
+    },
+    {
+      "team": "Tottenham",
+      "pot": 3,
+      "expected_points": 8.9857,
+      "top8": 0.055,
+      "top24": 0.50167,
+      "final": 0.001,
+      "champion": 0.00033,
+      "rank_mean": 23.4,
+      "rank_ci90": [
+        8,
+        35
+      ]
+    },
+    {
+      "team": "Monaco",
+      "pot": 4,
+      "expected_points": 8.4723,
+      "top8": 0.04067,
+      "top24": 0.43033,
+      "final": 0.00067,
+      "champion": 0.0,
+      "rank_mean": 24.762,
+      "rank_ci90": [
+        9,
+        35
+      ]
+    },
+    {
+      "team": "Newcastle United",
+      "pot": 4,
+      "expected_points": 8.3567,
+      "top8": 0.03933,
+      "top24": 0.42133,
+      "final": 0.002,
+      "champion": 0.00067,
+      "rank_mean": 25.02,
+      "rank_ci90": [
+        10,
+        35
+      ]
+    },
+    {
+      "team": "Athletic Club",
+      "pot": 4,
+      "expected_points": 7.7227,
+      "top8": 0.018,
+      "top24": 0.344,
+      "final": 0.0,
+      "champion": 0.0,
+      "rank_mean": 26.572,
+      "rank_ci90": [
+        12,
+        36
+      ]
+    },
+    {
+      "team": "Kairat Almaty",
+      "pot": 4,
+      "expected_points": 7.4823,
+      "top8": 0.01767,
+      "top24": 0.307,
+      "final": 0.00033,
+      "champion": 0.0,
+      "rank_mean": 27.167,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    },
+    {
+      "team": "Galatasaray",
+      "pot": 4,
+      "expected_points": 7.2957,
+      "top8": 0.01767,
+      "top24": 0.30033,
+      "final": 0.00033,
+      "champion": 0.0,
+      "rank_mean": 27.493,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    },
+    {
+      "team": "Qarabag",
+      "pot": 4,
+      "expected_points": 7.277,
+      "top8": 0.02167,
+      "top24": 0.29233,
+      "final": 0.00033,
+      "champion": 0.00033,
+      "rank_mean": 27.553,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    },
+    {
+      "team": "Copenhagen",
+      "pot": 4,
+      "expected_points": 7.214,
+      "top8": 0.01233,
+      "top24": 0.28567,
+      "final": 0.00033,
+      "champion": 0.0,
+      "rank_mean": 27.711,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    },
+    {
+      "team": "Union Saint Gilloise",
+      "pot": 4,
+      "expected_points": 7.183,
+      "top8": 0.01833,
+      "top24": 0.26867,
+      "final": 0.00033,
+      "champion": 0.0,
+      "rank_mean": 27.787,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    },
+    {
+      "team": "Pafos",
+      "pot": 4,
+      "expected_points": 7.117,
+      "top8": 0.01767,
+      "top24": 0.27933,
+      "final": 0.0,
+      "champion": 0.0,
+      "rank_mean": 27.846,
+      "rank_ci90": [
+        13,
+        36
+      ]
+    }
+  ],
+  "source_of_real_results": "https://github.com/openfootball/champions-league/blob/master/2025-26/cl.txt",
+  "generated_at_utc": "2026-10-13T07:30:53.810246+00:00"
+}
