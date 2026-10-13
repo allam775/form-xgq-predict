@@ -313,6 +313,61 @@ def precompute_all(teams,rating,form):
  return pred
 
 
+def advance_probability(a,b,models,*,neutral=False):
+ """Independent expected first-90-min scorelines on TWO legs; 50/50 tiebreak."""
+ if neutral:
+  x=models[(a,b)]['grid']
+  y=models[(b,a)]['grid']
+  grid=blend(x,[list(row) for row in zip(*y)])
+  p=sum(v for i,row in enumerate(grid) for j,v in enumerate(row) if i>j)
+  d=sum(v for i,row in enumerate(grid) for j,v in enumerate(row) if i==j)
+  return p+.5*d
+ first=models[(b,a)]['grid']
+ second=models[(a,b)]['grid']
+ diff1=defaultdict(float)
+ diff2=defaultdict(float)
+ for i,row in enumerate(first):
+  for j,p in enumerate(row):diff1[j-i]+=p
+ for i,row in enumerate(second):
+  for j,p in enumerate(row):diff2[i-j]+=p
+ p=d=0.
+ for m,pm in diff1.items():
+  for n,pn in diff2.items():
+   if m+n>0:p+=pm*pn
+   if m+n==0:d+=pm*pn
+ return p+.5*d
+
+
+def most_likely_bracket(table,models):
+ """Conditional illustrative pairing choice, NOT the yet-to-be-drawn UEFA path."""
+ t=[r['team'] for r in table]
+ stages={'playoff':[],'round_of_16':[],'quarter_final':[],
+         'semi_final':[]}
+ def tie(a,b,phase):
+  prob=advance_probability(a,b,models)
+  winner=a if prob>=.5 else b
+  stages[phase].append({'a':a,'b':b,'winner':winner,
+                        'p_a':round(prob,4),'p_b':round(1-prob,4)})
+  return winner
+ po=[]
+ for high,low in ((t[8:10],t[22:24]),(t[10:12],t[20:22]),
+                  (t[12:14],t[18:20]),(t[14:16],t[16:18])):
+  for a,b in zip(high,low):po.append(tie(a,b,'playoff'))
+ seeds=(t[0:2],t[2:4],t[4:6],t[6:8])
+ opponents=(po[6:8],po[4:6],po[2:4],po[0:2])
+ r16=[]
+ for first,second in zip(seeds,opponents):
+  for a,b in zip(first,second):r16.append(tie(a,b,'round_of_16'))
+ quarters=[tie(r16[i],r16[i+1],'quarter_final') for i in range(0,8,2)]
+ semis=[tie(quarters[i],quarters[i+1],'semi_final') for i in (0,2)]
+ fa,fb=semis
+ pf=advance_probability(fa,fb,models,neutral=True)
+ stages['final']={'a':fa,'b':fb,'winner':fa if pf>=.5 else fb,
+                  'p_a':round(pf,4),'p_b':round(1-pf,4)}
+ stages['note']='Illustrative permissible pairing path; no official knockout draw exists yet.'
+ return stages
+
+
 def simulation(fixtures,pred,base_table,models,reps=REPS):
  rng=random.Random(SEED)
  cnt={t:Counter() for t in TEAM_NAMES}
@@ -325,7 +380,7 @@ def simulation(fixtures,pred,base_table,models,reps=REPS):
    round_games.append({**m,'sample':sc})
   rows=score_table(round_games,'sample')
   for pos,row in enumerate(rows,1):
-   t=row['team'];table_total[t]+=row['Pts']
+   t=row['team'];table_total[t]+=row['Pts'];cnt[t]['rank_total']+=pos;cnt[t]['pos_'+str(pos)]+=1
    if pos<=8:cnt[t]['top8']+=1
    if pos<=24:cnt[t]['top24']+=1
   p16,r16,qf,semi,win=bracket(rows,models,rng)
@@ -338,6 +393,10 @@ def simulation(fixtures,pred,base_table,models,reps=REPS):
  for t in sorted(TEAM_NAMES):
   report[t]={k:cnt[t][k]/reps for k in ('top8','top24','r16','qf','sf','final','champion')}
   report[t]['expected_points']=table_total[t]/reps
+  report[t]['mean_rank']=cnt[t]['rank_total']/reps
+  positions=[i for i in range(1,37) for _ in range(cnt[t]['pos_'+str(i)])]
+  report[t]['rank_low_90']=positions[int(.05*(reps-1))]
+  report[t]['rank_high_90']=positions[int(.95*(reps-1))]
  return report
 
 
@@ -371,10 +430,12 @@ def main():
  monte=simulation(fixture,preds,projected,models)
  # One readable scenario draw, NOT literally a forecast of the UEFA draw.
  draw=bracket(projected,models,random.Random(SEED+1000),with_trace=True)
+ favorite_draw=most_likely_bracket(projected,models)
  # Bracket advantage estimates use the independent tournament simulation.
  winners=sorted(monte.items(),key=lambda x:-x[1]['champion'])
  for r in projected:
-  r.update({k:round(monte[r['team']][k],5) for k in ('top8','top24','r16','qf','sf','final','champion','expected_points')})
+  r.update({k:round(monte[r['team']][k],5) for k in ('top8','top24','r16','qf','sf','final','champion','expected_points','mean_rank')})
+  r.update({k:monte[r['team']][k] for k in ('rank_low_90','rank_high_90')})
  record={
   'as_of':CUTOFF,'season':'2026-27','format':'36 teams 144 league games and conditional 2027 knockouts',
   'model':'UEFA pot prior + D1 five-league shot-volume/xG/XGQ shrinkage + DC correlated goals',
@@ -389,6 +450,7 @@ def main():
     {'team':t,'prob':round(v['champion'],5)} for t,v in winners[:12]],
   'one_sample_bracket_is_official':False,
   'scenario_bracket':draw,
+  'illustrative_favored_bracket':favorite_draw,
   'league_table':projected,
   'matches':matches}
  REPORT.mkdir(parents=True,exist_ok=True)
@@ -397,7 +459,7 @@ def main():
   cols=[k for k in matches[0] if k!='score'];out=csv.DictWriter(fp,fieldnames=cols)
   out.writeheader();out.writerows([{k:m[k] for k in cols} for m in matches])
  with (REPORT/'ucl_2026_27_table.csv').open('w',newline='',encoding='utf-8-sig') as fp:
-  cols=['rank','team','pot','P','W','D','L','GF','GA','GD','Pts','route','top8','top24','r16','qf','sf','final','champion','expected_points']
+  cols=['rank','team','pot','P','W','D','L','GF','GA','GD','Pts','route','top8','top24','r16','qf','sf','final','champion','expected_points','mean_rank','rank_low_90','rank_high_90']
   out=csv.DictWriter(fp,fieldnames=cols);out.writeheader();out.writerows([{k:r[k] for k in cols} for r in projected])
  print(json.dumps({'ok':True,'actual':18,'predicted':126,
   'teams_with_private_domestic_form':len(form),'history_count':n_history,
