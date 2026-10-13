@@ -477,9 +477,9 @@ def main():
   r.update({k:monte[r['team']][k] for k in ('rank_low_90','rank_high_90')})
  # Separate the expected table (not a single simulated season) from the
  # optional fully coherent seeded sample season.
- expected=sorted(({'team':t,'pot':TEAM_POT[t],
-                   'expected_'+k:round(v['expected_'+k],4)
-                   for k in ('W','D','L','GF','GA','GD')}
+ expected=sorted(({'team':t,'pot':TEAM_POT[t]}
+                  |{'expected_'+k:round(v['expected_'+k],4)
+                    for k in ('W','D','L','GF','GA','GD')}
                   |{'expected_points':round(v['expected_points'],5),
                     'mean_rank':round(v['mean_rank'],5),
                     'rank_low_90':v['rank_low_90'],
