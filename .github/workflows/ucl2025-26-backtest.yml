@@ -1,0 +1,61 @@
+name: Retrospective 2025-26 UCL exact score and 1X2 benchmark
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/ucl2025_26_fixtures.json
+      - research/ucl_2025_26.py
+      - tests/test_ucl2025_26.py
+      - .github/workflows/ucl2025-26-backtest.yml
+permissions:
+  contents: write
+concurrency:
+  group: independent-historical-ucl2025-replay
+  cancel-in-progress: false
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test source integrity and strict absence of future leakage
+        run: |
+          python -m unittest discover -s tests -p 'test_ucl2025_26.py' -v
+      - name: Full chronological 189-match backtest on authorized private domestic Understat summaries
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m research.ucl_2025_26
+      - name: Validate 90-minute outcome and paired model denominators
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          j=json.loads(Path('research/reports/ucl2025_26/ucl_2025_26_backtest.json').read_text())
+          assert j['matches_total']==189
+          assert sum(j['actual_outcome_counts'].values())==189
+          assert j['final']['actual_score_90']=='1-1'
+          assert j['final']['penalties']=='4-3'
+          assert all(x['matches']==189 for x in j['scores'].values())
+          assert sum(len(x) for x in [list(j['matches'])])==189
+          assert j['shot_coverage_both_team_match_count']+j['shot_coverage_missing_one_or_both']==189
+          for match in j['matches']:
+            for val in match['models'].values():
+              assert abs(sum(val['probabilities'].values())-1)<3e-6
+              assert math.isfinite(val['log_loss']) and math.isfinite(val['brier'])
+          print('189/189 chronological European UCL comparisons verified.')
+          PY
+      - name: Publish research aggregates, with no private domestic input rows
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/reports/ucl2025_26/ucl_2025_26_backtest.json research/reports/ucl2025_26/ucl_2025_26_predictions.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "research: validated 189-match 2025-26 UCL historical comparison"
+            git push origin HEAD:main
+          fi
