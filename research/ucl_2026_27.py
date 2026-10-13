@@ -1,10 +1,13 @@
-"""2026/27 UEFA Champions League projection, as of 13 October 2026.
+"""UEFA Champions League 2026/27 whole-season probabilistic projection.
 
-Official fixed 144 fixtures, 18 known results. Prospective scenario research,
-NOT verified live forecasts nor exact five-league XGQ on out-of-league clubs.
-Uses UEFA draw-pot tier prior (explicit modeling assumption) and locally saved
-private Understat team xG, XGQ, shots only for supported five-league teams.
-No private Understat rows leave this module; publish model-derived aggregates.
+Snapshot 2026-10-13 before matchday 2. All 144 officially scheduled league
+games, 18 verified round-1 results; prospective round-2+ estimates.
+Knockout names are scenario-based, NOT UEFA-official future fixtures.
+
+Four UEFA draw pots provide *ordinal strength priors*, NOT independently
+validated cross-league Elo. Where private Understat history exists we add
+pre-cutoff xG, XGQ and shots with large shrinkage; elsewhere features neutral.
+No hypothetical future scores are fed back as real pre-match training records.
 """
 from __future__ import annotations
 import csv
@@ -14,3 +17,393 @@ import random
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
+
+from engine.understat_d1 import D1
+
+ROOT=Path(__file__).resolve().parent
+REPORT=ROOT/'reports'/'ucl2026_27'
+SOURCE=ROOT/'ucl_2026_27_fixtures.txt'
+CUTOFF='2026-10-13'
+SEED=20261013
+REPS=6000
+OUTCOMES=('home','draw','away')
+POTS={
+ 1:'PSG Bayern Munich Real Madrid Liverpool Inter Manchester City Arsenal Barcelona Atletico Madrid'.split(' / '),
+}
+# Explicit, UEFA-drawn 2026/27 pots. Exact names are declared, not estimated.
+POTS={
+ 1:('PSG','Bayern Munich','Real Madrid','Liverpool','Inter','Manchester City','Arsenal','Barcelona','Atletico Madrid'),
+ 2:('Dortmund','Roma','Sporting CP','Aston Villa','Porto','Manchester United','Club Brugge','Real Betis','PSV'),
+ 3:('Feyenoord','Lille','Bodo Glimt','Napoli','RB Leipzig','Villarreal','Fenerbahce','Shakhtar Donetsk','Galatasaray'),
+ 4:('Slavia Prague','Slovan Bratislava','Stuttgart','AEK','LASK','Como','Lens','Viking','Sabah'),
+}
+TIER_ELO={1:1890,2:1780,3:1680,4:1570}  # ordinal assumption, not sourced match-derived ratings
+TEAM_UNDERSTAT={
+ 'PSG':('fr.1','paris saint germain'),'Bayern Munich':('de.1','bayern munich'),
+ 'Real Madrid':('es.1','real madrid'),'Liverpool':('en.1','liverpool'),
+ 'Inter':('it.1','inter'),'Manchester City':('en.1','manchester city'),
+ 'Arsenal':('en.1','arsenal'),'Barcelona':('es.1','barcelona'),
+ 'Atletico Madrid':('es.1','atletico madrid'),
+ 'Dortmund':('de.1','borussia dortmund'),'Roma':('it.1','roma'),
+ 'Aston Villa':('en.1','aston villa'),'Manchester United':('en.1','manchester united'),
+ 'Real Betis':('es.1','real betis'),
+ 'Lille':('fr.1','lille'),'Napoli':('it.1','napoli'),
+ 'RB Leipzig':('de.1','rasenballsport leipzig'),'Villarreal':('es.1','villarreal'),
+ 'Stuttgart':('de.1','vfb stuttgart'),'Como':('it.1','como'),'Lens':('fr.1','lens'),
+}
+TEAM_NAMES=set(t for teams in POTS.values() for t in teams)
+TEAM_POT={t:pot for pot,teams in POTS.items() for t in teams}
+
+
+def clip(x,lo,hi):
+ return min(hi,max(lo,x))
+
+
+def fixtures():
+ output=[]
+ for line in SOURCE.read_text(encoding='utf-8').splitlines():
+  line=line.strip()
+  if not line or line.startswith('#'):continue
+  parts=line.split(';')
+  day,roundtext=parts[:2]
+  date.fromisoformat(day)
+  md=int(roundtext)
+  for spec in parts[2:]:
+   pair,sep,score=spec.partition('=')
+   h,sep2,a=pair.partition('>')
+   if not sep2 or h not in TEAM_NAMES or a not in TEAM_NAMES or h==a:
+    raise ValueError('Unknown team or invalid fixed official fixture '+spec)
+   actual=None
+   if sep:
+    ga,gb=map(int,score.split('-'))
+    actual=(ga,gb)
+   output.append({'id':len(output)+1,'date':day,'round':md,'home':h,'away':a,'actual':actual})
+ if len(TEAM_NAMES)!=36 or len(output)!=144:
+  raise ValueError('Expected 36 official UEFA teams / 144 league fixtures')
+ plays=Counter(t for m in output for t in (m['home'],m['away']))
+ homes=Counter(m['home'] for m in output)
+ if any(plays[t]!=8 or homes[t]!=4 for t in TEAM_NAMES):
+  raise ValueError('UEFA Swiss stage must have 8 fixtures, 4 home, per club')
+ if any((m['round']==1)!=(m['actual'] is not None) for m in output):
+  raise ValueError('Only first matchday should be recorded as an actual result')
+ if sum(m['actual'] is not None for m in output)!=18:
+  raise ValueError('18 authentic fixed results are required')
+ if any((m['round']==1)!=(m['date']<'2026-10-13') for m in output):
+  raise ValueError('Historical/future date mismatch')
+ if len({(m['date'],m['home'],m['away']) for m in output})!=144:
+  raise ValueError('Duplicate official fixture')
+ return output
+
+
+def profiles(history):
+ """Use only D1 fields as of 12 October; no private rows written to GitHub."""
+ history=[m for m in history if m['date']<CUTOFF]
+ league_stats={}
+ for league in ('en.1','es.1','de.1','it.1','fr.1'):
+  matches=[r for r in history if r['league']==league]
+  if len(matches)<150:raise ValueError('Insufficient domestic context for '+league)
+  league_stats[league]={
+   'xg':sum(m['home_xg']+m['away_xg'] for m in matches)/(2*len(matches)),
+   'shots':sum(m['home_shots']+m['away_shots'] for m in matches)/(2*len(matches)),
+   'quality':sum(m['home_xgq']+m['away_xgq'] for m in matches)/(2*len(matches))}
+ result={}
+ for team,lookup in TEAM_UNDERSTAT.items():
+  league,name=lookup
+  rows=sorted((m for m in history if m['league']==league and
+              name in (m['h'],m['a'])),key=lambda m:(m['date'],m['id']),reverse=True)[:16]
+  if len(rows)<5:continue
+  totals=defaultdict(float)
+  wsum=0.
+  for r in rows:
+   home=r['h']==name
+   delta=(date.fromisoformat(CUTOFF)-date.fromisoformat(r['date'])).days
+   w=2**(-delta/120.)
+   for fld,k in [('xg','xg'),('shots','shots'),('xgq','quality')]:
+    totals['for_'+k]+=w*r[('home_' if home else 'away_')+fld]
+    totals['against_'+k]+=w*r[('away_' if home else 'home_')+fld]
+   wsum+=w
+  # Six full prior matches to keep 5-game teams from huge outliers.
+  base=league_stats[league]
+  n=len(rows)
+  form={'league':league,'games':n}
+  for k in ('xg','shots','quality'):
+   for side in ('for','against'):
+    observed=(totals[side+'_'+k]/wsum)
+    shrunk=(observed*n+6*base[k])/(n+6)
+    form[side+'_'+k]=clip(shrunk/base[k],.55,1.65)
+  result[team]=form
+ return result,league_stats,len(history)
+
+
+def poiss(mu,cap=7):
+ probs=[math.exp(-mu)]
+ for n in range(1,cap):
+  probs.append(probs[-1]*mu/n)
+ probs.append(max(0,1-sum(probs)))
+ return probs
+
+
+def joint(home,away,rho=-.08):
+ """Low-score Dixon–Coles correction to independent Poisson."""
+ hp,ap=poiss(clip(home,.18,4.1)),poiss(clip(away,.18,4.1))
+ grid=[]
+ for i,h in enumerate(hp):
+  row=[]
+  for j,a in enumerate(ap):
+   tau=1.
+   if i==0 and j==0:tau=1-home*away*rho
+   elif i==0 and j==1:tau=1+home*rho
+   elif i==1 and j==0:tau=1+away*rho
+   elif i==1 and j==1:tau=1-rho
+   row.append(h*a*max(.01,tau))
+  grid.append(row)
+ z=sum(sum(x) for x in grid)
+ return [[v/z for v in row] for row in grid]
+
+
+def onex2(grid):
+ p={'home':0.,'draw':0.,'away':0.}
+ for i,row in enumerate(grid):
+  for j,v in enumerate(row):
+   p['home' if i>j else 'away' if i<j else 'draw']+=v
+ return p
+
+
+def blend(a,b,w=.5):
+ return [[(1-w)*a[i][j]+w*b[i][j] for j in range(8)] for i in range(8)]
+
+
+def calc(match,rating,form):
+ """Blended goal baseline + the XGQ/xG/shot-volume research component."""
+ h,a=match['home'],match['away']
+ delta=rating[h]-rating[a]+58
+ lamb_h=clip(1.34*math.exp(math.log(1.8)*delta/400),.3,3.8)
+ lamb_a=clip(1.34*math.exp(-math.log(1.8)*delta/400),.3,3.8)
+ base=joint(lamb_h,lamb_a)
+ def val(t,k):
+  return form.get(t,{}).get(k,1.)
+ def modifier(t,opponent):
+  # Small powers because xG already encodes volume and quality; these are
+  # empirical five-league-derived features, not invented for missing clubs.
+  attacks=clip(val(t,'for_xg')*val(opponent,'against_xg'),.65,1.5)**.28
+  volume=clip(val(t,'for_shots')*val(opponent,'against_shots'),.65,1.5)**.25
+  quality=clip(val(t,'for_quality')*val(opponent,'against_quality'),.65,1.5)**.30
+  return clip(attacks*volume*quality,.76,1.28)
+ extra=joint(lamb_h*modifier(h,a),lamb_a*modifier(a,h))
+ mixed=blend(base,extra)
+ probs=onex2(mixed)
+ chosen=max(probs,key=probs.get)
+ # Score mode conditional on selected outcome; makes table coherent with pick.
+ possible=[(mixed[i][j],i,j) for i in range(8) for j in range(8)
+           if ('home' if i>j else 'away' if i<j else 'draw')==chosen]
+ _,hi,ai=max(possible)
+ return {'p':probs,'score':[hi,ai],'pick':chosen,
+         'lambda_home':lamb_h*modifier(h,a),'lambda_away':lamb_a*modifier(a,h),
+         'grid':mixed,'pure_goals':onex2(base)}
+
+
+def make_ratings(fixture):
+ ratings={t:float(TIER_ELO[TEAM_POT[t]]) for t in TEAM_NAMES}
+ # Distinguish equal-ranked pot opponents mildly using their authentic,
+ # PRE-CUTOFF first-round European performance; deterministic Elo K=18.
+ changes=defaultdict(float)
+ for game in fixture:
+  if game['actual'] is None:continue
+  h,a=game['home'],game['away']
+  hg,ag=game['actual']
+  d=ratings[h]+58-ratings[a]
+  expectation=1/(1+10**(-d/400))
+  actual=1. if hg>ag else .5 if hg==ag else 0.
+  change=18*(actual-expectation)
+  changes[h]+=change
+  changes[a]-=change
+ for t,n in changes.items():ratings[t]+=n
+ return ratings
+
+
+def score_table(matches,score_key):
+ league={t:{'team':t,'pot':TEAM_POT[t],'P':0,'W':0,'D':0,'L':0,
+            'GF':0,'GA':0,'GD':0,'Pts':0} for t in TEAM_NAMES}
+ for m in matches:
+  h,a=m['home'],m['away']
+  hs,as_=m[score_key]
+  for team,gf,ga in ((h,hs,as_),(a,as_,hs)):
+   line=league[team]
+   line['P']+=1;line['GF']+=gf;line['GA']+=ga
+   line['GD']=line['GF']-line['GA']
+   if gf>ga:line['W']+=1;line['Pts']+=3
+   elif gf==ga:line['D']+=1;line['Pts']+=1
+   else:line['L']+=1
+ return sorted(league.values(),key=lambda r:(-r['Pts'],-r['GD'],-r['GF'],r['team']))
+
+
+def sample_grid(grid,rng):
+ value=rng.random();s=0.
+ for i,row in enumerate(grid):
+  for j,p in enumerate(row):
+   s+=p
+   if value<=s:return i,j
+ return 7,7
+
+
+def advance(a,b,models,rng,*,neutral=False):
+ """Forecast a TWO-LEG tie; no away-goal rule. Neutral one-leg final."""
+ if neutral:
+  # Venue-neutral is approximated by equally averaging each order's matrix.
+  g1=models[(a,b)]['grid'];g2=models[(b,a)]['grid']
+  probs=blend(g1,[list(row) for row in zip(*g2)])
+  x,y=sample_grid(probs,rng)
+  if x!=y:return a if x>y else b
+ else:
+  first=sample_grid(models[(b,a)]['grid'],rng)  # seeded a hosts return leg
+  second=sample_grid(models[(a,b)]['grid'],rng)
+  x=first[1]+second[0];y=first[0]+second[1]
+  if x!=y:return a if x>y else b
+ # Extra time / penalties: small symmetric mixture around ability difference.
+ strength=models[(a,b)]['lambda_home']/max(.1,models[(b,a)]['lambda_home'])
+ p=clip(.5+math.log(strength)*.16,.27,.73)
+ return a if rng.random()<p else b
+
+
+def bracket(ranked,models,rng,*,with_trace=False):
+ """One illustrative draw consistent with article 19 PAIR GROUP constraints."""
+ names=[z['team'] for z in ranked]
+ groups=[
+  (names[8:10],names[22:24]),
+  (names[10:12],names[20:22]),
+  (names[12:14],names[18:20]),
+  (names[14:16],names[16:18])]
+ play=[]
+ wins=[]
+ for high,low in groups:
+  low=list(low);rng.shuffle(low)
+  for h,l in zip(high,low):
+   victor=advance(h,l,models,rng)
+   play.append({'a':h,'b':l,'winner':victor})
+   wins.append(victor)
+ r16=[]
+ seed_positions=[names[0:2],names[2:4],names[4:6],names[6:8]]
+ opponent_positions=[wins[6:8],wins[4:6],wins[2:4],wins[0:2]]
+ r16wins=[]
+ for seeds,opp in zip(seed_positions,opponent_positions):
+  seeds=list(seeds);rng.shuffle(seeds)
+  for s,o in zip(seeds,opp):
+   victor=advance(s,o,models,rng)
+   r16.append({'a':s,'b':o,'winner':victor})
+   r16wins.append(victor)
+ qf=[];qfwins=[]
+ for i in range(0,8,2):
+  a,b=r16wins[i:i+2];v=advance(a,b,models,rng)
+  qf.append({'a':a,'b':b,'winner':v});qfwins.append(v)
+ semis=[];swins=[]
+ for i in (0,2):
+  a,b=qfwins[i:i+2];v=advance(a,b,models,rng)
+  semis.append({'a':a,'b':b,'winner':v});swins.append(v)
+ champion=advance(*swins,models,rng,neutral=True)
+ return {'playoff':play,'round_of_16':r16,'quarter_final':qf,
+         'semi_final':semis,'final':{'a':swins[0],'b':swins[1],'winner':champion},
+         'champion':champion} if with_trace else (wins,r16wins,qfwins,swins,champion)
+
+
+def precompute_all(teams,rating,form):
+ pred={}
+ for a in teams:
+  for b in teams:
+   if a!=b:pred[(a,b)]=calc({'home':a,'away':b},rating,form)
+ return pred
+
+
+def simulation(fixtures,pred,base_table,models,reps=REPS):
+ rng=random.Random(SEED)
+ cnt={t:Counter() for t in TEAM_NAMES}
+ table_total=defaultdict(float)
+ for _ in range(reps):
+  round_games=[]
+  for m in fixtures:
+   if m['actual'] is not None:sc=list(m['actual'])
+   else:sc=sample_grid(pred[m['id']]['grid'],rng)
+   round_games.append({**m,'sample':sc})
+  rows=score_table(round_games,'sample')
+  for pos,row in enumerate(rows,1):
+   t=row['team'];table_total[t]+=row['Pts']
+   if pos<=8:cnt[t]['top8']+=1
+   if pos<=24:cnt[t]['top24']+=1
+  p16,r16,qf,semi,win=bracket(rows,models,rng)
+  for t in p16:cnt[t]['r16']+=1
+  for t in r16:cnt[t]['qf']+=1
+  for t in qf:cnt[t]['sf']+=1
+  for t in semi:cnt[t]['final']+=1
+  cnt[win]['champion']+=1
+ report={}
+ for t in sorted(TEAM_NAMES):
+  report[t]={k:cnt[t][k]/reps for k in ('top8','top24','r16','qf','sf','final','champion')}
+  report[t]['expected_points']=table_total[t]/reps
+ return report
+
+
+def main():
+ fixture=fixtures()
+ db=D1()
+ form,league_stats,n_history=profiles(db.history())
+ rating=make_ratings(fixture)
+ preds={}
+ matches=[]
+ for m in fixture:
+  p=calc(m,rating,form);preds[m['id']]=p
+  observed=m['actual']
+  matches.append({'id':m['id'],'date':m['date'],'matchday':m['round'],
+    'home':m['home'],'away':m['away'],
+    'status':'ACTUAL' if observed is not None else 'PREDICTION',
+    'score':list(observed) if observed is not None else p['score'],
+    'scoreline':f"{(observed or p['score'])[0]}-{(observed or p['score'])[1]}",
+    'pick':p['pick'],'home_probability':round(p['p']['home'],6),
+    'draw_probability':round(p['p']['draw'],6),
+    'away_probability':round(p['p']['away'],6),
+    'score_lambda_home':round(p['lambda_home'],4),
+    'score_lambda_away':round(p['lambda_away'],4),
+    'home_form_games':form.get(m['home'],{}).get('games',0),
+    'away_form_games':form.get(m['away'],{}).get('games',0),
+    'model_is_cross_league_adaptation':True})
+ projected=score_table(matches,'score')
+ for i,t in enumerate(projected,1):
+  t['rank']=i;t['route']='direct_ro16' if i<=8 else 'playoff' if i<=24 else 'eliminated'
+ models=precompute_all(TEAM_NAMES,rating,form)
+ monte=simulation(fixture,preds,projected,models)
+ # One readable scenario draw, NOT literally a forecast of the UEFA draw.
+ draw=bracket(projected,models,random.Random(SEED+1000),with_trace=True)
+ # Bracket advantage estimates use the independent tournament simulation.
+ winners=sorted(monte.items(),key=lambda x:-x[1]['champion'])
+ for r in projected:
+  r.update({k:round(monte[r['team']][k],5) for k in ('top8','top24','r16','qf','sf','final','champion','expected_points')})
+ record={
+  'as_of':CUTOFF,'season':'2026-27','format':'36 teams 144 league games and conditional 2027 knockouts',
+  'model':'UEFA pot prior + D1 five-league shot-volume/xG/XGQ shrinkage + DC correlated goals',
+  'caution':'Pot-derived power priors are analyst assumptions; not a validated all-Europe Elo model. Source shot metrics only from five domestic leagues. Results are uncertain.',
+  'source_uefa':'https://www.uefa.com/uefachampionsleague/news/02a8-2174c9e9019d-f909a77bd77a-1000--2026-27-champions-league-all-the-league-phase-fixtures/',
+  'source_pots':'https://www.uefa.com/uefachampionsleague/news/02a8-21717d0c6cb5-03a9a5ff1552-1000--champions-league-league-phase-draw-pots-confirmed/',
+  'assumed_pot_elo':TIER_ELO,'ratings_after_real_md1':{k:round(v,2) for k,v in sorted(rating.items())},
+  'total_actual':18,'total_predicted':126,'history_private_matches':n_history,
+  'actual_first_round_only':True,'domestic_form_teams':len(form),
+  'teams_without_domestic_xg':sorted(TEAM_NAMES-set(form)),
+  'n_simulations':REPS,'champion_favorites':[
+    {'team':t,'prob':round(v['champion'],5)} for t,v in winners[:12]],
+  'one_sample_bracket_is_official':False,
+  'scenario_bracket':draw,
+  'league_table':projected,
+  'matches':matches}
+ REPORT.mkdir(parents=True,exist_ok=True)
+ (REPORT/'ucl_2026_27_results.json').write_text(json.dumps(record,indent=2,ensure_ascii=False))
+ with (REPORT/'ucl_2026_27_matches.csv').open('w',newline='',encoding='utf-8-sig') as fp:
+  cols=[k for k in matches[0] if k!='score'];out=csv.DictWriter(fp,fieldnames=cols)
+  out.writeheader();out.writerows([{k:m[k] for k in cols} for m in matches])
+ with (REPORT/'ucl_2026_27_table.csv').open('w',newline='',encoding='utf-8-sig') as fp:
+  cols=['rank','team','pot','P','W','D','L','GF','GA','GD','Pts','route','top8','top24','r16','qf','sf','final','champion','expected_points']
+  out=csv.DictWriter(fp,fieldnames=cols);out.writeheader();out.writerows([{k:r[k] for k in cols} for r in projected])
+ print(json.dumps({'ok':True,'actual':18,'predicted':126,
+  'teams_with_private_domestic_form':len(form),'history_count':n_history,
+  'top_table':[(r['team'],r['Pts']) for r in projected[:12]],
+  'top_champions':record['champion_favorites'][:9]},ensure_ascii=False))
+ return record
+
+if __name__=='__main__':
+ main()
