@@ -1,0 +1,67 @@
+name: Penniless multi-source football sample audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'research/penniless_multisource_samples.py'
+      - 'tests/test_penniless_multisource_samples.py'
+      - '.github/workflows/penniless-sample-matrix.yml'
+  workflow_dispatch:
+  schedule:
+    # One bounded weekly research sample, UTC; not an unrestricted crawler.
+    - cron: '17 5 * * 1'
+permissions:
+  contents: write
+concurrency:
+  group: penniless-multisource-bounded-samples
+  cancel-in-progress: false
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prove no sample enumeration, private leakage, or invented XGQ
+        run: |
+          python -m unittest discover -s tests -p 'test_penniless_multisource_samples.py' -v
+          python -m unittest discover -s tests -p 'test_penniless_365_pilot.py' -v
+      - name: Bounded samples from public free data and owner authorized private sources
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: |
+          python -m research.penniless_multisource_samples
+      - name: Verify six-source sample report has no private match-level data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          f=Path('research/reports/penniless_sample_matrix.json')
+          x=json.loads(f.read_text())
+          assert x['source_count']==6 and x['production_modified'] is False
+          assert x['candidate_does_not_equal_accepted_xgq'] is True
+          a=x['sources']['365scores_legacy_authorized_pilot']
+          assert 'details' not in a and a['raw_provider_bytes_written']==0
+          assert a['queries_made']<=a['request_cap']<=5
+          assert a['accepted_complete_xgq']==0
+          b=x['sources']['understat_private']
+          assert b.get('private_rows_exported',0)==0
+          assert all('shot_xgs' not in json.dumps(z) for z in x['sources'].values())
+          print('PASS: six providers surveyed; only safe diagnostics and openly distributable StatsBomb summaries published.')
+          PY
+      - name: Save aggregated public-source diagnostics without raw provider payloads
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/reports/penniless_sample_matrix.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: bounded six-source Penniless sample survey (no private rows)"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
