@@ -19,6 +19,7 @@ from .understat_backfill import validate_config
 from .xgq import normalized, predict_xgq
 from .understat_championship import _dc_baseline, _elo_probs
 from .understat_hybrid import hybrid_probs
+from .feature_ladder import stage1_probs
 from .prematch_ledger import _ratings_by_league, normalize_probabilities
 
 FORECASTS = "private_daily_forecasts"
@@ -113,6 +114,11 @@ def _forecast(fixture, league_rows, ratings, *, now):
     goal_baseline = _dc_baseline(prior, fixture)
     if goal_baseline:
         models["goal_fixed_rho"] = normalize_probabilities(goal_baseline)
+        # Historical validation-selected shot-volume challenger, SHADOW ONLY.
+        # No earlier frozen forecast can ever be rewritten or relabelled.
+        stage1 = stage1_probs(prior, fixture, goal_baseline, (.50, .25, .30))
+        if stage1:
+            models["stage1_volume_xgq"] = normalize_probabilities(stage1)
         hybrid = hybrid_probs(prior, fixture, goal_baseline, (.35, .30))
         if hybrid:
             models["hybrid_393_validation"] = normalize_probabilities(hybrid)
