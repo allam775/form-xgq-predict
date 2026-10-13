@@ -18,6 +18,7 @@ from .understat_d1 import D1
 PRIMARY = "xgq_production_formula"
 CHALLENGER = "goal_fixed_rho"
 EXPLORATORY = "hybrid_393_validation"
+SHOT_VOLUME = "stage1_volume_xgq"
 GATE_PAIRS = 350
 MIN_LEAGUE = 25
 OUTCOMES = ("home", "draw", "away")
@@ -84,6 +85,7 @@ def compare(frozen, grades, *, min_pairs=GATE_PAIRS):
         raise ValueError("Duplicate independently graded fixture")
     lookup = {row["id"]: row for row in frozen}
     paired = []
+    stage1_paired = []
     counted = set()
     missing = 0
     for result in grades:
@@ -115,6 +117,12 @@ def compare(frozen, grades, *, min_pairs=GATE_PAIRS):
         paired.append({"league": f["league"], "date": f["date"],
                        "a": a, "b": b,
                        "hybrid": optional if _valid_score(optional) else None})
+        c = result["models"].get(SHOT_VOLUME)
+        if _valid_score(c):
+            if c["pick"] != f.get("picks", {}).get(SHOT_VOLUME):
+                raise ValueError("Shot-volume shadow pick differs from original frozen forecast")
+            stage1_paired.append({"league": f["league"], "date": f["date"],
+                                  "a": b, "b": c, "primary": a})
         counted.add(f["id"])
     n = len(paired)
     pa = _summarize([x["a"] for x in paired])
@@ -132,13 +140,28 @@ def compare(frozen, grades, *, min_pairs=GATE_PAIRS):
         and brier_gain is not None and brier_gain > 0
         and pb["top_choice_accuracy"] >= pa["top_choice_accuracy"]
     )
+    volume_count = len(stage1_paired)
+    volume_report = {
+        "paired_verified_matches": volume_count,
+        "stage1_volume_xgq": _summarize([r["b"] for r in stage1_paired]),
+        "goal_fixed_rho": _summarize([r["a"] for r in stage1_paired]),
+        "xgq_production_formula": _summarize([r["primary"] for r in stage1_paired]),
+        "stage1_vs_goal_ci95": _paired_ci(stage1_paired) if volume_count else
+            {"status": "no_new_shot_volume_forward_pairs"},
+        "requires_manual_approval": True,
+        "ready_for_consideration": volume_count >= GATE_PAIRS and
+          all(sum(r["league"] == code for r in stage1_paired) >= MIN_LEAGUE
+              for code in ("en.1", "de.1", "es.1", "it.1", "fr.1")),
+        "note": "Shadow stage 1 only since initial live freeze; older predictions are excluded."
+    }
     return {
+        "stage1_volume_challenger": volume_report,
         "status": "eligible_for_manual_review" if acceptance
                   else "collecting_prospective_evidence" if n < min_pairs
                   else "not_proven_better",
         "decision": "KEEP_EXISTING_PRODUCTION_MODEL",
         "requires_manual_approval_to_switch": True,
-        "models_pre_registered": [PRIMARY, CHALLENGER, EXPLORATORY],
+        "models_pre_registered": [PRIMARY, CHALLENGER, EXPLORATORY, SHOT_VOLUME],
         "primary": PRIMARY, "challenger": CHALLENGER,
         "candidate_is_fixed_rho_not_fitted_dc": True,
         "paired_verified_matches": n, "graded_without_paired_baseline": missing,
