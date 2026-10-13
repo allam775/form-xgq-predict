@@ -94,6 +94,19 @@ class ProspectiveShadowTests(unittest.TestCase):
         self.assertEqual(r["min_forward_pairs"], GATE_PAIRS)
         self.assertEqual(set(r["by_league_paired_counts"]),set(codes))
 
+    def test_stage1_shot_volume_shadow_is_only_scored_if_originally_frozen(self):
+        f0,g0=pair(0)
+        f1,g1=pair(1)
+        f1["picks"]["stage1_volume_xgq"]="home"
+        g1["models"]["stage1_volume_xgq"]={
+            "pick":"home","correct":True,"log_loss":.5,"brier":.35}
+        report=compare([f0,f1],[g0,g1])
+        self.assertEqual(report["paired_verified_matches"],2)
+        self.assertEqual(report["stage1_volume_challenger"]["paired_verified_matches"],1)
+        self.assertEqual(report["stage1_volume_challenger"]["stage1_volume_xgq"]["tested"],1)
+        self.assertFalse(report["stage1_volume_challenger"]["ready_for_consideration"])
+        self.assertEqual(report["decision"],"KEEP_EXISTING_PRODUCTION_MODEL")
+
     def test_duplicates_and_orphan_grades_are_rejected(self):
         f, g = pair(0)
         with self.assertRaises(ValueError):
