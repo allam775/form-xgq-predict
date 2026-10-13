@@ -143,11 +143,13 @@ def run_stage3(rows,*,min_test=80):
     selected=min(PARAMS,key=lambda p:(metrics[str(p)]["log_loss"],p))
     for r in test:r["stage3"]=r["variants"][str(selected)]
     names=("xgq","dc","elo","hybrid_fixed","stage1_fixed","stage3")
-    report.update(status="retrospective",selected={"params":selected,
-      "chosen_on":"validation_only"},
-      scores={k:_metrics(test,k) for k in names},
+    report.update({
+      "status":"retrospective",
+      "selected":{"params":selected,"chosen_on":"validation_only"},
+      "scores":{k:_metrics(test,k) for k in names},
       "per_league":{league:{name:_metrics([r for r in test if r["league"]==league],name)
-         for name in names} for league in sorted({r["league"] for r in test})})
+          for name in names} for league in sorted({r["league"] for r in test})}
+    })
     return report
 
 
