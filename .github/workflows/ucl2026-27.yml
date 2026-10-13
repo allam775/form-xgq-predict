@@ -1,0 +1,67 @@
+name: Project the entire 2026-27 UEFA Champions League
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/ucl_2026_27.py'
+      - 'research/ucl_2026_27_fixtures.txt'
+      - '.github/workflows/ucl2026-27.yml'
+permissions:
+  contents: write
+concurrency:
+  group: xgq-ucl2027-standalone-research
+  cancel-in-progress: false
+jobs:
+  project-season:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify all actual UEFA fixtures and complete balanced Swiss phase
+        run: |
+          python - <<'PY'
+          from research.ucl_2026_27 import fixtures,TEAM_NAMES
+          data=fixtures()
+          assert len(data)==144 and len(TEAM_NAMES)==36
+          assert len([x for x in data if x['actual']])==18
+          assert len([x for x in data if not x['actual']])==126
+          print('UEFA 144 match schedule checked for 36 teams and 4H/4A balance')
+          PY
+      - name: Project goal scorelines and calculate full 36-team league table plus knockout title odds
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+        run: python -m research.ucl_2026_27
+      - name: Verify probabilities and UEFA 36-table, playoff bracket and 6k tournament simulations
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('research/reports/ucl2026_27/ucl_2026_27_results.json').read_text())
+          assert len(r['matches'])==144 and len(r['league_table'])==36
+          assert len(set(x['team'] for x in r['league_table']))==36
+          assert all(r['matches'][i]['status']=='ACTUAL' for i in range(18))
+          assert sum(x['status']=='PREDICTION' for x in r['matches'])==126
+          assert all(abs(x['home_probability']+x['draw_probability']+x['away_probability']-1)<3e-6 for x in r['matches'])
+          assert sum(x['Pts'] for x in r['league_table'])<=432
+          assert len(r['scenario_bracket']['playoff'])==8
+          assert len(r['scenario_bracket']['round_of_16'])==8
+          assert len(r['scenario_bracket']['quarter_final'])==4
+          assert len(r['scenario_bracket']['semi_final'])==2
+          assert abs(sum(r['league_table'][i]['champion'] for i in range(36))-1)<.001
+          print('Verified 144 fixtures, 36 teams, 6k simulations, 8+8+4+2+1 knockout path')
+          PY
+      - name: Publish full forecast CSV, JSON and projected 36-club ranking
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/reports/ucl2026_27/ucl_2026_27_results.json research/reports/ucl2026_27/ucl_2026_27_matches.csv research/reports/ucl2026_27/ucl_2026_27_table.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "research: 144 UCL match scorelines, full final league table and title scenarios"
+            git push origin HEAD:main
+          fi
