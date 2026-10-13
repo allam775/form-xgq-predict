@@ -7,6 +7,9 @@ on:
       - 'engine/feature_ladder.py'
       - 'tests/test_feature_ladder.py'
       - '.github/workflows/feature-ladder.yml'
+  schedule:
+    # Weekly research refresh, never an automatic production promotion.
+    - cron: '47 4 * * 0'
 permissions:
   contents: read
 concurrency:
