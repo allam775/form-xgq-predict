@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-13T08:34:28.568458+00:00",
+  "created_at_utc": "2026-10-13T08:37:34.429097+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -124,20 +124,57 @@
     },
     "365scores_legacy_authorized_pilot": {
       "status": "candidate_samples_inspected",
-      "known_configured_team_id": "224",
-      "request_cap": 5,
-      "queries_made": 5,
+      "known_configured_team_ids": [
+        "224",
+        "1169",
+        "890"
+      ],
+      "request_cap": 9,
+      "queries_made": 9,
       "accepted_complete_xgq": 0,
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 21,
-      "total_shot_events_with_individual_xg": 95,
+      "listings_with_configured_team": 68,
+      "total_shot_events_with_individual_xg": 77,
       "detail_diagnostic_status_counts": {
         "missing_competition_identity": 3,
-        "no_chart_events": 1
+        "no_chart_events": 3
       },
-      "matches_inspected": 4,
+      "matches_inspected": 6,
+      "observed_score_field_kinds": {
+        "float": 3,
+        "missing": 3
+      },
+      "games_with_competition_display_name": 3,
+      "observed_home_score_nested_fields": [],
+      "observed_away_score_nested_fields": [],
+      "observed_root_competition_item_fields": [
+        "color",
+        "competitorsType",
+        "countryId",
+        "currentPhaseNum",
+        "currentSeasonNum",
+        "currentStageNum",
+        "currentStageType",
+        "hasActiveGames",
+        "hasBrackets",
+        "hasLiveStandings",
+        "hasStandings",
+        "hasStandingsGroups",
+        "hideOnCatalog",
+        "hideOnSearch",
+        "id",
+        "imageVersion",
+        "isInternational",
+        "liveGames",
+        "longName",
+        "name",
+        "nameForURL",
+        "popularityRank",
+        "sportId",
+        "totalGames"
+      ],
       "observed_game_field_names": [
         "awayCompetitor",
         "chartEvents",
