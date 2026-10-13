@@ -1,0 +1,1847 @@
+{
+  "status": "RETROSPECTIVE NATIONAL ADAPTATION; NOT UNDERSTAT XGQ",
+  "historical_results_count": 11899,
+  "match_count": 104,
+  "training_end": "2026-06-10",
+  "exact_per_shot_xgq_available": false,
+  "summary": {
+    "wc_stage1_adapted": {
+      "n": 104,
+      "correct": 58,
+      "accuracy": 0.5576923076923077,
+      "log_loss": 0.9142219814602454,
+      "brier": 0.5443666075677954,
+      "picks": {
+        "home": 56,
+        "draw": 1,
+        "away": 47
+      }
+    },
+    "goal_dc": {
+      "n": 104,
+      "correct": 56,
+      "accuracy": 0.5384615384615384,
+      "log_loss": 0.9223875209699346,
+      "brier": 0.5496091565092345,
+      "picks": {
+        "home": 55,
+        "draw": 3,
+        "away": 46
+      }
+    },
+    "elo": {
+      "n": 104,
+      "correct": 57,
+      "accuracy": 0.5480769230769231,
+      "log_loss": 0.9768930915097146,
+      "brier": 0.5825352819972696,
+      "picks": {
+        "home": 58,
+        "draw": 0,
+        "away": 46
+      }
+    },
+    "goal_elo_hybrid": {
+      "n": 104,
+      "correct": 61,
+      "accuracy": 0.5865384615384616,
+      "log_loss": 0.9365001572888166,
+      "brier": 0.5565591184461218,
+      "picks": {
+        "home": 59,
+        "draw": 0,
+        "away": 45
+      }
+    },
+    "uniform": {
+      "n": 104,
+      "correct": 46,
+      "accuracy": 0.4423076923076923,
+      "log_loss": 1.0919231796586781,
+      "brier": 0.6623307692307692,
+      "picks": {
+        "home": 104,
+        "draw": 0,
+        "away": 0
+      }
+    }
+  },
+  "groups": {
+    "Group A": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9553950615706125,
+        "brier": 0.564964737368361,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9607598277913625,
+        "brier": 0.5691256280804456,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.8895074277154711,
+        "brier": 0.5134403477705686,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9333806214530588,
+        "brier": 0.5470582620371719,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group B": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9567526341788731,
+        "brier": 0.5907642759088562,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9671489425756413,
+        "brier": 0.5983531717088936,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.0659993567150055,
+        "brier": 0.6573853734653609,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9920238417257687,
+        "brier": 0.6106529594664999,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 1.1083497235943511,
+        "brier": 0.6726833333333332,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group C": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.7265716342885588,
+        "brier": 0.4014560187715415,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.7266416986985101,
+        "brier": 0.4016076432766369,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.7923483859287245,
+        "brier": 0.44427192072244875,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.7485752020927512,
+        "brier": 0.4149623686334627,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group D": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.174183177770371,
+        "brier": 0.7294197179258735,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.1655936006922165,
+        "brier": 0.7230159084869232,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 1.0838602464961398,
+        "brier": 0.6594970014512344,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 1,
+        "accuracy": 0.16666666666666666,
+        "log_loss": 1.131672458821601,
+        "brier": 0.6975455698124996,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group E": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9249322732661747,
+        "brier": 0.5498865871768164,
+        "picks": {
+          "home": 3,
+          "draw": 1,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 0.9289883987638774,
+        "brier": 0.5517645147244706,
+        "picks": {
+          "home": 2,
+          "draw": 1,
+          "away": 3
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9547498445466167,
+        "brier": 0.5680645878564654,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.935929418617668,
+        "brier": 0.5547078649887726,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group F": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9047626311083796,
+        "brier": 0.5426618352142841,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9016060190369153,
+        "brier": 0.5386765316972267,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9980561082023801,
+        "brier": 0.5978629414038211,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9274427780193085,
+        "brier": 0.5523660684330933,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.1083497235943511,
+        "brier": 0.6726833333333332,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group G": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.0976798614654653,
+        "brier": 0.681589402114097,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.103853595175597,
+        "brier": 0.6860869593555644,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.1062018230799942,
+        "brier": 0.6716979258757357,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.101487343335312,
+        "brier": 0.6756986659397582,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.2088415217890567,
+        "brier": 0.7360166666666665,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group H": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 0.9548297410087857,
+        "brier": 0.5828749835117392,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 0.9655050394629177,
+        "brier": 0.5884943896191461,
+        "picks": {
+          "home": 3,
+          "draw": 1,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.089020197752417,
+        "brier": 0.6665841639893761,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 2,
+        "accuracy": 0.3333333333333333,
+        "log_loss": 1.0006683306265707,
+        "brier": 0.6103611456806036,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 1,
+        "accuracy": 0.16666666666666666,
+        "log_loss": 1.2088415217890567,
+        "brier": 0.7360166666666665,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group I": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.6785969814770049,
+        "brier": 0.371052819119857,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.7111805504947917,
+        "brier": 0.39434001505393584,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.883023997700283,
+        "brier": 0.5149041936963631,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.7586812419358849,
+        "brier": 0.4262883674567664,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 1.0078579253996456,
+        "brier": 0.60935,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group J": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.641529467139364,
+        "brier": 0.3468673409332966,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.6509498615209529,
+        "brier": 0.3521326248085545,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.8293145767935828,
+        "brier": 0.47365129879769174,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 5,
+        "accuracy": 0.8333333333333334,
+        "log_loss": 0.7035038650483987,
+        "brier": 0.3842420127761235,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group K": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9289426396794619,
+        "brier": 0.5442317046250045,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9427651231684098,
+        "brier": 0.5540929443385535,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 1.0270877567527903,
+        "brier": 0.618210053536825,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9687032347120349,
+        "brier": 0.5732081729619535,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 1.1083497235943511,
+        "brier": 0.6726833333333332,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group L": {
+      "wc_stage1_adapted": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.920810474309716,
+        "brier": 0.560990242736826,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_dc": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9158906673756856,
+        "brier": 0.5570684470650773,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "elo": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.960906023576661,
+        "brier": 0.5771184766129688,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 6,
+        "correct": 4,
+        "accuracy": 0.6666666666666666,
+        "log_loss": 0.9265044368937311,
+        "brier": 0.5591035166635141,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "uniform": {
+        "n": 6,
+        "correct": 3,
+        "accuracy": 0.5,
+        "log_loss": 1.0581038244969985,
+        "brier": 0.6410166666666667,
+        "picks": {
+          "home": 6,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    }
+  },
+  "stages": {
+    "Final": {
+      "wc_stage1_adapted": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.1824343625716929,
+        "brier": 0.7232163628814621,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "goal_dc": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.1788899567941153,
+        "brier": 0.7203865104305509,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "elo": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.3019804751492496,
+        "brier": 0.7964404681748228,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.220270160801083,
+        "brier": 0.7465713498539696,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "uniform": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.3093333199837622,
+        "brier": 0.7993499999999999,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Group Stage": {
+      "wc_stage1_adapted": {
+        "n": 72,
+        "correct": 40,
+        "accuracy": 0.5555555555555556,
+        "log_loss": 0.9054155481052306,
+        "brier": 0.5388966387838794,
+        "picks": {
+          "home": 37,
+          "draw": 1,
+          "away": 34
+        }
+      },
+      "goal_dc": {
+        "n": 72,
+        "correct": 39,
+        "accuracy": 0.5416666666666666,
+        "log_loss": 0.9117402770630731,
+        "brier": 0.5428965648512857,
+        "picks": {
+          "home": 36,
+          "draw": 2,
+          "away": 34
+        }
+      },
+      "elo": {
+        "n": 72,
+        "correct": 40,
+        "accuracy": 0.5555555555555556,
+        "log_loss": 0.973339645438339,
+        "brier": 0.580224023764905,
+        "picks": {
+          "home": 38,
+          "draw": 0,
+          "away": 34
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 72,
+        "correct": 42,
+        "accuracy": 0.5833333333333334,
+        "log_loss": 0.9273810644401741,
+        "brier": 0.550516247904185,
+        "picks": {
+          "home": 39,
+          "draw": 0,
+          "away": 33
+        }
+      },
+      "uniform": {
+        "n": 72,
+        "correct": 34,
+        "accuracy": 0.4722222222222222,
+        "log_loss": 1.0916010905619002,
+        "brier": 0.6621277777777776,
+        "picks": {
+          "home": 72,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Quarter-finals": {
+      "wc_stage1_adapted": {
+        "n": 4,
+        "correct": 2,
+        "accuracy": 0.5,
+        "log_loss": 1.0999772239926107,
+        "brier": 0.6745670662922484,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 1
+        }
+      },
+      "goal_dc": {
+        "n": 4,
+        "correct": 1,
+        "accuracy": 0.25,
+        "log_loss": 1.123554237415308,
+        "brier": 0.6908257313898425,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 4,
+        "correct": 2,
+        "accuracy": 0.5,
+        "log_loss": 1.0879347347638348,
+        "brier": 0.663283374327192,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 1
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 4,
+        "correct": 2,
+        "accuracy": 0.5,
+        "log_loss": 1.1107740545822051,
+        "brier": 0.6810010848037539,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 1
+        }
+      },
+      "uniform": {
+        "n": 4,
+        "correct": 2,
+        "accuracy": 0.5,
+        "log_loss": 1.158595622691704,
+        "brier": 0.7043499999999999,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Round of 16": {
+      "wc_stage1_adapted": {
+        "n": 8,
+        "correct": 6,
+        "accuracy": 0.75,
+        "log_loss": 0.7873330321620166,
+        "brier": 0.4456597735081746,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "goal_dc": {
+        "n": 8,
+        "correct": 6,
+        "accuracy": 0.75,
+        "log_loss": 0.8037946060992768,
+        "brier": 0.45668640538086225,
+        "picks": {
+          "home": 3,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "elo": {
+        "n": 8,
+        "correct": 4,
+        "accuracy": 0.5,
+        "log_loss": 0.9505328235471505,
+        "brier": 0.5609061054592435,
+        "picks": {
+          "home": 4,
+          "draw": 0,
+          "away": 4
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 8,
+        "correct": 6,
+        "accuracy": 0.75,
+        "log_loss": 0.8496551487154441,
+        "brier": 0.48840064119115617,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 6
+        }
+      },
+      "uniform": {
+        "n": 8,
+        "correct": 1,
+        "accuracy": 0.125,
+        "log_loss": 1.0455423497226601,
+        "brier": 0.6331,
+        "picks": {
+          "home": 8,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Round of 32": {
+      "wc_stage1_adapted": {
+        "n": 16,
+        "correct": 8,
+        "accuracy": 0.5,
+        "log_loss": 0.9479441571776589,
+        "brier": 0.5715524745143554,
+        "picks": {
+          "home": 11,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "goal_dc": {
+        "n": 16,
+        "correct": 8,
+        "accuracy": 0.5,
+        "log_loss": 0.9587242012217233,
+        "brier": 0.5780052293315379,
+        "picks": {
+          "home": 12,
+          "draw": 1,
+          "away": 3
+        }
+      },
+      "elo": {
+        "n": 16,
+        "correct": 9,
+        "accuracy": 0.5625,
+        "log_loss": 0.9549662385389561,
+        "brier": 0.5674649550204631,
+        "picks": {
+          "home": 11,
+          "draw": 0,
+          "away": 5
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 16,
+        "correct": 9,
+        "accuracy": 0.5625,
+        "log_loss": 0.9548192004297482,
+        "brier": 0.5716405334254707,
+        "picks": {
+          "home": 13,
+          "draw": 0,
+          "away": 3
+        }
+      },
+      "uniform": {
+        "n": 16,
+        "correct": 9,
+        "accuracy": 0.5625,
+        "log_loss": 1.102068986207182,
+        "brier": 0.6687249999999999,
+        "picks": {
+          "home": 16,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Semi-finals": {
+      "wc_stage1_adapted": {
+        "n": 2,
+        "correct": 2,
+        "accuracy": 1.0,
+        "log_loss": 0.8064175234285158,
+        "brier": 0.45997520820272986,
+        "picks": {
+          "home": 0,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_dc": {
+        "n": 2,
+        "correct": 2,
+        "accuracy": 1.0,
+        "log_loss": 0.8502756403534435,
+        "brier": 0.49210465907078865,
+        "picks": {
+          "home": 0,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "elo": {
+        "n": 2,
+        "correct": 2,
+        "accuracy": 1.0,
+        "log_loss": 0.9123876303761882,
+        "brier": 0.53871486517551,
+        "picks": {
+          "home": 0,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 2,
+        "correct": 2,
+        "accuracy": 1.0,
+        "log_loss": 0.8711531910409043,
+        "brier": 0.5076500651262413,
+        "picks": {
+          "home": 0,
+          "draw": 0,
+          "away": 2
+        }
+      },
+      "uniform": {
+        "n": 2,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.0078579253996456,
+        "brier": 0.60935,
+        "picks": {
+          "home": 2,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    },
+    "Third-place match": {
+      "wc_stage1_adapted": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.2282175307510648,
+        "brier": 0.7620163698603992,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "goal_dc": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.139399976827915,
+        "brier": 0.7013259411848208,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "elo": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.154209965492448,
+        "brier": 0.7138477968069074,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "goal_elo_hybrid": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.144558560533163,
+        "brier": 0.7056489856371119,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      },
+      "uniform": {
+        "n": 1,
+        "correct": 0,
+        "accuracy": 0.0,
+        "log_loss": 1.0078579253996456,
+        "brier": 0.60935,
+        "picks": {
+          "home": 1,
+          "draw": 0,
+          "away": 0
+        }
+      }
+    }
+  },
+  "teams": {
+    "Algeria": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 0.8878137662486001,
+      "brier": 0.5195620066242634,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Argentina": {
+      "n": 8,
+      "correct": 5,
+      "accuracy": 0.625,
+      "log_loss": 0.9287900124522075,
+      "brier": 0.5705089927461197,
+      "picks": {
+        "home": 6,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Australia": {
+      "n": 4,
+      "correct": 0,
+      "accuracy": 0.0,
+      "log_loss": 1.1176109832159273,
+      "brier": 0.6860846784170703,
+      "picks": {
+        "home": 0,
+        "draw": 0,
+        "away": 4
+      }
+    },
+    "Austria": {
+      "n": 4,
+      "correct": 3,
+      "accuracy": 0.75,
+      "log_loss": 0.7254643623166308,
+      "brier": 0.3974445288876038,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 0
+      }
+    },
+    "Belgium": {
+      "n": 6,
+      "correct": 3,
+      "accuracy": 0.5,
+      "log_loss": 0.9482544682090518,
+      "brier": 0.5593341352554609,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Bosnia and Herzegovina": {
+      "n": 4,
+      "correct": 3,
+      "accuracy": 0.75,
+      "log_loss": 0.7386989710513567,
+      "brier": 0.4213314925002991,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 0
+      }
+    },
+    "Brazil": {
+      "n": 5,
+      "correct": 2,
+      "accuracy": 0.4,
+      "log_loss": 0.9154544055062068,
+      "brier": 0.5403001847080213,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Canada": {
+      "n": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "log_loss": 0.9049837299004626,
+      "brier": 0.5442013333189821,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Cape Verde": {
+      "n": 4,
+      "correct": 0,
+      "accuracy": 0.0,
+      "log_loss": 1.4718239521808796,
+      "brier": 0.9869942802587572,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 0
+      }
+    },
+    "Colombia": {
+      "n": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "log_loss": 0.9725599222747174,
+      "brier": 0.5691897158247722,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Croatia": {
+      "n": 4,
+      "correct": 4,
+      "accuracy": 1.0,
+      "log_loss": 0.6772714266494991,
+      "brier": 0.3644804632116346,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Curaçao": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.7175290821914971,
+      "brier": 0.4142527902590513,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Czech Republic": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.9364366798718303,
+      "brier": 0.5529339358458617,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "DR Congo": {
+      "n": 4,
+      "correct": 3,
+      "accuracy": 0.75,
+      "log_loss": 0.8538137868346893,
+      "brier": 0.4972747467255417,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 0
+      }
+    },
+    "Ecuador": {
+      "n": 4,
+      "correct": 1,
+      "accuracy": 0.25,
+      "log_loss": 1.1948529866098307,
+      "brier": 0.7503554828028808,
+      "picks": {
+        "home": 2,
+        "draw": 1,
+        "away": 1
+      }
+    },
+    "Egypt": {
+      "n": 5,
+      "correct": 2,
+      "accuracy": 0.4,
+      "log_loss": 0.9969733127233832,
+      "brier": 0.6049983206423932,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "England": {
+      "n": 8,
+      "correct": 5,
+      "accuracy": 0.625,
+      "log_loss": 0.9645016249785769,
+      "brier": 0.5874397863217219,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 4
+      }
+    },
+    "France": {
+      "n": 8,
+      "correct": 6,
+      "accuracy": 0.75,
+      "log_loss": 0.7416844096076893,
+      "brier": 0.41862783587170127,
+      "picks": {
+        "home": 4,
+        "draw": 0,
+        "away": 4
+      }
+    },
+    "Germany": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 1.118337225430366,
+      "brier": 0.6867060194066004,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Ghana": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 1.0812237307921158,
+      "brier": 0.6842267955033644,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Haiti": {
+      "n": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "log_loss": 0.6146928155388321,
+      "brier": 0.32248147000058747,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Iran": {
+      "n": 3,
+      "correct": 0,
+      "accuracy": 0.0,
+      "log_loss": 1.3475244640172497,
+      "brier": 0.8585856585140389,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Iraq": {
+      "n": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "log_loss": 0.43260907739269,
+      "brier": 0.18979318877632353,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Ivory Coast": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 0.8161320145314471,
+      "brier": 0.4714826567473576,
+      "picks": {
+        "home": 2,
+        "draw": 1,
+        "away": 1
+      }
+    },
+    "Japan": {
+      "n": 4,
+      "correct": 1,
+      "accuracy": 0.25,
+      "log_loss": 1.1272673350051094,
+      "brier": 0.7032283566181636,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Jordan": {
+      "n": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "log_loss": 0.3233806183587861,
+      "brier": 0.12516243881979802,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Mexico": {
+      "n": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "log_loss": 0.8378350827650273,
+      "brier": 0.4872666572549619,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Morocco": {
+      "n": 6,
+      "correct": 4,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.9143327441019888,
+      "brier": 0.536036498845969,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 4
+      }
+    },
+    "Netherlands": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 0.8298291940334043,
+      "brier": 0.4756072507372962,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "New Zealand": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.8818017188355034,
+      "brier": 0.5324604382858055,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Norway": {
+      "n": 6,
+      "correct": 3,
+      "accuracy": 0.5,
+      "log_loss": 0.9610324603219015,
+      "brier": 0.5749425557746782,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Panama": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.8338248794298778,
+      "brier": 0.4808851170725474,
+      "picks": {
+        "home": 0,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Paraguay": {
+      "n": 5,
+      "correct": 1,
+      "accuracy": 0.2,
+      "log_loss": 1.1120450849055916,
+      "brier": 0.6915214381360102,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Portugal": {
+      "n": 5,
+      "correct": 3,
+      "accuracy": 0.6,
+      "log_loss": 0.8928179398303742,
+      "brier": 0.5144546359198503,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Qatar": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.9274689635042644,
+      "brier": 0.5761784667349616,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Saudi Arabia": {
+      "n": 3,
+      "correct": 1,
+      "accuracy": 0.3333333333333333,
+      "log_loss": 0.843937443047858,
+      "brier": 0.49280668908026937,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Scotland": {
+      "n": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "log_loss": 0.7230050721784171,
+      "brier": 0.3992090385587997,
+      "picks": {
+        "home": 0,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Senegal": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 0.9395258836550867,
+      "brier": 0.5510906090012109,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "South Africa": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 1.0100135721151497,
+      "brier": 0.6040590719191936,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "South Korea": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 1.020279075265413,
+      "brier": 0.6087983268558498,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Spain": {
+      "n": 8,
+      "correct": 6,
+      "accuracy": 0.75,
+      "log_loss": 0.7794822460291808,
+      "brier": 0.44911416671281673,
+      "picks": {
+        "home": 5,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Sweden": {
+      "n": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "log_loss": 0.952635757267718,
+      "brier": 0.5828118217393312,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 1
+      }
+    },
+    "Switzerland": {
+      "n": 6,
+      "correct": 1,
+      "accuracy": 0.16666666666666666,
+      "log_loss": 1.1930597157420944,
+      "brier": 0.7534619163427481,
+      "picks": {
+        "home": 3,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Tunisia": {
+      "n": 3,
+      "correct": 2,
+      "accuracy": 0.6666666666666666,
+      "log_loss": 0.6082176100296318,
+      "brier": 0.3269844636773439,
+      "picks": {
+        "home": 0,
+        "draw": 0,
+        "away": 3
+      }
+    },
+    "Turkey": {
+      "n": 3,
+      "correct": 0,
+      "accuracy": 0.0,
+      "log_loss": 1.2334962256036455,
+      "brier": 0.7720330719890433,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "United States": {
+      "n": 5,
+      "correct": 2,
+      "accuracy": 0.4,
+      "log_loss": 0.9084097466111253,
+      "brier": 0.5362950108555903,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 4
+      }
+    },
+    "Uruguay": {
+      "n": 3,
+      "correct": 1,
+      "accuracy": 0.3333333333333333,
+      "log_loss": 0.8119476613738493,
+      "brier": 0.4671816219761453,
+      "picks": {
+        "home": 1,
+        "draw": 0,
+        "away": 2
+      }
+    },
+    "Uzbekistan": {
+      "n": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "log_loss": 0.6997731315619481,
+      "brier": 0.38291326884165217,
+      "picks": {
+        "home": 2,
+        "draw": 0,
+        "away": 1
+      }
+    }
+  },
+  "90min_draws": 29,
+  "extra_time_games": 9,
+  "matches_with_any_earlier_wc_xg": 80,
+  "methods": [
+    "International matches Elo (day lagged)",
+    "18-match opponent-adjusted goals, half-life 420d",
+    "True hosts only, no arbitrary home bias",
+    "Prior World Cup match xG+shots; 6 pseudo-games prior",
+    "Phase 1 transferred weights .50 goal / .50 shot; volume .25; xG/shot proxy .30",
+    "90-minute results only, extra time and penalties reported separately",
+    "No shot-level per-event XGQ, no genuine pre-2026 xG"
+  ],
+  "sources": {
+    "wc": "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json",
+    "intl": "https://raw.githubusercontent.com/martj42/international_results/master/results.csv",
+    "detail": "https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/main/matches_detailed.csv",
+    "stats": "https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/main/match_team_stats.csv"
+  }
+}
