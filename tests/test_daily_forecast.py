@@ -101,6 +101,10 @@ class DailyForecastTests(unittest.TestCase):
         self.assertEqual(payload["model"], "xgq_production_formula")
         self.assertEqual(set(payload["models"]["xgq_production_formula"]), {"home", "draw", "away"})
         self.assertAlmostEqual(sum(payload["models"]["xgq_production_formula"].values()), 1, places=6)
+        self.assertIn("stage1_volume_xgq",payload["models"])
+        self.assertAlmostEqual(sum(payload["models"]["stage1_volume_xgq"].values()),1,places=6)
+        self.assertEqual(payload["model"],"xgq_production_formula")
+        self.assertTrue(payload["experimental_models_not_promoted"])
         future = strict_row({
             "date": "2026-10-13", "league": "it.1",
             "home_team": "Roma", "away_team": "Como",
