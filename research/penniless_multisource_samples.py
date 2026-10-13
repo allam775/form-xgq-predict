@@ -230,6 +230,18 @@ def _shot_diagnostics(payload,match_id):
             "home_shots_detected":len(shots[hi]),"away_shots_detected":len(shots[ai]),
             "shots_missing_xg":bad,"shots_unassigned":unassigned,
             "score_present":score_ok,"competition_identity_present":bool(name and country),
+            "competition_display_name_present":bool(match.get("competitionDisplayName")),
+            "home_score_field_kind":type(home.get("score")).__name__,
+            "away_score_field_kind":type(away.get("score")).__name__,
+            "home_score_nested_fields":sorted(str(k) for k in home.get("score",{})
+                 if isinstance(k,str))[:15] if isinstance(home.get("score"),dict) else [],
+            "away_score_nested_fields":sorted(str(k) for k in away.get("score",{})
+                 if isinstance(k,str))[:15] if isinstance(away.get("score"),dict) else [],
+            "root_competition_item_fields":sorted(str(k) for k in
+                ((payload.get("competitions") or [{}])[0].keys()
+                 if isinstance(payload.get("competitions"),list) and
+                    payload["competitions"] and isinstance(payload["competitions"][0],dict)
+                 else []))[:25],
             "game_field_names":safe_fieldnames(match),
             "home_field_names":safe_fieldnames(home),
             "away_field_names":safe_fieldnames(away),
@@ -238,54 +250,58 @@ def _shot_diagnostics(payload,match_id):
             "accepted_complete_xgq":False}
 
 
-def run_365(*,transport=None,limit=4,sleep=1.5):
-    """One known owner-configured Inter team results page + <=4 game details.
+def run_365(*,transport=None,limit=4,sleep=1.5,team_ids=("224",)):
+    """Bounded, known real 365Scores club IDs, not brute-force discovery.
 
-    Only existing team ID 224; no enumeration or guessed team IDs.
-    Uses same endpoint patterns as previously authorized original model.
-    Response is processed in memory and discarded. Never write raw responses.
+    '224' appears in verified legacy tests for Inter. Club Brugge '1169'
+    and Sporting CP '890' appear in published official 365Scores match
+    page URLs, and the results listing must independently confirm membership.
     """
-    report={"status":"not_started","known_configured_team_id":"224",
-            "request_cap":1+limit,"queries_made":0,"details":[],
-            "accepted_complete_xgq":0,
+    if not team_ids or len(team_ids)>3 or any(
+       t not in ("224","1169","890") for t in team_ids):
+        raise ValueError("Only known, page-documented research IDs permitted")
+    report={"status":"not_started","known_configured_team_ids":list(team_ids),
+            "request_cap":len(team_ids)*(1+limit),"queries_made":0,
+            "details":[],"accepted_complete_xgq":0,
             "source_authorization":"owner reports prior private XGQ consent",
             "bulk_scope_not_assumed":True,"raw_provider_bytes_written":0}
     def query(path,params):
         result=fetch(path,params,transport=transport)
         report["queries_made"]+=1
         return result
+    listings=0
     try:
-        index=query("games/results/",{"competitors":"224"})
-        eligible={}
-        for game in _unpack_games(index):
-            ident=_game_id(game)
-            if ident and "224" in _identity(game):
-                eligible[ident]=1
-        # Prior known confirmed ID guarantees one match even if listing is empty.
-        eligible.setdefault("4732693",1)
-        ids=list(eligible)[:limit]
-        report["listings_with_configured_team"]=len(eligible)
-        for mid in ids:
-            if transport is None:time.sleep(sleep)
-            try:
-                payload=query("game/",{"gameId":mid,"topBookmaker":"14"})
-            except AccessDenied:
-                report["status"]="access_denied_stopped"
-                return report
-            except HTTPError as e:
-                if e.code in (401,403,429):
+        for team_id in team_ids:
+            index=query("games/results/",{"competitors":team_id})
+            eligible={}
+            for game in _unpack_games(index):
+                ident=_game_id(game)
+                if ident and team_id in _identity(game):
+                    eligible[ident]=1
+            if team_id=="224":
+                # One confirmed old test match, even if outside index horizon.
+                eligible.setdefault("4732693",1)
+            listings+=len(eligible)
+            for mid in list(eligible)[:limit]:
+                if transport is None:time.sleep(sleep)
+                try:
+                    payload=query("game/",{"gameId":mid,"topBookmaker":"14"})
+                except AccessDenied:
                     report["status"]="access_denied_stopped";return report
-                report["details"].append({"status":"http_error","code":e.code})
-                continue
-            except (URLError,TimeoutError,ValueError) as e:
-                report["details"].append({"status":"failed_request",
-                                          "reason":type(e).__name__})
-                continue
-            info=_shot_diagnostics(payload,mid)
-            # Use match ordinal to avoid accidental redistribution of IDs
-            info["ordinal"]=len(report["details"])+1
-            report["details"].append(info)
+                except HTTPError as e:
+                    if e.code in (401,403,429):
+                        report["status"]="access_denied_stopped";return report
+                    report["details"].append({"status":"http_error","code":e.code})
+                    continue
+                except (URLError,TimeoutError,ValueError) as e:
+                    report["details"].append({"status":"failed_request",
+                                              "reason":type(e).__name__})
+                    continue
+                info=_shot_diagnostics(payload,mid)
+                info["ordinal"]=len(report["details"])+1
+                report["details"].append(info)
         report["status"]="candidate_samples_inspected"
+        report["listings_with_configured_team"]=listings
         report["total_shot_events_with_individual_xg"]=sum(
            v.get("shot_events",0) for v in report["details"])
         return report
@@ -311,7 +327,8 @@ def main():
      ("openfootball",run_openfootball),
      ("football_data_uk",run_football_data),
      ("club_elo_catalog",run_clubelo_catalog),
-     ("365scores_legacy_authorized_pilot",run_365),
+     ("365scores_legacy_authorized_pilot",
+      lambda:run_365(team_ids=("224","1169","890"),limit=2)),
     )
     for name,fn in funcs:
         try:sources[name]=fn()
@@ -327,6 +344,14 @@ def main():
         private["matches_inspected"]=len(private["details"])
         # Share field NAME patterns only, never provider field values or
         # per-match shot series, scores, xG or match IDs.
+        private["observed_score_field_kinds"]=dict(Counter(
+            r.get("home_score_field_kind","missing") for r in private["details"]))
+        private["games_with_competition_display_name"]=sum(
+            bool(r.get("competition_display_name_present")) for r in private["details"])
+        for field in ("home_score_nested_fields","away_score_nested_fields",
+                      "root_competition_item_fields"):
+            private["observed_"+field]=sorted(set(
+                name for row in private["details"] for name in row.get(field,[])))[:30]
         for field in ("game_field_names","home_field_names",
                       "away_field_names","root_field_names"):
             private["observed_"+field]=sorted(set(
