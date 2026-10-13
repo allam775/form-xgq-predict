@@ -30,7 +30,7 @@ def clip(value,lo,hi):return max(lo,min(hi,value))
 def _team_form(prior,team,day,window,*,venue=None):
     filtered=[r for r in prior if (team in (r["h"],r["a"]) and
          r["date"]<day and (venue is None or
-            (r["h"]==team)==(venue=="home"))]
+            (r["h"]==team)==(venue=="home")))]
     recent=sorted(filtered,key=lambda r:(r["date"],r["id"]),reverse=True)[:window]
     if len(recent)<5:return None
     weighted=[0.,0.,0.]
