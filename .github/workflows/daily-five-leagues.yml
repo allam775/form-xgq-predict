@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: form-xgq-online
+  group: form-xgq-daily-forecasts
   cancel-in-progress: false
 
 jobs:
