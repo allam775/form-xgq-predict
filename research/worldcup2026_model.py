@@ -11,8 +11,8 @@ URLS={
  'wc':'https://raw.githubusercontent.com/openfootball/worldcup.json/516d3825c3bd23fdc298c4014e84bde78f2d4965/2026/worldcup.json',
  'intl':'https://raw.githubusercontent.com/martj42/international_results/d5bd6de012c87e2f325de602ae77fe2f9ab61ef3/results.csv',
  'detail':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/matches_detailed.csv',
- 'stats':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/match_team_stats.csv'},
- 'meta':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/matches.csv'
+ 'stats':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/match_team_stats.csv',
+ 'meta':'https://raw.githubusercontent.com/mominullptr/FIFA-World-Cup-2026-Dataset/2f61805ec8ac58e52882e8f0e2413a5cfa7f4d61/matches.csv'}
 ALIASES={'USA':'United States','Czechia':'Czech Republic','Bosnia & Herzegovina':'Bosnia and Herzegovina','Türkiye':'Turkey','Côte d’Ivoire':'Ivory Coast',"Côte d'Ivoire":'Ivory Coast','Cabo Verde':'Cape Verde','Congo DR':'DR Congo','IR Iran':'Iran'}
 def N(s):return ALIASES.get(s.strip(),s.strip())
 def get(u):
