@@ -7,6 +7,7 @@ on:
       - 'engine/understat_creativity.py'
       - 'engine/stage2_research.py'
       - 'tests/test_understat_creativity.py'
+      - 'tests/test_stage2_research.py'
       - '.github/workflows/understat-creativity.yml'
   schedule:
     # Resumable, bounded enrichment of historical MATCH rosters into private D1.
@@ -28,6 +29,7 @@ jobs:
       - name: Validate real match xA and Key Passes schemas
         run: |
           python -m unittest discover -s tests -p 'test_understat_creativity.py' -v
+          python -m unittest discover -s tests -p 'test_stage2_research.py' -v
           python -m py_compile engine/stage2_research.py
       - name: Enrich 100 existing verified Understat matches per pass
         env:
