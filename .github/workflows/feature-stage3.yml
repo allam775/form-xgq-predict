@@ -7,6 +7,9 @@ on:
       - 'engine/stage3_form.py'
       - 'tests/test_stage3_form.py'
       - '.github/workflows/feature-stage3.yml'
+  schedule:
+    # Weekly historical re-evaluation on newly imported PRIVATE Understat evidence.
+    - cron: '19 5 * * 0'
 permissions:
   contents: read
 concurrency:
