@@ -74,6 +74,25 @@ class SampleMatrixTests(unittest.TestCase):
         self.assertEqual(z["shots_missing_xg"],1)
         self.assertEqual(z["accepted_complete_xgq"],False)
 
+    def test_integral_float_scores_and_provider_catalog_match(self):
+        game={"game":{"id":"4732693","statusText":"Finished",
+           "competitionId":572,"competitionDisplayName":"UEFA Champions League",
+           "homeCompetitor":{"id":111,"score":2.0},
+           "awayCompetitor":{"id":224,"score":1.0},
+           "chartEvents":{"events":[
+               {"xg":"0.25","competitorNum":1},
+               {"xg":"0.45","competitorNum":2}]}},
+           "competitions":[{"id":572,"name":"UEFA Champions League",
+                            "countryId":999,"isInternational":True}]}
+        z=p._shot_diagnostics(game,"4732693")
+        self.assertEqual(z["status"],"partial_unverified")
+        self.assertTrue(z["score_present"])
+        self.assertTrue(z["competition_catalog_identity_confirmed"])
+        self.assertFalse(z["accepted_complete_xgq"])
+        game["game"]["homeCompetitor"]["score"]=2.5
+        z=p._shot_diagnostics(game,"4732693")
+        self.assertFalse(z["score_present"])
+
     def test_source_reports_are_sanitized_before_written_in_public(self):
         report_data={"status":"candidate_samples_inspected",
            "queries_made":2,"details":[{"status":"missing_competition_identity",
