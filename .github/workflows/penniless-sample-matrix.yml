@@ -62,6 +62,20 @@ jobs:
           git add research/reports/penniless_sample_matrix.json
           if ! git diff --cached --quiet; then
             git commit -m "research: bounded six-source Penniless sample survey (no private rows)"
-            git pull --rebase origin main
-            git push origin HEAD:main
+            # Other independent workflows may push while this small audit runs.
+            # Rebase and retry races without force-push, bounded to four tries.
+            published=0
+            for attempt in 1 2 3 4; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                published=1
+                break
+              fi
+              sleep "$attempt"
+            done
+            if [ "$published" -ne 1 ]; then
+              echo "Could not publish the safe source report after four retries"
+              exit 1
+            fi
           fi
