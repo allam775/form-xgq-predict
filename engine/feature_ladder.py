@@ -161,6 +161,8 @@ def run_stage1(rows, *, min_test=80):
                         if not all(candidates.values()):continue
                         buckets[split].append({
                             "league":league,"date":day,"actual":actual_outcome(match),
+                            "home":match["home"],"away":match["away"],
+                            "score":str(match["hg"])+"-"+str(match["ag"]),
                             "xgq":{k:xgq["probabilities"][k] for k in OUTCOMES},
                             "elo":elo,"dc_fixed_rho":dc,"naive":naive,
                             "hybrid_fixed":hybrid,"variants":candidates})
@@ -202,6 +204,13 @@ def run_stage1(rows, *, min_test=80):
             name: _metrics([r for r in test if r["league"] == league], name)
             for name in names}
             for league in sorted({r["league"] for r in test})},
+        "oct11_replay": [{
+            "league":r["league"],"home":r["home"],"away":r["away"],
+            "score":r["score"],"actual":r["actual"],
+            "stage1_probs":{k:round(r["stage1"][k],5) for k in OUTCOMES},
+            "picks":{name:max(OUTCOMES,key=lambda k:r[name][k]) for name in names},
+        } for r in test if r["date"]=="2026-10-11"],
+        "oct11_replay_is_retrospective": True,
         "test_candidate_count": len(STAGE1_CANDIDATES),
         "private_match_level_records_written": 0,
     })
