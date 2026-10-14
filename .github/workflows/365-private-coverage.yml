@@ -1,0 +1,93 @@
+name: Private 365Scores competition coverage
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 03 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: private365-coverage
+  cancel-in-progress: false
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - { comp: '7', league: 'en.1' }
+          - { comp: '11', league: 'es.1' }
+          - { comp: '17', league: 'it.1' }
+          - { comp: '73', league: 'pt.1' }
+          - { comp: '572', league: 'uefa.cl' }
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      XGQ_365_ACCESS_AUTHORIZED: ${{ vars.XGQ_365_ACCESS_AUTHORIZED || secrets.XGQ_365_ACCESS_AUTHORIZED }}
+      XGQ_365_PRIVATE_ONLY: ${{ vars.XGQ_365_PRIVATE_ONLY || secrets.XGQ_365_PRIVATE_ONLY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - id: rights
+        name: Check private source rights and credentials
+        shell: bash
+        run: |
+          if [[ "$XGQ_365_ACCESS_AUTHORIZED" != "1" || "$XGQ_365_PRIVATE_ONLY" != "1" || -z "$CLOUDFLARE_API_TOKEN" || -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Private 365Scores coverage disabled; requires documented source rights and private Cloudflare credentials."
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore private catalog from D1
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        env:
+          COMP: ${{ matrix.comp }}
+          LEAGUE: ${{ matrix.league }}
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,competition_id,league,fixture_date,status,payload FROM private_365_fixture_catalog WHERE competition_id='$COMP'" > /tmp/365matches.json
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,competition_id,scan_date,scan_status,payload FROM private_365_coverage_days WHERE competition_id='$COMP'" > /tmp/365days.json
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,payload FROM private_365_coverage_verified WHERE json_extract(payload,'$.league')='$LEAGUE'" > /tmp/365verified.json
+          python -m engine.coverage365_d1 restore \
+            --matches-input /tmp/365matches.json --days-input /tmp/365days.json --verified-input /tmp/365verified.json \
+            --competition-id "$COMP" --league "$LEAGUE" --start 2026-07-01 --end 2027-06-30 \
+            --output data/private_365_catalog_live.json
+      - name: Scan real fixtures and cross-verify per-shot xG
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        env:
+          COMP: ${{ matrix.comp }}
+          LEAGUE: ${{ matrix.league }}
+        run: |
+          set -euo pipefail
+          python -m engine.coverage365 \
+            --competition-id "$COMP" --league "$LEAGUE" --start 2026-07-01 --end 2027-06-30 \
+            --through "$(date -u +%F)" --max-days 14 --max-details 24 \
+            --output data/private_365_catalog_live.json
+      - name: Upsert private D1 checkpoint (no public publish)
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m engine.coverage365_d1 export \
+            --input data/private_365_catalog_live.json --output /tmp/private365-coverage-upsert.sql
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote \
+            --file /tmp/private365-coverage-upsert.sql
+          rm -f /tmp/365matches.json /tmp/365days.json /tmp/365verified.json \
+            /tmp/private365-coverage-upsert.sql data/private_365_catalog_live.json
