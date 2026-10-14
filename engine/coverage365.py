@@ -374,6 +374,7 @@ def run(argv=None, *, transport=None):
     ap.add_argument("--output", required=True, help="Private filesystem path; never commit")
     ap.add_argument("--max-days", type=int, default=MAX_DAYS_PER_RUN)
     ap.add_argument("--max-details", type=int, default=0)
+    ap.add_argument("--through", help="YYYY-MM-DD; stop at this day, never scan future season dates")
     ap.add_argument("--expected-ids", help="Optional independently obtained JSON game ID array")
     ap.add_argument("--history-output", help="Existing private_365_history.json (for validated rows only)")
     options = ap.parse_args(argv)
@@ -385,6 +386,8 @@ def run(argv=None, *, transport=None):
     ledger = load_or_create(options.output, options.competition_id,
                             options.league, options.start, options.end)
     d, end = date.fromisoformat(options.start), date.fromisoformat(options.end)
+    through = date.fromisoformat(options.through) if options.through else date.today()
+    end = min(end, through)
     processed = 0
     while d <= end and processed < options.max_days:
         day = d.isoformat()
@@ -412,6 +415,16 @@ def run(argv=None, *, transport=None):
         if not isinstance(expected, list):
             raise ValueError("Expected fixture IDs must be a JSON array")
     status = audit(ledger, expected)
+    # The full-season audit includes future dates. A daily run evaluates
+    # coverage only up to the requested 'through' date without misreporting
+    # unplayed fixtures as missed.
+    daily_start = date.fromisoformat(options.start)
+    elapsed = max(0, (end - daily_start).days + 1)
+    status["days_not_scanned_through"] = max(
+        0, elapsed - len([d for d in ledger["scanned_days"]
+                         if options.start <= d <= end.isoformat()])
+    )
+    status["through_date"] = end.isoformat()
     if options.history_output:
         status["new_model_eligible_rows"] = sync_private_history(ledger, options.history_output)
     print(json.dumps(status, ensure_ascii=False, indent=2))
