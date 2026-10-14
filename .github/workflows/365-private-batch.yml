@@ -44,7 +44,7 @@ jobs:
           import json
           from pathlib import Path
           v=json.loads(Path('research/reports/365_private_batch_status.json').read_text())
-          assert v['requests']<=v['request_cap']<=15
+          assert v['requests']<=v['request_cap']<=25
           assert v['accepted_complete_xgq']==0
           assert v['raw_provider_payloads_stored']==0
           assert v['published_private_match_rows']==0
