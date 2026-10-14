@@ -7,7 +7,7 @@ feed, and does not imply that upstream coverage is complete.
 from __future__ import annotations
 
 import argparse
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime, timezone
 import hashlib
 import json
 import os
@@ -112,7 +112,8 @@ def new_ledger(cid, league, start, end):
         raise ValueError("Season window must be ordered and at most 501 days")
     return {"schema_version": 1, "competition_id": str(cid), "league": league,
             "start": start, "end": end, "scanned_days": [],
-            "failed_days": {}, "matches": {}, "unassigned_games": {}, "verified_rows": {},
+            "failed_days": {}, "failed_attempts": {},
+            "matches": {}, "unassigned_games": {}, "verified_rows": {},
             "uncertain_competition_events": 0}
 
 
@@ -433,23 +434,45 @@ def run(argv=None, *, transport=None):
     d, end = date.fromisoformat(options.start), date.fromisoformat(options.end)
     through = date.fromisoformat(options.through) if options.through else date.today()
     end = min(end, through)
+    # New dates have priority: fourteen persistently broken old dates must
+    # never prevent later fixtures from entering the private inventory.
+    # Once all unseen dates are reached, retry failures from least-recent
+    # attempt to most-recent attempt, rotating fairly across all failed days.
+    unscanned = []
+    day_cursor = d
+    while day_cursor <= end:
+        day = day_cursor.isoformat()
+        if day not in ledger["scanned_days"] and day not in ledger["failed_days"]:
+            unscanned.append(day)
+        day_cursor += timedelta(days=1)
+    failure_meta = ledger.setdefault("failed_attempts", {})
+    retries = sorted(
+        (day for day in ledger["failed_days"] if options.start <= day <= end.isoformat()
+         and day not in ledger["scanned_days"]),
+        key=lambda day: (failure_meta.get(day, {}).get("last_run_at", ""), day),
+    )
+    chosen = unscanned[:options.max_days]
+    chosen += retries[:options.max_days - len(chosen)]
     processed = 0
-    while d <= end and processed < options.max_days:
-        day = d.isoformat()
-        d += timedelta(days=1)
-        if day in ledger["scanned_days"]:
-            continue
+    access_denied = False
+    for day in chosen:
+        prior = failure_meta.get(day, {})
+        failure_meta[day] = {
+            "count": int(prior.get("count") or 0) + 1,
+            "last_run_at": datetime.now(timezone.utc).isoformat(),
+        }
         try:
             scan_day(ledger, day, transport=transport)
         except provider365.AccessDenied as exc:
             ledger["failed_days"][day] = str(exc)[:240]
+            access_denied = True
             _save_atomic(options.output, ledger)
             break   # never bypass or immediately retry 401/403/429
         except (OSError, ValueError, TypeError, KeyError) as exc:
             ledger["failed_days"][day] = str(exc)[:240]
         _save_atomic(options.output, ledger)
         processed += 1
-    if options.max_details:
+    if options.max_details and not access_denied:
         try:
             refresh_details(ledger, transport=transport, limit=options.max_details)
         finally:
@@ -470,6 +493,8 @@ def run(argv=None, *, transport=None):
                          if options.start <= d <= end.isoformat()])
     )
     status["through_date"] = end.isoformat()
+    status["attempted_scan_days_this_batch"] = processed
+    status["source_access_denied"] = access_denied
     if options.history_output:
         status["new_model_eligible_rows"] = sync_private_history(ledger, options.history_output)
     print(json.dumps(status, ensure_ascii=False, indent=2))
