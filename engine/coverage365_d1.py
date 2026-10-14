@@ -67,7 +67,16 @@ def restore(matches_input, days_input, verified_input, output, *, competition_id
         if status == "complete":
             ledger["scanned_days"].append(dt)
         elif status == "failed":
-            ledger["failed_days"][dt] = str(json.loads(row["payload"]).get("error") or "failed")
+            ledger["failed_days"][dt] = str(checkpoint.get("error") or "failed")
+            attempts = checkpoint.get("attempt_count", 0)
+            last_attempt = checkpoint.get("last_attempt_at", "")
+            if type(attempts) is not int or attempts < 0 or attempts > 100000:
+                raise ValueError("Invalid retry counter in D1")
+            if not isinstance(last_attempt, str) or len(last_attempt) > 40:
+                raise ValueError("Invalid retry timestamp in D1")
+            ledger.setdefault("failed_attempts", {})[dt] = {
+                "count": attempts, "last_run_at": last_attempt
+            }
         else:
             raise ValueError("Unknown persisted day status")
     for row in wrangler_rows(verified_input):
@@ -112,6 +121,8 @@ def export_sql(path, sql_output):
             ("id", "competition_id", "scan_date", "scan_status", "payload"),
             (f"{cid}|{dt}", cid, dt, "complete" if done else "failed",
              json.dumps({"day": dt, "error": ledger["failed_days"].get(dt),
+                         "attempt_count": ledger.get("failed_attempts", {}).get(dt, {}).get("count", 0),
+                         "last_attempt_at": ledger.get("failed_attempts", {}).get(dt, {}).get("last_run_at", ""),
                          "unassigned_games": {
                              mid: data for mid, data in ledger.get("unassigned_games", {}).items()
                              if data.get("observed_date") == dt
