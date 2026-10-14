@@ -34,16 +34,40 @@ MAX_REQUESTS=18
 DELAY=1.5
 
 
+def _pages(db,table,columns):
+    """Page the private tables beyond the default D1 row cap."""
+    if (table,columns) not in (
+            ("private_365_stats_audit","id,payload"),
+            ("private_365_research_candidates","payload")):
+        raise ValueError("unknown_private_pagination_table")
+    out=[];offset=0
+    while True:
+        rows=db.query(f"SELECT {columns} FROM {table} ORDER BY id LIMIT ? OFFSET ?",
+                      (250,offset))
+        if not isinstance(rows,list):
+            raise ValueError("malformed_private_pagination")
+        out.extend(rows)
+        if len(out)>20000:
+            raise ValueError("too_many_private_rows")
+        if len(rows)<250:
+            break
+        offset+=len(rows)
+    return out
+
+
 def prior_audits(db):
-    """Audit rows hold no raw shots, only status for dedup across runs."""
+    """All private audit rows are paginated; no repeated historic requests."""
     db.query("""CREATE TABLE IF NOT EXISTS private_365_stats_audit(
         id TEXT PRIMARY KEY NOT NULL, payload TEXT NOT NULL)""")
-    rows=db.query("SELECT id,payload FROM private_365_stats_audit LIMIT 250")
-    return {str(x["id"]):json.loads(x["payload"]) for x in rows}
+    rows=_pages(db,"private_365_stats_audit","id,payload")
+    result={str(x["id"]):json.loads(x["payload"]) for x in rows}
+    if len(result)!=len(rows):
+        raise ValueError("duplicate_audit_id")
+    return result
 
 
 def candidates(db):
-    raw=db.query("SELECT payload FROM private_365_research_candidates LIMIT 250")
+    raw=_pages(db,"private_365_research_candidates","payload")
     result={}
     for row in raw:
         v=json.loads(row["payload"])
