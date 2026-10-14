@@ -151,7 +151,6 @@ def repair(candidate,detail,verified_stats,breakdown):
       "corrected_outcome_class":k,
       "shot_xg_model":"chartEvents.xg",
       "training_release":False,
-      "removed_event_xg_private_only":xg_remove,
       "number_of_equivalent_removals":len(choices)
     }
     for s in ("home","away"):
