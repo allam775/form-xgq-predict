@@ -17,6 +17,8 @@ import unicodedata
 # https://www.365scores.com/football/league/super-lig-78
 # https://www.365scores.com/it/Voetbal/league/serie-a-17
 # https://www.365scores.com/football/league/jupiler-pro-league-98
+# https://www.365scores.com/Voetbal/league/premier-league-7
+# https://www.365scores.com/football/league/laliga-11
 KNOWN = {
     "572": {"league": "uefa.cl", "prefixes": ("Europe", "International"), "names": (
         "UEFA Champions League", "Champions League", "UCL",
@@ -30,6 +32,11 @@ KNOWN = {
         "international": False},
     "17": {"league": "it.1", "prefixes": ("Italy",), "names": (
         "Serie A", "Italian Serie A", "Italy Serie A"), "international": False},
+    "7": {"league": "en.1", "prefixes": ("England",), "names": (
+        "Premier League", "English Premier League"), "international": False},
+    "11": {"league": "es.1", "prefixes": ("Spain",), "names": (
+        "LaLiga", "La Liga", "Spanish LaLiga", "Primera Division"),
+        "international": False},
     "98": {"league": "be.1", "prefixes": ("Belgium",), "names": (
         "Jupiler Pro League", "Belgium Jupiler Pro League",
         "Belgian Pro League"), "international": False},
