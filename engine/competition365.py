@@ -16,19 +16,23 @@ import unicodedata
 # https://www.365scores.com/football/league/liga-portugal-73
 # https://www.365scores.com/football/league/super-lig-78
 # https://www.365scores.com/it/Voetbal/league/serie-a-17
+# https://www.365scores.com/football/league/jupiler-pro-league-98
 KNOWN = {
-    "572": {"league": "uefa.cl", "names": (
+    "572": {"league": "uefa.cl", "prefixes": ("Europe", "International"), "names": (
         "UEFA Champions League", "Champions League", "UCL",
         "UEFA Champions League 2026/2027"),
         "international": True},
-    "73": {"league": "pt.1", "names": (
+    "73": {"league": "pt.1", "prefixes": ("Portugal",), "names": (
         "Liga Portugal", "Primeira Liga", "Portuguese Primeira Liga",
         "Liga Portugal Betclic"), "international": False},
-    "78": {"league": "tr.1", "names": (
+    "78": {"league": "tr.1", "prefixes": ("Turkiye", "Turkey"), "names": (
         "Super Lig", "Süper Lig", "Trendyol Super Lig", "Turkish Super Lig"),
         "international": False},
-    "17": {"league": "it.1", "names": (
+    "17": {"league": "it.1", "prefixes": ("Italy",), "names": (
         "Serie A", "Italian Serie A", "Italy Serie A"), "international": False},
+    "98": {"league": "be.1", "prefixes": ("Belgium",), "names": (
+        "Jupiler Pro League", "Belgium Jupiler Pro League",
+        "Belgian Pro League"), "international": False},
 }
 
 
@@ -76,7 +80,18 @@ def resolve(payload, *, expected_leagues=None):
                 "provider_competition_id":gid}
     allowed={canonical(x) for x in spec["names"]}
     label=game.get("competitionDisplayName") or game.get("competitionName") or nested.get("name")
-    if label and canonical(label) not in allowed:
+    def valid_display(text):
+        if canonical(text) in allowed:
+            return True
+        # 365Scores live game details use "Europe, UEFA Champions League",
+        # whereas its embedded catalog uses "UEFA Champions League".
+        # Accept ONLY documented region/country + a known exact league name.
+        if isinstance(text,str) and "," in text:
+            region,competition=text.split(",",1)
+            prefixes={canonical(x) for x in spec["prefixes"]}
+            return canonical(region) in prefixes and canonical(competition) in allowed
+        return False
+    if label and not valid_display(label):
         return {"ok":False,"reason":"game_competition_name_disagrees",
                 "provider_competition_id":gid}
     cat=_catalog(payload)
@@ -102,7 +117,7 @@ def resolve(payload, *, expected_leagues=None):
         catalog_verified=True
     # Without the catalog, only accept an explicit confirmed name from the
     # game, not the bare numerical ID. The audit retains proof method.
-    if not catalog_verified and canonical(label) not in allowed:
+    if not catalog_verified and not valid_display(label):
         return {"ok":False,"reason":"no_catalog_and_no_verified_display_name",
                 "provider_competition_id":gid}
     return {"ok":True,"league":spec["league"],
