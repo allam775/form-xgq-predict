@@ -1,9 +1,6 @@
 name: Private 365Scores competition coverage
 
 on:
-  push:
-    branches:
-      - fix/365-no-silent-match-omissions
   workflow_dispatch:
   schedule:
     - cron: '25 03 * * *'
