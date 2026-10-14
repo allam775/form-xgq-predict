@@ -1,0 +1,47 @@
+name: Diagnose shot-event classifications for eleven rejected 365Scores matches
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/365-rejected-categories.yml'
+permissions:
+  contents: read
+concurrency:
+  group: 365scores-one-time-event-categories
+  cancel-in-progress: false
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate syntax and privacy gate
+        run: python -m py_compile research/365_rejected_event_categories.py
+      - name: Diagnose eleven original rejected private matches
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python -m research.365_rejected_event_categories
+      - name: Ensure only aggregate information leaves private D1
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/reports/365_rejected_event_categories.json').read_text())
+          assert x['case_count']==11 and x['requests']<=11
+          assert not x['raw_events_stored'] and not x['match_identifiers_exposed']
+          assert not x['xg_probabilities_stored'] and not x['verified_archive_changed']
+          print('PASS: only aggregate non-PII event taxonomy saved privately')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 365scores-rejected-event-categories-count-only
+          path: research/reports/365_rejected_event_categories.json
+          retention-days: 3
+          if-no-files-found: warn
