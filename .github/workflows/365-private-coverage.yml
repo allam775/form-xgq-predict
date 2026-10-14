@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   catalog:
+    if: github.repository == 'allam775/form-xgq-predict'
     runs-on: ubuntu-latest
     timeout-minutes: 28
     strategy:
@@ -32,8 +33,9 @@ jobs:
     env:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      XGQ_365_ACCESS_AUTHORIZED: ${{ vars.XGQ_365_ACCESS_AUTHORIZED || secrets.XGQ_365_ACCESS_AUTHORIZED }}
-      XGQ_365_PRIVATE_ONLY: ${{ vars.XGQ_365_PRIVATE_ONLY || secrets.XGQ_365_PRIVATE_ONLY }}
+      # Owner-confirmed private research only; this workflow is locked to this repository.
+      XGQ_365_ACCESS_AUTHORIZED: '1'
+      XGQ_365_PRIVATE_ONLY: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
