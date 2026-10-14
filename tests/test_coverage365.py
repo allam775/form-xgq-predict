@@ -116,6 +116,27 @@ class Coverage365Tests(TestCase):
                                          "hasMore": True})
         self.assertEqual(ledger["scanned_days"], [])
 
+    def test_live_game_stats_competitor_rows(self):
+        # Real 365Scores /game/stats fields: name, competitorId, value.
+        payload = {"statisticsFilters": [{"filterId": 1, "name": "Match"}],
+                   "statistics": [
+                       {"name": "Expected Goals", "competitorId": 11, "value": "0.30"},
+                       {"name": "Expected Goals", "competitorId": 22, "value": "0.10"},
+                       {"name": "Total Shots", "competitorId": 11, "value": 1},
+                       {"name": "Total Shots", "competitorId": 22, "value": "1"},
+                       {"name": "Expected Goals", "competitorId": 999, "value": "9.99"},
+                       {"name": "Expected Goals On Target", "competitorId": 22, "value": 0.50},
+                   ]}
+        totals = coverage365.aggregate_totals(payload, home_id=11, away_id=22)
+        self.assertEqual(totals["home"], {"xg": 0.30, "shots": 1.0})
+        self.assertEqual(totals["away"], {"xg": 0.10, "shots": 1.0})
+        row = {"home_shots": 1, "away_shots": 1,
+               "home_xg": 0.3, "away_xg": 0.1}
+        self.assertEqual(coverage365.compare_aggregate(
+            row, payload, home_id=11, away_id=22), (True, None))
+        self.assertEqual(coverage365.compare_aggregate(
+            row, payload, home_id=11, away_id=33)[0], False)
+
     def test_persist_and_resumption(self):
         ledger = self.ledger()
         coverage365.scan_day(ledger, "2025-10-21", transport=lambda _: {

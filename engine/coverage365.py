@@ -208,28 +208,58 @@ def _stat_number(value):
         return None
 
 
-def aggregate_totals(payload):
-    """Find documented team-level expected goals and total shots; never infer values."""
+def aggregate_totals(payload, home_id=None, away_id=None):
+    """Identify actual match-level team statistics, not player/aggregate guesses.
+
+    365Scores /game/stats statistics[] normally stores ONE team per row:
+    {name: "Expected Goals", competitorId: ..., value: ...}.
+    Legacy paired home/away and stats[0:2] layouts remain supported.
+    """
     found = {"home": {}, "away": {}}
-    def walk(node, depth=0):
+    def walk(node, depth=0, side_hint=None):
         if depth > 12:
             return
         if isinstance(node, list):
             for child in node:
-                walk(child, depth + 1)
+                walk(child, depth + 1, side_hint)
             return
         if not isinstance(node, dict):
             return
         if any(k in node for k in ("playerId", "athleteId", "memberId")):
             return
+
+        raw_id = node.get("competitorId") or node.get("competitorID") or node.get("teamId")
+        side = None
+        if raw_id is not None:
+            if home_id is not None and str(raw_id) == str(home_id):
+                side = "home"
+            elif away_id is not None and str(raw_id) == str(away_id):
+                side = "away"
+        if side is None:
+            num = node.get("competitorNum")
+            if num in (1, "1"):
+                side = "home"
+            elif num in (2, "2"):
+                side = "away"
+            elif raw_id is None:
+                side = side_hint
+
         label = re.sub(r"[^a-z]", "", str(
             node.get("name") or node.get("title") or node.get("label") or
             node.get("statName") or node.get("key") or ""
         ).lower())
-        typ = ("xg" if label in ("expectedgoals", "expectedgoalsxg", "xg")
-               else "shots" if label in ("totalshots", "shots", "shotstotal")
+        typ = ("xg" if label in ("expectedgoals", "expectedgoalsxg", "expectedgoal", "xg")
+               else "shots" if label in ("totalshots", "shots", "shotstotal",
+                                         "goalattempts", "attempts", "totalattempts")
                else None)
         if typ:
+            if side is not None:
+                v = _stat_number(node.get("value"))
+                if v is None:
+                    v = _stat_number(node.get("stat"))
+                if v is not None:
+                    found[side].setdefault(typ, v)
+
             pair = node.get("stats")
             home = _stat_number(node.get("homeValue") if "homeValue" in node else node.get("home"))
             away = _stat_number(node.get("awayValue") if "awayValue" in node else node.get("away"))
@@ -242,15 +272,21 @@ def aggregate_totals(payload):
                 found["home"].setdefault(typ, home)
             if away is not None:
                 found["away"].setdefault(typ, away)
+
         for key in ("statistics", "stats", "items", "rows", "groups", "categories", "data"):
             if key in node:
-                walk(node[key], depth + 1)
+                hint = side
+                if key.lower().startswith("home"):
+                    hint = "home"
+                elif key.lower().startswith("away"):
+                    hint = "away"
+                walk(node[key], depth + 1, hint)
     walk(payload)
     return found
 
 
-def compare_aggregate(row, stats_payload):
-    totals = aggregate_totals(stats_payload)
+def compare_aggregate(row, stats_payload, *, home_id=None, away_id=None):
+    totals = aggregate_totals(stats_payload, home_id=home_id, away_id=away_id)
     if any(k not in totals[side] for side in ("home", "away") for k in ("xg", "shots")):
         return False, "aggregates_not_available_for_both_teams"
     for side in ("home", "away"):
@@ -293,7 +329,12 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
             stats = provider365.fetch("game/stats/", {"games": mid}, transport)
             if transport is None:
                 time.sleep(1.2)
-            passed, issue = compare_aggregate(row, stats)
+            raw_game = game.get("game", game) if isinstance(game, dict) else {}
+            h = provider365._side(raw_game, "home")
+            a = provider365._side(raw_game, "away")
+            hi = h.get("id") or h.get("competitorId")
+            ai = a.get("id") or a.get("competitorId")
+            passed, issue = compare_aggregate(row, stats, home_id=hi, away_id=ai)
             fixture["xg_status"] = "verified_xg" if passed else "pending_verification"
             fixture["xg_issue"] = issue
             if passed:

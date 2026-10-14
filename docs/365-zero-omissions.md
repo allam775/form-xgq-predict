@@ -65,3 +65,9 @@ The D1 checkpoint may be saved only if the script reaches the SQL export step; t
 On 14 October 2026 a one-time GitHub-hosted ordinary HTTP request to 365Scores returned 259 football games for 13 October 2026, including nine competition ID 572 Champions League games. The nine game IDs were inserted/reconciled into private D1, and all nine home/away pairings matched UEFA's official 2026/27 matchday 2 fixture list. Previously only four of those nine appeared in the research sample. This proves one-day fixture discovery, not full-season or nine-match shot-level XGQ completeness. The one-time live probe workflow has been removed after success.
 
 Source: UEFA official 2026/27 Champions League fixtures, published 9 October 2026: https://www.uefa.com/uefachampionsleague/news/02a8-2174c9e9019d-f909a77bd77a-1000--2026-27-champions-league-all-the-league-phase-fixtures-a/
+
+## Live game/stats layout correction
+
+An authorized schema-only inspection of the real 365Scores `game/stats/` response found `statistics[]` rows shaped like `{name, competitorId, value}`: home and away are represented by *separate records*, not a combined two-value row. The updated `aggregate_totals` parser now attributes each metric against the actual match's home/away competitor IDs, rejects irrelevant competitors, keeps xG separate from xGOT, and retains legacy paired formats. The result of rechecking the 13 October 2026 UEFA batch was **two newly verified per-shot-xG matches**, taking the private verified staging archive from 20 to 22. The remaining disputed fixtures stay in the inventory, with real discrepancies recorded rather than invented xG.
+
+The schema-only debug probe was removed from the repository after use; it does not run on the main branch.
