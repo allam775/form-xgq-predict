@@ -82,6 +82,9 @@ def batch(*,db=None,get_stats=None,max_requests=MAX_REQUESTS,delay=DELAY):
             "candidate_archive_total":0,"already_audited":0,
             "new_candidates_checked":0,"new_verified_complete_xgq":0,
             "new_incomplete":0,"independent_stats_obtained":0,
+            "cumulative_checked":0,"cumulative_verified_complete_xgq":0,
+            "cumulative_rejected":0,"cumulative_reasons":{},
+            "cumulative_verified_by_competition":{},
             "total_count_shortfall_home":0,"total_count_shortfall_away":0,
             "cases_with_blocked_shots_explaining_both_gaps":0,
             "by_competition":{},"reasons":{},"errors":{},
@@ -140,6 +143,20 @@ def batch(*,db=None,get_stats=None,max_requests=MAX_REQUESTS,delay=DELAY):
                    else str(exc).split(":")[0][:70]]+=1
         finally:
             if get_stats is None:time.sleep(delay)
+    # Lifetime accepted records matter more than per-run UPSERT counts:
+    # re-running with no new fixtures must show the same 9 verified matches,
+    # not incorrectly display a zero-sized private archive.
+    all_audits=prior_audits(connection)
+    lifetime=Counter(v.get("status","unknown") for v in all_audits.values())
+    lifetime_leagues=Counter(v.get("competition","unknown")
+             for v in all_audits.values() if v.get("complete") is True)
+    report["cumulative_checked"]=len(all_audits)
+    report["cumulative_verified_complete_xgq"]=sum(
+        v.get("complete") is True for v in all_audits.values())
+    report["cumulative_rejected"]=sum(
+        v.get("complete") is False for v in all_audits.values())
+    report["cumulative_reasons"]=dict(sorted(lifetime.items()))
+    report["cumulative_verified_by_competition"]=dict(sorted(lifetime_leagues.items()))
     report["reasons"]=dict(sorted(reasons.items()))
     report["errors"]=dict(sorted(errors.items()))
     report["by_competition"]=dict(sorted(counts.items()))
