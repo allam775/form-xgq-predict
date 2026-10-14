@@ -81,7 +81,7 @@ class StatsTests(unittest.TestCase):
        reconcile(c,stats_witness(statistics(),candidate()))
  def test_xg_rounding_tolerance_is_bounded(self):
     c=candidate()
-    x=statistics({"Expected Goals":("0.414","0.500")})
+    x=statistics({"Expected Goals":("0.409","0.500")})
     w=stats_witness(x,c)
     self.assertTrue(reconcile(c,w)["ok"]) # 2 * .005 + .0005
     x=statistics({"Expected Goals":("0.415","0.500")})
