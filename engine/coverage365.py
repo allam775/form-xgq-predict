@@ -422,15 +422,18 @@ def run(argv=None, *, transport=None):
     ap.add_argument("--start", required=True, help="YYYY-MM-DD")
     ap.add_argument("--end", required=True, help="YYYY-MM-DD")
     ap.add_argument("--output", required=True, help="Private filesystem path; never commit")
-    ap.add_argument("--max-days", type=int, default=MAX_DAYS_PER_RUN)
+    ap.add_argument("--max-days", type=int, default=MAX_DAYS_PER_RUN,
+                    help="Days to discover per batch; 0 reviews indexed pending fixtures only")
     ap.add_argument("--max-details", type=int, default=0)
     ap.add_argument("--through", help="YYYY-MM-DD; stop at this day, never scan future season dates")
     ap.add_argument("--expected-ids", help="Optional independently obtained JSON game ID array")
     ap.add_argument("--history-output", help="Existing private_365_history.json (for validated rows only)")
     options = ap.parse_args(argv)
     _require_authorization()
-    if not 1 <= options.max_days <= MAX_DAYS_PER_RUN:
-        ap.error("--max-days must be 1..14")
+    if not 0 <= options.max_days <= MAX_DAYS_PER_RUN:
+        ap.error("--max-days must be 0..14 (0=review previously indexed fixtures only)")
+    if options.max_days == 0 and options.max_details == 0:
+        ap.error("--max-days 0 requires a positive --max-details for pending-only review")
     if not 0 <= options.max_details <= MAX_DETAILS_PER_RUN:
         ap.error("--max-details must be 0..48")
     ledger = load_or_create(options.output, options.competition_id,
