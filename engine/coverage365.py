@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import tempfile
+import time
 
 from . import provider365
 
@@ -111,7 +112,7 @@ def new_ledger(cid, league, start, end):
         raise ValueError("Season window must be ordered and at most 501 days")
     return {"schema_version": 1, "competition_id": str(cid), "league": league,
             "start": start, "end": end, "scanned_days": [],
-            "failed_days": {}, "matches": {}, "verified_rows": {},
+            "failed_days": {}, "matches": {}, "unassigned_games": {}, "verified_rows": {},
             "uncertain_competition_events": 0}
 
 
@@ -149,17 +150,29 @@ def scan_day(ledger, day, *, transport=None):
         "onlyMajorGames": "false", "withTop": "false"
     }, transport)
     candidates = _games(payload)
+    if transport is None:
+        time.sleep(1.2)
     observed = 0
     # Preserve matches even if the source later stops reporting them.
     for game in candidates:
         cid, _, _ = provider365._competition(game)
         if not cid:
+            # Could be from this competition, so record as unassigned rather than
+            # throwing the candidate away or guessing its league.
+            mid = provider365._game_id(game)
+            if mid:
+                ledger.setdefault("unassigned_games", {})[mid] = {
+                    "observed_date": day, "reason": "missing_competition_id",
+                    "home": str((provider365._side(game, "home") or {}).get("name") or ""),
+                    "away": str((provider365._side(game, "away") or {}).get("name") or "")
+                }
             ledger["uncertain_competition_events"] += 1
             continue
         fixture = _fixture(game, ledger["competition_id"], day)
         if fixture is None:
             continue
         key, new = fixture
+        ledger.setdefault("unassigned_games", {}).pop(key, None)
         old = ledger["matches"].get(key, {})
         # Never lose previous verification when the listing lacks detailed statistics.
         for field in ("xg_status", "xg_issue"):
@@ -265,6 +278,8 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
         mid = fixture["id"]
         try:
             game = provider365.fetch("game/", {"gameId": mid}, transport)
+            if transport is None:
+                time.sleep(1.2)
             row = provider365.parse_game(
                 game, ledger["league"], mid,
                 verified_competition_ids=(ledger["competition_id"],)
@@ -272,6 +287,8 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
             # Reconcile against the independent 365Scores game/stats totals.
             # Unknown/contradictory totals keep the fixture without promoting XGQ.
             stats = provider365.fetch("game/stats/", {"games": mid}, transport)
+            if transport is None:
+                time.sleep(1.2)
             passed, issue = compare_aggregate(row, stats)
             fixture["xg_status"] = "verified_xg" if passed else "pending_verification"
             fixture["xg_issue"] = issue
@@ -313,6 +330,7 @@ def audit(ledger, expected_game_ids=None):
                                                 and not pending_days and not ledger["failed_days"]
                                                 and not unavailable),
         "unknown_competition_events": ledger["uncertain_competition_events"],
+        "unassigned_game_ids": sorted(ledger.get("unassigned_games", {})),
         "note": "Not proof of provider historical completeness without independent fixture reconciliation."
     }
 
