@@ -85,6 +85,10 @@ def batch(*,db=None,get_stats=None,max_requests=MAX_REQUESTS,delay=DELAY):
             "cumulative_checked":0,"cumulative_verified_complete_xgq":0,
             "cumulative_rejected":0,"cumulative_reasons":{},
             "cumulative_verified_by_competition":{},
+            "cumulative_remaining_unaudited":0,
+            "cumulative_shot_count_shortfall_home":0,
+            "cumulative_shot_count_shortfall_away":0,
+            "cumulative_cases_where_blocked_shots_explain_gaps":0,
             "total_count_shortfall_home":0,"total_count_shortfall_away":0,
             "cases_with_blocked_shots_explaining_both_gaps":0,
             "by_competition":{},"reasons":{},"errors":{},
@@ -155,6 +159,15 @@ def batch(*,db=None,get_stats=None,max_requests=MAX_REQUESTS,delay=DELAY):
         v.get("complete") is True for v in all_audits.values())
     report["cumulative_rejected"]=sum(
         v.get("complete") is False for v in all_audits.values())
+    report["cumulative_remaining_unaudited"]=max(
+        0,len(incoming)-len(set(all_audits) & set(incoming)))
+    report["cumulative_shot_count_shortfall_home"]=sum(
+        max(0,v.get("home_count_difference") or 0) for v in all_audits.values())
+    report["cumulative_shot_count_shortfall_away"]=sum(
+        max(0,v.get("away_count_difference") or 0) for v in all_audits.values())
+    report["cumulative_cases_where_blocked_shots_explain_gaps"]=sum(
+        v.get("blocked_shots_explain_gap") is True and v.get("complete") is False
+        for v in all_audits.values())
     report["cumulative_reasons"]=dict(sorted(lifetime.items()))
     report["cumulative_verified_by_competition"]=dict(sorted(lifetime_leagues.items()))
     report["reasons"]=dict(sorted(reasons.items()))
