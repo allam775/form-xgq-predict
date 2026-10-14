@@ -34,7 +34,7 @@ def detailed(game_id, has_xg=True):
 
 class Coverage365Tests(TestCase):
     def ledger(self):
-        return coverage365.new_ledger("572", "eu.cl", "2025-10-21", "2025-10-21")
+        return coverage365.new_ledger("572", "uefa.cl", "2025-10-21", "2025-10-21")
 
     def test_all_calendar_games_without_120_match_truncation(self):
         ledger = self.ledger()
