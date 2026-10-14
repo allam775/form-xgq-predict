@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-14T03:15:26.941411+00:00",
+  "created_at_utc": "2026-10-14T12:25:05.610386+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -8,13 +8,13 @@
   "sources": {
     "understat_private": {
       "status": "existing_private_shot_history",
-      "rows_available": 3030,
+      "rows_available": 3274,
       "by_league": {
-        "de.1": 606,
-        "en.1": 607,
-        "es.1": 604,
-        "fr.1": 607,
-        "it.1": 606
+        "de.1": 654,
+        "en.1": 656,
+        "es.1": 653,
+        "fr.1": 656,
+        "it.1": 655
       },
       "private_rows_exported": 0,
       "is_fresh_365scores_source": false,
