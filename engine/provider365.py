@@ -179,6 +179,10 @@ def _score_number(value):
         return None
     if isinstance(value, int) and 0 <= value <= 30:
         return value
+    # 365Scores live detail feeds may serialize a full-time goal count as 2.0.
+    # Only mathematically integral finite float scores are valid.
+    if isinstance(value, float) and math.isfinite(value) and value.is_integer() and 0 <= value <= 30:
+        return int(value)
     if isinstance(value, str) and re.fullmatch(r"[0-9]{1,2}", value.strip()):
         n = int(value.strip())
         return n if n <= 30 else None
