@@ -3,7 +3,10 @@ name: Private 365Scores competition coverage
 on:
   workflow_dispatch:
   schedule:
-    - cron: '25 03 * * *'
+    # Three private coverage batches every day in Cairo civil time.
+    # Uses GitHub Actions IANA timezone schedule (supported since March 2026).
+    - cron: '11 05,13,19 * * *'
+      timezone: 'Africa/Cairo'
 
 permissions:
   contents: read

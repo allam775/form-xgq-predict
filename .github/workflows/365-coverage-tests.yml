@@ -8,6 +8,7 @@ on:
       - 'engine/provider365.py'
       - 'tests/test_coverage365.py'
       - 'tests/test_coverage365_d1.py'
+      - 'tests/test_365_three_daily_retry.py'
       - 'tests/test_provider365.py'
       - '.github/workflows/365-coverage-tests.yml'
   workflow_dispatch:
@@ -27,3 +28,4 @@ jobs:
           python -m unittest discover -s tests -p 'test_provider365.py' -v
           python -m unittest discover -s tests -p 'test_coverage365.py' -v
           python -m unittest discover -s tests -p 'test_coverage365_d1.py' -v
+          python -m unittest discover -s tests -p 'test_365_three_daily_retry.py' -v
