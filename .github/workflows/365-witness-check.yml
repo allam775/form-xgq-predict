@@ -1,0 +1,35 @@
+name: Independently verify 365Scores UCL shot completeness
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - research/365_witness_check.py
+      - tests/test_365_witness_check.py
+      - .github/workflows/365-witness-check.yml
+permissions:
+  contents: read
+jobs:
+  check-official-match-totals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate one-match independent shot completeness logic
+        run: python -m unittest discover -s tests -p 'test_365_witness_check.py' -v
+      - name: Privately compare previously captured shot XGQ with official 365Scores match-page totals
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python -m research.365_witness_check
+      - name: Upload aggregate completeness status only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 365scores-ucl-independent-witness
+          path: research/reports/365_witness_audit.json
+          retention-days: 7
