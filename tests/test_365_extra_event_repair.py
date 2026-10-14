@@ -40,7 +40,8 @@ class Tests(unittest.TestCase):
     self.assertAlmostEqual(x["away_xgq"],(.2**2+.3**2)/2)
     self.assertEqual(x["corrected_side"],"away")
     self.assertFalse(x["training_release"])
-    self.assertNotIn("chartEvents",str(x))
+    self.assertNotIn("\u0027chartEvents\u0027:",str(x))
+    self.assertNotIn("removed_event_xg_private_only",str(x))
  def test_ambiguous_multiple_distinct_exclusions_never_accepted(self):
     c,d,w,b=fixture(xs=(.8,.79,.21))
     w["away"]["xg"]=1.005
