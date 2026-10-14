@@ -46,6 +46,11 @@ def run(db=None,detail_fetch=None):
     counts=Counter()
     getter=detail_fetch if detail_fetch is not None else (
         lambda mid:p.fetch("game/",{"gameId":mid,"topBookmaker":"14"}))
+    # Invalidate prior *proposals* before applying the stricter
+    # goal-vs-saved outcome proof. Original audit + official verification tables
+    # are intentionally untouched.
+    for mid in matches:
+        d.query("DELETE FROM private_365_repair_proposals WHERE id=?",(mid,))
     for mid in matches:
         try:
             saved=d.query("SELECT payload FROM private_365_rejected_diagnosis WHERE id=?",(mid,))
