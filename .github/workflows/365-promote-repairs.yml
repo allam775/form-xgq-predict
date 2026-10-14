@@ -1,0 +1,48 @@
+name: Promote only three independently reconciled 365Scores repairs to private research
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/365-promote-repairs.yml'
+permissions:
+  contents: read
+jobs:
+  validate-private-research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test exact independent evidence and never release to production
+        run: |
+          python -m py_compile research/365_promote_unique_repairs.py
+          python -m unittest discover -s tests -p 'test_365_promote_unique_repairs.py' -v
+      - name: Privately promote unique provenance-checked corrections only
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python -m research.365_promote_unique_repairs
+      - name: Enforce no external requests or public model edits
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('research/reports/365_unique_repairs_promotion.json').read_text())
+          assert x['provider_requests']==0
+          assert x['published_private_rows']==0 and x['raw_event_data_written']==0
+          assert x['training_release'] is False
+          assert x['original_rejection_audit_unchanged'] is True
+          assert x['unique_corrections_confirmed']==3
+          print('Private unique-shot repair promotion verified')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 365scores-private-three-unique-repair-summary
+          path: research/reports/365_unique_repairs_promotion.json
+          if-no-files-found: warn
+          retention-days: 5
