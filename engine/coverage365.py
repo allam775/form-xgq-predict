@@ -176,6 +176,82 @@ def scan_day(ledger, day, *, transport=None):
     return observed
 
 
+
+def _stat_number(value):
+    if isinstance(value, dict):
+        for key in ("value", "stat", "amount", "displayValue", "display", "total", "current"):
+            if key in value:
+                n = _stat_number(value[key])
+                if n is not None:
+                    return n
+        return None
+    if isinstance(value, bool):
+        return None
+    try:
+        if value is None or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)?", str(value).strip()):
+            return None
+        return float(value)
+    except (ValueError, TypeError):
+        return None
+
+
+def aggregate_totals(payload):
+    """Find documented team-level expected goals and total shots; never infer values."""
+    found = {"home": {}, "away": {}}
+    def walk(node, depth=0):
+        if depth > 12:
+            return
+        if isinstance(node, list):
+            for child in node:
+                walk(child, depth + 1)
+            return
+        if not isinstance(node, dict):
+            return
+        if any(k in node for k in ("playerId", "athleteId", "memberId")):
+            return
+        label = re.sub(r"[^a-z]", "", str(
+            node.get("name") or node.get("title") or node.get("label") or
+            node.get("statName") or node.get("key") or ""
+        ).lower())
+        typ = ("xg" if label in ("expectedgoals", "expectedgoalsxg", "xg")
+               else "shots" if label in ("totalshots", "shots", "shotstotal")
+               else None)
+        if typ:
+            pair = node.get("stats")
+            home = _stat_number(node.get("homeValue") if "homeValue" in node else node.get("home"))
+            away = _stat_number(node.get("awayValue") if "awayValue" in node else node.get("away"))
+            if isinstance(pair, list) and len(pair) >= 2:
+                if home is None:
+                    home = _stat_number(pair[0])
+                if away is None:
+                    away = _stat_number(pair[1])
+            if home is not None:
+                found["home"].setdefault(typ, home)
+            if away is not None:
+                found["away"].setdefault(typ, away)
+        for key in ("statistics", "stats", "items", "rows", "groups", "categories", "data"):
+            if key in node:
+                walk(node[key], depth + 1)
+    walk(payload)
+    return found
+
+
+def compare_aggregate(row, stats_payload):
+    totals = aggregate_totals(stats_payload)
+    if any(k not in totals[side] for side in ("home", "away") for k in ("xg", "shots")):
+        return False, "aggregates_not_available_for_both_teams"
+    for side in ("home", "away"):
+        count = row[f"{side}_shots"]
+        xg = row[f"{side}_xg"]
+        if abs(totals[side]["shots"] - count) > 0.001:
+            return False, (f"{side}_shot_count_mismatch:"
+                           f"{count}_versus_{totals[side]['shots']}")
+        if abs(totals[side]["xg"] - xg) > 0.06:
+            return False, (f"{side}_xg_total_mismatch:"
+                           f"{xg:.3f}_versus_{totals[side]['xg']:.3f}")
+    return True, None
+
+
 def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
     """Try to improve xG completeness; parsing failures stay on the fixture ledger."""
     if not 0 <= limit <= MAX_DETAILS_PER_RUN:
@@ -184,7 +260,7 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
     for key, fixture in sorted(ledger["matches"].items()):
         if checked >= limit:
             break
-        if fixture.get("xg_status") == "shot_arrays_parsed" or not fixture.get("id"):
+        if fixture.get("xg_status") == "verified_xg" or not fixture.get("id"):
             continue
         mid = fixture["id"]
         try:
@@ -193,11 +269,16 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
                 game, ledger["league"], mid,
                 verified_competition_ids=(ledger["competition_id"],)
             )
-            # The old eight xG-sum disagreements must still be reconciled with
-            # /game/stats. A syntactically valid shot array is NOT a passed audit.
-            fixture["xg_status"] = "shot_arrays_parsed"
-            fixture["xg_issue"] = "aggregate_shots_and_xg_not_yet_cross_checked"
-            ledger["verified_rows"][mid] = row
+            # Reconcile against the independent 365Scores game/stats totals.
+            # Unknown/contradictory totals keep the fixture without promoting XGQ.
+            stats = provider365.fetch("game/stats/", {"games": mid}, transport)
+            passed, issue = compare_aggregate(row, stats)
+            fixture["xg_status"] = "verified_xg" if passed else "pending_verification"
+            fixture["xg_issue"] = issue
+            if passed:
+                ledger["verified_rows"][mid] = row
+            else:
+                ledger["verified_rows"].pop(mid, None)
         except provider365.AccessDenied:
             raise
         except (ValueError, KeyError, TypeError, OSError) as exc:
@@ -217,13 +298,13 @@ def audit(ledger, expected_game_ids=None):
         start += timedelta(days=1)
     pending_days = sorted(expected_days - set(ledger["scanned_days"]))
     unavailable = sorted(expected - seen)
-    pending_xg = sum(m["xg_status"] != "shot_arrays_parsed"
+    pending_xg = sum(m["xg_status"] != "verified_xg"
                      for m in ledger["matches"].values())
     return {
         "discovery_complete": not pending_days and not ledger["failed_days"]
                               and not unavailable and not ledger["uncertain_competition_events"],
         "matches_discovered": len(ledger["matches"]),
-        "shot_arrays_parsed_not_aggregate_verified": len(ledger["verified_rows"]),
+        "shot_and_aggregate_verified": len(ledger["verified_rows"]),
         "xg_pending": pending_xg,
         "days_not_scanned": len(pending_days),
         "failed_days": dict(ledger["failed_days"]),
