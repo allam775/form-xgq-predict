@@ -1,0 +1,42 @@
+name: Resolve duplicated-event identity in two ambiguous 365Scores games
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/365-ambiguous-identities.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check
+        run: python -m py_compile research/365_ambiguous_event_identity.py
+      - name: Recheck two residual extra-shot candidates
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python -m research.365_ambiguous_event_identity
+      - name: Verify no per-event values were published
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          o=json.loads(Path('research/reports/365_ambiguous_identity_diagnostic.json').read_text())
+          assert o['requests']<=2 and o['original_ambiguous_cases']==2
+          assert o['shot_probability_values_stored']==0 and o['public_match_ids']==0
+          assert o['original_verified_rows_changed']==0
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: 365scores-ambiguous-identities
+          path: research/reports/365_ambiguous_identity_diagnostic.json
+          retention-days: 3
