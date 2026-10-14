@@ -16,7 +16,9 @@ class CompetitionTests(unittest.TestCase):
             (73,"Liga Portugal","pt.1",False),
             (78,"Süper Lig","tr.1",False),
             (17,"Serie A","it.1",False),
-            (98,"Jupiler Pro League","be.1",False)):
+            (98,"Jupiler Pro League","be.1",False),
+            (7,"Premier League","en.1",False),
+            (11,"LaLiga","es.1",False)):
             with self.subTest(cid=cid):
                 r=resolve(payload(cid,name,international))
                 self.assertTrue(r["ok"],r)
@@ -28,7 +30,9 @@ class CompetitionTests(unittest.TestCase):
             (73,"Portugal, Liga Portugal","Liga Portugal",False),
             (17,"Italy, Serie A","Serie A",False),
             (78,"Turkiye, Super Lig","Super Lig",False),
-            (98,"Belgium, Jupiler Pro League","Jupiler Pro League",False)]
+            (98,"Belgium, Jupiler Pro League","Jupiler Pro League",False),
+            (7,"England, Premier League","Premier League",False),
+            (11,"Spain, LaLiga","LaLiga",False)]
         for cid,display,catalog_name,is_international in cases:
             with self.subTest(id=cid):
                 obj=payload(cid,catalog_name,is_international)
