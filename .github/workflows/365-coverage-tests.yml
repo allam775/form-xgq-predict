@@ -22,16 +22,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check private backfill configuration (booleans only)
-        env:
-          HAS_CF_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-          HAS_CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
-          RIGHTS_SET: ${{ (vars.XGQ_365_ACCESS_AUTHORIZED || secrets.XGQ_365_ACCESS_AUTHORIZED) == '1' }}
-          PRIVATE_SET: ${{ (vars.XGQ_365_PRIVATE_ONLY || secrets.XGQ_365_PRIVATE_ONLY) == '1' }}
-        run: |
-          echo "Cloudflare credentials configured: $HAS_CF_ID / $HAS_CF_TOKEN"
-          echo "365 source rights flag configured: $RIGHTS_SET"
-          echo "Private deployment flag configured: $PRIVATE_SET"
       - name: Run provider and coverage tests without calling 365Scores
         run: |
           python -m unittest discover -s tests -p 'test_provider365.py' -v
