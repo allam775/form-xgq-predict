@@ -141,6 +141,7 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
             "private_candidate_archive_total":None,
             "private_storage_status":"not_started",
             "rejections":{},"by_competition":{},
+            "public_competition_name_diagnostics":[],
             "raw_provider_payloads_stored":0,"published_private_match_rows":0,
             "status":"not_started"}
     bad=Counter();leagues=Counter();found=[];known=set()
@@ -164,6 +165,25 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
                     response=get("game/",{"gameId":mid,"topBookmaker":"14"})
                     report["details_inspected"]+=1
                     state=resolve(response)
+                    if not state["ok"]:
+                        # These names/IDs are public competition metadata, not
+                        # club/match/shot details. Needed to fix exact aliases.
+                        obj=response.get("game",response) if isinstance(response,dict) else {}
+                        objects=response.get("competitions") if isinstance(response,dict) else None
+                        objects=objects if isinstance(objects,list) else []
+                        cid=str(obj.get("competitionId") or obj.get("competitionDisplayId") or "")
+                        cc=next((c for c in objects if isinstance(c,dict)
+                                 and str(c.get("id") or "")==cid),{})
+                        diag={"id":cid[:12],
+                              "display":str(obj.get("competitionDisplayName") or "")[:90],
+                              "catalog_name":str(cc.get("name") or "")[:90],
+                              "catalog_long":str(cc.get("longName") or "")[:90],
+                              "international":cc.get("isInternational"),
+                              "country_id":str(cc.get("countryId") or "")[:12],
+                              "reason":state["reason"]}
+                        if (diag not in report["public_competition_name_diagnostics"]
+                            and len(report["public_competition_name_diagnostics"])<15):
+                            report["public_competition_name_diagnostics"].append(diag)
                     if state["ok"]:
                         report["competition_verified"]+=1
                     try:
