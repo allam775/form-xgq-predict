@@ -1,14 +1,6 @@
 name: Verify full 365Scores shot histories against independent match statistics
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'engine/stats365.py'
-      - 'research/365_stats_completeness_batch.py'
-      - 'tests/test_365_stats_completeness.py'
-      - 'tests/test_365_stats_completeness_batch.py'
-      - '.github/workflows/365-stats-completeness.yml'
   schedule:
     # Run after Saturday's separately scheduled private match discovery.
     - cron: '25 8 * * 6'
