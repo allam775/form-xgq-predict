@@ -114,6 +114,40 @@ def _unique_results(raw,team_id):
     return ids
 
 
+def _known_ids(db):
+    """Paginated PRIVATE D1 checkpoint; no match IDs printed or published."""
+    db.query("""CREATE TABLE IF NOT EXISTS private_365_research_candidates(
+        id TEXT PRIMARY KEY NOT NULL, payload TEXT NOT NULL)""")
+    db.query("""CREATE TABLE IF NOT EXISTS private_365_rejected_attempts(
+        id TEXT PRIMARY KEY NOT NULL, reason TEXT NOT NULL)""")
+    seen=set()
+    for table in ("private_365_research_candidates","private_365_rejected_attempts"):
+        offset=0
+        while True:
+            # Static allowlist names above; neither table nor SQL is user input.
+            batch=db.query(f"SELECT id FROM {table} ORDER BY id LIMIT ? OFFSET ?",
+                           (250,offset))
+            for item in batch:
+                mid=str(item.get("id") or "")
+                if not mid.isdigit():
+                    raise ValueError("Malformed private candidate checkpoint")
+                seen.add(mid)
+            if len(batch)<250:
+                break
+            offset+=len(batch)
+            if offset>20000:
+                raise ValueError("Private checkpoint exceeds bound")
+    return seen
+
+
+def _persist_rejected(db,match_ids):
+    """Track conclusive rejected matches, so weekly jobs move forward."""
+    for mid in dict.fromkeys(match_ids):
+        db.query("INSERT OR REPLACE INTO private_365_rejected_attempts(id,reason) VALUES(?,?)",
+                 (mid,"unusable_candidate_missing_required_evidence"))
+    return len(set(match_ids))
+
+
 def persist_private(rows,db):
     """Idempotent per-match UPSERT in PRIVATE D1, no raw shots."""
     db.query("""CREATE TABLE IF NOT EXISTS private_365_research_candidates(
@@ -143,11 +177,24 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
             "accepted_complete_xgq":0,"private_candidates_saved":0,
             "private_candidate_archive_total":None,"private_candidates_new":0,
             "private_storage_status":"not_started",
+            "previously_checked_ids":0,"previously_checked_skipped":0,
+            "conclusive_rejected_checkpointed":0,
             "rejections":{},"by_competition":{},
             "public_competition_name_diagnostics":[],
             "raw_provider_payloads_stored":0,"published_private_match_rows":0,
             "status":"not_started"}
     bad=Counter();leagues=Counter();found=[];known=set()
+    rejected_ids=[]
+    # Hard precondition: a private checkpoint must exist before spending
+    # provider requests; otherwise the same first fixtures repeat endlessly.
+    try:
+        database=db if db is not None else D1()
+        visited=_known_ids(database)
+        report["previously_checked_ids"]=len(visited)
+    except (D1Error,ValueError,TypeError,KeyError) as exc:
+        report["status"]="private_checkpoint_unavailable"
+        report["private_storage_status"]="failed_"+type(exc).__name__
+        return report
     def get(path,params):
         # Only the two existing documented endpoints; obey request cap.
         if report["requests"]>=report["request_cap"]:
@@ -161,7 +208,11 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
             candidates=_unique_results(index,team)
             report["listing_candidates"]+=len(candidates)
             if transport is None:time.sleep(delay)
-            for mid in candidates[:per_team]:
+            # Prefer previously UNSEEN official listing IDs, so subsequent
+            # weekly runs work through history instead of repeating the first 4.
+            report["previously_checked_skipped"]+=sum(mid in visited or mid in known for mid in candidates)
+            pending=[mid for mid in candidates if mid not in visited and mid not in known]
+            for mid in pending[:per_team]:
                 if mid in known:continue
                 known.add(mid)
                 try:
@@ -193,6 +244,7 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
                         row=provisional_match(response,mid,team)
                     except (ValueError,TypeError,KeyError) as exc:
                         bad[str(exc).split(":")[0][:90]]+=1
+                        rejected_ids.append(mid)
                         continue
                     found.append(row)
                     leagues[row["league"]]+=1
@@ -222,7 +274,6 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
     # D1 is mandatory to save a candidate; nothing secret enters public audit.
     if found:
         try:
-            database=db if db is not None else D1()
             total,new=persist_private(found,database)
             report["private_candidate_archive_total"]=total
             report["private_candidates_saved"]=len(found)
@@ -232,6 +283,13 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
             report["private_storage_status"]="failed_"+type(exc).__name__
     else:
         report["private_storage_status"]="no_qualifying_candidates"
+    # Attempt checkpoint comes AFTER successful private storage. If D1 fails
+    # there is no false promise of durable progress, and rejected fixtures can
+    # be reconsidered in a later, explicitly bounded run.
+    try:
+        report["conclusive_rejected_checkpointed"]=_persist_rejected(database,rejected_ids)
+    except (D1Error,ValueError,TypeError,KeyError) as exc:
+        report["private_storage_status"]="failed_checkpoint_"+type(exc).__name__
     if report["status"]=="not_started":
         report["status"]="completed_provisional_research_batch"
     return report
