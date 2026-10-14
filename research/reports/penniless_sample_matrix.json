@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-13T08:42:45.863494+00:00",
+  "created_at_utc": "2026-10-14T03:10:19.161316+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -8,13 +8,13 @@
   "sources": {
     "understat_private": {
       "status": "existing_private_shot_history",
-      "rows_available": 2785,
+      "rows_available": 3030,
       "by_league": {
-        "de.1": 557,
-        "en.1": 558,
-        "es.1": 556,
-        "fr.1": 557,
-        "it.1": 557
+        "de.1": 606,
+        "en.1": 607,
+        "es.1": 604,
+        "fr.1": 607,
+        "it.1": 606
       },
       "private_rows_exported": 0,
       "is_fresh_365scores_source": false,
@@ -22,47 +22,305 @@
     },
     "statsbomb_open": {
       "status": "sampled_public_shot_events",
-      "index_matches": 380,
-      "sampled": 2,
-      "accepted": 2,
+      "indexes_checked": 10,
+      "sampled": 16,
+      "accepted": 16,
       "rejected": {},
       "samples": [
         {
-          "date": "2015-08-08",
-          "source_match_id": "3754078",
-          "home": "Chelsea",
-          "away": "Swansea City",
-          "home_shots": 10,
-          "away_shots": 16,
-          "home_xg": 0.486011,
-          "away_xg": 2.471848,
-          "home_xgq": 0.00446559,
-          "away_xgq": 0.0575093,
+          "date": "2015-10-24",
+          "competition": "en.1",
+          "source_match_id": "3754288",
+          "home": "West Ham United",
+          "away": "Chelsea",
+          "home_shots": 12,
+          "away_shots": 9,
+          "home_xg": 0.784984,
+          "away_xg": 0.762451,
+          "home_xgq": 0.01264682,
+          "away_xgq": 0.00910812,
           "verified_shot_events": true,
           "source": "StatsBomb Open Data"
         },
         {
-          "date": "2015-08-08",
-          "source_match_id": "3754097",
-          "home": "Manchester United",
-          "away": "Tottenham Hotspur",
-          "home_shots": 9,
+          "date": "2016-03-05",
+          "competition": "en.1",
+          "source_match_id": "3754318",
+          "home": "Tottenham Hotspur",
+          "away": "Arsenal",
+          "home_shots": 25,
+          "away_shots": 11,
+          "home_xg": 1.24872,
+          "away_xg": 0.732763,
+          "home_xgq": 0.00630364,
+          "away_xgq": 0.0110917,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2023-10-29",
+          "competition": "de.1",
+          "source_match_id": "3895121",
+          "home": "Bayer Leverkusen",
+          "away": "Freiburg",
+          "home_shots": 18,
+          "away_shots": 10,
+          "home_xg": 1.425342,
+          "away_xg": 0.768274,
+          "home_xgq": 0.0115194,
+          "away_xgq": 0.00928378,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2024-03-17",
+          "competition": "de.1",
+          "source_match_id": "3895275",
+          "home": "Freiburg",
+          "away": "Bayer Leverkusen",
+          "home_shots": 11,
+          "away_shots": 19,
+          "home_xg": 0.93062,
+          "away_xg": 2.596176,
+          "home_xgq": 0.00905881,
+          "away_xgq": 0.04589368,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2015-10-17",
+          "competition": "de.1",
+          "source_match_id": "3890337",
+          "home": "Hamburger SV",
+          "away": "Bayer Leverkusen",
+          "home_shots": 8,
+          "away_shots": 10,
+          "home_xg": 0.415325,
+          "away_xg": 0.75512,
+          "home_xgq": 0.0055803,
+          "away_xgq": 0.01091924,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2016-03-13",
+          "competition": "de.1",
+          "source_match_id": "3890492",
+          "home": "Bayer Leverkusen",
+          "away": "Hamburger SV",
+          "home_shots": 13,
+          "away_shots": 10,
+          "home_xg": 1.116417,
+          "away_xg": 1.283962,
+          "home_xgq": 0.01148967,
+          "away_xgq": 0.02779334,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2020-11-29",
+          "competition": "es.1",
+          "source_match_id": "3773547",
+          "home": "Barcelona",
+          "away": "Osasuna",
+          "home_shots": 20,
+          "away_shots": 10,
+          "home_xg": 4.178243,
+          "away_xg": 1.106793,
+          "home_xgq": 0.09747929,
+          "away_xgq": 0.02466887,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2021-04-05",
+          "competition": "es.1",
+          "source_match_id": "3773474",
+          "home": "Barcelona",
+          "away": "Real Valladolid",
+          "home_shots": 25,
+          "away_shots": 7,
+          "home_xg": 1.823045,
+          "away_xg": 0.354709,
+          "home_xgq": 0.00868483,
+          "away_xgq": 0.00351739,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2015-10-17",
+          "competition": "fr.1",
+          "source_match_id": "3829507",
+          "home": "Toulouse",
+          "away": "Angers",
+          "home_shots": 22,
+          "away_shots": 7,
+          "home_xg": 1.38023,
+          "away_xg": 0.340678,
+          "home_xgq": 0.01087468,
+          "away_xgq": 0.00307548,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2016-03-05",
+          "competition": "fr.1",
+          "source_match_id": "3901168",
+          "home": "Lille",
+          "away": "Stade de Reims",
+          "home_shots": 8,
           "away_shots": 9,
-          "home_xg": 0.525077,
-          "away_xg": 0.584646,
-          "home_xgq": 0.00396675,
-          "away_xgq": 0.00880413,
+          "home_xg": 1.256662,
+          "away_xg": 0.345188,
+          "home_xgq": 0.05773705,
+          "away_xgq": 0.00170496,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2015-10-28",
+          "competition": "it.1",
+          "source_match_id": "3879592",
+          "home": "AS Roma",
+          "away": "Udinese",
+          "home_shots": 19,
+          "away_shots": 7,
+          "home_xg": 1.497169,
+          "away_xg": 0.604508,
+          "home_xgq": 0.01016146,
+          "away_xgq": 0.02482824,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2016-03-13",
+          "competition": "it.1",
+          "source_match_id": "3879782",
+          "home": "Carpi",
+          "away": "Frosinone",
+          "home_shots": 12,
+          "away_shots": 13,
+          "home_xg": 1.7183,
+          "away_xg": 0.87381,
+          "home_xgq": 0.06991504,
+          "away_xgq": 0.010224,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2019-06-01",
+          "competition": "uefa.cl",
+          "source_match_id": "22912",
+          "home": "Tottenham Hotspur",
+          "away": "Liverpool",
+          "home_shots": 16,
+          "away_shots": 14,
+          "home_xg": 0.924264,
+          "away_xg": 1.203148,
+          "home_xgq": 0.00500591,
+          "away_xgq": 0.04522438,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2018-05-26",
+          "competition": "uefa.cl",
+          "source_match_id": "18245",
+          "home": "Real Madrid",
+          "away": "Liverpool",
+          "home_shots": 14,
+          "away_shots": 14,
+          "home_xg": 1.677119,
+          "away_xg": 1.427067,
+          "home_xgq": 0.03900605,
+          "away_xgq": 0.03155398,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2017-06-03",
+          "competition": "uefa.cl",
+          "source_match_id": "18244",
+          "home": "Juventus",
+          "away": "Real Madrid",
+          "home_shots": 9,
+          "away_shots": 18,
+          "home_xg": 0.419174,
+          "away_xg": 1.571722,
+          "home_xgq": 0.00242865,
+          "away_xgq": 0.01773409,
+          "verified_shot_events": true,
+          "source": "StatsBomb Open Data"
+        },
+        {
+          "date": "2016-05-28",
+          "competition": "uefa.cl",
+          "source_match_id": "18243",
+          "home": "Real Madrid",
+          "away": "Atlético Madrid",
+          "home_shots": 31,
+          "away_shots": 22,
+          "home_xg": 6.500814,
+          "away_xg": 5.672407,
+          "home_xgq": 0.12312355,
+          "away_xgq": 0.16232247,
           "verified_shot_events": true,
           "source": "StatsBomb Open Data"
         }
       ],
-      "license_note": "StatsBomb Open Data: attribute Hudl StatsBomb"
+      "reusable_new_archive_rows": 0,
+      "sample_vs_incremental": "sampling only: archive dedup not assessed",
+      "license_note": "StatsBomb Open Data: credit Hudl StatsBomb",
+      "unique_accepted_match_ids": 16
     },
     "openfootball": {
       "status": "results_only",
-      "source_games_detected": 189,
       "shot_level_xg": false,
-      "sample_season": "2025-26 UCL"
+      "competition_coverage": {
+        "uefa.cl": {
+          "result_rows": 189
+        },
+        "en.1": {
+          "listed_matches": 380,
+          "completed_result_matches": 380
+        },
+        "de.1": {
+          "listed_matches": 306,
+          "completed_result_matches": 306
+        },
+        "es.1": {
+          "listed_matches": 380,
+          "completed_result_matches": 380
+        },
+        "it.1": {
+          "listed_matches": 380,
+          "completed_result_matches": 380
+        },
+        "fr.1": {
+          "listed_matches": 306,
+          "completed_result_matches": 305
+        },
+        "pt.1": {
+          "listed_matches": 306,
+          "completed_result_matches": 306
+        },
+        "tr.1": {
+          "listed_matches": 306,
+          "completed_result_matches": 99
+        },
+        "nl.1": {
+          "listed_matches": 306,
+          "completed_result_matches": 305
+        },
+        "be.1": {
+          "listed_matches": 240,
+          "completed_result_matches": 104
+        }
+      },
+      "completed_result_matches": 2565,
+      "sample_season": "2025-26",
+      "kind": "results_only_never_xgq",
+      "source_games_detected": 189
     },
     "football_data_uk": {
       "status": "results_and_aggregates_only",
@@ -135,20 +393,20 @@
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 68,
-      "total_shot_events_with_individual_xg": 77,
+      "listings_with_configured_team": 71,
+      "total_shot_events_with_individual_xg": 180,
       "detail_diagnostic_status_counts": {
-        "missing_competition_identity": 3,
-        "no_chart_events": 3
+        "missing_competition_identity": 5,
+        "no_chart_events": 1
       },
       "matches_inspected": 6,
       "observed_score_field_kinds": {
-        "float": 3,
-        "missing": 3
+        "float": 5,
+        "missing": 1
       },
-      "games_with_competition_display_name": 3,
+      "games_with_competition_display_name": 5,
       "games_with_competition_catalog_match": 0,
-      "games_with_readable_final_score": 3,
+      "games_with_readable_final_score": 5,
       "observed_home_score_nested_fields": [],
       "observed_away_score_nested_fields": [],
       "observed_root_competition_item_fields": [
@@ -174,6 +432,7 @@
         "name",
         "nameForURL",
         "popularityRank",
+        "shortName",
         "sportId",
         "totalGames"
       ],
