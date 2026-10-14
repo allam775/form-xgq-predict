@@ -74,49 +74,123 @@ def run_understat():
 
 
 def run_statsbomb():
+    """Sample multiple genuine open cohorts and sparse men's UCL seasons.
+
+    No synthetic XGQ. Errors for one archive never break other archives.
+    Match events are read in memory and only compact derived source-attributed
+    summaries are retained. These are SAMPLES, not incremental D1 inserts.
+    """
+    cohorts=[
+        ("en.1",2,27),("de.1",9,281),("de.1",9,27),
+        ("es.1",11,90),("fr.1",7,27),("it.1",12,27)
+    ]
+    response={"status":"not_started","indexes_checked":0,
+      "sampled":0,"accepted":0,"rejected":{},"samples":[],
+      "reusable_new_archive_rows":0,
+      "sample_vs_incremental":"sampling only: archive dedup not assessed",
+      "license_note":"StatsBomb Open Data: credit Hudl StatsBomb"}
+    bad=Counter()
     try:
-        games=json.loads(get(URLS["statsbomb_index"],limit=4_000_000))
-        if not isinstance(games,list):raise ValueError("Invalid index JSON")
-        candidates=sorted((g for g in games if g.get("match_id") and
-                           isinstance(g.get("home_score"),int)),
-                          key=lambda r:(r.get("match_date",""),r["match_id"]))[:2]
-        accepted=[]
-        rejected=Counter()
-        for match in candidates:
+        competitions=json.loads(get("https://raw.githubusercontent.com/hudl/open-data/master/data/competitions.json",limit=2_000_000))
+        if not isinstance(competitions,list):raise ValueError("Invalid competition catalog")
+        available={(m.get("competition_id"),m.get("season_id")) for m in competitions
+                   if isinstance(m,dict) and m.get("competition_gender")=="male"}
+    except (HTTPError,URLError,TimeoutError,ValueError) as e:
+        response["status"]="catalog_unavailable"
+        response["rejected"]={"catalog_"+type(e).__name__:1}
+        return response
+    cohorts=[c for c in cohorts if (c[1],c[2]) in available]
+    ucl=sorted((c for c in competitions if isinstance(c,dict)
+         and c.get("competition_id")==16 and c.get("competition_gender")=="male"
+         and isinstance(c.get("season_id"),int)),
+         key=lambda c:c.get("season_name",""),reverse=True)
+    cohorts += [("uefa.cl",16,c["season_id"]) for c in ucl[:4]]
+    used=set()
+    for league,comp,season in cohorts:
+        if response["sampled"]>=18:break
+        try:
+            matches=json.loads(get(
+                f"https://raw.githubusercontent.com/hudl/open-data/master/data/matches/{comp}/{season}.json",
+                limit=5_000_000))
+            if not isinstance(matches,list):raise ValueError("Invalid match index")
+            response["indexes_checked"]+=1
+        except (HTTPError,URLError,TimeoutError,ValueError) as e:
+            bad["index_"+type(e).__name__]+=1;continue
+        available_matches=sorted((m for m in matches if isinstance(m,dict)
+            and type(m.get("match_id")) is int
+            and m["match_id"] not in used
+            and type(m.get("home_score")) is int
+            and type(m.get("away_score")) is int
+            and isinstance(m.get("match_date"),str)),
+            key=lambda m:(m["match_date"],m["match_id"]))
+        if not available_matches:continue
+        indices=([len(available_matches)//2] if league=="uefa.cl"
+                 else [len(available_matches)//4,len(available_matches)*3//4])
+        for index in dict.fromkeys(indices):
+            if response["sampled"]>=18:break
+            match=available_matches[index]
+            mid=match["match_id"];used.add(mid);response["sampled"]+=1
             try:
-                url=URLS["statsbomb_event"].format(match_id=int(match["match_id"]))
-                events=json.loads(get(url))
-                row=statsbomb_to_row(match,events,"en.1")
-                accepted.append({
-                    "date":row["date"],"source_match_id":row["source_match_id"],
+                events=json.loads(get(URLS["statsbomb_event"].format(match_id=mid)))
+                row=statsbomb_to_row(match,events,league)
+                if row["home_shots"]<1 or row["away_shots"]<1:
+                    raise ValueError("One team missing original shot xG")
+                response["samples"].append({
+                    "date":row["date"],"competition":league,
+                    "source_match_id":row["source_match_id"],
                     "home":row["home"],"away":row["away"],
                     "home_shots":row["home_shots"],"away_shots":row["away_shots"],
                     "home_xg":row["home_xg"],"away_xg":row["away_xg"],
                     "home_xgq":row["home_xgq"],"away_xgq":row["away_xgq"],
-                    "verified_shot_events":True,
-                    "source":"StatsBomb Open Data"
-                })
-            except Exception as e:
-                rejected[type(e).__name__]+=1
-        return {"status":"sampled_public_shot_events",
-                "index_matches":len(games),
-                "sampled":len(candidates),"accepted":len(accepted),
-                "rejected":dict(rejected),"samples":accepted,
-                "license_note":"StatsBomb Open Data: attribute Hudl StatsBomb"}
-    except Exception as e:
-        return {"status":"unavailable","reason":type(e).__name__,"accepted":0}
+                    "verified_shot_events":True,"source":"StatsBomb Open Data"})
+                response["accepted"]+=1
+            except (HTTPError,URLError,TimeoutError,ValueError,TypeError,KeyError) as e:
+                bad["event_"+type(e).__name__]+=1
+    response["rejected"]=dict(bad)
+    response["unique_accepted_match_ids"]=len(set(
+        m["source_match_id"] for m in response["samples"]))
+    response["status"]="sampled_public_shot_events" if response["sampled"] else "no_source_matches"
+    return response
 
 
 def run_openfootball():
+    """Use published match results, never claim individual-shot xG.
+
+    UCL source uses the OpenFootball Champions League results-only archive;
+    domestic coverage comes from published OpenFootball football.json files.
+    """
+    report={"status":"results_only","shot_level_xg":False,
+            "competition_coverage":{},"completed_result_matches":0,
+            "sample_season":"2025-26","kind":"results_only_never_xgq"}
     try:
         raw=get(URLS["openfootball"],limit=200_000)
         count=len([x for x in raw.splitlines() if re.search(
             r"\([A-Z]{3}\)\s+v\s+.*\([A-Z]{3}\)\s+\d+-\d+",x)])
-        return {"status":"results_only","source_games_detected":count,
-                "shot_level_xg":False,"sample_season":"2025-26 UCL"}
-    except Exception as e:
-        return {"status":"unavailable","reason":type(e).__name__,
-                "shot_level_xg":False}
+        report["source_games_detected"]=count
+        report["competition_coverage"]["uefa.cl"]={"result_rows":count}
+    except (HTTPError,URLError,TimeoutError,ValueError) as e:
+        report["competition_coverage"]["uefa.cl"]={"error":type(e).__name__}
+    leagues=("en.1","de.1","es.1","it.1","fr.1","pt.1","tr.1","nl.1","be.1")
+    for league in leagues:
+        try:
+            url=f"https://raw.githubusercontent.com/openfootball/football.json/master/2025-26/{league}.json"
+            content=json.loads(get(url,limit=3_000_000))
+            matchlist=content.get("matches")
+            if not isinstance(matchlist,list):raise ValueError("Missing games array")
+            def valid_score(s):
+                if isinstance(s,dict):s=s.get("ft")
+                return isinstance(s,list) and len(s)==2 and all(
+                    type(x) is int and 0<=x<=30 for x in s)
+            completed=[m for m in matchlist if isinstance(m,dict)
+                and valid_score(m.get("score"))
+                and isinstance(m.get("date"),str)
+                and m["date"][:10]<=datetime.now(timezone.utc).date().isoformat()]
+            report["competition_coverage"][league]={
+                "listed_matches":len(matchlist),"completed_result_matches":len(completed)}
+            report["completed_result_matches"]+=len(completed)
+        except (HTTPError,URLError,TimeoutError,ValueError,KeyError) as e:
+            report["competition_coverage"][league]={"error":type(e).__name__}
+    return report
 
 
 def run_football_data():
