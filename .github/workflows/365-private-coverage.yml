@@ -51,6 +51,9 @@ jobs:
           else
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           fi
+      - name: Ensure private-only D1 tables exist
+        if: steps.rights.outputs.enabled == 'true'
+        run: npx --yes wrangler@4 d1 execute xgq-predictions --remote --file schema/private_365_coverage.sql
       - name: Restore private catalog from D1
         if: steps.rights.outputs.enabled == 'true'
         shell: bash
