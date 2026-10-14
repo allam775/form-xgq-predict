@@ -1,0 +1,30 @@
+name: Penniless free-source sampling
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * 3'
+  push:
+    branches: [main]
+    paths:
+      - research/penniless_multisource_probe.py
+      - .github/workflows/penniless-free-source-sampling.yml
+permissions:
+  contents: read
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check free dataset samples
+        run: python -m research.penniless_multisource_probe
+      - name: Upload availability diagnostics only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: penniless-free-sources
+          path: research/reports/penniless_multisource_probe.json
+          retention-days: 7
