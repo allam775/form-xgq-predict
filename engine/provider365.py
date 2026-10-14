@@ -32,6 +32,8 @@ KNOWN_LEAGUES = {
     "es.1": (("la liga", "primera division"), ("spain", "spanish")),
     "it.1": (("serie a",), ("italy", "italian")),
     "fr.1": (("ligue 1",), ("france", "french")),
+    "uefa.cl": (("uefa champions league", "champions league"), ("europe", "international")),
+    "pt.1": (("primeira liga", "liga portugal", "liga portugal betclic"), ("portugal", "portuguese")),
 }
 
 
@@ -70,7 +72,7 @@ def read_teams(path):
             raise ValueError("Invalid team config")
         team_id = str(item.get("team_id", ""))
         league = str(item.get("league", ""))
-        if not re.fullmatch(r"[1-9][0-9]{0,11}", team_id) or league not in ("en.1", "de.1", "es.1", "it.1", "fr.1"):
+        if not re.fullmatch(r"[1-9][0-9]{0,11}", team_id) or league not in KNOWN_LEAGUES:
             raise ValueError("Invalid team ID or unsupported league")
         # Additional verified competition IDs can be added without guessing.
         # An empty list still works when the detailed game explicitly identifies
@@ -90,7 +92,7 @@ def read_teams(path):
 
 
 def fetch(path, params=None, transport=None):
-    if path not in ("games/results/", "game/"):
+    if path not in ("games/results/", "games/allscores/", "game/", "game/stats/"):
         raise ValueError("Unapproved endpoint")
     query = urlencode({**DEFAULT_QUERY, **(params or {})})
     url = f"{HOST}/{path}?{query}"

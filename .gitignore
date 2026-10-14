@@ -22,3 +22,8 @@ generated/private-history.sql
 data/private_understat_history.json
 generated/private_understat_history.sql
 generated/private_understat_form.sql
+
+# Competition-wide 365Scores fixture ledger, never commit provider-derived metadata.
+data/private_365_catalog*.json
+data/private_365_coverage*.json
+generated/private-365-coverage*.json
