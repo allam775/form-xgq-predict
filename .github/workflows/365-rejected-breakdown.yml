@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/365-rejected-breakdown.yml'
+      - 'research/365_rejected_stat_breakdown.py'
+      - 'tests/test_365_rejected_stat_breakdown.py'
 permissions:
   contents: read
 concurrency:
