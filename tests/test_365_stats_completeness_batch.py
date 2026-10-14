@@ -53,6 +53,8 @@ class BatchTests(unittest.TestCase):
                     max_requests=1,delay=0)
         self.assertEqual(requests,["4732693"])
         self.assertEqual(r["new_verified_complete_xgq"],1)
+        self.assertEqual(r["cumulative_verified_complete_xgq"],1)
+        self.assertEqual(r["cumulative_checked"],1)
         self.assertEqual(len(db.verified),1)
         self.assertEqual(db.verified[next(iter(db.verified))]["training_release"],False)
         self.assertEqual(r["raw_events_written"],0)
@@ -72,6 +74,8 @@ class BatchTests(unittest.TestCase):
                     max_requests=1,delay=0)
         self.assertEqual(r["stats_requests"],0)
         self.assertEqual(r["already_audited"],1)
+        self.assertEqual(r["cumulative_verified_complete_xgq"],0)
+        self.assertEqual(r["cumulative_rejected"],1)
     def test_unknown_competition_fail_closed(self):
         bad=candidate()
         bad["catalog_verified"]=False
