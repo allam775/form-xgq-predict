@@ -1,15 +1,6 @@
 name: 365Scores private verified-competition candidate collection
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'research/365_private_batch.py'
-      - 'engine/competition365.py'
-      - 'engine/provider365.py'
-      - 'tests/test_365_competition_identity.py'
-      - 'tests/test_365_private_batch.py'
-      - '.github/workflows/365-private-batch.yml'
   schedule:
     - cron: '37 7 * * 6'
 permissions:
