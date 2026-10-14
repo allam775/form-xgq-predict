@@ -62,17 +62,40 @@ class Coverage365Tests(TestCase):
         self.assertEqual(coverage365.audit(ledger)["matches_discovered"], 1)
         self.assertEqual(coverage365.audit(ledger)["xg_pending"], 1)
 
-    def test_parsed_shots_are_not_falsely_marked_aggregate_verified(self):
+    def test_aggregate_mismatch_stays_in_ledger_not_in_model(self):
         ledger = self.ledger()
         def transport(url):
-            return detailed("123456") if urlparse(url).path.endswith("/game/") else {
-                "games": [listing("123456", 1, 2)]
-            }
+            path = urlparse(url).path
+            if path.endswith("/game/"):
+                return detailed("123456")
+            if path.endswith("/game/stats/"):
+                return {"statistics": [
+                    {"name": "Expected Goals", "stats": [{"value": 0.80}, {"value": 0.10}]},
+                    {"name": "Total Shots", "stats": [{"value": 1}, {"value": 1}]},
+                ]}
+            return {"games": [listing("123456", 1, 2)]}
         coverage365.scan_day(ledger, "2025-10-21", transport=transport)
         coverage365.refresh_details(ledger, transport=transport)
-        self.assertEqual(ledger["matches"]["123456"]["xg_status"], "shot_arrays_parsed")
-        self.assertEqual(ledger["matches"]["123456"]["xg_issue"],
-                         "aggregate_shots_and_xg_not_yet_cross_checked")
+        self.assertEqual(ledger["matches"]["123456"]["xg_status"], "pending_verification")
+        self.assertIn("xg_total_mismatch", ledger["matches"]["123456"]["xg_issue"])
+        self.assertEqual(len(ledger["verified_rows"]), 0)
+
+    def test_verified_aggregate_enters_model_candidate_pool(self):
+        ledger = self.ledger()
+        def transport(url):
+            path = urlparse(url).path
+            if path.endswith("/game/"):
+                return detailed("123456")
+            if path.endswith("/game/stats/"):
+                return {"statistics": [
+                    {"name": "Expected Goals", "stats": [{"value": 0.30}, {"value": 0.10}]},
+                    {"name": "Total Shots", "stats": [{"value": 1}, {"value": 1}]},
+                ]}
+            return {"games": [listing("123456", 1, 2)]}
+        coverage365.scan_day(ledger, "2025-10-21", transport=transport)
+        coverage365.refresh_details(ledger, transport=transport)
+        self.assertEqual(ledger["matches"]["123456"]["xg_status"], "verified_xg")
+        self.assertEqual(coverage365.audit(ledger)["shot_and_aggregate_verified"], 1)
         self.assertEqual(len(ledger["verified_rows"]), 1)
 
     def test_missing_game_id_kept_for_followup_and_expected_ids_detect_gap(self):
