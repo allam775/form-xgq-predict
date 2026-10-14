@@ -118,13 +118,16 @@ def persist_private(rows,db):
     """Idempotent per-match UPSERT in PRIVATE D1, no raw shots."""
     db.query("""CREATE TABLE IF NOT EXISTS private_365_research_candidates(
         id TEXT PRIMARY KEY NOT NULL, payload TEXT NOT NULL)""")
+    before=db.query("SELECT COUNT(*) AS n FROM private_365_research_candidates")
+    prev_count=int(before[0]["n"])
     # Full private rows, not public GitHub logs.
     for row in rows:
         db.query("INSERT OR REPLACE INTO private_365_research_candidates(id,payload) VALUES(?,?)",
                  (row["source_match_id"],json.dumps(row,ensure_ascii=False,separators=(",",":"))))
     # Number of rows is checked in the same private table, no values exported.
     count=db.query("SELECT COUNT(*) AS n FROM private_365_research_candidates")
-    return int(count[0]["n"])
+    final_count=int(count[0]["n"])
+    return final_count,max(0,final_count-prev_count)
 
 
 def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH,
@@ -138,7 +141,7 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
             "requests":0,"listing_candidates":0,"details_inspected":0,
             "competition_verified":0,"provisional_candidates":0,
             "accepted_complete_xgq":0,"private_candidates_saved":0,
-            "private_candidate_archive_total":None,
+            "private_candidate_archive_total":None,"private_candidates_new":0,
             "private_storage_status":"not_started",
             "rejections":{},"by_competition":{},
             "public_competition_name_diagnostics":[],
@@ -220,8 +223,10 @@ def collect(transport=None,db=None,*,team_ids=TEAM_IDS,per_team=MAX_DETAILS_EACH
     if found:
         try:
             database=db if db is not None else D1()
-            report["private_candidate_archive_total"]=persist_private(found,database)
+            total,new=persist_private(found,database)
+            report["private_candidate_archive_total"]=total
             report["private_candidates_saved"]=len(found)
+            report["private_candidates_new"]=new
             report["private_storage_status"]="success"
         except (D1Error,ValueError,TypeError,KeyError) as exc:
             report["private_storage_status"]="failed_"+type(exc).__name__
