@@ -22,7 +22,7 @@ OUTPUT = ROOT / "generated"
 STATS_BOMB = "https://raw.githubusercontent.com/hudl/open-data/master/data"
 FOOTBALL = "https://raw.githubusercontent.com/openfootball/football.json/master"
 LEAGUES = {"en.1": "Premier League", "de.1": "Bundesliga", "es.1": "La Liga",
-           "it.1": "Serie A", "fr.1": "Ligue 1", "eu.cl": "UEFA Champions League"}
+           "it.1": "Serie A", "fr.1": "Ligue 1", "uefa.cl": "UEFA Champions League", "pt.1": "Primeira Liga"}
 
 
 def fetch_json(url, max_bytes=9_000_000):
