@@ -175,7 +175,7 @@ def scan_day(ledger, day, *, transport=None):
         ledger.setdefault("unassigned_games", {}).pop(key, None)
         old = ledger["matches"].get(key, {})
         # Never lose previous verification when the listing lacks detailed statistics.
-        for field in ("xg_status", "xg_issue"):
+        for field in ("xg_status", "xg_issue", "details_attempts"):
             if field in old:
                 new[field] = old[field]
         if old.get("fixture_status") == "final":
@@ -270,12 +270,16 @@ def refresh_details(ledger, *, transport=None, limit=MAX_DETAILS_PER_RUN):
     if not 0 <= limit <= MAX_DETAILS_PER_RUN:
         raise ValueError("Exceeds bounded detail quota")
     checked = 0
-    for key, fixture in sorted(ledger["matches"].items()):
+    # Inspect never-attempted fixtures first so chronic failures cannot starve new games.
+    items = sorted(ledger["matches"].items(), key=lambda kv: (int(kv[1].get("details_attempts") or 0), kv[0]))
+    for key, fixture in items:
         if checked >= limit:
             break
-        if fixture.get("xg_status") == "verified_xg" or not fixture.get("id"):
+        if (fixture.get("xg_status") in ("verified_xg", "research_verified_not_released")
+                or not fixture.get("id") or fixture.get("fixture_status") != "final"):
             continue
         mid = fixture["id"]
+        fixture["details_attempts"] = int(fixture.get("details_attempts") or 0) + 1
         try:
             game = provider365.fetch("game/", {"gameId": mid}, transport)
             if transport is None:
