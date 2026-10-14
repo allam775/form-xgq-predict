@@ -39,6 +39,11 @@ def map_breakdown(payload,candidate,source_aggregates):
         for name in NAMES:
             rows=[x for x in stats if isinstance(x,dict)
                   and str(x.get("competitorId"))==sid and x.get("name")==name]
+            if name=="Hit Woodwork" and not rows:
+                # Optional category not returned by all competitions/matches.
+                # Unknown is NOT a zero count, so never fabricate it.
+                numeric[name]=None
+                continue
             if len(rows)!=1:
                 raise ValueError("ambiguous_category_"+name)
             count,_=_as_decimal(rows[0].get("value"),integer=name!="Expected Goals")
@@ -61,7 +66,8 @@ def map_breakdown(payload,candidate,source_aggregates):
           "on_target":numeric["Shots On Target"]-chart["On Target"],
           "off_target":numeric["Shots Off Target"]-chart["Off Target"],
           "blocked":numeric["Shots Blocked"]-chart["Blocked"],
-          "woodwork":numeric["Hit Woodwork"]-chart["Posts"],
+          "woodwork":(numeric["Hit Woodwork"]-chart["Posts"]
+                      if numeric["Hit Woodwork"] is not None else None),
           "total":numeric["Total Shots"]-chart["Total"],
         }
         record[side]={"stats":numeric,"chart":chart,"differences":differences}
@@ -77,12 +83,17 @@ def main():
         raise ValueError("Expected 11 originally rejected matches")
     db.query("""CREATE TABLE IF NOT EXISTS private_365_rejected_stat_breakdown(
       id TEXT PRIMARY KEY NOT NULL,payload TEXT NOT NULL)""")
+    already={str(r["id"]) for r in db.query(
+        "SELECT id FROM private_365_rejected_stat_breakdown LIMIT 100")}
     freq=Counter();errors=Counter()
     output={"source":"365Scores","rejected_cases":len(mids),"requests":0,
-       "checked":0,"raw_shots_written":0,"public_private_rows":0,
+       "checked":0,"already_checked_skipped":0,"raw_shots_written":0,"public_private_rows":0,
        "old_verification_modified":False,
        "category_gap_patterns":{},"errors":{}}
     for mid in mids:
+        if mid in already:
+            output["already_checked_skipped"]+=1
+            continue
         try:
             saved=db.query("SELECT payload FROM private_365_rejected_diagnosis WHERE id=?",(mid,))
             if len(saved)!=1:
@@ -98,8 +109,8 @@ def main():
             output["checked"]+=1
             for side in ("home","away"):
                 diffs=reconstructed[side]["differences"]
-                if any(diffs.values()):
-                    freq["gap_"+"/".join(f"{k}:{v}" for k,v in sorted(diffs.items()) if v)] += 1
+                if any(v is not None and v!=0 for v in diffs.values()):
+                    freq["gap_"+"/".join(f"{k}:{v}" for k,v in sorted(diffs.items()) if v is not None and v!=0)] += 1
                 else:freq["all_categories_match"]+=1
         except AccessDenied:
             errors["source_denied_stopped"]+=1
@@ -108,6 +119,8 @@ def main():
             errors[str(e)[:55]]+=1
         finally:
             time.sleep(1.3)
+    archived=db.query("SELECT COUNT(*) AS n FROM private_365_rejected_stat_breakdown")
+    output["cumulative_checked"]=int(archived[0]["n"])
     output["category_gap_patterns"]=dict(freq)
     output["errors"]=dict(errors)
     OUT.parent.mkdir(parents=True,exist_ok=True)
