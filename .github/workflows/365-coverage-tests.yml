@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - 'engine/coverage365.py'
+      - 'engine/coverage365_d1.py'
       - 'engine/provider365.py'
       - 'tests/test_coverage365.py'
+      - 'tests/test_coverage365_d1.py'
       - 'tests/test_provider365.py'
       - '.github/workflows/365-coverage-tests.yml'
   workflow_dispatch:
@@ -24,3 +26,4 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_provider365.py' -v
           python -m unittest discover -s tests -p 'test_coverage365.py' -v
+          python -m unittest discover -s tests -p 'test_coverage365_d1.py' -v
