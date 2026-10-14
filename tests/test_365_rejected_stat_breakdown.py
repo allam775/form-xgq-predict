@@ -34,6 +34,12 @@ class Tests(unittest.TestCase):
     x=m.map_breakdown(payload(),candidate(),a)
     self.assertEqual(x["away"]["differences"]["total"],-1)
     self.assertEqual(x["away"]["differences"]["off_target"],-1)
+ def test_optional_woodwork_missing_is_unknown_not_zero(self):
+    x=payload()
+    x["statistics"]=[a for a in x["statistics"] if a["name"]!="Hit Woodwork"]
+    r=m.map_breakdown(x,candidate(),aggregates())
+    self.assertIsNone(r["home"]["stats"]["Hit Woodwork"])
+    self.assertIsNone(r["home"]["differences"]["woodwork"])
  def test_reject_missing_independent_category(self):
     x=payload()
     x["statistics"]=[a for a in x["statistics"] if a["name"]!="Shots Blocked"]
