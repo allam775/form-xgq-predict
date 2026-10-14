@@ -1,0 +1,55 @@
+name: Private 365Scores stats structure probe
+on:
+  push:
+    branches:
+      - fix/365-real-stat-layout
+permissions:
+  contents: read
+jobs:
+  inspect:
+    if: github.repository == 'allam775/form-xgq-predict'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Inspect already verified game ID without persisting raw events
+        run: |
+          python - <<'PY'
+          import json
+          from engine import provider365
+          shapes={}
+          for label,path,params in [('stats','game/stats/',{'games':'4828476'}),('game','game/',{'gameId':'4828476'})]:
+              try:
+                  payload=provider365.fetch(path,params)
+                  items=[]
+                  def walk(node,loc='root',depth=0):
+                      if depth>5 or len(items)>70: return
+                      if isinstance(node,dict):
+                          ent={'path':loc,'keys':list(node.keys())[:40]}
+                          if any(k in node for k in ('name','title','label','statName','key')):
+                              ent['label']=str(next((node[k] for k in ('name','title','label','statName','key') if k in node),''))[:70]
+                          items.append(ent)
+                          for k,v in node.items():
+                              if isinstance(v,(dict,list)):walk(v,loc+'.'+k,depth+1)
+                      elif isinstance(node,list):
+                          for i,v in enumerate(node[:2]):walk(v,loc+'['+str(i)+']',depth+1)
+                  walk(payload)
+                  shapes[label]={'status':'ok','layout':items}
+              except Exception as exc:
+                  shapes[label]={'status':'error','kind':type(exc).__name__,'message':str(exc)[:140]}
+          q=lambda v:"'"+str(v).replace("'","''")+"'"
+          sql="INSERT INTO private_365_connection_probe(id,payload) VALUES ("+q('stats-layout-4828476')+","+q(json.dumps(shapes))+ ") ON CONFLICT(id) DO UPDATE SET payload=excluded.payload;"
+          open('/tmp/private-stats-layout.sql','w').write(sql+'\n')
+          print('Source layouts:',{k:v['status'] for k,v in shapes.items()})
+          PY
+      - name: Save schema-only diagnostics privately
+        run: npx --yes wrangler@4 d1 execute xgq-predictions --remote --file /tmp/private-stats-layout.sql
