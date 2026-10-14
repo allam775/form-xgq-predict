@@ -61,6 +61,9 @@ def restore(matches_input, days_input, verified_input, output, *, competition_id
         if not dt or not start <= dt <= end:
             raise ValueError("Unexpected day outside season window")
         status = str(row.get("scan_status"))
+        checkpoint = json.loads(row["payload"])
+        if isinstance(checkpoint.get("unassigned_games"), dict):
+            ledger["unassigned_games"].update(checkpoint["unassigned_games"])
         if status == "complete":
             ledger["scanned_days"].append(dt)
         elif status == "failed":
@@ -108,7 +111,11 @@ def export_sql(path, sql_output):
         sql.append(upsert_sql("private_365_coverage_days",
             ("id", "competition_id", "scan_date", "scan_status", "payload"),
             (f"{cid}|{dt}", cid, dt, "complete" if done else "failed",
-             json.dumps({"day": dt, "error": ledger["failed_days"].get(dt)}, separators=(",", ":")))))
+             json.dumps({"day": dt, "error": ledger["failed_days"].get(dt),
+                         "unassigned_games": {
+                             mid: data for mid, data in ledger.get("unassigned_games", {}).items()
+                             if data.get("observed_date") == dt
+                         }}, separators=(",", ":")))))
     for mid, item in sorted(ledger.get("verified_rows", {}).items()):
         sql.append(upsert_sql("private_365_coverage_verified",
             ("id", "payload"),
