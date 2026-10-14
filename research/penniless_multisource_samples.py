@@ -247,6 +247,39 @@ def run_clubelo_catalog():
     return result
 
 
+def run_international_results():
+    """Real historical international results; never a shot-level XGQ source."""
+    url="https://raw.githubusercontent.com/martj42/international_results/master/results.csv"
+    try:
+        raw=get(url,limit=9_000_000)
+        reader=csv.DictReader(io.StringIO(raw))
+        required={"date","home_team","away_team","home_score","away_score"}
+        if not required.issubset(reader.fieldnames or []):
+            raise ValueError("International results schema mismatch")
+        valid=recent=0
+        years=Counter()
+        for match in reader:
+            try:
+                day=datetime.fromisoformat(match["date"]).date()
+                hg,ag=int(match["home_score"]),int(match["away_score"])
+                if (day>datetime.now(timezone.utc).date() or min(hg,ag)<0
+                    or max(hg,ag)>30 or not match["home_team"] or not match["away_team"]):
+                    continue
+            except (ValueError,TypeError,KeyError):
+                continue
+            valid+=1;years[str(day.year)]+=1
+            if day.year>=2025:recent+=1
+        return {"status":"results_only","source":"martj42/international_results",
+            "validated_historical_matches":valid,
+            "validated_since_2025":recent,
+            "latest_years":{year:years[year] for year in sorted(years)[-4:]},
+            "has_individual_shot_xg":False,
+            "accepted_complete_xgq":0}
+    except (HTTPError,URLError,TimeoutError,ValueError,UnicodeError) as e:
+        return {"status":"unavailable","reason":type(e).__name__,
+                "has_individual_shot_xg":False,"accepted_complete_xgq":0}
+
+
 def _shot_diagnostics(payload,match_id):
     match=payload.get("game",payload) if isinstance(payload,dict) else None
     if not isinstance(match,dict) or _game_id(match)!=match_id:
@@ -418,6 +451,7 @@ def main():
      ("openfootball",run_openfootball),
      ("football_data_uk",run_football_data),
      ("club_elo_catalog",run_clubelo_catalog),
+     ("international_results",run_international_results),
      ("365scores_legacy_authorized_pilot",
       lambda:run_365(team_ids=("224","1169","890"),limit=2)),
     )
