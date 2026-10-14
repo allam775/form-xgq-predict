@@ -1,15 +1,6 @@
 name: Penniless multi-source football sample audit
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'research/penniless_multisource_samples.py'
-      - 'tests/test_penniless_multisource_samples.py'
-      - '.github/workflows/penniless-sample-matrix.yml'
   workflow_dispatch:
-  schedule:
-    # One bounded weekly research sample, UTC; not an unrestricted crawler.
-    - cron: '17 5 * * 1'
 permissions:
   contents: write
 concurrency:
@@ -37,14 +28,14 @@ jobs:
           CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
         run: |
           python -m research.penniless_multisource_samples
-      - name: Verify six-source sample report has no private match-level data
+      - name: Verify seven-source sample report has no private match-level data
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           f=Path('research/reports/penniless_sample_matrix.json')
           x=json.loads(f.read_text())
-          assert x['source_count']==6 and x['production_modified'] is False
+          assert x['source_count']==7 and x['production_modified'] is False
           assert x['candidate_does_not_equal_accepted_xgq'] is True
           a=x['sources']['365scores_legacy_authorized_pilot']
           assert 'details' not in a and a['raw_provider_bytes_written']==0
@@ -53,7 +44,7 @@ jobs:
           b=x['sources']['understat_private']
           assert b.get('private_rows_exported',0)==0
           assert all('shot_xgs' not in json.dumps(z) for z in x['sources'].values())
-          print('PASS: six providers surveyed; only safe diagnostics and openly distributable StatsBomb summaries published.')
+          print('PASS: seven providers surveyed; only safe diagnostics and openly distributable StatsBomb summaries published.')
           PY
       - name: Save aggregated public-source diagnostics without raw provider payloads
         run: |
@@ -61,7 +52,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add research/reports/penniless_sample_matrix.json
           if ! git diff --cached --quiet; then
-            git commit -m "research: bounded six-source Penniless sample survey (no private rows)"
+            git commit -m "research: bounded seven-source Penniless sample survey (no private rows)"
             # Other independent workflows may push while this small audit runs.
             # Rebase and retry races without force-push, bounded to four tries.
             published=0
