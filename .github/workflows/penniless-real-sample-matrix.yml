@@ -39,18 +39,43 @@ jobs:
           path: research/reports/penniless_sample_matrix.json
           if-no-files-found: warn
           retention-days: 7
-      - name: Retain sanitized aggregate/sample audit in the public repository
+      - name: Retain latest sanitized audit, safely retrying concurrent updates
         if: success()
         run: |
-          # The sampler strips private Understat match rows and 365Scores raw
-          # payloads/events before emitting the report.
+          cp research/reports/penniless_sample_matrix.json "$RUNNER_TEMP/penniless-report.json"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/reports/penniless_sample_matrix.json
-          if git diff --cached --quiet; then
-            echo "No audit changes"
-          else
-            git commit -m "research: refresh honest free-source sample matrix"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            # No rebasing generated JSON: a concurrent refresh can change every line.
+            # Do not replace a newer published sample with an older runner report.
+            python - <<'PY'
+          import json,os,pathlib
+          source=pathlib.Path(os.environ["RUNNER_TEMP"])/"penniless-report.json"
+          target=pathlib.Path("research/reports/penniless_sample_matrix.json")
+          new=json.loads(source.read_text())
+          try:
+              old=json.loads(target.read_text())
+          except (OSError,ValueError):
+              old={}
+          if old.get("created_at_utc","") > new.get("created_at_utc",""):
+              print("A fresher report is already in the repository.")
+          else:
+              target.parent.mkdir(parents=True,exist_ok=True)
+              target.write_text(source.read_text())
+          PY
+            git add research/reports/penniless_sample_matrix.json
+            if git diff --cached --quiet; then
+              echo "Already published or newer report retained"
+              exit 0
+            fi
+            git commit -m "research: refresh sanitized seven-source sample audit"
+            if git push origin HEAD:main; then
+              echo "Source audit published"
+              exit 0
+            fi
+            sleep "$attempt"
+          done
+          echo "All bounded publish retries failed"
+          exit 1
