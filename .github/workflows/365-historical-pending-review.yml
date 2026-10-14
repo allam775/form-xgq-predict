@@ -1,0 +1,105 @@
+name: Review original unresolved 365Scores historical fixtures privately
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Recheck the original 2025/26 eight disputed matches once daily.
+    # This is an audit, not additional competition discovery.
+    - cron: '23 05 * * *'
+      timezone: 'Africa/Cairo'
+
+permissions:
+  contents: read
+
+# Serialize with the three regular 2026/27 365Scores batches.
+concurrency:
+  group: private365-coverage
+  cancel-in-progress: false
+
+jobs:
+  historical-pending:
+    if: github.repository == 'allam775/form-xgq-predict'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - { comp: '7', league: 'en.1' }
+          - { comp: '11', league: 'es.1' }
+          - { comp: '17', league: 'it.1' }
+          - { comp: '73', league: 'pt.1' }
+          - { comp: '572', league: 'uefa.cl' }
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      XGQ_365_ACCESS_AUTHORIZED: '1'
+      XGQ_365_PRIVATE_ONLY: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Authorize only private research
+        id: rights
+        shell: bash
+        run: |
+          if [[ "$XGQ_365_ACCESS_AUTHORIZED" == "1" && "$XGQ_365_PRIVATE_ONLY" == "1" && -n "$CLOUDFLARE_ACCOUNT_ID" && -n "$CLOUDFLARE_API_TOKEN" ]]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Historical 365Scores recheck skipped: private provider access is not configured"
+          fi
+      - name: Ensure private fixture tables
+        if: steps.rights.outputs.enabled == 'true'
+        run: npx --yes wrangler@4 d1 execute xgq-predictions --remote --file schema/private_365_coverage.sql
+      - name: Read 2025/26 historical pending evidence from PRIVATE D1
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        env:
+          COMP: ${{ matrix.comp }}
+          LEAGUE: ${{ matrix.league }}
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,competition_id,league,fixture_date,status,payload FROM private_365_fixture_catalog WHERE competition_id='$COMP' AND fixture_date BETWEEN '2025-07-01' AND '2026-06-30'" > /tmp/365historicalmatches.json
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,competition_id,scan_date,scan_status,payload FROM private_365_coverage_days WHERE competition_id='$COMP' AND scan_date BETWEEN '2025-07-01' AND '2026-06-30'" > /tmp/365historicaldays.json
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --json --command \
+            "SELECT id,payload FROM private_365_coverage_verified WHERE json_extract(payload,'$.league')='$LEAGUE' AND json_extract(payload,'$.date') BETWEEN '2025-07-01' AND '2026-06-30'" > /tmp/365historicalverified.json
+          python -m engine.coverage365_d1 restore \
+            --matches-input /tmp/365historicalmatches.json --days-input /tmp/365historicaldays.json \
+            --verified-input /tmp/365historicalverified.json \
+            --competition-id "$COMP" --league "$LEAGUE" --start 2025-07-01 --end 2026-06-30 \
+            --output data/private_365_historical_review.json
+      - name: Recheck every indexed unresolved historical fixture, never invent xG
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        env:
+          COMP: ${{ matrix.comp }}
+          LEAGUE: ${{ matrix.league }}
+        run: |
+          set -euo pipefail
+          python -m engine.coverage365 \
+            --competition-id "$COMP" --league "$LEAGUE" \
+            --start 2025-07-01 --end 2026-06-30 --through 2026-06-30 \
+            --max-days 0 --max-details 24 \
+            --output data/private_365_historical_review.json
+      - name: Save only verified private research evidence and unresolved checkpoints
+        if: steps.rights.outputs.enabled == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m engine.coverage365_d1 export \
+            --input data/private_365_historical_review.json \
+            --output /tmp/private365-historical-update.sql
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote \
+            --file /tmp/private365-historical-update.sql
+          rm -f /tmp/365historicalmatches.json /tmp/365historicaldays.json \
+            /tmp/365historicalverified.json /tmp/private365-historical-update.sql \
+            data/private_365_historical_review.json
