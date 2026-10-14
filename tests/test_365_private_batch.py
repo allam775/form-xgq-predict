@@ -50,8 +50,8 @@ class BatchTests(unittest.TestCase):
     def test_private_idempotent_no_events_stored(self):
         db=FakeD1()
         row=b.provisional_match(game(),"4732693","224")
-        self.assertEqual(b.persist_private([row],db),1)
-        self.assertEqual(b.persist_private([row],db),1)
+        self.assertEqual(b.persist_private([row],db),(1,1))
+        self.assertEqual(b.persist_private([row],db),(1,0))
         self.assertNotIn("chartEvents",str(db.records))
         self.assertEqual(len(db.records),1)
     def test_accept_UEFA_competition_572_with_catalog(self):
@@ -87,6 +87,7 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(report["requests"],2)
         self.assertEqual(report["provisional_candidates"],1)
         self.assertEqual(report["private_candidates_saved"],1)
+        self.assertEqual(report["private_candidates_new"],1)
         self.assertEqual(report["accepted_complete_xgq"],0)
         self.assertEqual(len(calls),2)
         self.assertNotIn("home",json.dumps(report))
