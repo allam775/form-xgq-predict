@@ -105,7 +105,8 @@ class SampleMatrixTests(unittest.TestCase):
              patch.object(p,"run_statsbomb",return_value={"status":"sampled_public_shot_events","accepted":2}), \
              patch.object(p,"run_openfootball",return_value={"status":"results_only"}), \
              patch.object(p,"run_football_data",return_value={"status":"results_only"}), \
-             patch.object(p,"run_clubelo_catalog",return_value={"status":"metadata_sample_only"}):
+             patch.object(p,"run_clubelo_catalog",return_value={"status":"metadata_sample_only"}), \
+             patch.object(p,"run_international_results",return_value={"status":"results_only","validated_historical_matches":12345}):
             result=p.main()
             disk=Path(folder,"out.json").read_text()
             self.assertNotIn("home_shots_detected",disk)
