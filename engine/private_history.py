@@ -23,7 +23,7 @@ def verified_row(row):
     """Validate a compact existing XGQ row before restoring it from private D1."""
     if not isinstance(row, dict) or row.get("source") != SOURCE:
         raise ValueError("Unrecognized private source")
-    if row.get("league") not in ("en.1", "de.1", "es.1", "it.1", "fr.1"):
+    if row.get("league") not in ("en.1", "de.1", "es.1", "it.1", "fr.1", "eu.cl"):
         raise ValueError("Invalid private league")
     dt = date.fromisoformat(row["date"]).isoformat()
     h, a = normalized(row.get("home")), normalized(row.get("away"))
