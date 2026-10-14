@@ -24,14 +24,25 @@ def game(mid="4732693",comp=17,name="Serie A",country=120,international=False):
 class FakeD1:
     def __init__(self):
         self.records={}
+        self.rejected={}
         self.operations=[]
     def query(self,sql,params=()):
         self.operations.append((sql,params))
         if sql.startswith("CREATE TABLE"):return []
-        if sql.startswith("INSERT OR REPLACE"):
+        if sql.startswith("INSERT OR REPLACE INTO private_365_rejected_attempts"):
+            mid,status=params
+            self.rejected[mid]=status
+            return []
+        if sql.startswith("INSERT OR REPLACE INTO private_365_research_candidates"):
             mid,payload=params
             self.records[mid]=json.loads(payload)
             return []
+        if sql.startswith("SELECT id FROM private_365_research_candidates"):
+            limit,offset=params
+            return [{"id":i} for i in sorted(self.records)[offset:offset+limit]]
+        if sql.startswith("SELECT id FROM private_365_rejected_attempts"):
+            limit,offset=params
+            return [{"id":i} for i in sorted(self.rejected)[offset:offset+limit]]
         if sql.startswith("SELECT COUNT"):return [{"n":len(self.records)}]
         raise AssertionError(sql)
 
@@ -92,6 +103,45 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(len(calls),2)
         self.assertNotIn("home",json.dumps(report))
         self.assertEqual(len(db.records),1)
+    def test_weekly_repeat_skips_known_match_ids_and_reaches_next(self):
+        db=FakeD1();calls=[]
+        mids=["4732693","4732694","4732695"]
+        def transport(url):
+            u=urlparse(url);q=parse_qs(u.query)
+            calls.append((u.path,q))
+            if u.path.endswith("games/results/"):
+                return {"games":[{"gameId":mid,
+                     "homeCompetitor":{"id":111},"awayCompetitor":{"id":224}}
+                     for mid in mids]}
+            return game(q["gameId"][0])
+        a=b.collect(transport=transport,db=db,team_ids=("224",),per_team=1,delay=0)
+        self.assertEqual(a["private_candidates_new"],1)
+        self.assertEqual(a["previously_checked_ids"],0)
+        self.assertEqual(len(db.records),1)
+        e=b.collect(transport=transport,db=db,team_ids=("224",),per_team=1,delay=0)
+        self.assertEqual(e["private_candidates_new"],1)
+        self.assertEqual(e["previously_checked_ids"],1)
+        self.assertEqual(e["previously_checked_skipped"],1)
+        self.assertEqual(len(db.records),2)
+        self.assertEqual([k for k in db.records],mids[:2])
+        # Both executions used only one known listing and one actual game request.
+        self.assertEqual(len(calls),4)
+
+    def test_rejected_games_are_checkpointed_and_skipped_next_time(self):
+        db=FakeD1()
+        def transport(url):
+            u=urlparse(url);q=parse_qs(u.query)
+            if u.path.endswith("games/results/"):
+                return {"games":[{"gameId":"4732693",
+                         "homeCompetitor":{"id":111},"awayCompetitor":{"id":224}}]}
+            return game(q["gameId"][0],comp=999,name="Invalid competition")
+        a=b.collect(transport=transport,db=db,team_ids=("224",),per_team=1,delay=0)
+        self.assertEqual(a["conclusive_rejected_checkpointed"],1)
+        self.assertEqual(len(db.rejected),1)
+        b2=b.collect(transport=transport,db=db,team_ids=("224",),per_team=1,delay=0)
+        self.assertEqual(b2["requests"],1)
+        self.assertEqual(b2["previously_checked_skipped"],1)
+
     def test_no_team_id_guessing_or_excessive_requests(self):
         for ids,cap in ((("999",),1),(("224","1169","890","999"),1),
                         (("224",),15)):
