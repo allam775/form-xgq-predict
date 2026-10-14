@@ -10,7 +10,10 @@ on:
       - 'tests/test_penniless_multisource_samples.py'
       - '.github/workflows/penniless-real-sample-matrix.yml'
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: penniless-real-multisource-sample
+  cancel-in-progress: false
 jobs:
   sample:
     runs-on: ubuntu-latest
@@ -36,3 +39,18 @@ jobs:
           path: research/reports/penniless_sample_matrix.json
           if-no-files-found: warn
           retention-days: 7
+      - name: Retain sanitized aggregate/sample audit in the public repository
+        if: success()
+        run: |
+          # The sampler strips private Understat match rows and 365Scores raw
+          # payloads/events before emitting the report.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/reports/penniless_sample_matrix.json
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+          else
+            git commit -m "research: refresh honest free-source sample matrix"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
