@@ -58,6 +58,18 @@ class ZeroOmissionRetryTests(unittest.TestCase):
             ledger = json.loads(path.read_text())
             self.assertEqual(ledger["failed_attempts"]["2025-10-01"]["count"], 1)
 
+    def test_exact_rounding_limit_is_not_false_rejected_by_binary_float(self):
+        row = {"home_shots": 7, "away_shots": 4, "home_xg": 2.16, "away_xg": 0.4}
+        payload = {"statistics": [
+            {"name": "Total Shots", "stats": [7, 4]},
+            {"name": "Expected Goals", "stats": ["2.10", "0.40"]},
+        ]}
+        self.assertEqual(coverage365.compare_aggregate(row, payload), (True, None))
+        row["home_xg"] = 2.161
+        passed, reason = coverage365.compare_aggregate(row, payload)
+        self.assertFalse(passed)
+        self.assertIn("xg_total_mismatch", reason)
+
     def test_d1_retry_metadata_roundtrip(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
