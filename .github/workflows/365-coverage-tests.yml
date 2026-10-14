@@ -1,0 +1,26 @@
+name: Verify 365Scores coverage ledger
+
+on:
+  pull_request:
+    paths:
+      - 'engine/coverage365.py'
+      - 'engine/provider365.py'
+      - 'tests/test_coverage365.py'
+      - 'tests/test_provider365.py'
+      - '.github/workflows/365-coverage-tests.yml'
+  workflow_dispatch:
+
+jobs:
+  offline-coverage-contracts:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run provider and coverage tests without calling 365Scores
+        run: |
+          python -m unittest discover -s tests -p 'test_provider365.py' -v
+          python -m unittest discover -s tests -p 'test_coverage365.py' -v
