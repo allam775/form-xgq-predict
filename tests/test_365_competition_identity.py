@@ -15,12 +15,36 @@ class CompetitionTests(unittest.TestCase):
             (572,"UEFA Champions League","uefa.cl",True),
             (73,"Liga Portugal","pt.1",False),
             (78,"Süper Lig","tr.1",False),
-            (17,"Serie A","it.1",False)):
+            (17,"Serie A","it.1",False),
+            (98,"Jupiler Pro League","be.1",False)):
             with self.subTest(cid=cid):
                 r=resolve(payload(cid,name,international))
                 self.assertTrue(r["ok"],r)
                 self.assertEqual(r["league"],lg)
                 self.assertTrue(r["catalog_verified"])
+    def test_country_comma_league_display_as_returned_by_real_provider(self):
+        cases=[
+            (572,"Europe, UEFA Champions League","UEFA Champions League",True),
+            (73,"Portugal, Liga Portugal","Liga Portugal",False),
+            (17,"Italy, Serie A","Serie A",False),
+            (78,"Turkiye, Super Lig","Super Lig",False),
+            (98,"Belgium, Jupiler Pro League","Jupiler Pro League",False)]
+        for cid,display,catalog_name,is_international in cases:
+            with self.subTest(id=cid):
+                obj=payload(cid,catalog_name,is_international)
+                obj["game"]["competitionDisplayName"]=display
+                r=resolve(obj)
+                self.assertTrue(r["ok"],r)
+                self.assertTrue(r["catalog_verified"])
+
+    def test_wrong_country_comma_league_is_not_accepted(self):
+        obj=payload()
+        obj["game"]["competitionDisplayName"]="Portugal, UEFA Champions League"
+        self.assertEqual(resolve(obj)["reason"],"game_competition_name_disagrees")
+        obj=payload(73,"Liga Portugal",False)
+        obj["game"]["competitionDisplayName"]="Europe, Liga Portugal"
+        self.assertEqual(resolve(obj)["reason"],"game_competition_name_disagrees")
+
     def test_missing_game_display_can_use_same_response_catalog(self):
         x=payload()
         del x["game"]["competitionDisplayName"]
