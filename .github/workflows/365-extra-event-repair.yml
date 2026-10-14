@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/365-extra-event-repair.yml'
       - 'engine/repair365.py'
+      - 'research/365_excess_event_repair.py'
       - 'tests/test_365_extra_event_repair.py'
 permissions:
   contents: read
