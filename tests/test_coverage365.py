@@ -123,7 +123,7 @@ class Coverage365Tests(TestCase):
         with tempfile.TemporaryDirectory() as root:
             path = Path(root) / "private_365_catalog.json"
             coverage365._save_atomic(path, ledger)
-            new = coverage365.load_or_create(path, "572", "eu.cl",
+            new = coverage365.load_or_create(path, "572", "uefa.cl",
                                               "2025-10-21", "2025-10-21")
             self.assertEqual(new["matches"], ledger["matches"])
             self.assertEqual(coverage365.audit(new)["days_not_scanned"], 0)
