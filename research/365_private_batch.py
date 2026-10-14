@@ -1,6 +1,6 @@
 """Owner-authorized, bounded 365Scores historical-match candidate collection.
 
-Scope: at most 3 known, public-page-documented team IDs; 4 games per team.
+Scope: at most 5 known, public-page-documented team IDs; 4 games per team.
 365Scores returns shot xG on chartEvents, but a subset of chart events must
 NOT be passed to the real XGQ model without independent shot/xG totals.
 This module stores compact *PROVISIONAL* summaries in PRIVATE Cloudflare D1;
@@ -27,8 +27,8 @@ from engine.understat_d1 import D1,D1Error
 OWNERSHIP_SCOPE="prior 365Scores permission for private noncommercial XGQ research"
 SOURCE_NAME="365Scores"
 OUTPUT=Path("research/reports/365_private_batch_status.json")
-TEAM_IDS=("224","1169","890")  # Inter, Club Brugge, Sporting CP
-MAX_TEAMS=3
+TEAM_IDS=("224","1169","890","104","134")  # Inter, Club Brugge, Sporting CP, Arsenal, Atletico Madrid
+MAX_TEAMS=5
 MAX_DETAILS_EACH=4
 MAX_TOTAL_REQUESTS=MAX_TEAMS*(1+MAX_DETAILS_EACH)
 PAUSE_SECONDS=1.5
