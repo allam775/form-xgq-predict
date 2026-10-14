@@ -141,14 +141,35 @@ def run(db=None,transport=None,delay=1.5):
         id TEXT PRIMARY KEY NOT NULL,payload TEXT NOT NULL)""")
     fetcher=transport if transport is not None else p.fetch
     result={"original_source":"allam775/xgq-project-365/server.py",
-        "cases":8,"calls":0,"compared":0,"alone_reconciled":0,
+        "cases":8,"calls":0,"compared":0,"already_compared":0,
+        "alone_reconciled":0,
         "matchup_reconciled":0,"either_reconciled":0,
         "shot_count_different_by_bundle":0,"xg_sum_different_by_bundle":0,
         "legacy_parser_xg_disagreements":0,"legacy_lineup_side_fallbacks":0,
         "no_verified_change":True,"training_changed":False,
-        "provider_payloads_published":False,"outcomes":{},"status":"complete"}
+        "provider_payloads_published":False,"per_match_provider_data_public":False,
+        "outcomes":{},"status":"complete"}
     reasons=Counter()
+    # The original eight-match comparison was already performed privately.
+    # Reuse that evidence instead of contacting the same provider again.
+    stored=d.query("SELECT id,payload FROM private_365_original_bundle_diagnostic ORDER BY id LIMIT 50")
+    archival={str(v["id"]):json.loads(v["payload"]) for v in stored}
+    if len(archival)!=len(stored):
+        raise ValueError("duplicate_private_original_comparison")
     for mid,old in sorted(work.items()):
+        if mid in archival:
+            prev=archival[mid]
+            result["already_compared"]+=1
+            result["compared"]+=1
+            result["alone_reconciled"]+=int(prev.get("regular_ok") is True)
+            result["matchup_reconciled"]+=int(prev.get("matchup_ok") is True)
+            result["either_reconciled"]+=int(
+                prev.get("regular_ok") is True or prev.get("matchup_ok") is True)
+            for side in ("home","away"):
+                rd=prev.get("regular_count_deltas",{}).get(side)
+                md=prev.get("matchup_count_deltas",{}).get(side)
+                if rd!=md:result["shot_count_different_by_bundle"]+=1
+            continue
         witness_rows=d.query("SELECT payload FROM private_365_rejected_diagnosis WHERE id=?",(mid,))
         if len(witness_rows)!=1:
             reasons["missing_private_independent_statistics"]+=1;continue
