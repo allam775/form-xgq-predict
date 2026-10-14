@@ -32,7 +32,8 @@ KNOWN_LEAGUES = {
     "es.1": (("la liga", "primera division"), ("spain", "spanish")),
     "it.1": (("serie a",), ("italy", "italian")),
     "fr.1": (("ligue 1",), ("france", "french")),
-    "eu.cl": (("uefa champions league", "champions league"), ("europe", "international")),
+    "uefa.cl": (("uefa champions league", "champions league"), ("europe", "international")),
+    "pt.1": (("primeira liga", "liga portugal", "liga portugal betclic"), ("portugal", "portuguese")),
 }
 
 
