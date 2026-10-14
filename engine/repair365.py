@@ -54,7 +54,7 @@ def _event_shots(payload):
         elif out in ("missed","post"):kind="off_target"
         elif out=="blocked":kind="blocked"
         else:raise ValueError("unknown_shot_category")
-        rows[side].append((x,kind))
+        rows[side].append((x,kind,out))
     return rows
 
 
@@ -100,7 +100,7 @@ def repair(candidate,detail,verified_stats,breakdown):
         samples=events[side]
         if len(samples)!=candidate[side+"_chart_shots"]:
             return fail("chart_count_changed")
-        if abs(sum(x for x,_ in samples)-candidate[side+"_chart_xg_sum"])>0.000001:
+        if abs(sum(x for x,_,_ in samples)-candidate[side+"_chart_xg_sum"])>0.000001:
             return fail("chart_xg_changed")
         if side not in verified_stats or side not in breakdown:
             return fail("independent_evidence_missing")
@@ -109,7 +109,7 @@ def repair(candidate,detail,verified_stats,breakdown):
     if len(extra)!=1:
         return fail("not_exactly_one_extra_side")
     side=extra[0];other="away" if side=="home" else "home"
-    if not _within([v for v,_ in events[other]],verified_stats[other]):
+    if not _within([v for v,_,_ in events[other]],verified_stats[other]):
         return fail("other_team_not_reconciled")
     diff=breakdown[side]["differences"]
     affected=[key for key in ("on_target","off_target","blocked") if diff.get(key)==-1]
@@ -121,10 +121,25 @@ def repair(candidate,detail,verified_stats,breakdown):
                ("on_target","off_target","blocked") if other_key!=k)):
         return fail("category_counts_cannot_be_reconciled")
     samples=events[side]
+    # A disallowed GOAL cannot be repaired by removing an unrelated saved shot
+    # even when its xG would accidentally match the rounded aggregate.
+    count_goals=sum(outcome=="goal" for _,_,outcome in samples)
+    official_goals=candidate["hg" if side=="home" else "ag"]
+    if k=="on_target":
+        if count_goals==official_goals+1:
+            allowed_outcomes={"goal"}
+        elif count_goals==official_goals:
+            allowed_outcomes={"saved"}
+        else:
+            return fail("goal_event_count_conflicts_with_final_score")
+    elif k=="off_target":
+        allowed_outcomes={"missed","post"}
+    else:
+        allowed_outcomes={"blocked"}
     choices=[]
-    for index,(v,kind) in enumerate(samples):
-        if kind!=k:continue
-        rem=[x for i,(x,_) in enumerate(samples) if i!=index]
+    for index,(v,kind,outcome) in enumerate(samples):
+        if kind!=k or outcome not in allowed_outcomes:continue
+        rem=[x for i,(x,_,_) in enumerate(samples) if i!=index]
         if _within(rem,verified_stats[side]):
             choices.append((v,rem))
     if not choices:
@@ -149,12 +164,13 @@ def repair(candidate,detail,verified_stats,breakdown):
       "correction_proof":"one_unique_observed_overcounted_outcome_with_independent_stats",
       "corrected_side":side,
       "corrected_outcome_class":k,
+      "disallowed_event_outcome":next(o for v,_,o in samples if v==xg_remove and o in allowed_outcomes),
       "shot_xg_model":"chartEvents.xg",
       "training_release":False,
       "number_of_equivalent_removals":len(choices)
     }
     for s in ("home","away"):
-        xgs=remain if s==side else [x for x,_ in events[s]]
+        xgs=remain if s==side else [x for x,_,_ in events[s]]
         output[s+"_xg"]=round(sum(xgs),6)
         output[s+"_xgq"]=round(sum(x*x for x in xgs)/len(xgs),8)
     return {"ok":True,"reason":"uniquely_reconciled_overcounted_chart_shot",
