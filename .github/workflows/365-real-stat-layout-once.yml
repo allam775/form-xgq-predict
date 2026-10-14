@@ -53,6 +53,26 @@ jobs:
           PY
       - name: Save schema-only diagnostics privately
         run: npx --yes wrangler@4 d1 execute xgq-predictions --remote --file /tmp/private-stats-layout.sql
+      - name: Store match-level stat field values for schema verification
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from engine import provider365
+          game=provider365.fetch('game/',{'gameId':'4828476'})['game']
+          stats=provider365.fetch('game/stats/',{'games':'4828476'})
+          rows=[]
+          for item in stats.get('statistics',[]):
+              label=str(item.get('name') or '')
+              if any(w in label.lower() for w in ('shot','attempt','expected goal')):
+                  rows.append({'name':label,'competitorId':item.get('competitorId'),'value':item.get('value'),'value_type':type(item.get('value')).__name__})
+          output={'home_id':game['homeCompetitor'].get('id'),'away_id':game['awayCompetitor'].get('id'),'rows':rows[:50]}
+          q=lambda v:"'"+str(v).replace("'","''")+"'"
+          sql='INSERT INTO private_365_connection_probe(id,payload) VALUES ('+q('stats-values-4828476')+','+q(json.dumps(output))+') ON CONFLICT(id) DO UPDATE SET payload=excluded.payload;'
+          open('/tmp/private-stats-values.sql','w').write(sql+'\n')
+          print('Aggregated statistics rows inspected:',len(rows))
+          PY
+          npx --yes wrangler@4 d1 execute xgq-predictions --remote --file /tmp/private-stats-values.sql
       - name: Restore UEFA research catalog and inspect actual per-shot xG
         shell: bash
         run: |
