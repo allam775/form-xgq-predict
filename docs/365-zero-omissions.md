@@ -52,10 +52,16 @@ The existing private D1 database named **xgq-predictions** has been extended wit
 A separate workflow `.github/workflows/365-private-coverage.yml` restores per-competition D1 data, scans up to fourteen previously unscanned dates (never future dates), checks at most 24 completed match details, and writes an idempotent D1 checkpoint. The scheduled trigger is daily at 03:25 UTC **only after merging the branch**, and runs solely when these requirements are explicitly configured:
 
 - GitHub secrets `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` (rights restricted to this database).
-- Either GitHub Actions variables or secrets `XGQ_365_ACCESS_AUTHORIZED=1` and `XGQ_365_PRIVATE_ONLY=1`, after verifying provider usage rights and destination privacy.
+- The workflow is explicitly locked to the owner repository and the confirmed private research/D1 workflow. It sets `XGQ_365_ACCESS_AUTHORIZED=1` and `XGQ_365_PRIVATE_ONLY=1` for this specific collector. Revoke this gate if source rights are withdrawn; it is not permission to publish private source records.
 
 The configured 2026/27 source-verified competitions are **7** Premier League, **11** La Liga, **17** Serie A, **73** Portugal Primeira Liga and **572** UEFA Champions League. To add more leagues, first validate their competition IDs with reliable source evidence and extend the matrix. Never enumerate unknown identifiers. The scanner neither changes public site predictions nor overrides `training_release`.
 
 The D1 checkpoint may be saved only if the script reaches the SQL export step; the program also persists a local atomic JSON checkpoint per date. If GitHub stops a job before the SQL export, a subset of that batch may be re-requested on the next run without producing duplicate D1 records. The script deliberately does not retry 401/403/429 with evasive tactics.
 
 **Unresolved requirement:** independently verify completeness of each official competition schedule, including the actual game IDs and official date range. The source may omit games, change its response shape, or fail outright. No code can assert 100% historical availability from source data alone.
+
+## Live verification checkpoint
+
+On 14 October 2026 a one-time GitHub-hosted ordinary HTTP request to 365Scores returned 259 football games for 13 October 2026, including nine competition ID 572 Champions League games. The nine game IDs were inserted/reconciled into private D1, and all nine home/away pairings matched UEFA's official 2026/27 matchday 2 fixture list. Previously only four of those nine appeared in the research sample. This proves one-day fixture discovery, not full-season or nine-match shot-level XGQ completeness. The one-time live probe workflow has been removed after success.
+
+Source: UEFA official 2026/27 Champions League fixtures, published 9 October 2026: https://www.uefa.com/uefachampionsleague/news/02a8-2174c9e9019d-f909a77bd77a-1000--2026-27-champions-league-all-the-league-phase-fixtures-a/
