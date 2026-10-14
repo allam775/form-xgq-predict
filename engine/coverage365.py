@@ -309,9 +309,42 @@ def audit(ledger, expected_game_ids=None):
         "days_not_scanned": len(pending_days),
         "failed_days": dict(ledger["failed_days"]),
         "expected_ids_missing": unavailable,
+        "independent_reconciliation_complete": (expected_game_ids is not None and bool(expected)
+                                                and not pending_days and not ledger["failed_days"]
+                                                and not unavailable),
         "unknown_competition_events": ledger["uncertain_competition_events"],
         "note": "Not proof of provider historical completeness without independent fixture reconciliation."
     }
+
+
+
+def sync_private_history(ledger, path):
+    """Append only aggregate-reconciled XGQ rows to the existing private D1 cache.
+
+    Unresolved fixtures stay in the separate private catalog; they NEVER become
+    estimated XGQ values. This function does not make anything public.
+    """
+    from .private_history import verified_row
+    path = Path(path)
+    previous = json.loads(path.read_text(encoding="utf8")) if path.exists() else []
+    if not isinstance(previous, list):
+        raise ValueError("Invalid existing private history")
+    by_id = {r["id"]: verified_row(r) for r in previous}
+    if len(by_id) != len(previous):
+        raise ValueError("Duplicate existing private shot history")
+    added = 0
+    for mid, row in ledger["verified_rows"].items():
+        verified_row(row)
+        if row["league"] != ledger["league"] or str(row["source_match_id"]) != str(mid):
+            raise ValueError("Source identity conflict in newly verified XGQ row")
+        if row["id"] in by_id:
+            if by_id[row["id"]].get("source_match_id") != row["source_match_id"]:
+                raise ValueError("Cross-provider match identity conflict")
+            continue
+        by_id[row["id"]] = row
+        added += 1
+    _save_atomic(path, list(by_id.values()))
+    return added
 
 
 def run(argv=None, *, transport=None):
@@ -324,6 +357,7 @@ def run(argv=None, *, transport=None):
     ap.add_argument("--max-days", type=int, default=MAX_DAYS_PER_RUN)
     ap.add_argument("--max-details", type=int, default=0)
     ap.add_argument("--expected-ids", help="Optional independently obtained JSON game ID array")
+    ap.add_argument("--history-output", help="Existing private_365_history.json (for validated rows only)")
     options = ap.parse_args(argv)
     _require_authorization()
     if not 1 <= options.max_days <= MAX_DAYS_PER_RUN:
@@ -360,6 +394,8 @@ def run(argv=None, *, transport=None):
         if not isinstance(expected, list):
             raise ValueError("Expected fixture IDs must be a JSON array")
     status = audit(ledger, expected)
+    if options.history_output:
+        status["new_model_eligible_rows"] = sync_private_history(ledger, options.history_output)
     print(json.dumps(status, ensure_ascii=False, indent=2))
     return status
 
