@@ -66,8 +66,11 @@ def probe():
     away_meta=provider365._side(match,"away")
     out["home_club_name"]=str(home_meta.get("name") or home_meta.get("displayName") or "")[:80]
     out["away_club_name"]=str(away_meta.get("name") or away_meta.get("displayName") or "")[:80]
-    out["final_score"]=[provider365._score(match,"home",home_meta),
-                        provider365._score(match,"away",away_meta)]
+    try:
+        out["final_score"]=[provider365._score(match,"home",home_meta),provider365._score(match,"away",away_meta)]
+    except ValueError:
+        out["final_score"]=None
+        out["score_fields_verified"]=False
     out["competition_id"]=str(comp_id) if (comp_id:=(provider365._competition(match)[0])) else None
     out["provider_competition_field_names"]=[
         k for k in match.keys() if any(w in k.lower() for w in ("competit","league","tournament"))][:12]
@@ -90,6 +93,7 @@ def probe():
         out["outcome"]="no_chart_events_array";return out
     out["chart_events_total"]=len(events)
     counts={h:0,a:0}
+    sums={h:0.,a:0.}
     xsums={h:0.,a:0.}
     invalid_xg=unassigned=0
     for evt in events:
@@ -112,12 +116,15 @@ def probe():
                 continue
         counts[team]+=1
         if shot_xg is not None:
+            sums[team]+=shot_xg
+        if shot_xg is not None:
             xsums[team]+=shot_xg
     out["recognized_shot_events"]=sum(counts.values())+unassigned
     out["home_shot_events"]=counts[h]
     out["away_shot_events"]=counts[a]
     out["home_shot_xg_sum"]=round(xsums[h],4)
     out["away_shot_xg_sum"]=round(xsums[a],4)
+    out["shot_xg_sums"]=[round(sums[h],4),round(sums[a],4)]
     out["shot_events_with_missing_xg"]=invalid_xg
     out["shot_events_unassigned"]=unassigned
     out["valid_individual_xg_for_observed_events"]=(
