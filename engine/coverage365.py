@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import date, timedelta, datetime, timezone
+from decimal import Decimal
 import hashlib
 import json
 import os
@@ -296,7 +297,10 @@ def compare_aggregate(row, stats_payload, *, home_id=None, away_id=None):
         if abs(totals[side]["shots"] - count) > 0.001:
             return False, (f"{side}_shot_count_mismatch:"
                            f"{count}_versus_{totals[side]['shots']}")
-        if abs(totals[side]["xg"] - xg) > 0.06:
+        # The 0.06 boundary is intentional. Binary float subtraction can
+        # produce 0.06000000000000005, incorrectly rejecting equality.
+        # Decimal preserves the existing threshold; it does not widen it.
+        if abs(Decimal(str(totals[side]["xg"])) - Decimal(str(xg))) > Decimal("0.06"):
             return False, (f"{side}_xg_total_mismatch:"
                            f"{xg:.3f}_versus_{totals[side]['xg']:.3f}")
     return True, None
