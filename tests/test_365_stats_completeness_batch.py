@@ -36,9 +36,13 @@ class DB:
         if sql.startswith("CREATE TABLE"):
             return []
         if "SELECT payload FROM private_365_research_candidates" in sql:
-            return [{"payload":json.dumps(v)} for v in self.candidates.values()]
+            limit,offset=params
+            vals=[{"payload":json.dumps(v)} for v in self.candidates.values()]
+            return vals[offset:offset+limit]
         if "SELECT id,payload FROM private_365_stats_audit" in sql:
-            return [{"id":k,"payload":json.dumps(v)} for k,v in self.audits.items()]
+            limit,offset=params
+            vals=[{"id":k,"payload":json.dumps(v)} for k,v in self.audits.items()]
+            return vals[offset:offset+limit]
         if "INSERT OR REPLACE INTO private_365_stats_audit" in sql:
             self.audits[params[0]]=json.loads(params[1]);return []
         if "INSERT OR REPLACE INTO private_365_research_verified" in sql:
@@ -92,6 +96,14 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(r["status"],"request_budget_reached")
         with self.assertRaises(ValueError):
             mod.batch(db=db,get_stats=lambda _:stats(),max_requests=19,delay=0)
+    def test_private_archives_paginate_beyond_250_rows(self):
+        db=DB([candidate(str(4732693+i)) for i in range(270)])
+        rows=mod.candidates(db)
+        self.assertEqual(len(rows),270)
+        db.audits={mid:{"status":"shot_count_mismatch","complete":False}
+                   for mid in rows}
+        self.assertEqual(len(mod.prior_audits(db)),270)
+
     def test_stats_schema_error_is_not_silently_approved(self):
         db=DB([candidate()])
         def invalid(mid):
