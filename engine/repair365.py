@@ -141,14 +141,14 @@ def repair(candidate,detail,verified_stats,breakdown):
         if kind!=k or outcome not in allowed_outcomes:continue
         rem=[x for i,(x,_,_) in enumerate(samples) if i!=index]
         if _within(rem,verified_stats[side]):
-            choices.append((v,rem))
+            choices.append((v,rem,outcome))
     if not choices:
         return fail("no_observed_shot_reconciles_to_independent_xg")
     # Multiple indistinguishable repeated values may represent one ambiguous
     # identity, but their XGQ is mathematically identical; no shot guessed.
-    if len({v for v,_ in choices})!=1:
+    if len({(v,outcome) for v,_,outcome in choices})!=1:
         return fail("multiple_distinct_shots_would_match")
-    xg_remove,remain=choices[0]
+    xg_remove,remain,chosen_outcome=choices[0]
     if not _within(remain,verified_stats[side]):
         return fail("reconciliation_lost")
     new={"home":events["home"],"away":events["away"]}
@@ -164,7 +164,7 @@ def repair(candidate,detail,verified_stats,breakdown):
       "correction_proof":"one_unique_observed_overcounted_outcome_with_independent_stats",
       "corrected_side":side,
       "corrected_outcome_class":k,
-      "disallowed_event_outcome":next(o for v,_,o in samples if v==xg_remove and o in allowed_outcomes),
+      "disallowed_event_outcome":chosen_outcome,
       "shot_xg_model":"chartEvents.xg",
       "training_release":False,
       "number_of_equivalent_removals":len(choices)
