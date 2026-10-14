@@ -23,7 +23,7 @@ Run only with permission to use the provider data and with a private Access-prot
 ```bash
 export XGQ_365_ACCESS_AUTHORIZED=1
 export XGQ_365_PRIVATE_ONLY=1
-python -m engine.coverage365 --competition-id 572 --league eu.cl \
+python -m engine.coverage365 --competition-id 572 --league uefa.cl \
   --start 2025-07-01 --end 2026-06-30 \
   --output data/private_365_catalog_cl2526.json \
   --max-days 14 --max-details 48 \
