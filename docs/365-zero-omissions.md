@@ -44,3 +44,18 @@ Repeat the same command to resume remaining dates, preserving the private ledger
 Reconciliation checks use a strict 0.06 xG tolerance for known rounding. Tolerance cannot be expanded solely to raise nominal coverage. 401, 403 and 429 must not be bypassed.
 
 **Important:** This change prevents silent omissions and creates an accountable backfill mechanism. A claim of 100% of the season requires a successful live scan and an independent fixture register. The eight previously disputed matches are not automatically resolved by this patch.
+
+## Cloudflare persistence and automation (2026-10-14)
+
+The existing private D1 database named **xgq-predictions** has been extended with the tables `private_365_fixture_catalog`, `private_365_coverage_days` and `private_365_coverage_verified`. All three tables are for private staging only. The initial source-backed research manifest has 28 distinct game IDs (five verified competition identities), of which 20 have separately verified shot-level evidence and eight still lack a satisfactory verification. The verified 20 are **research-only; `training_release=false` is retained**. There are no records in the production `private_shot_history` table. No publication permission is inferred from the private study records.
+
+A separate workflow `.github/workflows/365-private-coverage.yml` restores per-competition D1 data, scans up to fourteen previously unscanned dates (never future dates), checks at most 24 completed match details, and writes an idempotent D1 checkpoint. The scheduled trigger is daily at 03:25 UTC **only after merging the branch**, and runs solely when these requirements are explicitly configured:
+
+- GitHub secrets `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` (rights restricted to this database).
+- Either GitHub Actions variables or secrets `XGQ_365_ACCESS_AUTHORIZED=1` and `XGQ_365_PRIVATE_ONLY=1`, after verifying provider usage rights and destination privacy.
+
+The configured 2026/27 source-verified competitions are **7** Premier League, **11** La Liga, **17** Serie A, **73** Portugal Primeira Liga and **572** UEFA Champions League. To add more leagues, first validate their competition IDs with reliable source evidence and extend the matrix. Never enumerate unknown identifiers. The scanner neither changes public site predictions nor overrides `training_release`.
+
+The D1 checkpoint may be saved only if the script reaches the SQL export step; the program also persists a local atomic JSON checkpoint per date. If GitHub stops a job before the SQL export, a subset of that batch may be re-requested on the next run without producing duplicate D1 records. The script deliberately does not retry 401/403/429 with evasive tactics.
+
+**Unresolved requirement:** independently verify completeness of each official competition schedule, including the actual game IDs and official date range. The source may omit games, change its response shape, or fail outright. No code can assert 100% historical availability from source data alone.
