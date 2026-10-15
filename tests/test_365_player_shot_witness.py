@@ -34,6 +34,12 @@ class Tests(unittest.TestCase):
         self.assertEqual(result["aggregate"]["stats_players"],4)
         self.assertEqual(result["aggregate"]["players_with_xg_gap"],0)
         self.assertEqual(result["by_side"]["home"]["stat_shots_total"],2)
+    def test_original_provider_player_stats_in_global_game_statistics(self):
+        g=game()
+        g["statistics"]=g.pop("members")
+        result=compare_players(g,witness())
+        self.assertTrue(result["player_evidence_complete"])
+
     def test_overcount_detected_for_exact_player(self):
         g=game()
         g["chartEvents"]["events"].append(event(201,.2,2))
