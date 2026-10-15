@@ -114,6 +114,27 @@ def profile(payload):
     # Some member statistics are stored at game root, outside team nodes.
     for k in ("members","lineups","playerStatistics","statistics","players"):
         if k in game:walk(game[k],k,0)
+    # Diagnose which level contains player stat rows and whether their
+    # competitorId equals the HOME/AWAY team IDs. Publish counts only.
+    home_id=str(p._side(game,"home").get("id") or "")
+    away_id=str(p._side(game,"away").get("id") or "")
+    owner_location=Counter()
+    def locate(node,root,depth=0):
+        if depth>MAX_DEPTH:return
+        if isinstance(node,list):
+            for child in node[:250]:locate(child,root,depth+1)
+        elif isinstance(node,dict):
+            if isinstance(node.get("stats"),list) and node.get("id") is not None:
+                comp=str(node.get("competitorId") or "")
+                klass=("home" if comp==home_id else
+                    "away" if comp==away_id else
+                    "other" if comp else "no_comp")
+                owner_location[root+":"+klass]+=1
+            for child in node.values():
+                if isinstance(child,(list,dict)):locate(child,root,depth+1)
+    for side,node in zip(("home_team","away_team"),team_nodes):locate(node,side)
+    for key in ("members","statistics","playerStatistics","players","lineups"):
+        if key in game:locate(game[key],"game."+key)
     # Match individual shot shooter reference IDs to player-stat owner IDs
     # entirely in memory, report only counts (NO player identifiers).
     ownerids=set()
@@ -159,6 +180,7 @@ def profile(payload):
         "stat_row_shapes":dict(sorted(sample_stat_shapes.items())),
         "stat_field_coverage":dict(sorted(coverage.items())),
         "shot_to_player_stat_owner_counts":dict(sorted(links.items())),
+        "stat_owner_competitor_id_match_counts":dict(sorted(owner_location.items())),
     }
 
 def main():
