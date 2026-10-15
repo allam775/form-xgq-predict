@@ -52,6 +52,9 @@ def profile(payload):
     names=Counter()
     keys=Counter()
     examples=Counter()
+    owners=Counter()
+    sample_stat_shapes=Counter()
+    coverage=Counter()
     def walk(node,context="",depth=0):
         if depth>MAX_DEPTH or counters["nodes"]>=MAX_NODES:return
         counters["nodes"]+=1
@@ -71,6 +74,27 @@ def profile(payload):
             counters["explicit_player_id_nodes"]+=1
         if any(k in node for k in ("statistics","playerStatistics","playerStats","stats")):
             counters["stats_containing_nodes"]+=1
+            for key in ("statistics","playerStatistics","playerStats","stats"):
+                statsv=node.get(key)
+                if isinstance(statsv,(list,dict)):
+                    keys_present=",".join(k for k in ("id","athleteId","playerId",
+                        "memberId","competitorId","player","member","name","teamId")
+                        if k in node)
+                    owners[key+":"+type(statsv).__name__+":owner="+keys_present]+=1
+                    rows=statsv if isinstance(statsv,list) else [statsv]
+                    statnames=set()
+                    for item in rows[:150]:
+                        if isinstance(item,dict):
+                            sample_stat_shapes[",".join(sorted(k for k in item if k in (
+                                "name","label","type","key","value","stat","displayValue",
+                                "title","stats","items","groups","athleteId","playerId")))] += 1
+                            for kk in ("name","label","type","title"):
+                                lbl=_safe_label(item.get(kk))
+                                if lbl:statnames.add(lbl)
+                    coverage["stat_container_with_total_shots"]+=int("total shots" in statnames)
+                    coverage["stat_container_with_expected_goals"]+=int("expected goals" in statnames)
+                    coverage["stat_container_with_both"]+=int(
+                        "total shots" in statnames and "expected goals" in statnames)
         directstat = {k for k in node if k in (
             "shots","totalShots","shotsOnTarget","shotsOffTarget",
             "shotsBlocked","xg","xG","expectedGoals","expectedGoal",
@@ -96,6 +120,9 @@ def profile(payload):
         "stat_metric_field_occurrences":dict(sorted(examples.items())),
         "stat_container_keys":dict(sorted(keys.items())),
         "recognized_metric_labels":dict(sorted(names.items())),
+        "stat_owner_shapes":dict(sorted(owners.items())),
+        "stat_row_shapes":dict(sorted(sample_stat_shapes.items())),
+        "stat_field_coverage":dict(sorted(coverage.items())),
     }
 
 def main():
