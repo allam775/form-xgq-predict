@@ -13,7 +13,7 @@ class Tests(unittest.TestCase):
                  {"player":{"id":9093,"name":"Player Goalkeeper"},
                    "statistics":[{"name":"Shots on Target","value":"1"}]}]}},
              "awayCompetitor":{"id":22,"name":"Another Team",
-                 "lineups":{"players":[{"player":{"id":9001,"name":"Private"},{"shots":2}]}]},
+                 "lineups":{"players":[{"player":{"id":9001,"name":"Private"},"shots":2}]}},
              "members":[]}}
         out=p.profile(game)
         text=str(out)
