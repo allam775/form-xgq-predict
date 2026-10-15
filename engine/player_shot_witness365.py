@@ -64,19 +64,28 @@ def player_stats(game):
         raise ValueError("ambiguous_teams")
     owners={"home":{},"away":{}}
     visited=[0]
-    def walk(node,depth=0):
+    def walk(node,depth=0,side_hint=None):
         if depth>MAX_DEPTH:return
         visited[0]+=1
         if visited[0]>MAX_NODES:
             raise ValueError("player_statistics_too_many_nodes")
         if isinstance(node,list):
-            for child in node[:250]:walk(child,depth+1)
+            for child in node[:250]:walk(child,depth+1,side_hint)
             return
         if not isinstance(node,dict):return
         entries=node.get("stats")
-        if isinstance(entries,list) and node.get("id") is not None and node.get("competitorId") is not None:
-            pid=str(node["id"]);tid=str(node["competitorId"])
-            side=next((s for s,i in ids.items() if i==tid),None)
+        if isinstance(entries,list) and node.get("id") is not None:
+            pid=str(node["id"])
+            tid=str(node.get("competitorId") or "")
+            explicit=next((s for s,i in ids.items() if i==tid),None)
+            if tid and explicit is None:
+                raise ValueError("player_stats_competitor_unknown")
+            if side_hint is not None and explicit is not None and side_hint!=explicit:
+                raise ValueError("player_stats_competitor_conflicts_with_team_section")
+            # 365Scores often returns competitorId=null for players nested
+            # under a team's lineups. The *authenticated team section*
+            # supplies the missing side, like original xgq-project-365.
+            side=explicit or side_hint
             if side is not None:
                 extracted={}
                 for entry in entries:
@@ -98,8 +107,8 @@ def player_stats(game):
                     owners[side][pid]=extracted
         for item in node.values():
             if isinstance(item,(list,dict)):
-                walk(item,depth+1)
-    for team in (home,away):walk(team)
+                walk(item,depth+1,side_hint)
+    for side,team in (("home",home),("away",away)):walk(team,side_hint=side)
     # Members frequently have player statistics outside team lineups.
     for key in ("members","lineups","players","statistics"):
         if key in game:walk(game[key])
