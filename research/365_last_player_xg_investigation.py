@@ -29,7 +29,7 @@ def attempt(*,db=None,fetch=None):
         if not pv or pv.get("player_evidence_complete") is True:continue
         if pv.get("aggregate",{}).get("unmapped_shots"):continue
         if pv.get("aggregate",{}).get("players_with_shot_gap"):continue
-        if pv.get("aggregate",{}).get("players_with_xg_gap")==1:
+        if pv.get("aggregate",{}).get("players_with_xg_gap",0)>0:
             candidate_ids.append(mid)
     if len(candidate_ids)!=1:
         # Most important: DO NOT mislabel a team-vs-player count mismatch as
@@ -55,6 +55,7 @@ def attempt(*,db=None,fetch=None):
                 "raw_events_written":False,"public_player_identifiers":False,
                 "public_match_identifiers":False}
     mid=candidate_ids[0];row=rem[mid]
+    discrepant_players=int(records[mid]["aggregate"]["players_with_xg_gap"])
     d.query("""CREATE TABLE IF NOT EXISTS private_365_last_xg_investigation(
         id TEXT PRIMARY KEY NOT NULL,payload TEXT NOT NULL)""")
     previous=d.query("SELECT payload FROM private_365_last_xg_investigation WHERE id=?",(mid,))
@@ -88,6 +89,7 @@ def attempt(*,db=None,fetch=None):
                 (approved["id"],json.dumps(approved,separators=(",",":"),ensure_ascii=False)))
     totals=d.query("SELECT COUNT(*) AS n FROM private_365_research_verified")
     return {"original_last_cases":1,"provider_requests":1,"already_checked":0,
+            "independent_player_xg_conflicts":discrepant_players,
             "strict_xg_repaired":int(outcome["ok"]),"reason":outcome["reason"],
             "strict_private_research_total":int(totals[0]["n"]),
             "training_release":False,"original_audit_preserved":True,
