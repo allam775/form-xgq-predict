@@ -10,7 +10,7 @@ from pathlib import Path
 from collections import Counter
 import importlib,json
 from engine import provider365 as p
-from engine.alternate_player_shot_xg365 import repair
+from engine.alternate_player_shot_xg365 import repair,repair_two_players
 from engine.understat_d1 import D1,D1Error
 from engine.xgq import normalized
 
@@ -59,7 +59,7 @@ def attempt(*,db=None,fetch=None):
     d.query("""CREATE TABLE IF NOT EXISTS private_365_last_xg_investigation(
         id TEXT PRIMARY KEY NOT NULL,payload TEXT NOT NULL)""")
     previous=d.query("SELECT payload FROM private_365_last_xg_investigation WHERE id=?",(mid,))
-    if previous:
+    if previous and json.loads(previous[0]["payload"]).get("algorithm_version")==2:
         known=json.loads(previous[0]["payload"])
         return {"original_last_cases":1,"provider_requests":0,"already_checked":1,
                 "strict_xg_repaired":int(known["ok"]),"reason":known["status"],
@@ -77,8 +77,10 @@ def attempt(*,db=None,fetch=None):
     detail=get(mid)
     game=player.validate(detail,row,mid)
     outcome=repair(row,game,stats,old)
+    if not outcome["ok"] and outcome["reason"]=="not_one_isolated_player_xg_conflict":
+        outcome=repair_two_players(row,game,stats,old)
     d.query("INSERT OR REPLACE INTO private_365_last_xg_investigation(id,payload) VALUES(?,?)",
-            (mid,json.dumps({"ok":outcome["ok"],"status":outcome["reason"]},
+            (mid,json.dumps({"ok":outcome["ok"],"status":outcome["reason"],"algorithm_version":2},
                             separators=(",",":"))))
     if outcome["ok"]:
         approved=outcome["private_row"]
@@ -90,6 +92,7 @@ def attempt(*,db=None,fetch=None):
     totals=d.query("SELECT COUNT(*) AS n FROM private_365_research_verified")
     return {"original_last_cases":1,"provider_requests":1,"already_checked":0,
             "independent_player_xg_conflicts":discrepant_players,
+            "explicit_alternative_counts":outcome.get("explicit_alternative_counts",[]),
             "strict_xg_repaired":int(outcome["ok"]),"reason":outcome["reason"],
             "strict_private_research_total":int(totals[0]["n"]),
             "training_release":False,"original_audit_preserved":True,
