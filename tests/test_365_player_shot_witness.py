@@ -40,6 +40,23 @@ class Tests(unittest.TestCase):
         result=compare_players(g,witness())
         self.assertTrue(result["player_evidence_complete"])
 
+    def test_real_provider_null_competitorid_but_team_lineup_context(self):
+        g=game()
+        members=g.pop("members")
+        for person in members:
+            person["competitorId"]=None
+        g["homeCompetitor"]["lineups"]={"players":members[:2]}
+        g["awayCompetitor"]["lineups"]={"players":members[2:]}
+        r=compare_players(g,witness())
+        self.assertTrue(r["player_evidence_complete"],r["aggregate"])
+
+    def test_explicit_competitor_conflicting_with_team_lineup_fails(self):
+        g=game()
+        members=g.pop("members")
+        g["homeCompetitor"]["lineups"]={"players":[members[2]]}
+        with self.assertRaisesRegex(ValueError,"conflicts_with_team_section"):
+            player_stats(g)
+
     def test_overcount_detected_for_exact_player(self):
         g=game()
         g["chartEvents"]["events"].append(event(201,.2,2))
