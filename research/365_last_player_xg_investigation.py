@@ -32,7 +32,28 @@ def attempt(*,db=None,fetch=None):
         if pv.get("aggregate",{}).get("players_with_xg_gap")==1:
             candidate_ids.append(mid)
     if len(candidate_ids)!=1:
-        raise ValueError("not_exactly_one_xg_only_player_conflict")
+        # Most important: DO NOT mislabel a team-vs-player count mismatch as
+        # an xG-only problem. No source request is made for an ineligible case.
+        signatures={}
+        for mid,pv in records.items():
+            if mid not in rem or pv.get("player_evidence_complete") is True:
+                continue
+            if pv.get("extra_shot_isolatable_to_one_player") is True:
+                continue
+            agg=pv.get("aggregate",{})
+            kind=("missing_shooter" if agg.get("unmapped_shots") else
+                  "individual_shot_gap" if agg.get("players_with_shot_gap") else
+                  "individual_xg_gap" if agg.get("players_with_xg_gap") else
+                  "player_vs_team_total_count_or_chart_disagreement")
+            signatures[kind]=signatures.get(kind,0)+1
+        return {"status":"not_eligible_for_alternate_shot_xg_test",
+                "original_remaining_cases":len(rem),
+                "eligible_xg_only_player_conflicts":len(candidate_ids),
+                "other_issues":signatures,
+                "provider_requests":0,"strict_xg_repaired":0,
+                "training_release":False,"original_audit_preserved":True,
+                "raw_events_written":False,"public_player_identifiers":False,
+                "public_match_identifiers":False}
     mid=candidate_ids[0];row=rem[mid]
     d.query("""CREATE TABLE IF NOT EXISTS private_365_last_xg_investigation(
         id TEXT PRIMARY KEY NOT NULL,payload TEXT NOT NULL)""")
