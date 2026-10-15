@@ -114,7 +114,42 @@ def profile(payload):
     # Some member statistics are stored at game root, outside team nodes.
     for k in ("members","lineups","playerStatistics","statistics","players"):
         if k in game:walk(game[k],k,0)
-    return {
+    # Match individual shot shooter reference IDs to player-stat owner IDs
+    # entirely in memory, report only counts (NO player identifiers).
+    ownerids=set()
+    def owner_visit(node,depth=0):
+        if depth>10:return
+        if isinstance(node,list):
+            for child in node[:200]:owner_visit(child,depth+1)
+        elif isinstance(node,dict):
+            if isinstance(node.get("stats"),list) and node.get("id") is not None:
+                ownerids.add(str(node["id"]))
+            for val in node.values():
+                if isinstance(val,(list,dict)):owner_visit(val,depth+1)
+    for node in team_nodes:owner_visit(node)
+    for key in ("members","players"):
+        if key in game:owner_visit(game[key])
+    chart=game.get("chartEvents") or game.get("chart_events") or {}
+    events=chart.get("events") or chart.get("items") or [] if isinstance(chart,dict) else chart
+    links=Counter()
+    if isinstance(events,list):
+        for ev in events[:500]:
+            if not isinstance(ev,dict) or not p._is_shot(ev):continue
+            links["shot_events"]+=1
+            found=False
+            for key in ("playerId","memberId","athleteId","entityId"):
+                if ev.get(key) is not None:
+                    links["has_"+key]+=1
+                    if str(ev[key]) in ownerids:found=True
+            for key in ("player","member","shooter","shot"):
+                nested=ev.get(key)
+                if isinstance(nested,dict):
+                    for alias in ("id","playerId","memberId","athleteId"):
+                        if nested.get(alias) is not None:
+                            links["nested_"+key+"_"+alias]+=1
+                            if str(nested[alias]) in ownerids:found=True
+            links["shot_maps_to_stats_owner" if found else "shot_no_stats_owner_link"]+=1
+        return {
         "nodes_inspected":counters["nodes"],
         "container_counts":{k:v for k,v in counters.items() if k!="nodes"},
         "stat_metric_field_occurrences":dict(sorted(examples.items())),
@@ -123,6 +158,7 @@ def profile(payload):
         "stat_owner_shapes":dict(sorted(owners.items())),
         "stat_row_shapes":dict(sorted(sample_stat_shapes.items())),
         "stat_field_coverage":dict(sorted(coverage.items())),
+        "shot_to_player_stat_owner_counts":dict(sorted(links.items())),
     }
 
 def main():
