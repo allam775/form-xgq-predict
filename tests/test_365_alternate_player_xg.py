@@ -1,6 +1,6 @@
 """Offline alternative per-shot xG proof with player and official team totals."""
 import unittest
-from engine.alternate_player_shot_xg365 import repair
+from engine.alternate_player_shot_xg365 import repair,repair_two_players
 
 def fixture():
     g={"homeCompetitor":{"id":2,"name":"Home",
@@ -49,4 +49,45 @@ class Tests(unittest.TestCase):
  def test_original_snapshot_changes_do_not_get_rewritten(self):
     c,g,s,p=fixture();c["home_chart_xg_sum"]=.7
     self.assertEqual(repair(c,g,s,p)["reason"],"original_chart_xg_changed_since_capture")
+def two_players():
+    game={"homeCompetitor":{"id":2,"lineups":{"players":[{
+        "id":21,"competitorId":None,
+        "stats":[{"name":"Total Shots","value":"1"},
+                 {"name":"Expected Goals","value":"0.20"}]}]}},
+        "awayCompetitor":{"id":3,"lineups":{"players":[{
+        "id":31,"competitorId":None,
+        "stats":[{"name":"Total Shots","value":"1"},
+                 {"name":"Expected Goals","value":"0.40"}]}]}},
+        "chartEvents":{"events":[
+            {"playerId":21,"competitorNum":1,"xg":"0.10","expected_goals":"0.20"},
+            {"playerId":31,"competitorNum":2,"xg":"0.30","expected_goals":"0.40"}]}}
+    original={"catalog_verified":True,"league":"uefa.cl","date":"2026-10-13",
+              "home":"Home","away":"Away","hg":0,"ag":0,
+              "source_match_id":"12345",
+              "home_chart_xg_sum":.10,"away_chart_xg_sum":.30}
+    stats={"home":{"shots":1,"xg":.20,"xg_display_decimals":2},
+           "away":{"shots":1,"xg":.40,"xg_display_decimals":2}}
+    audit={"complete":False,"status":"home_xg_mismatch"}
+    return original,game,stats,audit
+
+class TwoPlayerTests(unittest.TestCase):
+ def test_two_explicit_player_shot_sources_can_resolve_joint_mismatch(self):
+    c,g,s,a=two_players()
+    v=repair_two_players(c,g,s,a)
+    self.assertTrue(v["ok"],v)
+    self.assertAlmostEqual(v["private_row"]["home_xgq"],.04)
+    self.assertAlmostEqual(v["private_row"]["away_xgq"],.16)
+    self.assertFalse(v["private_row"]["training_release"])
+ def test_missing_real_alternate_xg_keeps_case_rejected(self):
+    c,g,s,a=two_players()
+    del g["chartEvents"]["events"][0]["expected_goals"]
+    v=repair_two_players(c,g,s,a)
+    self.assertFalse(v["ok"])
+    self.assertEqual(v["reason"],"one_or_both_players_have_no_valid_observed_alternative_xg")
+ def test_shot_count_mismatch_not_masked_as_xg_conflict(self):
+    c,g,s,a=two_players()
+    s["home"]["shots"]=2
+    v=repair_two_players(c,g,s,a)
+    self.assertFalse(v["ok"])
+
 if __name__=="__main__":unittest.main()
