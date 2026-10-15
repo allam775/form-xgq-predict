@@ -101,7 +101,7 @@ def player_stats(game):
                 walk(item,depth+1)
     for team in (home,away):walk(team)
     # Members frequently have player statistics outside team lineups.
-    for key in ("members","lineups","players"):
+    for key in ("members","lineups","players","statistics"):
         if key in game:walk(game[key])
     return owners
 
