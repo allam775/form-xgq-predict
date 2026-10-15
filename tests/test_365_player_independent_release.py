@@ -19,7 +19,7 @@ def player():
            "chart_sum_xg":xg,"stats_sum_xg":xg,
            "stats_xg_precision":2}}}
     return {"player_evidence_complete":True,
-            "aggregate":{"unmapped_shots":0},
+            "aggregate":{"unmapped_shots":0,"players_missing_xg":0},
             "by_side":{"home":data(2,.4),"away":data(1,.2)}}
 def official():
     return {"home":{"shots":2,"xg":.8,"xg_display_decimals":2},
