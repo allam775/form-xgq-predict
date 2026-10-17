@@ -143,8 +143,15 @@ def draw_watch_metrics(rows,selection):
         min_relative=t["minimum_relative_to_best_win"])]
     n=len(selected)
     hits=sum(r["actual"]=="draw" for r in selected)
+    original_correct=sum(
+        max(OUTCOMES,key=lambda k:r["calibrated"][k])==r["actual"]
+        for r in selected)
+    # Counterfactual, evaluated only: does replacing 1X2 with draw help?
+    delta_correct=hits-original_correct
     actual=sum(r["actual"]=="draw" for r in rows)
     return {"status":"research_only","flagged":n,"correct_draw_flags":hits,
+            "correct_winning_picks_overridden":original_correct,
+            "net_correct_change_if_forced_draw":delta_correct,
             "precision":round(hits/n,6) if n else None,
             "recall":round(hits/actual,6) if actual else None,
             "unflagged_draws":actual-hits,
