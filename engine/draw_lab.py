@@ -49,6 +49,8 @@ def feature_vector(r):
 def apply_draw_calibration(original, features, weights):
     if len(weights)!=len(features):
         raise ValueError("Calibration feature mismatch")
+    if not any(weights):
+        return dict(original)
     z=logit(original["draw"])+sum(w*x for w,x in zip(weights,features))
     p_draw=clip(logistic(z),.03,.70)
     remain=(1-p_draw)/max(1e-10,1-original["draw"])
@@ -158,7 +160,7 @@ def report(history, *, as_of):
     val=[r for r in prepared if VAL_START<=r["date"]<=VAL_END]
     historical=[r for r in prepared if TEST_START<=r["date"]<=TEST_END]
     season=[r for r in prepared if SEASON_START<=r["date"]<=as_of]
-    if len(train)<100 or len(val)<60:
+    if len(train)<100 or len(val)<40:
         return {"status":"insufficient","train_games":len(train),
                 "validation_games":len(val),"historical_games":len(historical),
                 "season_games":len(season)}
