@@ -112,16 +112,19 @@ def _forecast(fixture, league_rows, ratings, *, now):
         return None, reason or "unavailable_verified_shot_form"
     models = {"xgq_production_formula": normalize_probabilities({k: primary["probabilities"][k] for k in OUTCOMES})}
     goal_baseline = _dc_baseline(prior, fixture)
-    if goal_baseline:
-        models["goal_fixed_rho"] = normalize_probabilities(goal_baseline)
-        # Historical validation-selected shot-volume challenger, SHADOW ONLY.
-        # No earlier frozen forecast can ever be rewritten or relabelled.
-        stage1 = stage1_probs(prior, fixture, goal_baseline, (.50, .25, .30))
-        if stage1:
-            models["stage1_volume_xgq"] = normalize_probabilities(stage1)
-        hybrid = hybrid_probs(prior, fixture, goal_baseline, (.35, .30))
-        if hybrid:
-            models["hybrid_393_validation"] = normalize_probabilities(hybrid)
+    if not goal_baseline:
+        return None, "missing_goal_baseline_for_approved_stage1"
+    models["goal_fixed_rho"] = normalize_probabilities(goal_baseline)
+    # Approved 2026-10-17: Stage 1 now drives NEW fixtures only. Its xG/xGA,
+    # shot volume and XGQ terms are trained strictly on older verified games.
+    # Already-frozen XGQ predictions are immutable and keep their original model.
+    stage1 = stage1_probs(prior, fixture, goal_baseline, (.50, .25, .30))
+    if stage1 is None:
+        return None, "missing_verified_stage1_shot_evidence"
+    models["stage1_volume_xgq"] = normalize_probabilities(stage1)
+    hybrid = hybrid_probs(prior, fixture, goal_baseline, (.35, .30))
+    if hybrid:
+        models["hybrid_393_validation"] = normalize_probabilities(hybrid)
     elo = _elo_probs(prior, ratings, fixture)
     if elo:
         models["elo"] = normalize_probabilities(elo)
@@ -132,14 +135,17 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "home_id": fixture["h"], "away_id": fixture["a"],
         "kickoff_utc": fixture["kickoff_utc"],
         "frozen_at_utc": now.isoformat(),
-        "model": "xgq_production_formula", "status": "frozen",
+        "model": "stage1_volume_xgq", "model_version": "penniless-stage1-v2-20261017",
+        "status": "frozen",
         "models": models,
         "picks": {name: max(OUTCOMES, key=lambda v: probs[v]) for name, probs in models.items()},
         "prior_team_games": team_games,
         "prior_verified_matches": len(prior),
         "source": SOURCE,
         "source_evidence_end_lt": min(fixture["date"], now.date().isoformat()),
-        "production_formula_unchanged": True,
+        "production_formula_unchanged": False,
+        "original_xgq_preserved_as_comparator": True,
+        "stage3_and_advanced_features_research_only": True,
         "experimental_models_not_promoted": True,
     }, None
 
