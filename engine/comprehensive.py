@@ -118,7 +118,7 @@ def _dated_replay(rows, until):
                             continue
                         models={"stage1":s1,"stage3":s3,
                                 "elo":elo,"dc":dc,"hybrid":hy,
-                                "xgq":primary["probabilities"]}
+                                "xgq":{k:primary["probabilities"][k] for k in OUTCOMES}}
                         if any(set(m)!=set(OUTCOMES) or
                                 abs(sum(m.values())-1)>.0001
                                for m in models.values()):
