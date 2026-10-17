@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'engine/today_v2_replay.py'
+      - 'engine/draw_lab.py'
+      - 'engine/daily_forecast.py'
+      - 'tests/test_draw_lab.py'
       - 'tests/test_today_v2_replay.py'
       - '.github/workflows/today-v2-replay.yml'
 permissions:
