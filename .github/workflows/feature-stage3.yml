@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'engine/stage3_form.py'
+      - 'engine/daily_forecast.py'
+      - 'docs/PENNILESS_MODEL_DECISION_20261017_AR.md'
       - 'tests/test_stage3_form.py'
       - '.github/workflows/feature-stage3.yml'
   schedule:
@@ -26,7 +28,7 @@ jobs:
           python-version: '3.12'
       - name: Verify prior-date Elo, 5-10-20-game form and venue shrinkage
         run: python -m unittest discover -s tests -p 'test_stage3_form.py' -v
-      - name: Audit stage 3 on identical historical dates as the stage 1 goal and XGQ models
+      - name: Re-run paired Stage 3 versus approved Stage 1 and all fixed baselines on latest private history
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
