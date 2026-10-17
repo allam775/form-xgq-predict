@@ -16,6 +16,12 @@ class DrawLabTests(unittest.TestCase):
         self.assertAlmostEqual(sum(p.values()),1,places=10)
         self.assertGreater(p["draw"],probs["draw"])
         self.assertAlmostEqual(p["home"]/p["away"],probs["home"]/probs["away"])
+    def test_rounded_frozen_ledger(self):
+        p={"home":0.38254321,"draw":0.25123456,"away":0.36622222}
+        calibrated=apply_draw_calibration(p,(1,.1,.2,0,0),
+            (-.143539829,.244601568,-.107317616,0,0))
+        self.assertAlmostEqual(sum(calibrated.values()),1,places=12)
+        self.assertTrue(all(x>=0 for x in calibrated.values()))
     def test_no_unvalidated_draw_watch(self):
         self.assertEqual(draw_watch_selection([])["status"],"insufficient")
     def test_fitting_converges_directionally(self):
