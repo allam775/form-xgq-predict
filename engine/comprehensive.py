@@ -92,7 +92,7 @@ def _short(records, name):
     return metrics
 
 
-def _dated_replay(rows, until):
+def _dated_replay(rows, until, *, eval_start=VAL_START):
     """One evaluation per fixture, only games strictly earlier than match day as inputs."""
     records=[verified_row(r) for r in rows if r["date"]<=until]
     if len({r["id"] for r in records})!=len(records):
@@ -109,7 +109,7 @@ def _dated_replay(rows, until):
         ratings={}
         for day, items in groupby(history,lambda r:r["date"]):
             batch=list(items)
-            eligible=day>=VAL_START
+            eligible=day>=eval_start
             if eligible:
                 by_period["fixtures_from_validation_on"]+=len(batch)
                 recent=[r for r in prior if r["date"] >=
@@ -141,8 +141,24 @@ def _dated_replay(rows, until):
                                 abs(sum(m.values())-1)>.0001
                                for m in models.values()):
                             raise ValueError("Incomplete 1X2")
+                        # Draw-specific predictors all lagged to earlier match dates.
+                        league_draw = sum(r["hg"] == r["ag"] for r in recent) / len(recent)
+                        def last_form(team):
+                            matches = [r for r in recent if team in (r["h"],r["a"])][-20:]
+                            count = len(matches)
+                            draw_n = sum(r["hg"] == r["ag"] for r in matches)
+                            avg_total = (sum(r["hg"] + r["ag"] for r in matches) / count
+                                         if count else 2.7)
+                            return (draw_n + 6*league_draw)/(count+6),avg_total
+                        hdraw,htot=last_form(game["h"])
+                        adraw,atot=last_form(game["a"])
+                        draw_features={
+                            "league_draw_rate":league_draw,
+                            "recent_team_draw_rate":(hdraw+adraw)/2.,
+                            "recent_total_goals":(htot+atot)/2.
+                        }
                         results.append({"league":league,"date":day,"actual":actual_outcome(match),
-                                        "models":models})
+                                        "models":models,"draw_features":draw_features})
             # Only *after* all fixtures on that date have been forecast:
             batch_annotated=[{**r,
                 "prior_opponent_elo_home":ratings.get(r["a"],1500),
