@@ -168,6 +168,36 @@ def draw_watch_selection(validation):
             "validation_recall":round(best[4],6),
             "baseline_draw_rate":round(actual_rate,6)}
 
+def paired_day_bootstrap(rows, *, trials=1000, seed=20261017):
+    """Paired improvement in log-loss; resample independent league/match-day blocks.
+
+    Descriptive CI only. Prior research had inspected some overlapping seasons.
+    """
+    from random import Random
+    groups=defaultdict(list)
+    for r in rows:
+        k=(r["league"],r["date"])
+        label=r["actual"]
+        gain=math.log(max(1e-12,r["calibrated"][label]))-math.log(
+            max(1e-12,r["original"][label]))
+        groups[k].append(gain)
+    arr=list(groups.values())
+    if len(arr)<10:
+        return {"status":"insufficient_paired_days","days":len(arr)}
+    rng=Random(seed)
+    samples=[]
+    for _ in range(trials):
+        chosen=[arr[rng.randrange(len(arr))] for _ in arr]
+        samples.append(sum(map(sum,chosen))/sum(map(len,chosen)))
+    samples.sort()
+    return {"status":"descriptive_historical","paired_days":len(arr),
+            "games":len(rows),
+            "mean_gain":round(sum(map(sum,arr))/len(rows),6),
+            "logloss_gain_ci95":[round(samples[int((trials-1)*.025)],6),
+                                  round(samples[int((trials-1)*.975)],6)],
+            "ci_strictly_positive":samples[int((trials-1)*.025)]>0}
+
+
 def draw_watch_metrics(rows,selection):
     if selection["status"]!="validation_candidate":
         return {"status":"disabled_not_validated"}
@@ -228,6 +258,7 @@ def report(history, *, as_of):
         b={"n":len(bucket),"unmodified":metrics(bucket,"original"),
            "draw_calibrated":metrics(bucket,"calibrated"),
            "draw_watch":draw_watch_metrics(bucket,watch),
+           "paired_logloss_uncertainty":paired_day_bootstrap(bucket),
            "by_league":{league:{"n":sum(r["league"]==league for r in bucket),
                    "base":metrics([r for r in bucket if r["league"]==league],"original"),
                    "calibrated":metrics([r for r in bucket if r["league"]==league],"calibrated")}
