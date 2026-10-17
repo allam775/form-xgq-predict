@@ -16,6 +16,10 @@ from .understat_quality import score
 from .understat_d1 import D1
 
 REPORT_KEY = "penniless_draw_lab_20261017"
+# Selected using 2025-08..2026-01 training and 2026-02..03 validation.
+# No current-season outcomes were used to fit or choose these coefficients.
+FROZEN_DRAW_WEIGHTS = (-0.143539829,0.244601568,-0.107317616,0.,0.)
+DRAW_VERSION = "penniless-comprehensive-draw-v2-20261017"
 TRAIN_START, TRAIN_END = "2025-08-01", "2026-01-31"
 VAL_START, VAL_END = "2026-02-01", "2026-03-31"
 TEST_START, TEST_END = "2026-04-01", "2026-05-31"
@@ -32,6 +36,36 @@ def logistic(v):
     if v>=0: return 1/(1+math.exp(-v))
     e=math.exp(v)
     return e/(1+e)
+
+def draw_features_for_fixture(prior, fixture):
+    """Pre-match feature input identical to the chronological replay protocol.
+
+    Receives only rows strictly before the target fixture date. Defensive
+    filtering prevents current/same-date results influencing live inference.
+    """
+    from datetime import date, timedelta
+    day=fixture["date"]
+    minimum=(date.fromisoformat(day)-timedelta(days=900)).isoformat()
+    recent=[r for r in prior if r["date"]<day and
+            r["date"]>=minimum and r["league"]==fixture["league"]]
+    if len(recent)<40:
+        return None
+    base_rate=sum(r["hg"]==r["ag"] for r in recent)/len(recent)
+    def team_profile(team):
+        matches=[r for r in recent if team in (r["h"],r["a"])][-20:]
+        if len(matches)<5:
+            return None
+        draw_count=sum(r["hg"]==r["ag"] for r in matches)
+        avg_total=sum(r["hg"]+r["ag"] for r in matches)/len(matches)
+        return (draw_count+6*base_rate)/(len(matches)+6),avg_total
+    h=team_profile(fixture["h"])
+    a=team_profile(fixture["a"])
+    if not h or not a:
+        return None
+    return {"league_draw_rate":base_rate,
+            "recent_team_draw_rate":(h[0]+a[0])/2,
+            "recent_total_goals":(h[1]+a[1])/2}
+
 
 def feature_vector(r):
     """All feature values from pre-match model and recent verified completed games."""

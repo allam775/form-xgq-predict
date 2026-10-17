@@ -22,7 +22,9 @@ from .understat_hybrid import hybrid_probs
 from .feature_ladder import stage1_probs
 from .stage3_form import stage3_probs
 from .comprehensive import (annotated_opponent_ratings, ensemble,
-                            APPROVED_PARAMS, MODEL_VERSION, STAGE3_PRESET)
+                            APPROVED_PARAMS, STAGE3_PRESET)
+from .draw_lab import (apply_draw_calibration, feature_vector,
+                       draw_features_for_fixture, FROZEN_DRAW_WEIGHTS, DRAW_VERSION)
 from .prematch_ledger import _ratings_by_league, normalize_probabilities
 
 FORECASTS = "private_daily_forecasts"
@@ -147,6 +149,16 @@ def _forecast(fixture, league_rows, ratings, *, now):
     }
     models["penniless_comprehensive"] = normalize_probabilities(
         ensemble(all_components, APPROVED_PARAMS))
+    # Lagged draw-specific calibration, selected only from earlier seasons.
+    # Crucially, this modifies honest probabilities, NOT forced 1X2 draw picks.
+    lagged_draw = draw_features_for_fixture(prior, fixture)
+    if lagged_draw is None:
+        return None, "missing_verified_draw_form_for_v2"
+    models["penniless_draw_calibrated"] = normalize_probabilities(
+        apply_draw_calibration(
+            models["penniless_comprehensive"],
+            feature_vector({"models": all_components, "draw_features": lagged_draw}),
+            FROZEN_DRAW_WEIGHTS))
     return {
         "id": fixture["id"], "league": fixture["league"],
         "date": fixture["date"], "source_match_id": fixture["source_match_id"],
@@ -154,7 +166,7 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "home_id": fixture["h"], "away_id": fixture["a"],
         "kickoff_utc": fixture["kickoff_utc"],
         "frozen_at_utc": now.isoformat(),
-        "model": "penniless_comprehensive", "model_version": MODEL_VERSION,
+        "model": "penniless_draw_calibrated", "model_version": DRAW_VERSION,
         "status": "frozen",
         "models": models,
         "picks": {name: max(OUTCOMES, key=lambda v: probs[v]) for name, probs in models.items()},
@@ -167,6 +179,9 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "stage3_lagged_opponent_ratings": True,
         "stage3_missing_replaced_by_stage1": stage3_fallback,
         "comprehensive_frozen_params": list(APPROVED_PARAMS),
+        "draw_calibration_coefficients": list(FROZEN_DRAW_WEIGHTS),
+        "draw_only_probability_calibration": True,
+        "no_forced_draw_pick": True,
         "creativity_metrics_not_yet_approved_for_production": True,
         "experimental_models_not_promoted": True,
     }, None

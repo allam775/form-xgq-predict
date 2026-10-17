@@ -11,6 +11,8 @@ on:
     paths:
       - 'engine/daily_forecast.py'
       - 'engine/comprehensive.py'
+      - 'engine/draw_lab.py'
+      - 'tests/test_draw_lab.py'
       - 'engine/stage3_form.py'
       - 'engine/forward_shadow.py'
       - 'tests/test_forward_shadow.py'
