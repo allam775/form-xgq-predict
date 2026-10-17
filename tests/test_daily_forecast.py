@@ -98,15 +98,20 @@ class DailyForecastTests(unittest.TestCase):
         self.assertEqual(result["newly_frozen"], 1)
         frozen = db.forecasts[FIXTURE_ID]
         payload = json.loads(frozen)
-        self.assertEqual(payload["model"], "stage1_volume_xgq")
+        self.assertEqual(payload["model"], "penniless_comprehensive")
         self.assertEqual(set(payload["models"]["xgq_production_formula"]), {"home", "draw", "away"})
         self.assertAlmostEqual(sum(payload["models"]["xgq_production_formula"].values()), 1, places=6)
         self.assertIn("stage1_volume_xgq",payload["models"])
-        self.assertEqual(payload["model_version"], "penniless-stage1-v2-20261017")
+        self.assertIn("stage3_opponent_form",payload["models"])
+        self.assertIn("elo",payload["models"])
+        self.assertIn("penniless_comprehensive",payload["models"])
+        self.assertAlmostEqual(sum(payload["models"]["penniless_comprehensive"].values()), 1, places=6)
+        self.assertEqual(payload["comprehensive_frozen_params"], [.45,.30,.00,1.10])
+        self.assertEqual(payload["model_version"], "penniless-comprehensive-v1-20261017")
         self.assertTrue(payload["original_xgq_preserved_as_comparator"])
         self.assertFalse(payload["production_formula_unchanged"])
         self.assertAlmostEqual(sum(payload["models"]["stage1_volume_xgq"].values()),1,places=6)
-        self.assertEqual(payload["model"],"stage1_volume_xgq")
+        self.assertEqual(payload["model"],"penniless_comprehensive")
         self.assertTrue(payload["experimental_models_not_promoted"])
         future = strict_row({
             "date": "2026-10-13", "league": "it.1",

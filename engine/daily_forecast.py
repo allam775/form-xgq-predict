@@ -20,6 +20,9 @@ from .xgq import normalized, predict_xgq
 from .understat_championship import _dc_baseline, _elo_probs
 from .understat_hybrid import hybrid_probs
 from .feature_ladder import stage1_probs
+from .stage3_form import stage3_probs
+from .comprehensive import (annotated_opponent_ratings, ensemble,
+                            APPROVED_PARAMS, MODEL_VERSION, STAGE3_PRESET)
 from .prematch_ledger import _ratings_by_league, normalize_probabilities
 
 FORECASTS = "private_daily_forecasts"
@@ -126,8 +129,24 @@ def _forecast(fixture, league_rows, ratings, *, now):
     if hybrid:
         models["hybrid_393_validation"] = normalize_probabilities(hybrid)
     elo = _elo_probs(prior, ratings, fixture)
-    if elo:
-        models["elo"] = normalize_probabilities(elo)
+    if not elo:
+        return None, "missing_elo_for_approved_comprehensive"
+    models["elo"] = normalize_probabilities(elo)
+    # Stage 3 requires opponents' Elo values *before* the old fixtures:
+    # reconstruct them chronologically and update ratings after each match day.
+    # If unavailable, the conservative Stage 1 substitute is explicitly recorded.
+    decorated_prior = annotated_opponent_ratings(prior)
+    stage3 = stage3_probs(decorated_prior, fixture, goal_baseline, STAGE3_PRESET)
+    stage3_fallback = stage3 is None
+    models["stage3_opponent_form"] = normalize_probabilities(stage3 or stage1)
+    all_components = {
+        "stage1": models["stage1_volume_xgq"],
+        "stage3": models["stage3_opponent_form"],
+        "elo": models["elo"],
+        "dc": models["goal_fixed_rho"],
+    }
+    models["penniless_comprehensive"] = normalize_probabilities(
+        ensemble(all_components, APPROVED_PARAMS))
     return {
         "id": fixture["id"], "league": fixture["league"],
         "date": fixture["date"], "source_match_id": fixture["source_match_id"],
@@ -135,7 +154,7 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "home_id": fixture["h"], "away_id": fixture["a"],
         "kickoff_utc": fixture["kickoff_utc"],
         "frozen_at_utc": now.isoformat(),
-        "model": "stage1_volume_xgq", "model_version": "penniless-stage1-v2-20261017",
+        "model": "penniless_comprehensive", "model_version": MODEL_VERSION,
         "status": "frozen",
         "models": models,
         "picks": {name: max(OUTCOMES, key=lambda v: probs[v]) for name, probs in models.items()},
@@ -145,7 +164,10 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "source_evidence_end_lt": min(fixture["date"], now.date().isoformat()),
         "production_formula_unchanged": False,
         "original_xgq_preserved_as_comparator": True,
-        "stage3_and_advanced_features_research_only": True,
+        "stage3_lagged_opponent_ratings": True,
+        "stage3_missing_replaced_by_stage1": stage3_fallback,
+        "comprehensive_frozen_params": list(APPROVED_PARAMS),
+        "creativity_metrics_not_yet_approved_for_production": True,
         "experimental_models_not_promoted": True,
     }, None
 

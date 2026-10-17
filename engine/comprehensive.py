@@ -21,6 +21,10 @@ from .xgq import predict_xgq
 
 OUTCOMES = ("home", "draw", "away")
 STAGE3_PRESET = (.25, .15)  # historical validation-selected, frozen before this study
+# Chosen on February–March 2026, BEFORE historical April–May / Aug–Oct tests.
+# Version pinned for future predictions: do not re-tune on completed fixtures.
+APPROVED_PARAMS = (.45, .30, .00, 1.10)
+MODEL_VERSION = "penniless-comprehensive-v1-20261017"
 VAL_START, VAL_END = "2026-02-01", "2026-03-31"
 HIST_START, HIST_END = "2026-04-01", "2026-05-31"
 SEASON_START = "2026-08-01"
@@ -35,6 +39,20 @@ DRAW_FACTORS = (.90, 1.00, 1.10, 1.20, 1.35, 1.50)
 PARAMETERS = tuple((e,s,d,b)
     for e in EL0_WEIGHTS for s in STAGE3_WEIGHTS for d in DC_WEIGHTS
     if 1-e-s-d >= .0999 for b in DRAW_FACTORS)
+
+
+def annotated_opponent_ratings(prior):
+    """Add strict lagged Elo opponent values for Stage 3; update after whole match day."""
+    ratings = {}
+    out = []
+    ordered = sorted(prior, key=lambda r: (r["date"], r["id"]))
+    for _, group in groupby(ordered, lambda r: r["date"]):
+        matches = list(group)
+        out.extend({**m, "prior_opponent_elo_home": ratings.get(m["a"], 1500),
+                    "prior_opponent_elo_away": ratings.get(m["h"], 1500)}
+                   for m in matches)
+        _update_elo_batch(ratings, matches)
+    return out
 
 
 def ensemble(base, params):
