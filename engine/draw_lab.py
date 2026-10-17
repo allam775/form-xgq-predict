@@ -90,9 +90,14 @@ def apply_draw_calibration(original, features, weights):
     remain=(1-p_draw)/max(1e-10,1-original["draw"])
     probs={"home":original["home"]*remain,
            "draw":p_draw, "away":original["away"]*remain}
-    if abs(sum(probs.values())-1)>1e-8:
-        raise ValueError("Draw calibration normalization failure")
-    return probs
+    total = sum(probs.values())
+    if (not math.isfinite(total) or total <= 0 or
+            any(not math.isfinite(v) or v < 0 for v in probs.values())):
+        raise ValueError("Invalid draw calibration probabilities")
+    # The frozen 1X2 ledger rounds to 8dp, so input can be a few
+    # billionths away from one. Normalize harmless machine precision
+    # without altering the relative home/away odds.
+    return {k: v/total for k,v in probs.items()}
 
 def fit(train, *, regularization=.02, feature_mask=(1,1,1,1,1), iterations=500):
     """Penalized binomial likelihood with base logit as offset; no external ML libs."""
