@@ -82,8 +82,14 @@ def benchmark(rows,*,through="2026-10-17"):
         choices["draw_v2"]=adjusted
         for key,probs in choices.items():
             if set(probs)!=set(OUTCOMES) or any(not isinstance(v,(int,float)) or not math.isfinite(v) or v<0
-                                for v in probs.values()) or abs(sum(probs.values())-1)>1e-5:
+                                for v in probs.values()):
                 raise ValueError("Invalid 1X2 for "+key)
+            total=sum(probs.values())
+            # XGQ probabilities may be truncated in its legacy payload.
+            # Accept only tiny numerical discrepancy and normalize fairly.
+            if not (0.999 <= total <= 1.001):
+                raise ValueError("Substantial probability sum error for "+key)
+            choices[key]={k:float(probs[k])/total for k in OUTCOMES}
         evaluated.append({"date":x["date"],"league":x["league"],
                           "actual":x["actual"],"models":choices})
     if not evaluated:
