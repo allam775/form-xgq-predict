@@ -30,8 +30,16 @@ from .prematch_ledger import _ratings_by_league, normalize_probabilities
 FORECASTS = "private_daily_forecasts"
 GRADES = "private_daily_grades"
 LEAD = timedelta(minutes=30)
-HORIZON = timedelta(hours=48)
+HORIZON = timedelta(hours=72)
 OUTCOMES = ("home", "draw", "away")
+# Every new forecast must retain every independently computed registered model.
+MODEL_SUITE = (
+    "xgq_production_formula", "goal_fixed_rho", "elo",
+    "hybrid_393_validation", "stage1_volume_xgq",
+    "stage3_opponent_form", "penniless_comprehensive",
+    "penniless_draw_calibrated",
+)
+MODEL_SUITE_VERSION = "penniless-eight-models-forward-v1-20261018"
 
 
 def _utc(value):
@@ -128,19 +136,21 @@ def _forecast(fixture, league_rows, ratings, *, now):
         return None, "missing_verified_stage1_shot_evidence"
     models["stage1_volume_xgq"] = normalize_probabilities(stage1)
     hybrid = hybrid_probs(prior, fixture, goal_baseline, (.35, .30))
-    if hybrid:
-        models["hybrid_393_validation"] = normalize_probabilities(hybrid)
+    if hybrid is None:
+        return None, "missing_verified_hybrid"
+    models["hybrid_393_validation"] = normalize_probabilities(hybrid)
     elo = _elo_probs(prior, ratings, fixture)
     if not elo:
         return None, "missing_elo_for_approved_comprehensive"
     models["elo"] = normalize_probabilities(elo)
     # Stage 3 requires opponents' Elo values *before* the old fixtures:
     # reconstruct them chronologically and update ratings after each match day.
-    # If unavailable, the conservative Stage 1 substitute is explicitly recorded.
+    # Never silently substitute Stage 1 under a Stage 3 model name.
     decorated_prior = annotated_opponent_ratings(prior)
     stage3 = stage3_probs(decorated_prior, fixture, goal_baseline, STAGE3_PRESET)
-    stage3_fallback = stage3 is None
-    models["stage3_opponent_form"] = normalize_probabilities(stage3 or stage1)
+    if stage3 is None:
+        return None, "missing_genuine_stage3_opponent_form"
+    models["stage3_opponent_form"] = normalize_probabilities(stage3)
     all_components = {
         "stage1": models["stage1_volume_xgq"],
         "stage3": models["stage3_opponent_form"],
@@ -159,6 +169,8 @@ def _forecast(fixture, league_rows, ratings, *, now):
             models["penniless_comprehensive"],
             feature_vector({"models": all_components, "draw_features": lagged_draw}),
             FROZEN_DRAW_WEIGHTS))
+    if set(models) != set(MODEL_SUITE):
+        return None, "incomplete_eight_model_suite"
     return {
         "id": fixture["id"], "league": fixture["league"],
         "date": fixture["date"], "source_match_id": fixture["source_match_id"],
@@ -167,6 +179,9 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "kickoff_utc": fixture["kickoff_utc"],
         "frozen_at_utc": now.isoformat(),
         "model": "penniless_draw_calibrated", "model_version": DRAW_VERSION,
+        "model_suite_version": MODEL_SUITE_VERSION,
+        "complete_model_suite": True,
+        "registered_models": list(MODEL_SUITE),
         "status": "frozen",
         "models": models,
         "picks": {name: max(OUTCOMES, key=lambda v: probs[v]) for name, probs in models.items()},
@@ -177,7 +192,7 @@ def _forecast(fixture, league_rows, ratings, *, now):
         "production_formula_unchanged": False,
         "original_xgq_preserved_as_comparator": True,
         "stage3_lagged_opponent_ratings": True,
-        "stage3_missing_replaced_by_stage1": stage3_fallback,
+        "stage3_missing_replaced_by_stage1": False,
         "comprehensive_frozen_params": list(APPROVED_PARAMS),
         "draw_calibration_coefficients": list(FROZEN_DRAW_WEIGHTS),
         "draw_only_probability_calibration": True,

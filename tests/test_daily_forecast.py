@@ -4,7 +4,7 @@ import json
 import unittest
 
 from engine.daily_forecast import (
-    fixtures_from_index, fetch_upcoming, freeze, grade, _forecast, LEAD,
+    fixtures_from_index, fetch_upcoming, freeze, grade, _forecast, LEAD, MODEL_SUITE, HORIZON,
 )
 from engine.provider_understat import SOURCE
 from engine.xgq import strict_row
@@ -99,6 +99,11 @@ class DailyForecastTests(unittest.TestCase):
         frozen = db.forecasts[FIXTURE_ID]
         payload = json.loads(frozen)
         self.assertEqual(payload["model"], "penniless_draw_calibrated")
+        self.assertEqual(set(payload["models"]),set(MODEL_SUITE))
+        self.assertEqual(set(payload["picks"]),set(MODEL_SUITE))
+        self.assertTrue(payload["complete_model_suite"])
+        self.assertFalse(payload["stage3_missing_replaced_by_stage1"])
+        self.assertLess(datetime.fromisoformat(payload["frozen_at_utc"]),datetime.fromisoformat(payload["kickoff_utc"]))
         self.assertEqual(set(payload["models"]["xgq_production_formula"]), {"home", "draw", "away"})
         self.assertAlmostEqual(sum(payload["models"]["xgq_production_formula"].values()), 1, places=6)
         self.assertIn("stage1_volume_xgq",payload["models"])
@@ -137,6 +142,9 @@ class DailyForecastTests(unittest.TestCase):
         result = freeze(db, now=NOW, fetcher=lambda kind, selector: source_index())
         self.assertEqual(result["withheld"], 1)
         self.assertEqual(result["total_frozen"], 0)
+
+    def test_72_hour_lookahead_for_predictable_early_freezing(self):
+        self.assertEqual(HORIZON,timedelta(hours=72))
 
     def test_postkickoff_rows_never_created(self):
         late = datetime(2026, 10, 13, 13, tzinfo=timezone.utc)
