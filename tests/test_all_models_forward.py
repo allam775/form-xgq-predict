@@ -4,7 +4,6 @@ import unittest
 from datetime import datetime,timezone
 from engine.all_models_forward import make_supplement
 from engine.daily_forecast import MODEL_SUITE, LEAD, HORIZON, _forecast
-from tests.test_daily_forecast import synthetic
 
 NOW=datetime(2026,10,18,20,0,tzinfo=timezone.utc)
 KO="2026-10-19T18:45:00+00:00"
