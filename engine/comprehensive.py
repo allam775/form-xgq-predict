@@ -158,6 +158,7 @@ def _dated_replay(rows, until, *, eval_start=VAL_START):
                             "recent_total_goals":(htot+atot)/2.
                         }
                         results.append({"league":league,"date":day,"actual":actual_outcome(match),
+                                        "home":match["home"],"away":match["away"],
                                         "models":models,"draw_features":draw_features})
             # Only *after* all fixtures on that date have been forecast:
             batch_annotated=[{**r,
