@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'engine/market_closing_benchmark.py'
+      - 'engine/comprehensive.py'
       - 'tests/test_market_closing_benchmark.py'
       - '.github/workflows/market-closing-benchmark.yml'
 permissions:
