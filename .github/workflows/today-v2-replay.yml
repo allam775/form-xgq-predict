@@ -1,4 +1,4 @@
-name: Read-only Oct 17 current V2 retrospective test
+name: Read-only Oct 18 Penniless Comprehensive Draw V2 retrospective test
 on:
   workflow_dispatch:
   push:
@@ -13,7 +13,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: penniless-oct17-v2-retroreplay
+  group: penniless-oct18-v2-retroreplay
   cancel-in-progress: false
 jobs:
   replay:
@@ -26,9 +26,10 @@ jobs:
           python-version: '3.12'
       - name: Verify historical timestamp isolation, no frozen modification
         run: python -m unittest discover -s tests -p 'test_today_v2_replay.py' -v
-      - name: Compute approved V2 for saved Oct 17 fixtures; store private report
+      - name: Compute approved V2 for saved Oct 18 fixtures; store private report
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CF_D1_DATABASE_ID: ${{ secrets.CF_D1_DATABASE_ID }}
+          PENNILESS_RETRO_TARGET: '2026-10-18'
         run: python -m engine.today_v2_replay
