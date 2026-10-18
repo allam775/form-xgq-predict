@@ -8,7 +8,7 @@ Results may become available to the Understat database after the match.
 from __future__ import annotations
 from collections import Counter, defaultdict
 from datetime import datetime,timezone
-import json,sys
+import json,sys,os
 from .understat_d1 import D1
 from .daily_forecast import _forecast
 from .prematch_ledger import _ratings_by_league
@@ -93,19 +93,22 @@ def replay(saved, history, *, target=TARGET):
             "withheld":dict(withheld),"verified_finals":sum(x.get("result_status")=="provider_verified_final" for x in scored),
             "model_scores_on_verified_finals":aggregate,
             "games":scored,
-            "claims":["Recomputed after the day began using pre-Oct17 history only.",
+            "claims":[f"Recomputed after the day began using history before {target} only.",
                       "NOT actual frozen V2 forecasts, and not a prospective performance test.",
                       "Finals are only auto-scored when matched to authentic Understat completed history.",
                       "No frozen source forecast was updated."]}
 
 def main():
     db=D1()
+    target=os.environ.get("PENNILESS_RETRO_TARGET",TARGET)
+    if target not in ("2026-10-17","2026-10-18"):
+        raise ValueError("Only the explicitly authorized frozen historical days are supported")
     rows=[json.loads(x["payload"]) for x in db.query(
          "SELECT payload FROM private_daily_forecasts WHERE json_extract(payload,'$.date')=? ORDER BY id",
-         (TARGET,))]
-    result=replay(rows,db.history())
+         (target,))]
+    result=replay(rows,db.history(),target=target)
     db.query("INSERT OR REPLACE INTO metadata(k,v) VALUES (?,?)",
-        (KEY,json.dumps(result,ensure_ascii=False,separators=(",",":"))))
+        (f"penniless_{target.replace('-','')}_v2_replay",json.dumps(result,ensure_ascii=False,separators=(",",":"))))
     print(json.dumps({k:result[k] for k in
        ("status","date","registered","generated","verified_finals",
         "withheld","model_scores_on_verified_finals")},sort_keys=True))
