@@ -92,9 +92,9 @@ def fixtures():
  return output
 
 
-def profiles(history):
- """Use only D1 fields as of 12 October; no private rows written to GitHub."""
- history=[m for m in history if m['date']<CUTOFF]
+def profiles(history, *, cutoff=CUTOFF):
+ """Use only D1 fields as of the preceding UTC date; no private rows written to GitHub."""
+ history=[m for m in history if m['date']<cutoff]
  league_stats={}
  for league in ('en.1','es.1','de.1','it.1','fr.1'):
   matches=[r for r in history if r['league']==league]
@@ -113,7 +113,7 @@ def profiles(history):
   wsum=0.
   for r in rows:
    home=r['h']==name
-   delta=(date.fromisoformat(CUTOFF)-date.fromisoformat(r['date'])).days
+   delta=(date.fromisoformat(cutoff)-date.fromisoformat(r['date'])).days
    w=2**(-delta/120.)
    for fld,k in [('xg','xg'),('shots','shots'),('xgq','quality')]:
     totals['for_'+k]+=w*r[('home_' if home else 'away_')+fld]
