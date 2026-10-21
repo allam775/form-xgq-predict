@@ -102,7 +102,13 @@ def fetch_365_results(day, schedule, *, fetcher=provider_fetch):
         if not check["ok"]:
             counts["unverified_competition"]+=1
             continue
-        if not _final(item):
+        # Provider status parsers can otherwise mistake "not final" for "final".
+        status_text=" ".join(str(v.get("name") or v.get("description") or "") if isinstance(v,dict) else str(v or "")
+           for v in (item.get("status"),item.get("statusText"),item.get("statusName"),
+                     item.get("gameStatus"),item.get("shortStatusText"))).casefold()
+        if (any(term in status_text for term in ("not final","not finished","not ended",
+                "scheduled","upcoming","postponed","in progress","live","half time"))
+                or not _final(item)):
             counts["not_final"]+=1;continue
         try:
             seen_day=_date(item)
