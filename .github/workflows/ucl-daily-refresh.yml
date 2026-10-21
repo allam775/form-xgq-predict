@@ -32,6 +32,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Guard original predictions, real fixtures and final-result certification
-        run: python -m unittest discover -s tests -p 'test_ucl_daily_refresh.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_ucl_daily_refresh.py' -v
+          python -m unittest discover -s tests -p 'test_ucl_grade_daily.py' -v
       - name: Fetch bounded authorized 365Scores UCL match finals, refresh verified past-day Elo and simulate remaining tournament
         run: python -m research.ucl_daily_refresh
+      - name: Grade pre-kickoff frozen continental model suite from certified official match finishes
+        run: python -m research.ucl_forward grade

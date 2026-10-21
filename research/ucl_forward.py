@@ -195,7 +195,26 @@ def grade(db,*,now=None):
     _make(db)
     saved=[json.loads(r["payload"]) for r in _get(db,FIXTURE_TABLE)]
     already={r["id"] for r in _get(db,GRADE_TABLE)}
-    valid=verified_results(fixtures())
+    schedule=fixtures()
+    valid=verified_results(schedule)
+    all_uefa={(x["date"],x["home"],x["away"]) for x in schedule}
+    scores_table="private_ucl_confirmed_finals_2026_27"
+    db.query(f"CREATE TABLE IF NOT EXISTS {scores_table} (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
+    # The scheduled results collector independently certifies final status,
+    # exact UEFA fixture identity and 365Scores competition 572.
+    for offset in range(0,3000,150):
+        page=db.query(f"SELECT payload FROM {scores_table} ORDER BY id LIMIT ? OFFSET ?",(150,offset))
+        for item in page:
+            got=json.loads(item["payload"])
+            key=(got["date"],got["home"],got["away"])
+            score=(got["hg"],got["ag"])
+            if (key not in all_uefa or got.get("competition")!="uefa.cl"
+                    or got.get("status")!="certified_final"
+                    or any(type(x)!=int or not 0<=x<=30 for x in score)
+                    or (key in valid and valid[key]!=score)):
+                raise ValueError("Unverified or conflicting continental result in D1")
+            valid[key]=score
+        if len(page)<150:break
     added=0
     for row in saved:
         if row["id"] in already: continue
@@ -215,7 +234,8 @@ def grade(db,*,now=None):
                 "brier":sum((p[k]-int(k==outcome))**2 for k in OUTCOMES)}
         record={"id":row["id"],"date":row["date"],"hg":hg,"ag":ag,
                 "outcome":outcome,"models":metrics,
-                "grade_source":"UEFA-official verified results file",
+                "grade_source":("UEFA-verified historical static file" if key in verified_results(schedule)
+                                else "365Scores verified final+explicit UEFA competition+fixture"),
                 "graded_at_utc":now.isoformat()}
         db.query(f"INSERT OR IGNORE INTO {GRADE_TABLE}(id,payload) VALUES (?,?)",
                  (row["id"],json.dumps(record,separators=(",",":"),ensure_ascii=False)))
