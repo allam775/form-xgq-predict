@@ -15,7 +15,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, date, timezone, timedelta
 from hashlib import sha256
 from itertools import groupby
-import csv, json, math, os, re, unicodedata
+import csv, json, math, os, re, unicodedata, hashlib
 
 from engine.understat_d1 import D1
 from engine.provider365 import fetch as provider_fetch, _side, _score, _final, _competition, _date
@@ -199,7 +199,11 @@ def completed_day(schedule,known,*,today):
 
 def historical_published_scores(known,*,asof):
     """No retro-replay: score the immutable Oct13 144-fixture prediction file."""
-    original=assess_oct20.__globals__["EXISTING"]
+    original=EXISTING
+    raw=original.read_bytes()
+    digest=hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\x00"+raw).hexdigest()
+    if digest!="6b53aef892c7b0b5ce2e5fd04fadf13b61bf6a36":
+        raise ValueError("Original 13 Oct predictions have changed; refuse historical scoring")
     results=[]
     rows=list(csv.DictReader(original.open(encoding="utf-8-sig",newline="")))
     for row in rows:

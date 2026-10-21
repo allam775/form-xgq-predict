@@ -1,15 +1,8 @@
 name: Project the entire 2026-27 UEFA Champions League
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'research/ucl_2026_27.py'
-      - 'research/ucl_2026_27_fixtures.txt'
-      - 'tests/test_ucl_scoreline.py'
-      - '.github/workflows/ucl2026-27.yml'
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: xgq-ucl2027-standalone-research
   cancel-in-progress: false
@@ -77,12 +70,5 @@ jobs:
           assert abs(sum(r['league_table'][i]['champion'] for i in range(36))-1)<.001
           print('Verified 144 fixtures, 36 teams, 6k simulations, 8+8+4+2+1 knockout path')
           PY
-      - name: Publish full forecast CSV, JSON and projected 36-club ranking
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/reports/ucl2026_27/ucl_2026_27_results.json research/reports/ucl2026_27/ucl_2026_27_matches.csv research/reports/ucl2026_27/ucl_2026_27_table.csv research/reports/ucl2026_27/ucl_2026_27_expected_table.csv
-          if ! git diff --cached --quiet; then
-            git commit -m "research: 144 UCL match scorelines, full final league table and title scenarios"
-            git push origin HEAD:main
-          fi
+      - name: Historic Oct 13 outputs are immutable
+        run: echo "No commit/push; current season updates are retained privately in the daily matchday snapshot ledger."
