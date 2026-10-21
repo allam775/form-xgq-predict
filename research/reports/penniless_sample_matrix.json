@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-14T12:25:05.610386+00:00",
+  "created_at_utc": "2026-10-21T12:27:17.595607+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -8,13 +8,13 @@
   "sources": {
     "understat_private": {
       "status": "existing_private_shot_history",
-      "rows_available": 3274,
+      "rows_available": 8154,
       "by_league": {
-        "de.1": 654,
-        "en.1": 656,
-        "es.1": 653,
-        "fr.1": 656,
-        "it.1": 655
+        "de.1": 1630,
+        "en.1": 1632,
+        "es.1": 1629,
+        "fr.1": 1632,
+        "it.1": 1631
       },
       "private_rows_exported": 0,
       "is_fresh_365scores_source": false,
@@ -407,7 +407,7 @@
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 71,
+      "listings_with_configured_team": 69,
       "total_shot_events_with_individual_xg": 180,
       "detail_diagnostic_status_counts": {
         "missing_competition_identity": 5,
