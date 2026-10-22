@@ -13,6 +13,7 @@ class DailyProjectionTests(unittest.TestCase):
  def test_no_day_until_complete(self):
   schedule=fixtures()
   known=verified_results(schedule)
+  self.assertEqual(completed_day(schedule,known,today="2026-10-22"),"2026-10-21")
   self.assertEqual(completed_day(schedule,known,today="2026-10-21"),"2026-10-20")
   self.assertEqual(completed_day(schedule,known,today="2026-10-20"),"2026-10-14")
  def test_original_oct13_projection_stays_read_only(self):

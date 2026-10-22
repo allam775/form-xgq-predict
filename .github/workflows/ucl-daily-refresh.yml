@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'research/ucl_daily_refresh.py'
+      - 'research/ucl2026_27_verified_results.json'
+      - 'tests/test_ucl_forward.py'
+      - 'tests/test_ucl_grade_daily.py'
       - 'tests/test_ucl_daily_refresh.py'
       - '.github/workflows/ucl-daily-refresh.yml'
   schedule:

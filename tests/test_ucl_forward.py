@@ -9,9 +9,9 @@ class TestUCLForward(unittest.TestCase):
   fixture=fixtures()
   a=verified_results(fixture)
   self.assertEqual(len(fixture),144)
-  self.assertEqual(len(a),45) # MD1:18, MD2:18, Oct20:9
+  self.assertEqual(len(a),54) # MD1:18, MD2:18, Oct20:9, Oct21:9
   self.assertEqual(a[("2026-10-20","PSG","Barcelona")],(4,2))
-  self.assertNotIn(("2026-10-21","Como","Manchester United"),a)
+  self.assertEqual(a[("2026-10-21","Como","Manchester United")],(4,1))
  def test_tuesday_results_never_leak_into_same_day_picks(self):
   fixture=fixtures()
   a=verified_results(fixture)

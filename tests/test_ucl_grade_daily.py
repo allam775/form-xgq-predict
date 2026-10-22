@@ -14,7 +14,7 @@ class FakeD1:
       "models":{"ucl_pot_dc_goals":{"home":.6,"draw":.2,"away":.2}},
       "picks":{"ucl_pot_dc_goals":"home"}}
   self.results=[{"date":m["date"],"home":m["home"],"away":m["away"],
-                 "hg":2,"ag":0,"competition":"uefa.cl","status":"certified_final"}]
+                 "hg":4,"ag":1,"competition":"uefa.cl","status":"certified_final"}]
   self.grades=[]
  def query(self,sql,params=()):
   if sql.startswith("CREATE TABLE"):return []
@@ -34,7 +34,7 @@ class Grading(unittest.TestCase):
   value=grade(db,now=datetime(2026,10,22,12,tzinfo=timezone.utc))
   self.assertEqual(value["newly_graded"],1)
   self.assertTrue(db.grades[0]["models"]["ucl_pot_dc_goals"]["correct"])
-  self.assertIn("365Scores",db.grades[0]["grade_source"])
+  self.assertIn("UEFA-verified",db.grades[0]["grade_source"])
  def test_pre_kickoff_integrity_protected(self):
   db=FakeD1()
   db.frozen["frozen_at_utc"]="2026-10-21T17:00:00+00:00"

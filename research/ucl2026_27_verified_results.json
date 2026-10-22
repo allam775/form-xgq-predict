@@ -1,6 +1,5 @@
 {
-  "source": "UEFA official 2026/27 league phase completed fixtures",
-  "verified_as_of_utc": "2026-10-21T13:30:00+00:00",
+  "source": "UEFA fixtures checked against independent 21 Oct full-time match reports",
   "matches": [
     [
       "2026-10-13",
@@ -190,6 +189,77 @@
       "Atletico Madrid",
       1,
       1
+    ],
+    [
+      "2026-10-21",
+      "Como",
+      "Manchester United",
+      4,
+      1
+    ],
+    [
+      "2026-10-21",
+      "Lille",
+      "Galatasaray",
+      2,
+      4
+    ],
+    [
+      "2026-10-21",
+      "Aston Villa",
+      "Viking",
+      3,
+      1
+    ],
+    [
+      "2026-10-21",
+      "Club Brugge",
+      "Lens",
+      3,
+      0
+    ],
+    [
+      "2026-10-21",
+      "Bayern Munich",
+      "Arsenal",
+      2,
+      2
+    ],
+    [
+      "2026-10-21",
+      "Inter",
+      "Shakhtar Donetsk",
+      1,
+      0
+    ],
+    [
+      "2026-10-21",
+      "Real Madrid",
+      "RB Leipzig",
+      4,
+      1
+    ],
+    [
+      "2026-10-21",
+      "Real Betis",
+      "Feyenoord",
+      1,
+      0
+    ],
+    [
+      "2026-10-21",
+      "Sporting CP",
+      "LASK",
+      2,
+      3
     ]
-  ]
+  ],
+  "verified_as_of_date_utc": "2026-10-22",
+  "provenance": {
+    "2026-10-13_to_2026-10-20": "Previously independently confirmed official UEFA finals",
+    "2026-10-21": [
+      "https://www.rte.ie/sport/results/soccer/champions-league/47760/results/",
+      "https://www.reuters.com/sports/soccer/paz-dazzles-como-thrash-manchester-united-4-1-2026-10-21/"
+    ]
+  }
 }
