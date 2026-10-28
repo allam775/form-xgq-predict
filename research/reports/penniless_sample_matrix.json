@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-21T12:27:17.595607+00:00",
+  "created_at_utc": "2026-10-28T13:33:48.438245+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -8,13 +8,13 @@
   "sources": {
     "understat_private": {
       "status": "existing_private_shot_history",
-      "rows_available": 8154,
+      "rows_available": 10000,
       "by_league": {
-        "de.1": 1630,
-        "en.1": 1632,
-        "es.1": 1629,
-        "fr.1": 1632,
-        "it.1": 1631
+        "de.1": 2000,
+        "en.1": 2000,
+        "es.1": 2000,
+        "fr.1": 2000,
+        "it.1": 2000
       },
       "private_rows_exported": 0,
       "is_fresh_365scores_source": false,
@@ -407,20 +407,20 @@
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 69,
-      "total_shot_events_with_individual_xg": 180,
+      "listings_with_configured_team": 70,
+      "total_shot_events_with_individual_xg": 132,
       "detail_diagnostic_status_counts": {
-        "missing_competition_identity": 5,
-        "no_chart_events": 1
+        "missing_competition_identity": 4,
+        "no_chart_events": 2
       },
       "matches_inspected": 6,
       "observed_score_field_kinds": {
-        "float": 5,
-        "missing": 1
+        "float": 4,
+        "missing": 2
       },
-      "games_with_competition_display_name": 5,
+      "games_with_competition_display_name": 4,
       "games_with_competition_catalog_match": 0,
-      "games_with_readable_final_score": 5,
+      "games_with_readable_final_score": 4,
       "observed_home_score_nested_fields": [],
       "observed_away_score_nested_fields": [],
       "observed_root_competition_item_fields": [
