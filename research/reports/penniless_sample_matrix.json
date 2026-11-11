@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-11-04T14:53:54.065693+00:00",
+  "created_at_utc": "2026-11-11T14:43:43.937923+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -407,20 +407,20 @@
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 73,
-      "total_shot_events_with_individual_xg": 108,
+      "listings_with_configured_team": 74,
+      "total_shot_events_with_individual_xg": 131,
       "detail_diagnostic_status_counts": {
-        "missing_competition_identity": 4,
-        "no_chart_events": 2
+        "missing_competition_identity": 5,
+        "no_chart_events": 1
       },
       "matches_inspected": 6,
       "observed_score_field_kinds": {
-        "float": 4,
-        "missing": 2
+        "float": 5,
+        "missing": 1
       },
-      "games_with_competition_display_name": 4,
+      "games_with_competition_display_name": 5,
       "games_with_competition_catalog_match": 0,
-      "games_with_readable_final_score": 4,
+      "games_with_readable_final_score": 5,
       "observed_home_score_nested_fields": [],
       "observed_away_score_nested_fields": [],
       "observed_root_competition_item_fields": [
