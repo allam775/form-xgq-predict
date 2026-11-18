@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-11-11T14:43:43.937923+00:00",
+  "created_at_utc": "2026-11-18T15:59:19.792914+00:00",
   "scope": "zero-cost bounded source samples; private XGQ inputs unchanged",
   "production_modified": false,
   "all_live_sources_unrestricted": false,
@@ -383,13 +383,13 @@
     "international_results": {
       "status": "results_only",
       "source": "martj42/international_results",
-      "validated_historical_matches": 49939,
-      "validated_since_2025": 1803,
+      "validated_historical_matches": 50118,
+      "validated_since_2025": 1982,
       "latest_years": {
         "2023": 1064,
         "2024": 1231,
         "2025": 1002,
-        "2026": 801
+        "2026": 980
       },
       "has_individual_shot_xg": false,
       "accepted_complete_xgq": 0
@@ -407,7 +407,7 @@
       "source_authorization": "owner reports prior private XGQ consent",
       "bulk_scope_not_assumed": true,
       "raw_provider_bytes_written": 0,
-      "listings_with_configured_team": 74,
+      "listings_with_configured_team": 69,
       "total_shot_events_with_individual_xg": 131,
       "detail_diagnostic_status_counts": {
         "missing_competition_identity": 5,
