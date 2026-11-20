@@ -70,6 +70,28 @@ class Tests(unittest.TestCase):
         self.assertEqual(rows, [public])
         self.assertEqual(report["shared_cross_provider_fixtures"], 1)
 
+    def test_unavailable_source_keeps_verified_cache_and_explicit_stale_flag(self):
+        public = fixture("StatsBomb Open Data", "998")
+        private = fixture(SOURCE, "123")
+        env = {
+            "XGQ_UNDERSTAT_LEAGUES": "en.1",
+            "XGQ_UNDERSTAT_ACCESS_AUTHORIZED": "1",
+            "XGQ_UNDERSTAT_STORAGE_AUTHORIZED": "1",
+            "XGQ_UNDERSTAT_MAX_NEW": "0",
+        }
+        with TemporaryDirectory() as d:
+            p = Path(d) / "private.json"
+            p.write_text(json.dumps([private]), encoding="utf-8")
+            with patch("engine.understat_pipeline.collect",
+                       side_effect=SourceUnavailable("upstream non-JSON")):
+                rows, report = run(
+                    [public], env=env, asof=date(2026, 11, 20), private_path=p
+                )
+        self.assertEqual(rows, [public])
+        self.assertEqual(report["status"], "source_unavailable")
+        self.assertFalse(report["source_fresh"])
+        self.assertEqual(report["shared_cross_provider_fixtures"], 1)
+
     def test_conflicting_cross_provider_score_refuses_merge(self):
         public = fixture("StatsBomb Open Data", "999", hg=2)
         private = fixture(SOURCE, "123", hg=1)
