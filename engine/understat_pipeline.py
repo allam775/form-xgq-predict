@@ -9,7 +9,7 @@ import json
 import os
 from pathlib import Path
 
-from .provider_understat import SOURCE, enabled, read_leagues, collect
+from .provider_understat import SOURCE, enabled, read_leagues, collect, SourceUnavailable
 from .understat_private import verified_row
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,8 +52,16 @@ def run(history, *, env=None, asof=None, private_path=None, transport=None):
         raise ValueError('Understat request budget must be between 0 and 48')
     current_start = today.year if today.month >= 7 else today.year-1
     years = [current_start, current_start - 1]
-    rows, report = collect(list(stored.values()), leagues, years,
-                           max_new=int(count), transport=transport, today=today)
+    try:
+        rows, report = collect(list(stored.values()), leagues, years,
+                               max_new=int(count), transport=transport, today=today)
+    except SourceUnavailable:
+        # The public StatsBomb snapshot can still be regenerated from verified
+        # local cache. Do NOT fabricate any current Understat match data or
+        # call a substitute provider under the same source label.
+        rows = list(stored.values())
+        report = {'status': 'source_unavailable', 'added': 0,
+                  'source_fresh': False, 'error_type': 'non_json_source_response'}
     report.update(enabled=True, rights_confirmed_by_owner=True,
                   restored_private=len(previous),
                   shared_cross_provider_fixtures=shared_fixtures,
