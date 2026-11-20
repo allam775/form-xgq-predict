@@ -31,6 +31,10 @@ class AccessDenied(RuntimeError):
     """Source denied access: caller must stop instead of working around it."""
 
 
+class SourceUnavailable(RuntimeError):
+    """The source returned unusable content; never infer fixtures or results."""
+
+
 def enabled(env=None):
     env = os.environ if env is None else env
     return all(env.get(k, '').strip().lower() in ('1', 'true', 'yes') for k in
@@ -92,9 +96,14 @@ def fetch(kind, identifier, *, transport=None):
             raw = stream.read(MAX_BYTES + 1)
         if len(raw) > MAX_BYTES:
             raise ValueError('Understat decoded response too large')
-    result = json.loads(raw)
+    try:
+        result = json.loads(raw)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        # The site sometimes responds HTTP 200 with HTML / non-JSON text.
+        # Do not log or expose the response and never treat it as a match.
+        raise SourceUnavailable('Understat returned a non-JSON response') from exc
     if not isinstance(result, dict):
-        raise ValueError('Expected JSON object')
+        raise SourceUnavailable('Understat returned a non-object response')
     return result
 
 
