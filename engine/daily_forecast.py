@@ -9,11 +9,12 @@ from __future__ import annotations
 import argparse
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
+from urllib.error import URLError
 import json
 import math
 import re
 
-from .provider_understat import SOURCE, LEAGUES, fetch as understat_fetch
+from .provider_understat import SOURCE, LEAGUES, SourceUnavailable, fetch as understat_fetch
 from .understat_d1 import D1
 from .understat_backfill import validate_config
 from .xgq import normalized, predict_xgq
@@ -94,12 +95,21 @@ def fixtures_from_index(payload, league, *, now):
     return output
 
 
-def fetch_upcoming(leagues, *, now, fetcher=understat_fetch):
+def fetch_upcoming(leagues, *, now, fetcher=understat_fetch, source_errors=None):
     season = now.year if now.month >= 7 else now.year - 1
     found = {}
     for league in leagues:
-        payload = fetcher("league", (league, season))
-        for item in fixtures_from_index(payload, league, now=now):
+        try:
+            payload = fetcher("league", (league, season))
+            fixtures = fixtures_from_index(payload, league, now=now)
+        except (SourceUnavailable, URLError, TimeoutError, ValueError):
+            # Isolate a single unavailable/malformed league feed, but do NOT
+            # treat missing results as a successful provider refresh.
+            if source_errors is None:
+                raise
+            source_errors.append(league)
+            continue
+        for item in fixtures:
             if item["id"] in found and found[item["id"]] != item:
                 raise ValueError("Conflicting source fixture identity")
             found[item["id"]] = item
@@ -212,7 +222,11 @@ def freeze(db, *, now=None, fetcher=understat_fetch):
     leagues, _, _ = validate_config(db.get_setting())
     # No provider fixture discovery if authorization is absent.
     ensure_tables(db)
-    fixtures = fetch_upcoming(leagues, now=now, fetcher=fetcher)
+    source_errors = []
+    fixtures = fetch_upcoming(leagues, now=now, fetcher=fetcher,
+                              source_errors=source_errors)
+    if len(source_errors) == len(leagues):
+        raise SourceUnavailable('All authorized Understat league indexes unavailable; no forecasts created')
     known = {r["id"] for r in db.query(f"SELECT id FROM {FORECASTS}")}
     history = db.history()
     pools = defaultdict(list)
@@ -224,6 +238,7 @@ def freeze(db, *, now=None, fetcher=understat_fetch):
     ratings = _ratings_by_league([r for values in pools.values() for r in values])
     report = Counter()
     report["upcoming"] = len(fixtures)
+    report["source_index_errors"] = len(source_errors)
     for fixture in fixtures:
         if fixture["id"] in known:
             report["already_frozen"] += 1
