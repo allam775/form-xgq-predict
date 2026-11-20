@@ -32,11 +32,20 @@ def run(history, *, env=None, asof=None, private_path=None, transport=None):
     previous = json.loads(private_path.read_text(encoding='utf8'))
     if not isinstance(previous, list):
         raise ValueError('Malformed private Understat D1 data')
+    # Both providers can document the same real match. Their canonical
+    # fixture IDs deliberately collide; never replace public evidence with
+    # private Understat evidence or drop either provider's private D1 row.
     stored = {r['id']: r for r in history}
+    shared_fixtures = 0
     for row in previous:
         verified_row(row)
-        if row['id'] in stored and stored[row['id']]['source'] != SOURCE:
-            raise ValueError('Cross-provider identity collision')
+        existing = stored.get(row['id'])
+        if existing is not None and existing['source'] != SOURCE:
+            if any(existing.get(k) != row.get(k) for k in
+                   ('league', 'date', 'h', 'a', 'hg', 'ag')):
+                raise ValueError('Conflicting final score or identity across providers')
+            shared_fixtures += 1
+            continue  # Keep the public record in the mixed snapshot.
         stored[row['id']] = row
     count = env.get('XGQ_UNDERSTAT_MAX_NEW', '24')
     if not count.isdecimal() or not 0 <= int(count) <= 48:
@@ -47,5 +56,6 @@ def run(history, *, env=None, asof=None, private_path=None, transport=None):
                            max_new=int(count), transport=transport, today=today)
     report.update(enabled=True, rights_confirmed_by_owner=True,
                   restored_private=len(previous),
+                  shared_cross_provider_fixtures=shared_fixtures,
                   private_rows=sum(r.get('source') == SOURCE for r in rows))
     return rows, report

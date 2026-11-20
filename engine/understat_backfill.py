@@ -58,7 +58,7 @@ def prioritize(indexes, previous, budget):
     return selected
 
 
-def backfill(db, *, max_new=250, min_interval=1.0, fetcher=fetch, clock=time.monotonic, sleeper=time.sleep, today=None):
+def backfill(db, *, max_new=250, min_interval=1.0, fetcher=fetch, clock=time.monotonic, sleeper=time.sleep, today=None, recent_only=False):
     if type(max_new) is not int or not 1<=max_new<=BATCH_MAX:
         raise ValueError('Excessive per-run backfill request budget')
     if type(min_interval) not in (float,int) or not .5<=min_interval<=15:
@@ -67,11 +67,15 @@ def backfill(db, *, max_new=250, min_interval=1.0, fetcher=fetch, clock=time.mon
     leagues,seasons,target=validate_config(db.get_setting())
     before=db.history()
     total=len(before)
-    if total>=target:
+    if total >= target and not recent_only:
         report={'status':'target_reached','target':target,'total':total,'added':0,'as_of':today.isoformat()}
         db.set_progress(report)
         return report
-    budget=min(max_new,target-total,TARGET_MAX-total)
+    if total >= TARGET_MAX:
+        raise D1Error('Understat private archive at safety capacity; owner review required')
+    # The historical target is a minimum, NOT a cap on current-season updates.
+    # Historical backfill remains capped at target, preserving old behaviour.
+    budget=min(max_new,TARGET_MAX-total) if recent_only else min(max_new,target-total,TARGET_MAX-total)
     last_request=None
     def paced_fetch(kind,ident):
         nonlocal last_request
@@ -82,11 +86,17 @@ def backfill(db, *, max_new=250, min_interval=1.0, fetcher=fetch, clock=time.mon
         try:return fetcher(kind,ident)
         finally:last_request=clock()
     indexes=defaultdict(list)
+    active_season=today.year if today.month >= 7 else today.year-1
+    years=[active_season] if recent_only else seasons
+    recent_cutoff=(today-timedelta(days=75)).isoformat()
     for league in leagues:
-        for year in seasons:
+        for year in years:
             try:
                 raw=paced_fetch('league',(league,year))
-                indexes[league].extend(match_index(raw,league,year,today=today))
+                found=match_index(raw,league,year,today=today)
+                if recent_only:
+                    found=[r for r in found if recent_cutoff <= r['date'] <= today.isoformat()]
+                indexes[league].extend(found)
             except AccessDenied:
                 raise
             except (HTTPError,URLError,TimeoutError,ValueError,KeyError,TypeError):
@@ -121,7 +131,9 @@ def backfill(db, *, max_new=250, min_interval=1.0, fetcher=fetch, clock=time.mon
         raise D1Error('Unexpected backfill size growth')
     profiles=team_profiles(all_rows,as_of=(today+timedelta(days=1)).isoformat(),source=SOURCE,min_games=1)
     db.upsert_forms(profiles)
-    report={'status':'target_reached' if len(all_rows)>=target else 'progress',
+    report={'status':('recent_refresh' if recent_only else
+                      'target_reached' if len(all_rows)>=target else 'progress'),
+            'mode':'recent_only' if recent_only else 'historical',
             'target':target,'total':len(all_rows),'added':len(all_rows)-total,
             'rejected':rejected,'inspected':inspected,'profiles':len(profiles),
             'season_count':len(seasons),'by_league_imported':dict(by_league),
@@ -134,8 +146,11 @@ def main(argv=None):
     ap=argparse.ArgumentParser()
     ap.add_argument('--max-new',type=int,default=250)
     ap.add_argument('--min-interval',type=float,default=1.0)
+    ap.add_argument('--recent-only',action='store_true',
+                    help='Refresh verified finals from current season even after historical target')
     args=ap.parse_args(argv)
-    stats=backfill(D1(),max_new=args.max_new,min_interval=args.min_interval)
+    stats=backfill(D1(),max_new=args.max_new,min_interval=args.min_interval,
+                   recent_only=args.recent_only)
     # Counts only: no provider payload, tokens or private match identifiers in logs.
     print(json.dumps(stats,sort_keys=True))
 
